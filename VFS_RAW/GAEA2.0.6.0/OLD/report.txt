@@ -1,0 +1,27 @@
+
+──────────────────────────────────────────────────────────────────────────────────────────  GAEA BUILD SWARM  2.0.4.1 ──
+
+                                                                                           
+          Filename:  │ D:\REPOS\ENVOffTheGrid\VFS_RAW\GAEA2.0\Gaea_Template_FINAL.terrain  
+    Build Location:  │ D:\REPOS\ENVOffTheGrid\VFS_RAW\GAEA2.0                              
+  Build Resolution:  │ 1024 x 1024                                                         
+             Nodes:  │ Total [20] / Exporting [2]                                          
+                                                                                           
+
+──────────────────────────────────────────────────────────────────────────────────────────────────────── Build Report ──
+
+             Build Results                              Statistics                
+                                                                                  
+      Result: │ Success                    Erosion2 │ 0:00:00.149                 
+  Resolution: │ 1024                         Rivers │ 0:00:01.653                 
+  Node Count: │ 20                              Sea │ 0:00:01.244                 
+  Start Time: │ 10/21/2024 2:24:40 PM          Tint │ 0:00:00.127                 
+    End Time: │ 10/21/2024 2:24:44 PM               │                             
+    Duration: │ 00:00:04.2203524            Fastest │ Landscape_Height @ 0:00:00  
+                                            Slowest │ Rivers @ 0:00:01.653        
+                                                                                  
+                                          * nodes that took <100ms are excluded.  
+
+
+████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████
+■ Rivers 1653%    ■ Sea 1244%    ■ Erosion2 149%    ■ Tint 127%   ■ Draw [ Gameplay Mask ] 93%    ■ Flow [ Sand ] 80%   
