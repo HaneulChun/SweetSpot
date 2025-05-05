@@ -1,7 +1,7 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "UnrealProjectBaseProjectile.h"
-#include "GameFramework/ProjectileMovementComponent.h"
+//#include "GameFramework/ProjectileMovementComponent.h"
 #include "Components/SphereComponent.h"
 
 AUnrealProjectBaseProjectile::AUnrealProjectBaseProjectile() 
@@ -20,13 +20,18 @@ AUnrealProjectBaseProjectile::AUnrealProjectBaseProjectile()
 	RootComponent = CollisionComp;
 
 	// Use a ProjectileMovementComponent to govern this projectile's movement
-	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileComp"));
-	ProjectileMovement->UpdatedComponent = CollisionComp;
-	ProjectileMovement->InitialSpeed = 3000.f;
-	ProjectileMovement->MaxSpeed = 3000.f;
-	ProjectileMovement->bRotationFollowsVelocity = true;
-	ProjectileMovement->bShouldBounce = true;
 
+
+	
+	// ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileComp"));
+	// ProjectileMovement->UpdatedComponent = CollisionComp;
+	// ProjectileMovement->InitialSpeed = 3000.f;
+	// ProjectileMovement->MaxSpeed = 3000.f;
+	// ProjectileMovement->bRotationFollowsVelocity = true;
+	// ProjectileMovement->bShouldBounce = true;
+
+	
+	
 	// Die after 3 seconds by default
 	InitialLifeSpan = 3.0f;
 }
