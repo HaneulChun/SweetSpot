@@ -4,6 +4,7 @@
 #include "LoopingHallwayTeleporter.h"
 #include "Components/BoxComponent.h"
 #include "GameFramework/Character.h"
+#include "Components/CapsuleComponent.h"
 
 // Sets default values
 ALoopingHallwayTeleporter::ALoopingHallwayTeleporter()
@@ -38,7 +39,7 @@ void ALoopingHallwayTeleporter::BeginPlay()
 void ALoopingHallwayTeleporter::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (Cast<ACharacter>(OtherActor))
+	if (ACharacter* Character = Cast<ACharacter>(OtherActor))
 	{
 		if (isCompleted == true)
 		{
@@ -46,14 +47,29 @@ void ALoopingHallwayTeleporter::OnOverlapBegin(UPrimitiveComponent* OverlappedCo
 		}
 		else
 		{
-			OtherActor->SetActorLocation(thisLoop);
-				
+			Teleport(OtherActor, thisLoop);
+			
 			Reset();
 
 			APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
 			if (APlayerController* character = Cast<APlayerController>(PlayerController))
 			{
 				// TODO increase the increase the madnessbar
+			}
+
+			if (UCapsuleComponent* Capsule = Character->GetCapsuleComponent())
+			{
+				Capsule->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+        
+				// Re-enable after delay
+				FTimerHandle TimerHandle;
+				GetWorld()->GetTimerManager().SetTimer(TimerHandle, [Capsule]()
+				{
+					if (Capsule)
+					{
+						Capsule->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+					}
+				}, 0.3f, false);
 			}
 		}
 	}
@@ -86,16 +102,12 @@ void ALoopingHallwayTeleporter::Complete(AActor* OtherActor)
 	OtherActor->SetActorLocation(nextLoop);
 }
 
-void ALoopingHallwayTeleporter::Teleport(AActor* OtherActor, FTransform Transform)
+void ALoopingHallwayTeleporter::Teleport(AActor* OtherActor, FVector Transform)
 {
-	FTransform destanation = Transform;
-	FTransform teleportStartPoint = this->GetTransform();
-	FTransform player = OtherActor->GetTransform();
-		
-	FVector offset = player.GetLocation() - teleportStartPoint.GetLocation();
-	FVector final = offset + destanation.GetLocation();
-		
-	FTransform finalTeleport = FTransform(destanation.GetRotation(), final, OtherActor->GetTransform().GetScale3D());
-	OtherActor->SetActorTransform(finalTeleport, false);
+	FVector offset = OtherActor->GetActorLocation() - this->GetActorLocation();
+	FVector finalLocation = offset + GetActorTransform().TransformPosition(Transform);
+	
+	FTransform finalTransform(FRotator::ZeroRotator, finalLocation, OtherActor->GetActorScale3D());
+	OtherActor->SetActorTransform(finalTransform, false);
 }
 

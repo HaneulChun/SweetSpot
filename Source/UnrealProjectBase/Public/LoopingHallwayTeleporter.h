@@ -40,7 +40,7 @@ public:
 	void Complete(AActor* OtherActor);
 
 	UFUNCTION()
-	void Teleport(AActor* OtherActor, FTransform Transform);
+	void Teleport(AActor* OtherActor, FVector Transform);
 	
 	UPROPERTY()
 	bool isCompleted = false;
@@ -51,6 +51,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Teleport")
 	float increaseMadness = 0.1;
 	
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Teleport")
 	UBoxComponent* triggerBox;
 };
