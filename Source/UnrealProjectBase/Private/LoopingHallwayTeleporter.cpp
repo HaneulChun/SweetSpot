@@ -69,7 +69,7 @@ void ALoopingHallwayTeleporter::OnOverlapBegin(UPrimitiveComponent* OverlappedCo
 					{
 						Capsule->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 					}
-				}, 0.3f, false);
+				}, 0.1f, false);
 			}
 		}
 	}
