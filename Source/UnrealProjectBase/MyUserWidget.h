@@ -44,20 +44,29 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Material")
 	void ChangeCameraMaterial(FPostProcessSettings& settings, float intensity);
 	
+
+	UFUNCTION(BlueprintCallable)
+	float GetSweatSpotValue();
+
+	UFUNCTION(BlueprintCallable)
+	float GetMadValue();
+
+	UFUNCTION(BlueprintCallable)
+	float GetCurrentValue();
 	
 	UFUNCTION(BlueprintCallable, Category = "UI")
 	void SetIncreaseMadness(float value);
 
-	UPROPERTY(EditAnywhere, BluePrintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float mmadnessBarValue = 0.0;
 
-	UPROPERTY(EditAnywhere, BluePrintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float increaseMadness = 0.0;
 
-	UPROPERTY(EditAnywhere, BluePrintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float sweatSpot = 0;
 
-	UPROPERTY(EditAnywhere, BluePrintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float mad = 0;
 
 	UFUNCTION()
