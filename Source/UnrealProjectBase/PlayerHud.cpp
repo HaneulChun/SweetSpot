@@ -29,6 +29,11 @@ void APlayerHud::BeginPlay()
 				widget->mad = mad;
 				
 				widget->SetMaterial(Material);
+
+				if (FullyMadSFX)
+				{
+					widget->FullyMadSFX = FullyMadSFX;
+				}
 			}
 		}
 	}

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "FMODEvent.h"
 #include "MyUserWidget.generated.h"
 
 /**
@@ -46,6 +47,9 @@ public:
 	
 	UFUNCTION(BlueprintCallable, Category = "Material")
 	void ChangeCameraMaterial(FPostProcessSettings& settings, float intensity);
+	
+	UPROPERTY()
+	UFMODEvent* FullyMadSFX;
 	
 
 	UFUNCTION(BlueprintCallable)

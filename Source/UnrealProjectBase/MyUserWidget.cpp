@@ -5,6 +5,7 @@
 #include "EngineUtils.h"
 #include "Camera/CameraComponent.h"
 #include "Engine/Scene.h"
+#include "FMODBlueprintStatics.h"
 
 void UMyUserWidget::NativeConstruct()
 {
@@ -59,6 +60,11 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 					if (Actor->Tags.Contains("Spawn"))
 					{
 						Player->SetActorLocation(Actor->GetActorLocation());
+
+						if (FullyMadSFX)
+						{
+							UFMODBlueprintStatics::PlayEventAtLocation(this, FullyMadSFX, Player->GetActorTransform(), true);	
+						}
 					}
 				}
 			}

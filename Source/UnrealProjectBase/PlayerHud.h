@@ -3,7 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/HUD.h" 
+#include "GameFramework/HUD.h"
+#include "FMODEvent.h"
 #include "PlayerHud.generated.h"
 
 /**
@@ -35,6 +36,10 @@ public:
 	
 	UFUNCTION(BlueprintCallable, Category = "UI")
 	UUserWidget* GetWidget() const;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
+	UFMODEvent* FullyMadSFX;
+	
 
 	UPROPERTY(EditAnywhere, BluePrintReadWrite)
 	float sweatSpot = 0.4;
