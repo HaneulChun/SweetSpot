@@ -65,14 +65,6 @@ void APlayerHud::UpdateTimer()
 	}
 }
 
-void APlayerHud::DrawHUD()
-{
-	Super::DrawHUD();
-	
-	FCanvasTextItem TextItem(FVector2D(20, 40), FText::FromString(timerText), GEngine->GetLargeFont(), FLinearColor::White);
-	Canvas->DrawItem(TextItem);
-}
-
 APlayerHud::APlayerHud()
 {
 	static ConstructorHelpers::FClassFinder<UUserWidget> WidgetObj(TEXT("/All/Game/Jason/UI/MadnessBar"));

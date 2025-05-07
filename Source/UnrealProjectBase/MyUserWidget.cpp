@@ -132,6 +132,15 @@ void UMyUserWidget::ChangeCameraSettings(FPostProcessSettings& settings, float c
 	Settings.VignetteIntensity = Vignette;
 }
 
+void UMyUserWidget::Color(FPostProcessSettings& settings, float intensity)
+{
+	FPostProcessSettings& Settings = settings;
+
+	Settings.bOverride_ColorSaturation = true;
+	Settings.ColorSaturation = FVector4(intensity, intensity, intensity, 1.0f);
+
+}
+
 void UMyUserWidget::ChangeCameraMaterial(FPostProcessSettings& settings, float intensity)
 {
 	FPostProcessSettings& Settings = settings;

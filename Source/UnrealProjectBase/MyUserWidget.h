@@ -42,6 +42,9 @@ public:
 	void ChangeCameraSettings(FPostProcessSettings& settings, float chromaticAberration, float Vignette);
 
 	UFUNCTION(BlueprintCallable, Category = "Material")
+	void Color(FPostProcessSettings& settings, float intensity);
+	
+	UFUNCTION(BlueprintCallable, Category = "Material")
 	void ChangeCameraMaterial(FPostProcessSettings& settings, float intensity);
 	
 

@@ -20,8 +20,6 @@ protected:
 	virtual void BeginPlay() override;
 
 	void UpdateTimer();
-
-	virtual void DrawHUD() override;
 	
 public:
 	APlayerHud();
