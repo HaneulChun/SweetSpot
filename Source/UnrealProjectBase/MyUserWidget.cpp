@@ -106,17 +106,6 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 	{
 		if (mvalue != "sweat")
 		{
-			if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
-			{
-				// point at the player's camera
-				if (UCameraComponent* Camera = PlayerController->PlayerCameraManager->GetOwningPlayerController()->PlayerCameraManager->ViewTarget.Target->FindComponentByClass<UCameraComponent>())
-				{
-					FPostProcessSettings& Settings = Camera->PostProcessSettings;
-					
-					ChangeCameraSettings(Settings, 0.0, 0.4);
-					ChangeCameraMaterial(Settings, 1.0f);
-				}
-			}
 			mvalue = "sweat";
 		}
 	}
@@ -154,6 +143,21 @@ void UMyUserWidget::ChangeCameraMaterial(FPostProcessSettings& settings, float i
 			Settings.AddBlendable(Material[i], intensity);
 		}
 	}
+}
+
+float UMyUserWidget::GetSweatSpotValue()
+{
+	return sweatSpot;
+}
+
+float UMyUserWidget::GetMadValue()
+{
+	return mad;
+}
+
+float UMyUserWidget::GetCurrentValue()
+{
+	return mmadnessBarValue;
 }
 
 void UMyUserWidget::SetIncreaseMadness(float value)
