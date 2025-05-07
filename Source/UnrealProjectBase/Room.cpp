@@ -58,7 +58,7 @@ void ARoom::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 		{
 			FPostProcessSettings& Settings = Camera->PostProcessSettings;
 			
-			Color(Settings, 0.5);
+			Color(Settings, 0.5, 1.0);
 		}
 	}
 }
@@ -91,16 +91,19 @@ void ARoom::NotifyActorEndOverlap(AActor* OtherActor)
 		{
 			FPostProcessSettings& Settings = Camera->PostProcessSettings;
 			
-			Color(Settings, 1);
+			Color(Settings, 1, 0.4);
 		}
 	}
 }
 
-void ARoom::Color(FPostProcessSettings& settings, float intensity)
+void ARoom::Color(FPostProcessSettings& settings, float intensity, float Vignette)
 {
 	FPostProcessSettings& Settings = settings;
 	
 	Settings.bOverride_ColorSaturation = true;
 	Settings.ColorSaturation = FVector4(intensity, intensity, intensity, 1.0f);
+
+	Settings.bOverride_VignetteIntensity = true;
+	Settings.VignetteIntensity = Vignette;
 }
 

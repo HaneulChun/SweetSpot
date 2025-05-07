@@ -40,7 +40,11 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 					FPostProcessSettings& Settings = Camera->PostProcessSettings;
 					
 					ChangeCameraSettings(Settings, 0.0, 0.4);
+					chromaticAberrationIntensity = 0;
+					vignetteIntensity = 0.4;
+					
 					ChangeCameraMaterial(Settings, 0.0f);
+					matIntensity = 0;
 				}
 			}
 			mvalue = "sane";
@@ -76,7 +80,11 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 				FPostProcessSettings& Settings = Camera->PostProcessSettings;
 				
 				ChangeCameraSettings(Settings, 0.0, 0.4);
+				chromaticAberrationIntensity = 0;
+				vignetteIntensity = 0.4;
+				
 				ChangeCameraMaterial(Settings, 0.0f);
+				matIntensity = 0;
 			}
 		}
 	}
@@ -94,13 +102,21 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 					FTimerDelegate TimerDelegate;
 					TimerDelegate.BindLambda([&]
 					{
-						ChangeCameraSettings(Settings, 5.0, 1.0);
+						ChangeCameraSettings(Settings, 10.0, 1.5);
+						chromaticAberrationIntensity = 10;
+						vignetteIntensity = 1.5;
+						
 						ChangeCameraMaterial(Settings, 0.0f);
+						matIntensity = 0;
 					});
 					
-					ChangeCameraSettings(Settings, 5.0, 1.0);
+					ChangeCameraSettings(Settings, 10.0, 1.5);
+					vignetteIntensity = 1.5;
+					chromaticAberrationIntensity = 10;
+					
 					ChangeCameraMaterial(Settings, 0.0f);
-
+					matIntensity = 0;
+					
 					FTimerHandle TimerHandle;
 					GetWorld()->GetTimerManager().SetTimer(TimerHandle, TimerDelegate, 3, false);
 				}
@@ -144,7 +160,6 @@ void UMyUserWidget::Color(FPostProcessSettings& settings, float intensity)
 
 	Settings.bOverride_ColorSaturation = true;
 	Settings.ColorSaturation = FVector4(intensity, intensity, intensity, 1.0f);
-
 }
 
 void UMyUserWidget::ChangeCameraMaterial(FPostProcessSettings& settings, float intensity)

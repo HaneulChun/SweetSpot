@@ -75,7 +75,21 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float mad = 0;
-
+	
 	UFUNCTION()
 	void IncreaseMadnessBar(float value);
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float chromaticAberrationIntensity;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float vignetteIntensity;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float matIntensity;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float colorIntensity;
+	
 };
