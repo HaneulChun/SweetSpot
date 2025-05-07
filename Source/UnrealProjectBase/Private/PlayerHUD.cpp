@@ -14,6 +14,11 @@ void APlayerHUD::BeginPlay()
 		if (WidgetInstance)
 		{
 			WidgetInstance->AddToViewport();
+
+			WidgetInstance->sweatSpot = sweatSpot;
+			WidgetInstance->mad = mad;
+
+			WidgetInstance->SetMaterial(Material);
 		}
 	}
 }

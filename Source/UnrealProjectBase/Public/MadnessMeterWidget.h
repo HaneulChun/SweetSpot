@@ -14,8 +14,7 @@ enum class EMadnessState : uint8
 {
 	Sane UMETA(DisplayName = "Sane"),
 	Mad UMETA(DisplayName = "Mad"),
-	SweatSpot UMETA(DisplayName = "Sweat Spot"),
-	Dead UMETA(DisplayName = "Dead")
+	SweatSpot UMETA(DisplayName = "Sweat Spot")
 };
 
 UCLASS()
@@ -29,15 +28,33 @@ protected:
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Madness")
-	EMadnessState CurrentState;
+	EMadnessState CurrentState = EMadnessState::Sane;
 
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
-	TSubclassOf<UUserWidget> WidgetClass;
+	// Visual change 
+	UPROPERTY(EditAnywhere, BluePrintReadWrite)
+	TArray<UMaterialInterface*> Material;
 
-	UPROPERTY(BlueprintReadWrite, Category = "UI")
-	UUserWidget* CurrentWidget;
-	
-	UFUNCTION(BlueprintCallable, Category = "UI")
-	UUserWidget* GetWidget() const;
+	UFUNCTION(BlueprintCallable, Category = "Material")
+	void SetMaterial(TArray<UMaterialInterface*> Mat);
+
+	UFUNCTION(BlueprintCallable, Category = "Material")
+	void ChangeCameraSettings(float chromaticAberration, float Vignette);
+
+	UFUNCTION(BlueprintCallable, Category = "Material")
+	void ChangeCameraMaterial(float intensity);
+
+
+	// Madness Bar
+	UFUNCTION()
+	void IncreaseMadnessBar(float value);
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float currentMadnessValue = 0;
+
+	UPROPERTY()
+	float sweatSpot = 0;
+
+	UPROPERTY()
+	float mad = 0;
 };

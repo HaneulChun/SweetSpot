@@ -15,11 +15,12 @@ private:
 	virtual void BeginPlay() override;
 	
 public:
-	UPROPERTY(EditAnywhere, BluePrintReadWrite, Category = "Timer")
-	float Timer = 360;
-
+	// Madness Meter
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MadnessMeter", meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<UMadnessMeterWidget> MadnessMeterWidget;
+
+	UPROPERTY(EditAnywhere, BluePrintReadWrite, Category = "MadnessMeter")
+	TArray<UMaterialInterface*> Material;
 	
 	UPROPERTY(EditAnywhere, BluePrintReadWrite, Category = "MadnessMeter")
 	float sweatSpot = 0.4;
