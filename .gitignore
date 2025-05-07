@@ -69,6 +69,3 @@ Thumbs.db.meta
 
 # Mac
 *.DS_Store
-
-# tools
-push.bat

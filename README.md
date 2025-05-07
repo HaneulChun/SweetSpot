@@ -44,32 +44,28 @@ NormalDX [RGB] ( BC5 )
 
 ### ---------------------------------------------------------------
 
-# Game Title  
-[high concept goes here]
+Sweet Spot  
+Sweet Spot is a First Person Eye Level, 3D Horror, Puzzle Solving game. You play as a concierge working at a remote hotel that's being haunted by an Eldritch Horror that shows itself via Tentacles and Eyeballs. It has trapped the Player in a Looping Hallway and an Elevator with missing pieces scattered throughout the Levels. The Player has access to a Wrist Watch which checks the time left in the Level and the state of their Madness. The Madness Meter is a Resource with 3 states: Sane, The Sweet Spot and Mad. The Ideal state the Player wants to be in is The Sweet Spot, this state will cause important items key to solving puzzles to glow. Use the Madness Meter to your advantage and solve the puzzles to find the missing elevator pieces and escape the loop.
 
 ### Documentation  
-[link to google drive folder here](linkURL)
+https://drive.google.com/drive/folders/1iGh71J26g5hfqgEvMaGSsHmyDN9VofN6?usp=sharing
 
 ### Gameplay Controls  
 Action               | Keyboard Control  | Gamepad Control
 ---                  |---                |---
-Move                 | WASD              | Stick R
-Aim                  | Mouse Look        | Stick L
-Attack               | Mouse L           | Trigger R
-Block                | Mouse R           | Trigger L
+Move                 | WASD            
+look                 | Mouse Look       
+interact             | e               
 
 ### Debug Controls  
 Action               | Keyboard Control
 ---                  |---          
-Debug Menu           | F1              
-Invincibility        | F2               
-Unlimited Ammo       | F3                
-Cycle Checkpoints    | F4                
-Respawn Enemies      | F5                
+Debug Menu           | Z              
 
 ### Team  
-<Team Member 1 - Role>  
-<Team Member 2 - Role>  
-<Team Member 3 - Role>  
-<Team Member 4 - Role>  
-<Team Member 5 - Role>  
+Parker Mise - Project Manager  
+Natalie Wong - Artist 
+Harnoor Garcha- Level Design
+Jason Saltenis - Programmer 
+Haneul Chan - Programmer 
+Jacob Tallio - Programmer 
