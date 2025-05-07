@@ -57,7 +57,8 @@ void ARoom::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 		if (UCameraComponent* Camera = Character->FindComponentByClass<UCameraComponent>())
 		{
 			FPostProcessSettings& Settings = Camera->PostProcessSettings;
-			// TODO Change camera settings when in room
+			
+			Color(Settings, 0.5);
 		}
 	}
 }
@@ -89,8 +90,17 @@ void ARoom::NotifyActorEndOverlap(AActor* OtherActor)
 		if (UCameraComponent* Camera = Character->FindComponentByClass<UCameraComponent>())
 		{
 			FPostProcessSettings& Settings = Camera->PostProcessSettings;
-			// TODO Change camera settings when exit room
+			
+			Color(Settings, 1);
 		}
 	}
+}
+
+void ARoom::Color(FPostProcessSettings& settings, float intensity)
+{
+	FPostProcessSettings& Settings = settings;
+	
+	Settings.bOverride_ColorSaturation = true;
+	Settings.ColorSaturation = FVector4(intensity, intensity, intensity, 1.0f);
 }
 
