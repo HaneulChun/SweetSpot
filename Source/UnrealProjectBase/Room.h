@@ -38,9 +38,6 @@ public:
 	UFUNCTION()
 	void NotifyActorEndOverlap(AActor* OtherActor) override;
 
-	UFUNCTION(BlueprintCallable)
-	void Color(FPostProcessSettings& settings, float intensity, float Vignette);
-	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float increment = 0.01;
 };

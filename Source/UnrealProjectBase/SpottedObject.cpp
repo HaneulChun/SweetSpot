@@ -42,6 +42,7 @@ void USpottedObject::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 				if (widget)
 				{
 					widget->IncreaseMadnessBar(increaseMadness);
+					GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, "IncreaseMadnessBar");
 				}	
 			}
 			spotted = true;

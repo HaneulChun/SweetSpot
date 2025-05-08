@@ -5,7 +5,6 @@
 #include "EngineUtils.h"
 #include "Camera/CameraComponent.h"
 #include "Engine/Scene.h"
-#include "FMODBlueprintStatics.h"
 
 void UMyUserWidget::NativeConstruct()
 {
@@ -40,11 +39,7 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 					FPostProcessSettings& Settings = Camera->PostProcessSettings;
 					
 					ChangeCameraSettings(Settings, 0.0, 0.4);
-					chromaticAberrationIntensity = 0;
-					vignetteIntensity = 0.4;
-					
 					ChangeCameraMaterial(Settings, 0.0f);
-					matIntensity = 0;
 				}
 			}
 			mvalue = "sane";
@@ -64,11 +59,6 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 					if (Actor->Tags.Contains("Spawn"))
 					{
 						Player->SetActorLocation(Actor->GetActorLocation());
-
-						if (FullyMadSFX)
-						{
-							UFMODBlueprintStatics::PlayEventAtLocation(this, FullyMadSFX, Player->GetActorTransform(), true);	
-						}
 					}
 				}
 			}
@@ -80,11 +70,7 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 				FPostProcessSettings& Settings = Camera->PostProcessSettings;
 				
 				ChangeCameraSettings(Settings, 0.0, 0.4);
-				chromaticAberrationIntensity = 0;
-				vignetteIntensity = 0.4;
-				
 				ChangeCameraMaterial(Settings, 0.0f);
-				matIntensity = 0;
 			}
 		}
 	}
@@ -102,21 +88,13 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 					FTimerDelegate TimerDelegate;
 					TimerDelegate.BindLambda([&]
 					{
-						ChangeCameraSettings(Settings, 10.0, 1.5);
-						chromaticAberrationIntensity = 10;
-						vignetteIntensity = 1.5;
-						
+						ChangeCameraSettings(Settings, 5.0, 1.0);
 						ChangeCameraMaterial(Settings, 0.0f);
-						matIntensity = 0;
 					});
 					
-					ChangeCameraSettings(Settings, 10.0, 1.5);
-					vignetteIntensity = 1.5;
-					chromaticAberrationIntensity = 10;
-					
+					ChangeCameraSettings(Settings, 5.0, 1.0);
 					ChangeCameraMaterial(Settings, 0.0f);
-					matIntensity = 0;
-					
+
 					FTimerHandle TimerHandle;
 					GetWorld()->GetTimerManager().SetTimer(TimerHandle, TimerDelegate, 3, false);
 				}
@@ -128,6 +106,17 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 	{
 		if (mvalue != "sweat")
 		{
+			if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
+			{
+				// point at the player's camera
+				if (UCameraComponent* Camera = PlayerController->PlayerCameraManager->GetOwningPlayerController()->PlayerCameraManager->ViewTarget.Target->FindComponentByClass<UCameraComponent>())
+				{
+					FPostProcessSettings& Settings = Camera->PostProcessSettings;
+					
+					ChangeCameraSettings(Settings, 0.0, 0.4);
+					ChangeCameraMaterial(Settings, 1.0f);
+				}
+			}
 			mvalue = "sweat";
 		}
 	}
@@ -154,14 +143,6 @@ void UMyUserWidget::ChangeCameraSettings(FPostProcessSettings& settings, float c
 	Settings.VignetteIntensity = Vignette;
 }
 
-void UMyUserWidget::Color(FPostProcessSettings& settings, float intensity)
-{
-	FPostProcessSettings& Settings = settings;
-
-	Settings.bOverride_ColorSaturation = true;
-	Settings.ColorSaturation = FVector4(intensity, intensity, intensity, 1.0f);
-}
-
 void UMyUserWidget::ChangeCameraMaterial(FPostProcessSettings& settings, float intensity)
 {
 	FPostProcessSettings& Settings = settings;
@@ -175,21 +156,6 @@ void UMyUserWidget::ChangeCameraMaterial(FPostProcessSettings& settings, float i
 	}
 }
 
-float UMyUserWidget::GetSweatSpotValue()
-{
-	return sweatSpot;
-}
-
-float UMyUserWidget::GetMadValue()
-{
-	return mad;
-}
-
-float UMyUserWidget::GetCurrentValue()
-{
-	return mmadnessBarValue;
-}
-
 void UMyUserWidget::SetIncreaseMadness(float value)
 {
 	increaseMadness = value;
@@ -198,9 +164,4 @@ void UMyUserWidget::SetIncreaseMadness(float value)
 void UMyUserWidget::IncreaseMadnessBar(float value)
 {
 	mmadnessBarValue += value;
-}
-
-TArray<float> UMyUserWidget::GetCameraSettings()
-{
-	return {chromaticAberrationIntensity, vignetteIntensity, matIntensity, colorIntensity};
 }

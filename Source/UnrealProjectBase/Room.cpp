@@ -50,23 +50,14 @@ void ARoom::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 					if (WidgetPtr)
 					{
 						WidgetPtr->SetIncreaseMadness(increment);
-
-						if (UCameraComponent* Camera = Character->FindComponentByClass<UCameraComponent>())
-						{
-							FPostProcessSettings& Settings = Camera->PostProcessSettings;
-
-							if (WidgetPtr->mvalue == "mad")
-							{
-								Color(Settings, 0.5, WidgetPtr->vignetteIntensity);
-							}
-							else
-							{
-								Color(Settings, 0.5, 1);	
-							}
-						}
 					}
 				}
 			}
+		}
+		if (UCameraComponent* Camera = Character->FindComponentByClass<UCameraComponent>())
+		{
+			FPostProcessSettings& Settings = Camera->PostProcessSettings;
+			// TODO Change camera settings when in room
 		}
 	}
 }
@@ -76,42 +67,30 @@ void ARoom::NotifyActorEndOverlap(AActor* OtherActor)
 {
 	Super::NotifyActorEndOverlap(OtherActor);
 
-	if (ACharacter* Character = Cast<ACharacter>(OtherActor))
-	{
-		if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
-		{
-			if (APlayerHud* MyHUD = Cast<APlayerHud>(PlayerController->GetHUD()))
-			{
-				UUserWidget* Widget = MyHUD->GetWidget();
-				if (Widget)
-				{
-					UMyUserWidget* WidgetPtr = Cast<UMyUserWidget>(Widget);
-			
-					if (WidgetPtr)
-					{
-						WidgetPtr->SetIncreaseMadness(0.0);
 
-						if (UCameraComponent* Camera = Character->FindComponentByClass<UCameraComponent>())
-						{
-							FPostProcessSettings& Settings = Camera->PostProcessSettings;
+	if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
+	{
+		if (APlayerHud* MyHUD = Cast<APlayerHud>(PlayerController->GetHUD()))
+		{
+			UUserWidget* Widget = MyHUD->GetWidget();
+			if (Widget)
+			{
+				UMyUserWidget* WidgetPtr = Cast<UMyUserWidget>(Widget);
 			
-							Color(Settings, WidgetPtr->colorIntensity, WidgetPtr->vignetteIntensity);
-						}
-					}
+				if (WidgetPtr)
+				{
+					WidgetPtr->SetIncreaseMadness(0.0);
 				}
 			}
 		}
 	}
-}
-
-void ARoom::Color(FPostProcessSettings& settings, float intensity, float Vignette)
-{
-	FPostProcessSettings& Settings = settings;
-	
-	Settings.bOverride_ColorSaturation = true;
-	Settings.ColorSaturation = FVector4(intensity, intensity, intensity, 1.0f);
-
-	Settings.bOverride_VignetteIntensity = true;
-	Settings.VignetteIntensity = Vignette;
+	if (ACharacter* Character = Cast<ACharacter>(OtherActor))
+	{
+		if (UCameraComponent* Camera = Character->FindComponentByClass<UCameraComponent>())
+		{
+			FPostProcessSettings& Settings = Camera->PostProcessSettings;
+			// TODO Change camera settings when exit room
+		}
+	}
 }
 

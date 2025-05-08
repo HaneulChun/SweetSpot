@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-#include "FMODEvent.h"
 #include "MyUserWidget.generated.h"
 
 /**
@@ -19,10 +18,10 @@ protected:
 	virtual void NativeConstruct() override;
 
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
-	
-public:
+
 	FString mvalue = "";
 	
+public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
 	TSubclassOf<UUserWidget> WidgetClass;
 
@@ -43,56 +42,24 @@ public:
 	void ChangeCameraSettings(FPostProcessSettings& settings, float chromaticAberration, float Vignette);
 
 	UFUNCTION(BlueprintCallable, Category = "Material")
-	void Color(FPostProcessSettings& settings, float intensity);
-	
-	UFUNCTION(BlueprintCallable, Category = "Material")
 	void ChangeCameraMaterial(FPostProcessSettings& settings, float intensity);
 	
-	UPROPERTY()
-	UFMODEvent* FullyMadSFX;
-	
-
-	UFUNCTION(BlueprintCallable)
-	float GetSweatSpotValue();
-
-	UFUNCTION(BlueprintCallable)
-	float GetMadValue();
-
-	UFUNCTION(BlueprintCallable)
-	float GetCurrentValue();
 	
 	UFUNCTION(BlueprintCallable, Category = "UI")
 	void SetIncreaseMadness(float value);
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BluePrintReadWrite)
 	float mmadnessBarValue = 0.0;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BluePrintReadWrite)
 	float increaseMadness = 0.0;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BluePrintReadWrite)
 	float sweatSpot = 0;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BluePrintReadWrite)
 	float mad = 0;
-	
+
 	UFUNCTION()
 	void IncreaseMadnessBar(float value);
-
-	UFUNCTION(BlueprintCallable)
-	TArray<float> GetCameraSettings();
-	
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float chromaticAberrationIntensity;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float vignetteIntensity;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float matIntensity;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float colorIntensity = 1;
-	
 };
