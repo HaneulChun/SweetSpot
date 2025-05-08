@@ -19,10 +19,10 @@ protected:
 	virtual void NativeConstruct() override;
 
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
-
-	FString mvalue = "";
 	
 public:
+	FString mvalue = "";
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
 	TSubclassOf<UUserWidget> WidgetClass;
 
@@ -79,6 +79,9 @@ public:
 	UFUNCTION()
 	void IncreaseMadnessBar(float value);
 
+	UFUNCTION(BlueprintCallable)
+	TArray<float> GetCameraSettings();
+	
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float chromaticAberrationIntensity;
@@ -90,6 +93,6 @@ public:
 	float matIntensity;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float colorIntensity;
+	float colorIntensity = 1;
 	
 };

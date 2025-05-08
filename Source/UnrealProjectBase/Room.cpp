@@ -50,15 +50,23 @@ void ARoom::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 					if (WidgetPtr)
 					{
 						WidgetPtr->SetIncreaseMadness(increment);
+
+						if (UCameraComponent* Camera = Character->FindComponentByClass<UCameraComponent>())
+						{
+							FPostProcessSettings& Settings = Camera->PostProcessSettings;
+
+							if (WidgetPtr->mvalue == "mad")
+							{
+								Color(Settings, 0.5, WidgetPtr->vignetteIntensity);
+							}
+							else
+							{
+								Color(Settings, 0.5, 1);	
+							}
+						}
 					}
 				}
 			}
-		}
-		if (UCameraComponent* Camera = Character->FindComponentByClass<UCameraComponent>())
-		{
-			FPostProcessSettings& Settings = Camera->PostProcessSettings;
-			
-			Color(Settings, 0.5, 1.0);
 		}
 	}
 }
@@ -68,30 +76,30 @@ void ARoom::NotifyActorEndOverlap(AActor* OtherActor)
 {
 	Super::NotifyActorEndOverlap(OtherActor);
 
-
-	if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
-	{
-		if (APlayerHud* MyHUD = Cast<APlayerHud>(PlayerController->GetHUD()))
-		{
-			UUserWidget* Widget = MyHUD->GetWidget();
-			if (Widget)
-			{
-				UMyUserWidget* WidgetPtr = Cast<UMyUserWidget>(Widget);
-			
-				if (WidgetPtr)
-				{
-					WidgetPtr->SetIncreaseMadness(0.0);
-				}
-			}
-		}
-	}
 	if (ACharacter* Character = Cast<ACharacter>(OtherActor))
 	{
-		if (UCameraComponent* Camera = Character->FindComponentByClass<UCameraComponent>())
+		if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
 		{
-			FPostProcessSettings& Settings = Camera->PostProcessSettings;
+			if (APlayerHud* MyHUD = Cast<APlayerHud>(PlayerController->GetHUD()))
+			{
+				UUserWidget* Widget = MyHUD->GetWidget();
+				if (Widget)
+				{
+					UMyUserWidget* WidgetPtr = Cast<UMyUserWidget>(Widget);
 			
-			Color(Settings, 1, 0.4);
+					if (WidgetPtr)
+					{
+						WidgetPtr->SetIncreaseMadness(0.0);
+
+						if (UCameraComponent* Camera = Character->FindComponentByClass<UCameraComponent>())
+						{
+							FPostProcessSettings& Settings = Camera->PostProcessSettings;
+			
+							Color(Settings, WidgetPtr->colorIntensity, WidgetPtr->vignetteIntensity);
+						}
+					}
+				}
+			}
 		}
 	}
 }

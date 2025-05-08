@@ -199,3 +199,8 @@ void UMyUserWidget::IncreaseMadnessBar(float value)
 {
 	mmadnessBarValue += value;
 }
+
+TArray<float> UMyUserWidget::GetCameraSettings()
+{
+	return {chromaticAberrationIntensity, vignetteIntensity, matIntensity, colorIntensity};
+}
