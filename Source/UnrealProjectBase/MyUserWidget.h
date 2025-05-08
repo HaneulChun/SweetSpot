@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "FMODEvent.h"
 #include "MyUserWidget.generated.h"
 
 /**
@@ -18,10 +19,10 @@ protected:
 	virtual void NativeConstruct() override;
 
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
-
-	FString mvalue = "";
 	
 public:
+	FString mvalue = "";
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
 	TSubclassOf<UUserWidget> WidgetClass;
 
@@ -42,7 +43,13 @@ public:
 	void ChangeCameraSettings(FPostProcessSettings& settings, float chromaticAberration, float Vignette);
 
 	UFUNCTION(BlueprintCallable, Category = "Material")
+	void Color(FPostProcessSettings& settings, float intensity);
+	
+	UFUNCTION(BlueprintCallable, Category = "Material")
 	void ChangeCameraMaterial(FPostProcessSettings& settings, float intensity);
+	
+	UPROPERTY()
+	UFMODEvent* FullyMadSFX;
 	
 
 	UFUNCTION(BlueprintCallable)
@@ -68,7 +75,24 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float mad = 0;
-
+	
 	UFUNCTION()
 	void IncreaseMadnessBar(float value);
+
+	UFUNCTION(BlueprintCallable)
+	TArray<float> GetCameraSettings();
+	
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float chromaticAberrationIntensity;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float vignetteIntensity;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float matIntensity;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float colorIntensity = 1;
+	
 };

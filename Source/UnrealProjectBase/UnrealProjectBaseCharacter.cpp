@@ -55,6 +55,14 @@ void AUnrealProjectBaseCharacter::BeginPlay()
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
 	}
+	if (!DefaultMappingContext)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "not");
+	}
+	else
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "work");
+	}
 
 }
 
@@ -125,4 +133,9 @@ void AUnrealProjectBaseCharacter::SetHasRifle(bool bNewHasRifle)
 bool AUnrealProjectBaseCharacter::GetHasRifle()
 {
 	return bHasRifle;
+}
+
+void AUnrealProjectBaseCharacter::Camera()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, "Camera");
 }
