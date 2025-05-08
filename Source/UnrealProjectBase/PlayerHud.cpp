@@ -29,6 +29,11 @@ void APlayerHud::BeginPlay()
 				widget->mad = mad;
 				
 				widget->SetMaterial(Material);
+
+				if (FullyMadSFX)
+				{
+					widget->FullyMadSFX = FullyMadSFX;
+				}
 			}
 		}
 	}
@@ -63,14 +68,6 @@ void APlayerHud::UpdateTimer()
 		}
 		CurrentTimer = Timer;
 	}
-}
-
-void APlayerHud::DrawHUD()
-{
-	Super::DrawHUD();
-	
-	FCanvasTextItem TextItem(FVector2D(20, 40), FText::FromString(timerText), GEngine->GetLargeFont(), FLinearColor::White);
-	Canvas->DrawItem(TextItem);
 }
 
 APlayerHud::APlayerHud()
