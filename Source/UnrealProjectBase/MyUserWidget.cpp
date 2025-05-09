@@ -43,7 +43,7 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 					chromaticAberrationIntensity = 0;
 					vignetteIntensity = 0.4;
 					
-					ChangeCameraMaterial(Settings, 0.0f);
+					ChangeCameraMaterial(0.0f);
 					matIntensity = 0;
 				}
 			}
@@ -83,7 +83,7 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 				chromaticAberrationIntensity = 0;
 				vignetteIntensity = 0.4;
 				
-				ChangeCameraMaterial(Settings, 0.0f);
+				ChangeCameraMaterial(0.0f);
 				matIntensity = 0;
 			}
 		}
@@ -106,7 +106,7 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 						chromaticAberrationIntensity = 10;
 						vignetteIntensity = 1.5;
 						
-						ChangeCameraMaterial(Settings, 0.0f);
+						ChangeCameraMaterial(0.0f);
 						matIntensity = 0;
 					});
 					
@@ -114,7 +114,7 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 					vignetteIntensity = 1.5;
 					chromaticAberrationIntensity = 10;
 					
-					ChangeCameraMaterial(Settings, 0.0f);
+					ChangeCameraMaterial(0.0f);
 					matIntensity = 0;
 					
 					FTimerHandle TimerHandle;
@@ -162,15 +162,22 @@ void UMyUserWidget::Color(FPostProcessSettings& settings, float intensity)
 	Settings.ColorSaturation = FVector4(intensity, intensity, intensity, 1.0f);
 }
 
-void UMyUserWidget::ChangeCameraMaterial(FPostProcessSettings& settings, float intensity)
+void UMyUserWidget::ChangeCameraMaterial(float intensity)
 {
-	FPostProcessSettings& Settings = settings;
-
-	for (int32 i = 0; i < Material.Num(); i++)
+	if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
 	{
-		if (Material.IsValidIndex(i))
+		// point at the player's camera
+		if (UCameraComponent* Camera = PlayerController->PlayerCameraManager->GetOwningPlayerController()->PlayerCameraManager->ViewTarget.Target->FindComponentByClass<UCameraComponent>())
 		{
-			Settings.AddBlendable(Material[i], intensity);
+			FPostProcessSettings& Settings = Camera->PostProcessSettings;
+
+			for (int32 i = 0; i < Material.Num(); i++)
+			{
+				if (Material.IsValidIndex(i))
+				{
+					Settings.AddBlendable(Material[i], intensity);
+				}
+			}
 		}
 	}
 }
