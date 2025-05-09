@@ -76,7 +76,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float mad = 0;
 	
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	void IncreaseMadnessBar(float value);
 
 	UFUNCTION(BlueprintCallable)
