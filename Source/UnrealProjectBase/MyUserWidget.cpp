@@ -47,6 +47,21 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 					matIntensity = 0;
 				}
 			}
+
+			// hide actor
+			for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+			{
+				AActor* Actor = *ActorItr;
+		
+				if (Actor->Tags.Contains("Sane"))
+				{
+					Actor->SetActorHiddenInGame(false);
+				}
+				if (Actor->Tags.Contains("Sweet"))
+				{
+					Actor->SetActorHiddenInGame(false);
+				}
+			}
 			mvalue = "sane";
 		}
 	}
@@ -64,7 +79,7 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 					if (Actor->Tags.Contains("Spawn"))
 					{
 						Player->SetActorLocation(Actor->GetActorLocation());
-
+						
 						if (FullyMadSFX)
 						{
 							UFMODBlueprintStatics::PlayEventAtLocation(this, FullyMadSFX, Player->GetActorTransform(), true);	
@@ -72,20 +87,7 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 					}
 				}
 			}
-
 			mmadnessBarValue = 0;
-			// point at the player's camera
-			if (UCameraComponent* Camera = PlayerController->PlayerCameraManager->GetOwningPlayerController()->PlayerCameraManager->ViewTarget.Target->FindComponentByClass<UCameraComponent>())
-			{
-				FPostProcessSettings& Settings = Camera->PostProcessSettings;
-				
-				ChangeCameraSettings(Settings, 0.0, 0.4);
-				chromaticAberrationIntensity = 0;
-				vignetteIntensity = 0.4;
-				
-				ChangeCameraMaterial(0.0f);
-				matIntensity = 0;
-			}
 		}
 	}
 	else if(mmadnessBarValue >= mad) // mad
@@ -108,6 +110,21 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 				}
 			}
 			mvalue = "mad";
+
+			// show actor
+			for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+			{
+				AActor* Actor = *ActorItr;
+		
+				if (Actor->Tags.Contains("Sane"))
+				{
+					Actor->SetActorHiddenInGame(true);
+				}
+				if (Actor->Tags.Contains("Sweet"))
+				{
+					Actor->SetActorHiddenInGame(false);
+				}
+			}
 		}
 	}
 	else // sweat spot
@@ -115,6 +132,21 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 		if (mvalue != "sweat")
 		{
 			mvalue = "sweat";
+
+			// hide actor
+			for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+			{
+				AActor* Actor = *ActorItr;
+		
+				if (Actor->Tags.Contains("Sane"))
+				{
+					Actor->SetActorHiddenInGame(true);
+				}
+				if (Actor->Tags.Contains("Sweet"))
+				{
+					Actor->SetActorHiddenInGame(true);
+				}
+			}
 		}
 	}
 }
