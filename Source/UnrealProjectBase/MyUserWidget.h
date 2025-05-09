@@ -46,7 +46,7 @@ public:
 	void Color(FPostProcessSettings& settings, float intensity);
 	
 	UFUNCTION(BlueprintCallable, Category = "Material")
-	void ChangeCameraMaterial(FPostProcessSettings& settings, float intensity);
+	void ChangeCameraMaterial(float intensity);
 	
 	UPROPERTY()
 	UFMODEvent* FullyMadSFX;
