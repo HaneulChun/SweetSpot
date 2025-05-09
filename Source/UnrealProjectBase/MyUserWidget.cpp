@@ -6,6 +6,8 @@
 #include "Camera/CameraComponent.h"
 #include "Engine/Scene.h"
 #include "FMODBlueprintStatics.h"
+#include "PlayerHud.h"
+#include "Kismet/GameplayStatics.h"
 
 void UMyUserWidget::NativeConstruct()
 {
@@ -63,6 +65,8 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 				}
 			}
 			mvalue = "sane";
+
+			//PlayerHud->Text = TEXT("");
 		}
 	}
 	else if(mmadnessBarValue >= 1) // dead 
@@ -108,8 +112,15 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 					ChangeCameraMaterial(0.0f);
 					matIntensity = 0;
 				}
+
+				APlayerHud* PlayerHud = Cast<APlayerHud>(PlayerController->GetHUD());
+				if (PlayerHud)
+				{
+					PlayerHud->SetText("");  
+				}
 			}
 			mvalue = "mad";
+			
 
 			// show actor
 			for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
@@ -132,7 +143,17 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 		if (mvalue != "sweat")
 		{
 			mvalue = "sweat";
+			
+			if (APlayerController* PlayerController = UGameplayStatics::GetPlayerController(this, 0))
+			{
+				APlayerHud* PlayerHud = Cast<APlayerHud>(PlayerController->GetHUD());
+				if (PlayerHud)
+				{
+					PlayerHud->SetText("C to Focus");  
+				}
+			}
 
+			
 			// hide actor
 			for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
 			{

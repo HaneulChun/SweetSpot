@@ -10,6 +10,7 @@
 /**
  * 
  */
+class APlayerHud;
 UCLASS()
 class UNREALPROJECTBASE_API UMyUserWidget : public UUserWidget
 {
@@ -19,9 +20,12 @@ protected:
 	virtual void NativeConstruct() override;
 
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
-	
+
 public:
 	FString mvalue = "";
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
+	TSubclassOf<APlayerHud> PlayerHudClass;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
 	TSubclassOf<UUserWidget> WidgetClass;

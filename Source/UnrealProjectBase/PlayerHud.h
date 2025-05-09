@@ -20,13 +20,13 @@ protected:
 	
 	virtual void BeginPlay() override;
 
-	void UpdateTimer();
+	virtual void DrawHUD() override;
 	
 public:
 	APlayerHud();
-	
-	UPROPERTY(EditAnywhere, BluePrintReadWrite)
-	float Timer = 360;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI")
+	FString Text = "";
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI", meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<UUserWidget> WidgetClass;
@@ -49,7 +49,10 @@ public:
 	
 	UPROPERTY(EditAnywhere, BluePrintReadWrite)
 	TArray<UMaterialInterface*> Material;
-private:
-	FString timerText = "";
-	float CurrentTimer;
+
+	UFUNCTION()
+	void emptyText();
+
+	UFUNCTION()
+	void SetText(FString setText);
 };

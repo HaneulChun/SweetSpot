@@ -13,10 +13,6 @@ void APlayerHud::BeginPlay()
 {
 	Super::BeginPlay();
 
-
-	CurrentTimer = Timer;
-	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &APlayerHud::UpdateTimer, 1, true);
-
 	if (WidgetClass)
 	{
 		CurrentWidget = CreateWidget<UUserWidget>(GetWorld(), WidgetClass);
@@ -37,38 +33,20 @@ void APlayerHud::BeginPlay()
 			}
 		}
 	}
+	Text = TEXT("E to Interact with object");
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &APlayerHud::emptyText, 0.1, false);
 }
 
-void APlayerHud::UpdateTimer()
+void APlayerHud::DrawHUD()
 {
-	CurrentTimer -= 1;
-	int32 Minutes = FMath::FloorToInt(CurrentTimer / 60);  
-	int32 Seconds = FMath::Fmod(CurrentTimer, 60); 
-	timerText = FString::Printf(TEXT("%02d:%02d"), Minutes, Seconds);
-	if (CurrentTimer <= 0)
-	{
-		timerText = "End";
-		
-		APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
-		if (PlayerController)
-		{
-			APawn* Player = PlayerController->GetPawn();
-			if (Player)
-			{
-				for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
-				{
-					AActor* Actor = *ActorItr;
-		
-					if (Actor->Tags.Contains("Spawn"))
-					{
-						Player->SetActorLocation(Actor->GetActorLocation());
-					}
-				}
-			}
-		}
-		CurrentTimer = Timer;
-	}
+	Super::DrawHUD();
+	
+	FCanvasTextItem TextItem(FVector2D(500, 40), FText::FromString(Text), GEngine->GetLargeFont(), FLinearColor::White);
+	TextItem.Scale = FVector2D(1.5f, 1.5f);
+	
+	Canvas->DrawItem(TextItem);
 }
+
 
 APlayerHud::APlayerHud()
 {
@@ -84,4 +62,14 @@ APlayerHud::APlayerHud()
 UUserWidget* APlayerHud::GetWidget() const
 {
 	return CurrentWidget;
+}
+
+void APlayerHud::emptyText()
+{
+	Text = TEXT("E to Interact with object");
+}
+
+void APlayerHud::SetText(FString setText)
+{
+	Text = setText;
 }
