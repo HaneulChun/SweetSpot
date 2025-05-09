@@ -40,7 +40,7 @@ public:
 		bool bFromSweep, const FHitResult& SweepResult);
 
 	UFUNCTION()
-	void Reset();
+	virtual void Reset() override;
 
 	UFUNCTION()
 	void Complete(AActor* OtherActor);
@@ -48,7 +48,7 @@ public:
 	UFUNCTION()
 	void Teleport(AActor* OtherActor, FTransform Transform);
 	
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool isCompleted = false;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
