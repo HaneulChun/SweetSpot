@@ -98,27 +98,13 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 				if (UCameraComponent* Camera = PlayerController->PlayerCameraManager->GetOwningPlayerController()->PlayerCameraManager->ViewTarget.Target->FindComponentByClass<UCameraComponent>())
 				{
 					FPostProcessSettings& Settings = Camera->PostProcessSettings;
-					
-					FTimerDelegate TimerDelegate;
-					TimerDelegate.BindLambda([&]
-					{
-						ChangeCameraSettings(Settings, 10.0, 1.5);
-						chromaticAberrationIntensity = 10;
-						vignetteIntensity = 1.5;
-						
-						ChangeCameraMaterial(0.0f);
-						matIntensity = 0;
-					});
-					
+
 					ChangeCameraSettings(Settings, 10.0, 1.5);
 					vignetteIntensity = 1.5;
 					chromaticAberrationIntensity = 10;
 					
 					ChangeCameraMaterial(0.0f);
 					matIntensity = 0;
-					
-					FTimerHandle TimerHandle;
-					GetWorld()->GetTimerManager().SetTimer(TimerHandle, TimerDelegate, 3, false);
 				}
 			}
 			mvalue = "mad";
