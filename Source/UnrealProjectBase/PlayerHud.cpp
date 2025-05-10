@@ -15,21 +15,19 @@ void APlayerHud::BeginPlay()
 
 	if (WidgetClass)
 	{
-		CurrentWidget = CreateWidget<UUserWidget>(GetWorld(), WidgetClass);
+		CurrentWidget = CreateWidget<UMyUserWidget>(GetWorld(), WidgetClass);
 		if (CurrentWidget)
 		{
 			CurrentWidget->AddToViewport();
-			if (UMyUserWidget* widget = Cast<UMyUserWidget>(CurrentWidget))
-			{
-				widget->sweatSpot = sweatSpot;
-				widget->mad = mad;
+			
+			CurrentWidget->sweatSpot = sweatSpot;
+			CurrentWidget->mad = mad;
 				
-				widget->SetMaterial(Material);
+			CurrentWidget->SetMaterial(Material);
 
-				if (FullyMadSFX)
-				{
-					widget->FullyMadSFX = FullyMadSFX;
-				}
+			if (FullyMadSFX)
+			{
+				CurrentWidget->FullyMadSFX = FullyMadSFX;
 			}
 		}
 	}
@@ -47,19 +45,7 @@ void APlayerHud::DrawHUD()
 	Canvas->DrawItem(TextItem);
 }
 
-
-APlayerHud::APlayerHud()
-{
-	static ConstructorHelpers::FClassFinder<UUserWidget> WidgetObj(TEXT("/All/Game/Jason/UI/MadnessBar"));
-	if (WidgetObj.Succeeded())
-	{
-		WidgetClass = WidgetObj.Class;
-	}
-
-	CurrentWidget = nullptr;
-}
-
-UUserWidget* APlayerHud::GetWidget() const
+UMyUserWidget* APlayerHud::GetWidget() const
 {
 	return CurrentWidget;
 }

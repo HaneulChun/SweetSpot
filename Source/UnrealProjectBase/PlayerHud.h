@@ -10,6 +10,7 @@
 /**
  * 
  */
+class UMyUserWidget;
 UCLASS()
 class UNREALPROJECTBASE_API APlayerHud : public AHUD
 {
@@ -23,19 +24,18 @@ protected:
 	virtual void DrawHUD() override;
 	
 public:
-	APlayerHud();
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI")
 	FString Text = "";
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI", meta = (AllowPrivateAccess = "true"))
-	TSubclassOf<UUserWidget> WidgetClass;
+	TSubclassOf<UMyUserWidget> WidgetClass;
 
 	UPROPERTY(BlueprintReadWrite, Category = "UI", meta = (AllowPrivateAccess = "true"))
-	UUserWidget* CurrentWidget;
+	UMyUserWidget* CurrentWidget;
 	
 	UFUNCTION(BlueprintCallable, Category = "UI")
-	UUserWidget* GetWidget() const;
+	UMyUserWidget* GetWidget() const;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
 	UFMODEvent* FullyMadSFX;
