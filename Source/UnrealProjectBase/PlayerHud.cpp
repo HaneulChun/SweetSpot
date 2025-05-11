@@ -31,7 +31,7 @@ void APlayerHud::BeginPlay()
 			}
 		}
 	}
-	Text = TEXT("E to Interact with object");
+	Text = TEXT("");
 	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &APlayerHud::emptyText, 0.1, false);
 }
 
@@ -52,7 +52,7 @@ UMyUserWidget* APlayerHud::GetWidget() const
 
 void APlayerHud::emptyText()
 {
-	Text = TEXT("E to Interact with object");
+	Text = TEXT("");
 }
 
 void APlayerHud::SetText(FString setText)

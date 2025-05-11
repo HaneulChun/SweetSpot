@@ -53,6 +53,6 @@ public:
 	UFUNCTION()
 	void emptyText();
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	void SetText(FString setText);
 };
