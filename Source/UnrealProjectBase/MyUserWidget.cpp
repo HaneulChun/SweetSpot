@@ -57,7 +57,7 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 		
 				if (Actor->Tags.Contains("Sane"))
 				{
-					Actor->SetActorHiddenInGame(false);
+					Actor->SetActorHiddenInGame(true);
 				}
 				if (Actor->Tags.Contains("Sweet"))
 				{
@@ -129,7 +129,7 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 		
 				if (Actor->Tags.Contains("Sane"))
 				{
-					Actor->SetActorHiddenInGame(true);
+					Actor->SetActorHiddenInGame(false);
 				}
 				if (Actor->Tags.Contains("Sweet"))
 				{
@@ -161,7 +161,7 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 		
 				if (Actor->Tags.Contains("Sane"))
 				{
-					Actor->SetActorHiddenInGame(true);
+					Actor->SetActorHiddenInGame(false);
 				}
 				if (Actor->Tags.Contains("Sweet"))
 				{
