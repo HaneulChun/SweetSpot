@@ -13,75 +13,49 @@ void APlayerHud::BeginPlay()
 {
 	Super::BeginPlay();
 
-
-	CurrentTimer = Timer;
-	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &APlayerHud::UpdateTimer, 1, true);
-
 	if (WidgetClass)
 	{
-		CurrentWidget = CreateWidget<UUserWidget>(GetWorld(), WidgetClass);
+		CurrentWidget = CreateWidget<UMyUserWidget>(GetWorld(), WidgetClass);
 		if (CurrentWidget)
 		{
 			CurrentWidget->AddToViewport();
-			if (UMyUserWidget* widget = Cast<UMyUserWidget>(CurrentWidget))
-			{
-				widget->sweatSpot = sweatSpot;
-				widget->mad = mad;
+			
+			CurrentWidget->sweatSpot = sweatSpot;
+			CurrentWidget->mad = mad;
 				
-				widget->SetMaterial(Material);
+			CurrentWidget->SetMaterial(Material);
 
-				if (FullyMadSFX)
-				{
-					widget->FullyMadSFX = FullyMadSFX;
-				}
-			}
-		}
-	}
-}
-
-void APlayerHud::UpdateTimer()
-{
-	CurrentTimer -= 1;
-	int32 Minutes = FMath::FloorToInt(CurrentTimer / 60);  
-	int32 Seconds = FMath::Fmod(CurrentTimer, 60); 
-	timerText = FString::Printf(TEXT("%02d:%02d"), Minutes, Seconds);
-	if (CurrentTimer <= 0)
-	{
-		timerText = "End";
-		
-		APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
-		if (PlayerController)
-		{
-			APawn* Player = PlayerController->GetPawn();
-			if (Player)
+			if (FullyMadSFX)
 			{
-				for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
-				{
-					AActor* Actor = *ActorItr;
-		
-					if (Actor->Tags.Contains("Spawn"))
-					{
-						Player->SetActorLocation(Actor->GetActorLocation());
-					}
-				}
+				CurrentWidget->FullyMadSFX = FullyMadSFX;
 			}
 		}
-		CurrentTimer = Timer;
 	}
+	Text = TEXT("");
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &APlayerHud::emptyText, 0.1, false);
 }
 
-APlayerHud::APlayerHud()
+void APlayerHud::DrawHUD()
 {
-	static ConstructorHelpers::FClassFinder<UUserWidget> WidgetObj(TEXT("/All/Game/Jason/UI/MadnessBar"));
-	if (WidgetObj.Succeeded())
-	{
-		WidgetClass = WidgetObj.Class;
-	}
-
-	CurrentWidget = nullptr;
+	Super::DrawHUD();
+	
+	FCanvasTextItem TextItem(FVector2D(500, 40), FText::FromString(Text), GEngine->GetLargeFont(), FLinearColor::White);
+	TextItem.Scale = FVector2D(1.5f, 1.5f);
+	
+	Canvas->DrawItem(TextItem);
 }
 
-UUserWidget* APlayerHud::GetWidget() const
+UMyUserWidget* APlayerHud::GetWidget() const
 {
 	return CurrentWidget;
+}
+
+void APlayerHud::emptyText()
+{
+	Text = TEXT("");
+}
+
+void APlayerHud::SetText(FString setText)
+{
+	Text = setText;
 }
