@@ -42,13 +42,14 @@ void USpottedObject::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 				if (widget)
 				{
 					widget->IncreaseMadnessBar(increaseMadness);
-					GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, "IncreaseMadnessBar");
 				}	
 			}
 			spotted = true;
 		}
+		FVector Direction = -GetOwner()->GetActorForwardVector();
 		FVector CurrentLocation = GetOwner()->GetActorLocation();
-		FVector NewLocation = CurrentLocation - FVector(0, 0, speed); // Move down on Z axis
+		FVector NewLocation = CurrentLocation + (Direction * speed);
+
 		GetOwner()->SetActorLocation(NewLocation);
 		if (CurrentLocation.Z <= -200)
 		{

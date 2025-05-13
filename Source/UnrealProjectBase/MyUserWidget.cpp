@@ -5,6 +5,9 @@
 #include "EngineUtils.h"
 #include "Camera/CameraComponent.h"
 #include "Engine/Scene.h"
+#include "FMODBlueprintStatics.h"
+#include "PlayerHud.h"
+#include "Kismet/GameplayStatics.h"
 
 void UMyUserWidget::NativeConstruct()
 {
@@ -39,10 +42,31 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 					FPostProcessSettings& Settings = Camera->PostProcessSettings;
 					
 					ChangeCameraSettings(Settings, 0.0, 0.4);
-					ChangeCameraMaterial(Settings, 0.0f);
+					chromaticAberrationIntensity = 0;
+					vignetteIntensity = 0.4;
+					
+					ChangeCameraMaterial(0.0f);
+					matIntensity = 0;
+				}
+			}
+
+			// hide actor
+			for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+			{
+				AActor* Actor = *ActorItr;
+		
+				if (Actor->Tags.Contains("Sane"))
+				{
+					Actor->SetActorHiddenInGame(true);
+				}
+				if (Actor->Tags.Contains("Sweet"))
+				{
+					Actor->SetActorHiddenInGame(false);
 				}
 			}
 			mvalue = "sane";
+
+			//PlayerHud->Text = TEXT("");
 		}
 	}
 	else if(mmadnessBarValue >= 1) // dead 
@@ -59,19 +83,15 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 					if (Actor->Tags.Contains("Spawn"))
 					{
 						Player->SetActorLocation(Actor->GetActorLocation());
+						
+						if (FullyMadSFX)
+						{
+							UFMODBlueprintStatics::PlayEventAtLocation(this, FullyMadSFX, Player->GetActorTransform(), true);	
+						}
 					}
 				}
 			}
-
 			mmadnessBarValue = 0;
-			// point at the player's camera
-			if (UCameraComponent* Camera = PlayerController->PlayerCameraManager->GetOwningPlayerController()->PlayerCameraManager->ViewTarget.Target->FindComponentByClass<UCameraComponent>())
-			{
-				FPostProcessSettings& Settings = Camera->PostProcessSettings;
-				
-				ChangeCameraSettings(Settings, 0.0, 0.4);
-				ChangeCameraMaterial(Settings, 0.0f);
-			}
 		}
 	}
 	else if(mmadnessBarValue >= mad) // mad
@@ -84,40 +104,70 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 				if (UCameraComponent* Camera = PlayerController->PlayerCameraManager->GetOwningPlayerController()->PlayerCameraManager->ViewTarget.Target->FindComponentByClass<UCameraComponent>())
 				{
 					FPostProcessSettings& Settings = Camera->PostProcessSettings;
-					
-					FTimerDelegate TimerDelegate;
-					TimerDelegate.BindLambda([&]
-					{
-						ChangeCameraSettings(Settings, 5.0, 1.0);
-						ChangeCameraMaterial(Settings, 0.0f);
-					});
-					
-					ChangeCameraSettings(Settings, 5.0, 1.0);
-					ChangeCameraMaterial(Settings, 0.0f);
 
-					FTimerHandle TimerHandle;
-					GetWorld()->GetTimerManager().SetTimer(TimerHandle, TimerDelegate, 3, false);
+					ChangeCameraSettings(Settings, 10.0, 1.5);
+					vignetteIntensity = 1.5;
+					chromaticAberrationIntensity = 10;
+					
+					ChangeCameraMaterial(0.0f);
+					matIntensity = 0;
+				}
+
+				APlayerHud* PlayerHud = Cast<APlayerHud>(PlayerController->GetHUD());
+				if (PlayerHud)
+				{
+					PlayerHud->SetText("");  
 				}
 			}
 			mvalue = "mad";
+			
+
+			// show actor
+			for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+			{
+				AActor* Actor = *ActorItr;
+		
+				if (Actor->Tags.Contains("Sane"))
+				{
+					Actor->SetActorHiddenInGame(false);
+				}
+				if (Actor->Tags.Contains("Sweet"))
+				{
+					Actor->SetActorHiddenInGame(false);
+				}
+			}
 		}
 	}
 	else // sweat spot
 	{
 		if (mvalue != "sweat")
 		{
-			if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
+			mvalue = "sweat";
+			
+			if (APlayerController* PlayerController = UGameplayStatics::GetPlayerController(this, 0))
 			{
-				// point at the player's camera
-				if (UCameraComponent* Camera = PlayerController->PlayerCameraManager->GetOwningPlayerController()->PlayerCameraManager->ViewTarget.Target->FindComponentByClass<UCameraComponent>())
+				APlayerHud* PlayerHud = Cast<APlayerHud>(PlayerController->GetHUD());
+				if (PlayerHud)
 				{
-					FPostProcessSettings& Settings = Camera->PostProcessSettings;
-					
-					ChangeCameraSettings(Settings, 0.0, 0.4);
-					ChangeCameraMaterial(Settings, 1.0f);
+					PlayerHud->SetText("C to Focus");  
 				}
 			}
-			mvalue = "sweat";
+
+			
+			// hide actor
+			for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+			{
+				AActor* Actor = *ActorItr;
+		
+				if (Actor->Tags.Contains("Sane"))
+				{
+					Actor->SetActorHiddenInGame(false);
+				}
+				if (Actor->Tags.Contains("Sweet"))
+				{
+					Actor->SetActorHiddenInGame(true);
+				}
+			}
 		}
 	}
 }
@@ -143,17 +193,47 @@ void UMyUserWidget::ChangeCameraSettings(FPostProcessSettings& settings, float c
 	Settings.VignetteIntensity = Vignette;
 }
 
-void UMyUserWidget::ChangeCameraMaterial(FPostProcessSettings& settings, float intensity)
+void UMyUserWidget::Color(FPostProcessSettings& settings, float intensity)
 {
 	FPostProcessSettings& Settings = settings;
 
-	for (int32 i = 0; i < Material.Num(); i++)
+	Settings.bOverride_ColorSaturation = true;
+	Settings.ColorSaturation = FVector4(intensity, intensity, intensity, 1.0f);
+}
+
+void UMyUserWidget::ChangeCameraMaterial(float intensity)
+{
+	if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
 	{
-		if (Material.IsValidIndex(i))
+		// point at the player's camera
+		if (UCameraComponent* Camera = PlayerController->PlayerCameraManager->GetOwningPlayerController()->PlayerCameraManager->ViewTarget.Target->FindComponentByClass<UCameraComponent>())
 		{
-			Settings.AddBlendable(Material[i], intensity);
+			FPostProcessSettings& Settings = Camera->PostProcessSettings;
+
+			for (int32 i = 0; i < Material.Num(); i++)
+			{
+				if (Material.IsValidIndex(i))
+				{
+					Settings.AddBlendable(Material[i], intensity);
+				}
+			}
 		}
 	}
+}
+
+float UMyUserWidget::GetSweatSpotValue()
+{
+	return sweatSpot;
+}
+
+float UMyUserWidget::GetMadValue()
+{
+	return mad;
+}
+
+float UMyUserWidget::GetCurrentValue()
+{
+	return mmadnessBarValue;
 }
 
 void UMyUserWidget::SetIncreaseMadness(float value)
@@ -164,4 +244,9 @@ void UMyUserWidget::SetIncreaseMadness(float value)
 void UMyUserWidget::IncreaseMadnessBar(float value)
 {
 	mmadnessBarValue += value;
+}
+
+TArray<float> UMyUserWidget::GetCameraSettings()
+{
+	return {chromaticAberrationIntensity, vignetteIntensity, matIntensity, colorIntensity};
 }
