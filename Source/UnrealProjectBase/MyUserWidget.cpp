@@ -6,6 +6,8 @@
 #include "Camera/CameraComponent.h"
 #include "Engine/Scene.h"
 #include "FMODBlueprintStatics.h"
+#include "PlayerHud.h"
+#include "Kismet/GameplayStatics.h"
 
 void UMyUserWidget::NativeConstruct()
 {
@@ -55,7 +57,7 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 		
 				if (Actor->Tags.Contains("Sane"))
 				{
-					Actor->SetActorHiddenInGame(false);
+					Actor->SetActorHiddenInGame(true);
 				}
 				if (Actor->Tags.Contains("Sweet"))
 				{
@@ -63,6 +65,8 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 				}
 			}
 			mvalue = "sane";
+
+			//PlayerHud->Text = TEXT("");
 		}
 	}
 	else if(mmadnessBarValue >= 1) // dead 
@@ -108,8 +112,15 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 					ChangeCameraMaterial(0.0f);
 					matIntensity = 0;
 				}
+
+				APlayerHud* PlayerHud = Cast<APlayerHud>(PlayerController->GetHUD());
+				if (PlayerHud)
+				{
+					PlayerHud->SetText("");  
+				}
 			}
 			mvalue = "mad";
+			
 
 			// show actor
 			for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
@@ -118,7 +129,7 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 		
 				if (Actor->Tags.Contains("Sane"))
 				{
-					Actor->SetActorHiddenInGame(true);
+					Actor->SetActorHiddenInGame(false);
 				}
 				if (Actor->Tags.Contains("Sweet"))
 				{
@@ -132,7 +143,17 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 		if (mvalue != "sweat")
 		{
 			mvalue = "sweat";
+			
+			if (APlayerController* PlayerController = UGameplayStatics::GetPlayerController(this, 0))
+			{
+				APlayerHud* PlayerHud = Cast<APlayerHud>(PlayerController->GetHUD());
+				if (PlayerHud)
+				{
+					PlayerHud->SetText("C to Focus");  
+				}
+			}
 
+			
 			// hide actor
 			for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
 			{
@@ -140,7 +161,7 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 		
 				if (Actor->Tags.Contains("Sane"))
 				{
-					Actor->SetActorHiddenInGame(true);
+					Actor->SetActorHiddenInGame(false);
 				}
 				if (Actor->Tags.Contains("Sweet"))
 				{
@@ -218,6 +239,29 @@ float UMyUserWidget::GetCurrentValue()
 void UMyUserWidget::SetIncreaseMadness(float value)
 {
 	increaseMadness = value;
+}
+
+void UMyUserWidget::DecreaseMadness(float value)
+{
+	mmadnessBarValue -= value;
+	if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
+	{
+		// point at the player's camera
+		if (UCameraComponent* Camera = PlayerController->PlayerCameraManager->GetOwningPlayerController()->PlayerCameraManager->ViewTarget.Target->FindComponentByClass<UCameraComponent>())
+		{
+			FPostProcessSettings& Settings = Camera->PostProcessSettings;
+
+			if (isInRoom)
+			{
+				ChangeCameraSettings(Settings, 0.0, 1);
+				Color(Settings, 0.5);
+			}
+			else
+			{
+				ChangeCameraSettings(Settings, 0.0, .4);
+			}
+		}
+	}
 }
 
 void UMyUserWidget::IncreaseMadnessBar(float value)

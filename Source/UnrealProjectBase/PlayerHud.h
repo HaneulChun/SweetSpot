@@ -3,12 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/HUD.h" 
+#include "GameFramework/HUD.h"
+#include "FMODEvent.h"
 #include "PlayerHud.generated.h"
 
 /**
  * 
  */
+class UMyUserWidget;
 UCLASS()
 class UNREALPROJECTBASE_API APlayerHud : public AHUD
 {
@@ -19,24 +21,25 @@ protected:
 	
 	virtual void BeginPlay() override;
 
-	void UpdateTimer();
-
 	virtual void DrawHUD() override;
 	
 public:
-	APlayerHud();
-	
-	UPROPERTY(EditAnywhere, BluePrintReadWrite)
-	float Timer = 360;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI")
+	FString Text = "";
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI", meta = (AllowPrivateAccess = "true"))
-	TSubclassOf<UUserWidget> WidgetClass;
+	TSubclassOf<UMyUserWidget> WidgetClass;
 
 	UPROPERTY(BlueprintReadWrite, Category = "UI", meta = (AllowPrivateAccess = "true"))
-	UUserWidget* CurrentWidget;
+	UMyUserWidget* CurrentWidget;
 	
 	UFUNCTION(BlueprintCallable, Category = "UI")
-	UUserWidget* GetWidget() const;
+	UMyUserWidget* GetWidget() const;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
+	UFMODEvent* FullyMadSFX;
+	
 
 	UPROPERTY(EditAnywhere, BluePrintReadWrite)
 	float sweatSpot = 0.4;
@@ -46,7 +49,10 @@ public:
 	
 	UPROPERTY(EditAnywhere, BluePrintReadWrite)
 	TArray<UMaterialInterface*> Material;
-private:
-	FString timerText = "";
-	float CurrentTimer;
+
+	UFUNCTION()
+	void emptyText();
+
+	UFUNCTION(BlueprintCallable)
+	void SetText(FString setText);
 };

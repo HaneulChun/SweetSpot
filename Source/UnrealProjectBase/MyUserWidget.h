@@ -10,6 +10,7 @@
 /**
  * 
  */
+class APlayerHud;
 UCLASS()
 class UNREALPROJECTBASE_API UMyUserWidget : public UUserWidget
 {
@@ -19,9 +20,12 @@ protected:
 	virtual void NativeConstruct() override;
 
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
-	
+
 public:
 	FString mvalue = "";
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
+	TSubclassOf<APlayerHud> PlayerHudClass;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
 	TSubclassOf<UUserWidget> WidgetClass;
@@ -64,6 +68,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "UI")
 	void SetIncreaseMadness(float value);
 
+	UFUNCTION(BlueprintCallable, Category = "UI")
+	void DecreaseMadness(float value);
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float mmadnessBarValue = 0.0;
 
@@ -76,7 +83,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float mad = 0;
 	
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	void IncreaseMadnessBar(float value);
 
 	UFUNCTION(BlueprintCallable)
@@ -94,5 +101,8 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float colorIntensity = 1;
-	
+
+
+	UPROPERTY()
+	bool isInRoom = false;
 };
