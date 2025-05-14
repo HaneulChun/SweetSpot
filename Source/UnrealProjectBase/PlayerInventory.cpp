@@ -52,3 +52,16 @@ bool UPlayerInventory::EatChocolate()
 	return false;
 }
 
+void UPlayerInventory::GetElevatorPart()
+{
+	elevatorPart++;
+}
+
+void UPlayerInventory::UseElevatorPart()
+{
+	if (elevatorPart > 0)
+	{
+		elevatorPart--;
+	}
+}
+
