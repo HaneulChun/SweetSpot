@@ -33,4 +33,13 @@ public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	int maxChocolate = 6;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	int elevatorPart = 0;
+
+	UFUNCTION(BlueprintCallable)
+	void GetElevatorPart();
+
+	UFUNCTION(BlueprintCallable)
+	void UseElevatorPart();
 };
