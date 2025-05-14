@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "SymblePuzzle.generated.h"
 
+enum class EElevatorPart : uint8;
+
 UCLASS()
 class UNREALPROJECTBASE_API ASymblePuzzle : public AActor
 {
@@ -28,4 +30,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool isActive;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	EElevatorPart ElevatorPart;
 };
