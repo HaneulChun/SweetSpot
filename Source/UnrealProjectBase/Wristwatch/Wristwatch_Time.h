@@ -13,6 +13,8 @@ class UNREALPROJECTBASE_API AWristwatch_Time : public ATextRenderActor
 
 public:
 	AWristwatch_Time();
+	
+	virtual void OnConstruction(const FTransform& Transform) override;
 
 protected:
 	virtual void BeginPlay() override;

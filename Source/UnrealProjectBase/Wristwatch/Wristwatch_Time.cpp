@@ -8,12 +8,16 @@
 AWristwatch_Time::AWristwatch_Time()
 {
 	PrimaryActorTick.bCanEverTick = true;
-
-	// Optional: Customize text component settings here
+	
 	GetTextRender()->SetHorizontalAlignment(EHTA_Center);
 	GetTextRender()->SetVerticalAlignment(EVRTA_TextCenter);
-	GetTextRender()->SetTextRenderColor(FColor::Cyan);
+	GetTextRender()->SetTextRenderColor(FColor::Black);
 	GetTextRender()->SetWorldSize(25.f);
+}
+
+void AWristwatch_Time::OnConstruction(const FTransform& Transform)
+{
+	Super::OnConstruction(Transform);
 }
 
 void AWristwatch_Time::BeginPlay()
