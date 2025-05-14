@@ -2,6 +2,8 @@
 
 
 #include "Elevator.h"
+
+#include "ElevatorPart.h"
 #include "MyTeleport.h"
 #include "PlayerInventory.h"
 #include "GameFramework/Character.h"
@@ -33,7 +35,8 @@ void AElevator::BeginPlay()
 		Switch->GetChildActor()->SetOwner(this);
 		if (UStaticMeshComponent* Mesh = Switch->GetChildActor()->FindComponentByClass<UStaticMeshComponent>())
 		{
-			Mesh->SetVisibility(false); 
+			Mesh->SetVisibility(false);
+			Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 		}
 	}
 	if (Button && Button->GetChildActor())
@@ -41,7 +44,8 @@ void AElevator::BeginPlay()
 		Button->GetChildActor()->SetOwner(this);
 		if (UStaticMeshComponent* Mesh = Button->GetChildActor()->FindComponentByClass<UStaticMeshComponent>())
 		{
-			Mesh->SetVisibility(false); 
+			Mesh->SetVisibility(false);
+			Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 		}
 	}
 	if (Cranck && Cranck->GetChildActor())
@@ -49,15 +53,26 @@ void AElevator::BeginPlay()
 		Cranck->GetChildActor()->SetOwner(this);
 		if (UStaticMeshComponent* Mesh = Cranck->GetChildActor()->FindComponentByClass<UStaticMeshComponent>())
 		{
-			Mesh->SetVisibility(false); 
+			Mesh->SetVisibility(false);
+			Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		}
+	}
+
+	InitPart(Switch, EElevatorPart::Switch);
+	InitPart(Button, EElevatorPart::Button);
+	InitPart(Cranck, EElevatorPart::Cranck);
+}
+
+void AElevator::InitPart(UChildActorComponent* Component, EElevatorPart Type)
+{
+	if (Component && Component->GetChildActor())
+	{
+		if (AElevatorPart* Part = Cast<AElevatorPart>(Component->GetChildActor()))
+		{
+			Part->ElevatorPart = Type;
 		}
 	}
 }
-
-void AElevator::Tick(float DeltaTime)
- {
- 	Super::Tick(DeltaTime);
- }
 
 void AElevator::FixElevator()
 {

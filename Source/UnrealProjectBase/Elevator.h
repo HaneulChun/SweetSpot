@@ -21,22 +21,23 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-	virtual void Tick(float DeltaTime) override;
+	
 	EElevatorPart ElevatorPart;
+
+	void InitPart(UChildActorComponent* Component, EElevatorPart Type);
 public:	
 
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TObjectPtr<AMyTeleport> Teleport;
 	
-	UPROPERTY(VisibleAnywhere, Category = "Parts")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly ,Category = "Parts")
 	UChildActorComponent* Switch;
 
-	UPROPERTY(VisibleAnywhere, Category = "Parts")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly ,Category = "Parts")
 	UChildActorComponent* Button;
 
-	UPROPERTY(VisibleAnywhere, Category = "Parts")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly ,Category = "Parts")
 	UChildActorComponent* Cranck;
 	
 	UFUNCTION(BlueprintCallable)
