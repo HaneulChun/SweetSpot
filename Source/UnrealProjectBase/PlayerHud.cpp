@@ -7,7 +7,7 @@
 #include "EngineUtils.h"
 #include "Blueprint/UserWidget.h"
 #include "Engine/Canvas.h"
-#include "MadnessMeter.h"
+#include "MyUserWidget.h"
 
 void APlayerHud::BeginPlay()
 {
@@ -15,7 +15,7 @@ void APlayerHud::BeginPlay()
 
 	if (WidgetClass)
 	{
-		CurrentWidget = CreateWidget<UMadnessMeter>(GetWorld(), WidgetClass);
+		CurrentWidget = CreateWidget<UMyUserWidget>(GetWorld(), WidgetClass);
 		if (CurrentWidget)
 		{
 			CurrentWidget->AddToViewport();
@@ -45,7 +45,7 @@ void APlayerHud::DrawHUD()
 	Canvas->DrawItem(TextItem);
 }
 
-UMadnessMeter* APlayerHud::GetWidget() const
+UMyUserWidget* APlayerHud::GetWidget() const
 {
 	return CurrentWidget;
 }

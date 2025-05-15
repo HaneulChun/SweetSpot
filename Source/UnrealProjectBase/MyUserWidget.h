@@ -1,18 +1,18 @@
-// All Rights Reserved by SweetSpot 2025-2026.
+// All Rights Reserved by Jason 2025-2026.
 
 #pragma once
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "FMODEvent.h"
-#include "MadnessMeter.generated.h"
+#include "MyUserWidget.generated.h"
 
 /**
  * 
  */
 class APlayerHud;
 UCLASS()
-class UNREALPROJECTBASE_API UMadnessMeter : public UUserWidget
+class UNREALPROJECTBASE_API UMyUserWidget : public UUserWidget
 {
 	GENERATED_BODY()
 
