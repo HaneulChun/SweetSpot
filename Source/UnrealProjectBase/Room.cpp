@@ -49,6 +49,7 @@ void ARoom::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 					UMyUserWidget* WidgetPtr = Cast<UMyUserWidget>(Widget);
 					if (WidgetPtr)
 					{
+						WidgetPtr->isInRoom = true;
 						WidgetPtr->SetIncreaseMadness(increment);
 
 						if (UCameraComponent* Camera = Character->FindComponentByClass<UCameraComponent>())
@@ -89,6 +90,7 @@ void ARoom::NotifyActorEndOverlap(AActor* OtherActor)
 			
 					if (WidgetPtr)
 					{
+						WidgetPtr->isInRoom = false;
 						WidgetPtr->SetIncreaseMadness(0.0);
 
 						if (UCameraComponent* Camera = Character->FindComponentByClass<UCameraComponent>())

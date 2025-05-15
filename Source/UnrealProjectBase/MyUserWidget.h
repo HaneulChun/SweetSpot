@@ -68,6 +68,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "UI")
 	void SetIncreaseMadness(float value);
 
+	UFUNCTION(BlueprintCallable, Category = "UI")
+	void DecreaseMadness(float value);
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float mmadnessBarValue = 0.0;
 
@@ -98,5 +101,8 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float colorIntensity = 1;
-	
+
+
+	UPROPERTY()
+	bool isInRoom = false;
 };
