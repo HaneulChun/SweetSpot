@@ -26,6 +26,9 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Time")
 	float TimeUpdateInterval = 1.0f;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
+	UObject* Time_Container;
+
 private:
 	// Accumulator to track time elapsed since last update
 	float TimeSinceLastUpdate = 0.0f;

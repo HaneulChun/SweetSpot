@@ -10,7 +10,7 @@
 /**
  * 
  */
-class UMadnessMeter;
+class UMyUserWidget;
 UCLASS()
 class UNREALPROJECTBASE_API APlayerHud : public AHUD
 {
@@ -29,13 +29,13 @@ public:
 	FString Text = "";
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI", meta = (AllowPrivateAccess = "true"))
-	TSubclassOf<UMadnessMeter> WidgetClass;
+	TSubclassOf<UMyUserWidget> WidgetClass;
 
 	UPROPERTY(BlueprintReadWrite, Category = "UI", meta = (AllowPrivateAccess = "true"))
-	UMadnessMeter* CurrentWidget;
+	UMyUserWidget* CurrentWidget;
 	
 	UFUNCTION(BlueprintCallable, Category = "UI")
-	UMadnessMeter* GetWidget() const;
+	UMyUserWidget* GetWidget() const;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
 	UFMODEvent* FullyMadSFX;

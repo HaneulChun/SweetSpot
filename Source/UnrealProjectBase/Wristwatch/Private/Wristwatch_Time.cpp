@@ -15,14 +15,7 @@ void AWristwatch_Time::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (WatchScreenWidgetClass)
-	{
-		WatchScreenWidgetInstance = CreateWidget<UUserWidget>(GetWorld(), WatchScreenWidgetClass);
-		if (WatchScreenWidgetInstance)
-		{
-			WatchScreenWidgetInstance->AddToViewport();
-		}
-	}
+	
 }
 
 void AWristwatch_Time::Tick(float DeltaTime)
@@ -39,18 +32,17 @@ void AWristwatch_Time::Tick(float DeltaTime)
 
 void AWristwatch_Time::UpdateTimeInUI()
 {
-	if (!WatchScreenWidgetInstance) return;
+	if (!Time_Container) return;
 
 	// Get the current system time as a formatted string (HH:MM:SS)
 	const FDateTime Now = FDateTime::Now();
 	const FString TimeString = Now.ToString(TEXT("%H:%M:%S"));
-
-	// Find the nested Time_Container widget inside WatchScreenWidgetInstance
-	UWidget* TimeContainerWidget = WatchScreenWidgetInstance->GetWidgetFromName(TEXT("Time_Container"));
-	if (!TimeContainerWidget) return;
+	
+	
+	if (!Time_Container) return;
 
 	// Cast to UUserWidget because Time_Container is a widget container
-	UUserWidget* TimeContainerUserWidget = Cast<UUserWidget>(TimeContainerWidget);
+	UUserWidget* TimeContainerUserWidget = Cast<UUserWidget>(Time_Container);
 	if (!TimeContainerUserWidget) return;
 
 	// Find the TextBlock named Widget_Time inside Time_Container
