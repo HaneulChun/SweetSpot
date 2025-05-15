@@ -83,44 +83,46 @@ void AElevator::FixElevator()
 			if (UPlayerInventory* Inventory = Pawn->FindComponentByClass<UPlayerInventory>())
 			{
 				ElevatorPart = Inventory->ElevatorPart;
-			}
-		}
-	}
-	
-	switch (ElevatorPart)
-	{
-	case EElevatorPart::Switch:
-		if (Switch)
-		{
-			if (UStaticMeshComponent* Mesh = Switch->GetChildActor()->FindComponentByClass<UStaticMeshComponent>())
-			{
-				Mesh->SetVisibility(true); 
-			}
-		}
-		break;
 
-	case EElevatorPart::Button:
-		if (Button)
-		{
-			if (UStaticMeshComponent* Mesh = Button->GetChildActor()->FindComponentByClass<UStaticMeshComponent>())
-			{
-				Mesh->SetVisibility(true); 
+				switch (ElevatorPart)
+				{
+				case EElevatorPart::Switch:
+					if (Switch)
+					{
+						if (UStaticMeshComponent* Mesh = Switch->GetChildActor()->FindComponentByClass<UStaticMeshComponent>())
+						{
+							Mesh->SetVisibility(true); 
+						}
+					}
+					break;
+
+				case EElevatorPart::Button:
+					if (Button)
+					{
+						if (UStaticMeshComponent* Mesh = Button->GetChildActor()->FindComponentByClass<UStaticMeshComponent>())
+						{
+							Mesh->SetVisibility(true); 
+						}
+					}
+					break;
+
+				case EElevatorPart::Cranck:
+					if (Cranck)
+					{
+						if (UStaticMeshComponent* Mesh = Cranck->GetChildActor()->FindComponentByClass<UStaticMeshComponent>())
+						{
+							Mesh->SetVisibility(true); 
+						}
+					}
+					break;
+
+				default:
+					break;
+				}
+
+				Inventory->ElevatorPart =  EElevatorPart::None;
 			}
 		}
-		break;
-
-	case EElevatorPart::Cranck:
-		if (Cranck)
-		{
-			if (UStaticMeshComponent* Mesh = Cranck->GetChildActor()->FindComponentByClass<UStaticMeshComponent>())
-			{
-				Mesh->SetVisibility(true); 
-			}
-		}
-		break;
-
-	default:
-		break;
 	}
 }
 
