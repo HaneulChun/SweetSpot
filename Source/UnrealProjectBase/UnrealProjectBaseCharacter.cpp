@@ -10,7 +10,6 @@
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
 #include "Engine/LocalPlayer.h"
-#include "Kismet/GameplayStatics.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
@@ -55,14 +54,6 @@ void AUnrealProjectBaseCharacter::BeginPlay()
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
 	}
-	if (!DefaultMappingContext)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "not");
-	}
-	else
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "work");
-	}
 
 }
 
@@ -82,9 +73,6 @@ void AUnrealProjectBaseCharacter::SetupPlayerInputComponent(UInputComponent* Pla
 
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AUnrealProjectBaseCharacter::Look);
-
-		// Focusing
-		EnhancedInputComponent->BindAction(FocusAction, ETriggerEvent::Triggered, this, &AUnrealProjectBaseCharacter::Focus);
 	}
 	else
 	{
@@ -119,12 +107,6 @@ void AUnrealProjectBaseCharacter::Look(const FInputActionValue& Value)
 	}
 }
 
-void AUnrealProjectBaseCharacter::Focus(const FInputActionValue& Value)
-{
-	UGameplayStatics::SetGlobalTimeDilation(GetWorld(), 0.0f);
-	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, "Focused");
-}
-
 void AUnrealProjectBaseCharacter::SetHasRifle(bool bNewHasRifle)
 {
 	bHasRifle = bNewHasRifle;
@@ -133,9 +115,4 @@ void AUnrealProjectBaseCharacter::SetHasRifle(bool bNewHasRifle)
 bool AUnrealProjectBaseCharacter::GetHasRifle()
 {
 	return bHasRifle;
-}
-
-void AUnrealProjectBaseCharacter::Camera()
-{
-	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, "Camera");
 }

@@ -40,7 +40,7 @@ public:
 		bool bFromSweep, const FHitResult& SweepResult);
 
 	UFUNCTION()
-	void Reset();
+	virtual void Reset() override;
 
 	UFUNCTION()
 	void Complete(AActor* OtherActor);

@@ -1,6 +1,6 @@
 // All Rights Reserved by Sweet Spot 2025-2026.
 
-#include "MyUserWidget.h"
+#include "MadnessMeter.h"
 
 #include "EngineUtils.h"
 #include "Camera/CameraComponent.h"
@@ -9,7 +9,7 @@
 #include "PlayerHud.h"
 #include "Kismet/GameplayStatics.h"
 
-void UMyUserWidget::NativeConstruct()
+void UMadnessMeter::NativeConstruct()
 {
 	Super::NativeConstruct();
 
@@ -25,7 +25,7 @@ void UMyUserWidget::NativeConstruct()
 	}
 }
 
-void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
+void UMadnessMeter::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {
 	Super::NativeTick(MyGeometry, InDeltaTime);
 	
@@ -172,17 +172,17 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 	}
 }
 
-UUserWidget* UMyUserWidget::GetWidget() const
+UUserWidget* UMadnessMeter::GetWidget() const
 {
 	return CurrentWidget;
 }
 
-void UMyUserWidget::SetMaterial(TArray<UMaterialInterface*> Mat)
+void UMadnessMeter::SetMaterial(TArray<UMaterialInterface*> Mat)
 {
 	Material = Mat;
 }
 
-void UMyUserWidget::ChangeCameraSettings(FPostProcessSettings& settings, float chromaticAberration, float Vignette)
+void UMadnessMeter::ChangeCameraSettings(FPostProcessSettings& settings, float chromaticAberration, float Vignette)
 {
 	FPostProcessSettings& Settings = settings;
 	
@@ -193,7 +193,7 @@ void UMyUserWidget::ChangeCameraSettings(FPostProcessSettings& settings, float c
 	Settings.VignetteIntensity = Vignette;
 }
 
-void UMyUserWidget::Color(FPostProcessSettings& settings, float intensity)
+void UMadnessMeter::Color(FPostProcessSettings& settings, float intensity)
 {
 	FPostProcessSettings& Settings = settings;
 
@@ -201,7 +201,7 @@ void UMyUserWidget::Color(FPostProcessSettings& settings, float intensity)
 	Settings.ColorSaturation = FVector4(intensity, intensity, intensity, 1.0f);
 }
 
-void UMyUserWidget::ChangeCameraMaterial(float intensity)
+void UMadnessMeter::ChangeCameraMaterial(float intensity)
 {
 	if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
 	{
@@ -221,27 +221,27 @@ void UMyUserWidget::ChangeCameraMaterial(float intensity)
 	}
 }
 
-float UMyUserWidget::GetSweatSpotValue()
+float UMadnessMeter::GetSweatSpotValue()
 {
 	return sweatSpot;
 }
 
-float UMyUserWidget::GetMadValue()
+float UMadnessMeter::GetMadValue()
 {
 	return mad;
 }
 
-float UMyUserWidget::GetCurrentValue()
+float UMadnessMeter::GetCurrentValue()
 {
 	return mmadnessBarValue;
 }
 
-void UMyUserWidget::SetIncreaseMadness(float value)
+void UMadnessMeter::SetIncreaseMadness(float value)
 {
 	increaseMadness = value;
 }
 
-void UMyUserWidget::DecreaseMadness(float value)
+void UMadnessMeter::DecreaseMadness(float value)
 {
 	mmadnessBarValue -= value;
 	if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
@@ -264,12 +264,12 @@ void UMyUserWidget::DecreaseMadness(float value)
 	}
 }
 
-void UMyUserWidget::IncreaseMadnessBar(float value)
+void UMadnessMeter::IncreaseMadnessBar(float value)
 {
 	mmadnessBarValue += value;
 }
 
-TArray<float> UMyUserWidget::GetCameraSettings()
+TArray<float> UMadnessMeter::GetCameraSettings()
 {
 	return {chromaticAberrationIntensity, vignetteIntensity, matIntensity, colorIntensity};
 }

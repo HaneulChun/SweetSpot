@@ -3,7 +3,7 @@
 
 #include "SpottedObject.h"
 
-#include "MyUserWidget.h"
+#include "MadnessMeter.h"
 #include "PlayerHud.h"
 
 // Sets default values for this component's properties
@@ -38,10 +38,11 @@ void USpottedObject::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 			{
 				APlayerHud* hud = Cast<APlayerHud>(PlayerController->GetHUD());
 
-				UMyUserWidget* widget = Cast<UMyUserWidget>(hud->GetWidget());
+				UMadnessMeter* widget = Cast<UMadnessMeter>(hud->GetWidget());
 				if (widget)
 				{
 					widget->IncreaseMadnessBar(increaseMadness);
+					GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, "IncreaseMadnessBar");
 				}	
 			}
 			spotted = true;
