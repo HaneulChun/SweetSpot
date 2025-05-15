@@ -9,7 +9,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/Character.h"
 #include "PlayerHud.h"
-#include "MyUserWidget.h"
+#include "MadnessMeter.h"
 
 // Sets default values
 AMyTeleport::AMyTeleport()
@@ -65,7 +65,7 @@ void AMyTeleport::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 				{
 					APlayerHud* hud = Cast<APlayerHud>(character->GetHUD());
 
-					UMyUserWidget* widget = Cast<UMyUserWidget>(hud->GetWidget());
+					UMadnessMeter* widget = Cast<UMadnessMeter>(hud->GetWidget());
 					if (widget)
 					{
 						widget->IncreaseMadnessBar(increaseMadness);

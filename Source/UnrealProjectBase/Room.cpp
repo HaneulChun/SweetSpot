@@ -4,7 +4,7 @@
 #include "Room.h"
 #include "Components/BoxComponent.h"
 #include "Blueprint/UserWidget.h"
-#include "MyUserWidget.h"
+#include "MadnessMeter.h"
 #include "GameFramework/Character.h"
 #include "Camera/CameraComponent.h"
 #include <string>
@@ -46,7 +46,7 @@ void ARoom::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 				UUserWidget* Widget = MyHUD->GetWidget();
 				if (Widget)
 				{
-					UMyUserWidget* WidgetPtr = Cast<UMyUserWidget>(Widget);
+					UMadnessMeter* WidgetPtr = Cast<UMadnessMeter>(Widget);
 					if (WidgetPtr)
 					{
 						WidgetPtr->isInRoom = true;
@@ -86,7 +86,7 @@ void ARoom::NotifyActorEndOverlap(AActor* OtherActor)
 				UUserWidget* Widget = MyHUD->GetWidget();
 				if (Widget)
 				{
-					UMyUserWidget* WidgetPtr = Cast<UMyUserWidget>(Widget);
+					UMadnessMeter* WidgetPtr = Cast<UMadnessMeter>(Widget);
 			
 					if (WidgetPtr)
 					{

@@ -5,7 +5,7 @@
 #include "SpottedObject.h"
 #include "EngineUtils.h"
 #include "PlayerHud.h"
-#include "MyUserWidget.h"
+#include "MadnessMeter.h"
 
 // Sets default values for this component's properties
 UPlayerVision::UPlayerVision()
