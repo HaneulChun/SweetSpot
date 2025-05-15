@@ -92,7 +92,10 @@ void AElevator::FixElevator()
 						if (UStaticMeshComponent* Mesh = Switch->GetChildActor()->FindComponentByClass<UStaticMeshComponent>())
 						{
 							Mesh->SetVisibility(true);
-							Teleport->isCompleted = true;
+							if (Teleport)
+							{
+								Teleport->isCompleted = true;
+							}
 						}
 					}
 					break;
@@ -103,7 +106,10 @@ void AElevator::FixElevator()
 						if (UStaticMeshComponent* Mesh = Button->GetChildActor()->FindComponentByClass<UStaticMeshComponent>())
 						{
 							Mesh->SetVisibility(true);
-							Teleport->isCompleted = true;
+							if (Teleport)
+							{
+								Teleport->isCompleted = true;
+							}
 						}
 					}
 					break;
@@ -114,7 +120,10 @@ void AElevator::FixElevator()
 						if (UStaticMeshComponent* Mesh = Cranck->GetChildActor()->FindComponentByClass<UStaticMeshComponent>())
 						{
 							Mesh->SetVisibility(true);
-							Teleport->isCompleted = true;
+							if (Teleport)
+							{
+								Teleport->isCompleted = true;
+							}
 						}
 					}
 					break;
