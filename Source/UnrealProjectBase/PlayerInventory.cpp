@@ -52,3 +52,21 @@ bool UPlayerInventory::EatChocolate()
 	return false;
 }
 
+void UPlayerInventory::GetElevatorPart(EElevatorPart newElevatorPart)
+{
+	if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
+	{
+		if (APawn* Pawn = PlayerController->GetPawn())
+		{
+			if (UPlayerInventory* Inventory = Pawn->FindComponentByClass<UPlayerInventory>())
+			{
+				Inventory->ElevatorPart = newElevatorPart;
+			}	
+		}
+	}
+}
+
+void UPlayerInventory::UseElevatorPart()
+{
+}
+

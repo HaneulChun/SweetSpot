@@ -7,6 +7,15 @@
 #include "PlayerInventory.generated.h"
 
 
+UENUM(BlueprintType)
+enum class EElevatorPart : uint8
+{
+	None UMETA(DisplayName = "None"),
+	Switch UMETA(DisplayName = "Switch"),
+	Button UMETA(DisplayName = "Button"),
+	Cranck UMETA(DisplayName = "Cranck")
+};
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class UNREALPROJECTBASE_API UPlayerInventory : public UActorComponent
 {
@@ -33,4 +42,13 @@ public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	int maxChocolate = 6;
+
+	UFUNCTION(BlueprintCallable)
+	void GetElevatorPart(EElevatorPart newElevatorPart);
+
+	UFUNCTION(BlueprintCallable)
+	void UseElevatorPart();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Madness")
+	EElevatorPart ElevatorPart = EElevatorPart::None;
 };
