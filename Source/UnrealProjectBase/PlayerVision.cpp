@@ -23,16 +23,7 @@ void UPlayerVision::BeginPlay()
 {
 	Super::BeginPlay();
 
-	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
-	{
-		AActor* Actor = *ActorItr;
-		
-		if (Actor->Tags.Contains("SeeMe"))
-		{
-			ActorArray.Add(Actor);
-		}
-	}
-	
+	SetActorArray();
 }
 
 
@@ -101,5 +92,18 @@ void UPlayerVision::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 			}
 		}
 		
+	}
+}
+
+void UPlayerVision::SetActorArray()
+{
+	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+	{
+		AActor* Actor = *ActorItr;
+		
+		if (Actor->Tags.Contains("SeeMe"))
+		{
+			ActorArray.Add(Actor);
+		}
 	}
 }

@@ -10,6 +10,7 @@
 #include "GameFramework/Character.h"
 #include "PlayerHud.h"
 #include "MyUserWidget.h"
+#include "PlayerVision.h"
 
 // Sets default values
 AMyTeleport::AMyTeleport()
@@ -93,6 +94,18 @@ void AMyTeleport::Reset()
 
 			GetWorld()->SpawnActor<AActor>(object->GetClass(), location[i], SpawnRotation, SpawnParams);
 			i++;
+		}
+	}
+	if (APlayerController* PC = GetWorld()->GetFirstPlayerController())
+	{
+		APawn* PlayerPawn = PC->GetPawn(); // Get the controlled Pawn
+		if (PlayerPawn)
+		{
+			UPlayerVision* VisionComp = PlayerPawn->FindComponentByClass<UPlayerVision>();
+			if (VisionComp)
+			{
+				VisionComp->SetActorArray();
+			}
 		}
 	}
 }
