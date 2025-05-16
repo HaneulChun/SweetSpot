@@ -143,16 +143,29 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 		if (mvalue != "sweat")
 		{
 			mvalue = "sweat";
-			
-			if (APlayerController* PlayerController = UGameplayStatics::GetPlayerController(this, 0))
+
+			for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
 			{
-				APlayerHud* PlayerHud = Cast<APlayerHud>(PlayerController->GetHUD());
-				if (PlayerHud)
+				AActor* Actor = *ActorItr;
+				if (Actor)
 				{
-					PlayerHud->SetText("C to Focus");  
+					if (UMeshComponent* MeshComp = Actor->FindComponentByClass<UMeshComponent>())
+					{
+						if (MeshComp->CustomDepthStencilValue == 1)
+						{
+							if (APlayerController* PlayerController = UGameplayStatics::GetPlayerController(this, 0))
+							{
+								APlayerHud* PlayerHud = Cast<APlayerHud>(PlayerController->GetHUD());
+								if (PlayerHud)
+								{
+									PlayerHud->SetText("C to Focus");  
+								}
+							}
+							break;
+						}
+					}
 				}
 			}
-
 			
 			// hide actor
 			for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
