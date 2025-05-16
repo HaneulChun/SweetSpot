@@ -22,6 +22,16 @@ UPlayerVision::UPlayerVision()
 void UPlayerVision::BeginPlay()
 {
 	Super::BeginPlay();
+
+	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+	{
+		AActor* Actor = *ActorItr;
+		
+		if (Actor->Tags.Contains("SeeMe"))
+		{
+			ActorArray.Add(Actor);
+		}
+	}
 	
 }
 
@@ -42,53 +52,54 @@ void UPlayerVision::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 		
 		FVector PlayerLocation = PlayerPawn->GetActorLocation();
 		
-		for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+		for (AActor* Actor : ActorArray)
 		{
-			AActor* Actor = *ActorItr;
-		
-			if (Actor->Tags.Contains("SeeMe"))
+			if (Actor)
 			{
-				UMeshComponent* MeshComp = Actor->FindComponentByClass<UMeshComponent>();
-				if (MeshComp && MeshComp->WasRecentlyRendered(0.1f))
+				if (UMeshComponent* MeshComp = Actor->FindComponentByClass<UMeshComponent>())
 				{
-					FVector Center = MeshComp->Bounds.Origin;
-					float Radius = MeshComp->Bounds.SphereRadius;
-
-					TArray<FVector> PointsToCheck = {
-						Center,
-						Center + FVector(Radius, 0, 0),
-						Center + FVector(-Radius, 0, 0),
-						Center + FVector(0, Radius, 0),
-						Center + FVector(0, -Radius, 0),
-						Center + FVector(0, 0, Radius),
-						Center + FVector(0, 0, -Radius)
-					};
-					
-					for (const FVector& Point : PointsToCheck)
+					if (Actor && Actor->WasRecentlyRendered(0.1f))
 					{
-						FHitResult HitResult;
-						FCollisionQueryParams Params;
-						Params.AddIgnoredActor(PlayerPawn);
+						FVector Center = MeshComp->Bounds.Origin;
+						float Radius = MeshComp->Bounds.SphereRadius;
 
-						bool bHit = GetWorld()->LineTraceSingleByChannel(
-							HitResult,
-							PlayerLocation,
-							Point,
-							ECC_Visibility,
-							Params
-						);
-
-						if (!bHit || HitResult.GetActor() == Actor)
+						TArray<FVector> PointsToCheck = {
+							Center,
+							Center + FVector(Radius, 0, 0),
+							Center + FVector(-Radius, 0, 0),
+							Center + FVector(0, Radius, 0),
+							Center + FVector(0, -Radius, 0),
+							Center + FVector(0, 0, Radius),
+							Center + FVector(0, 0, -Radius)
+						};
+					
+						for (const FVector& Point : PointsToCheck)
 						{
-							if (USpottedObject* object = Cast<USpottedObject>(Actor->FindComponentByClass<USpottedObject>()))
+							FHitResult HitResult;
+							FCollisionQueryParams Params;
+							Params.AddIgnoredActor(PlayerPawn);
+
+							bool bHit = GetWorld()->LineTraceSingleByChannel(
+								HitResult,
+								PlayerLocation,
+								Point,
+								ECC_Visibility,
+								Params
+							);
+
+							if (!bHit || HitResult.GetActor() == Actor)
 							{
-								object->FadeAway();
+								if (USpottedObject* object = Cast<USpottedObject>(Actor->FindComponentByClass<USpottedObject>()))
+								{
+									object->FadeAway();
+								}
+								break; 
 							}
-							break; 
 						}
 					}
 				}
 			}
 		}
+		
 	}
 }

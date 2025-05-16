@@ -6,6 +6,7 @@
 #include "ElevatorPart.h"
 #include "FMODBlueprintStatics.h"
 #include "MyTeleport.h"
+#include "PlayerHud.h"
 #include "PlayerInventory.h"
 #include "GameFramework/Character.h"
 
@@ -132,6 +133,16 @@ void AElevator::ShowElevatorPart(UChildActorComponent* Part)
 	{
 		UFMODBlueprintStatics::PlayEventAtLocation(this, FixElevatorSFX, this->GetActorTransform(), true);	
 	}
+	if (APlayerController* PC = GetWorld()->GetFirstPlayerController())
+	{
+		AHUD* HUD = PC->GetHUD();
+		APlayerHud* player = Cast<APlayerHud>(HUD);
+		if (player)
+		{
+			player->SetText("Go to Exit");
+		}
+	}
+
 }
 
 

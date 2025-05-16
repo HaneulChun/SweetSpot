@@ -7,6 +7,7 @@
 #include "PlayerVision.generated.h"
 
 
+class UMeshComponent;
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class UNREALPROJECTBASE_API UPlayerVision : public UActorComponent
 {
@@ -20,6 +21,9 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+	UPROPERTY()
+	TArray<AActor*> ActorArray;
+	
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
