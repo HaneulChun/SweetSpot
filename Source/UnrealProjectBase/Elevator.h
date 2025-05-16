@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "Elevator.generated.h"
 
+class UFMODEvent;
 enum class EElevatorPart : uint8;
 class AMyTeleport;
 class UBoxComponent;
@@ -42,4 +43,10 @@ public:
 	
 	UFUNCTION(BlueprintCallable)
 	void FixElevator();
+
+	UFUNCTION()
+	void ShowElevatorPart(UChildActorComponent* Part);
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
+	UFMODEvent* FixElevatorSFX;
 };

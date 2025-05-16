@@ -4,6 +4,7 @@
 #include "Elevator.h"
 
 #include "ElevatorPart.h"
+#include "FMODBlueprintStatics.h"
 #include "MyTeleport.h"
 #include "PlayerInventory.h"
 #include "GameFramework/Character.h"
@@ -89,42 +90,21 @@ void AElevator::FixElevator()
 				case EElevatorPart::Switch:
 					if (Switch)
 					{
-						if (UStaticMeshComponent* Mesh = Switch->GetChildActor()->FindComponentByClass<UStaticMeshComponent>())
-						{
-							Mesh->SetVisibility(true);
-							if (Teleport)
-							{
-								Teleport->isCompleted = true;
-							}
-						}
+						ShowElevatorPart(Switch);
 					}
 					break;
 
 				case EElevatorPart::Button:
 					if (Button)
 					{
-						if (UStaticMeshComponent* Mesh = Button->GetChildActor()->FindComponentByClass<UStaticMeshComponent>())
-						{
-							Mesh->SetVisibility(true);
-							if (Teleport)
-							{
-								Teleport->isCompleted = true;
-							}
-						}
+						ShowElevatorPart(Button);
 					}
 					break;
 
 				case EElevatorPart::Cranck:
 					if (Cranck)
 					{
-						if (UStaticMeshComponent* Mesh = Cranck->GetChildActor()->FindComponentByClass<UStaticMeshComponent>())
-						{
-							Mesh->SetVisibility(true);
-							if (Teleport)
-							{
-								Teleport->isCompleted = true;
-							}
-						}
+						ShowElevatorPart(Cranck);
 					}
 					break;
 
@@ -135,6 +115,22 @@ void AElevator::FixElevator()
 				Inventory->ElevatorPart =  EElevatorPart::None;
 			}
 		}
+	}
+}
+
+void AElevator::ShowElevatorPart(UChildActorComponent* Part)
+{
+	if (UStaticMeshComponent* Mesh = Part->GetChildActor()->FindComponentByClass<UStaticMeshComponent>())
+	{
+		Mesh->SetVisibility(true);
+	}
+	if (Teleport)
+	{
+		Teleport->isCompleted = true;
+	}
+	if (FixElevatorSFX)
+	{
+		UFMODBlueprintStatics::PlayEventAtLocation(this, FixElevatorSFX, this->GetActorTransform(), true);	
 	}
 }
 
