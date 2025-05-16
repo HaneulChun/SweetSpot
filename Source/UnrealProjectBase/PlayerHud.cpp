@@ -39,8 +39,8 @@ void APlayerHud::DrawHUD()
 {
 	Super::DrawHUD();
 	
-	FCanvasTextItem TextItem(FVector2D(500, 40), FText::FromString(Text), GEngine->GetLargeFont(), FLinearColor::White);
-	TextItem.Scale = FVector2D(1.5f, 1.5f);
+	FCanvasTextItem TextItem(FVector2D(500, 40), FText::FromString(Text), GEngine->GetLargeFont(), FLinearColor::Red);
+	TextItem.Scale = FVector2D(2.5f, 2.5f);
 	
 	Canvas->DrawItem(TextItem);
 }

@@ -241,6 +241,29 @@ void UMyUserWidget::SetIncreaseMadness(float value)
 	increaseMadness = value;
 }
 
+void UMyUserWidget::DecreaseMadness(float value)
+{
+	mmadnessBarValue -= value;
+	if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
+	{
+		// point at the player's camera
+		if (UCameraComponent* Camera = PlayerController->PlayerCameraManager->GetOwningPlayerController()->PlayerCameraManager->ViewTarget.Target->FindComponentByClass<UCameraComponent>())
+		{
+			FPostProcessSettings& Settings = Camera->PostProcessSettings;
+
+			if (isInRoom)
+			{
+				ChangeCameraSettings(Settings, 0.0, 1);
+				Color(Settings, 0.5);
+			}
+			else
+			{
+				ChangeCameraSettings(Settings, 0.0, .4);
+			}
+		}
+	}
+}
+
 void UMyUserWidget::IncreaseMadnessBar(float value)
 {
 	mmadnessBarValue += value;

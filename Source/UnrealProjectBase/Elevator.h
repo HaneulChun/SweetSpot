@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "Elevator.generated.h"
 
+class UFMODEvent;
+enum class EElevatorPart : uint8;
 class AMyTeleport;
 class UBoxComponent;
 UCLASS()
@@ -20,19 +22,31 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	
+	EElevatorPart ElevatorPart;
 
+	void InitPart(UChildActorComponent* Component, EElevatorPart Type);
 public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
 
-	UFUNCTION()
-	void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-		UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,
-		bool bFromSweep, const FHitResult& SweepResult);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TObjectPtr<AMyTeleport> Teleport;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly ,Category = "Parts")
+	UChildActorComponent* Switch;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Trigger")
-	UBoxComponent* triggerBox;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly ,Category = "Parts")
+	UChildActorComponent* Button;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly ,Category = "Parts")
+	UChildActorComponent* Cranck;
+	
+	UFUNCTION(BlueprintCallable)
+	void FixElevator();
+
+	UFUNCTION()
+	void ShowElevatorPart(UChildActorComponent* Part);
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
+	UFMODEvent* FixElevatorSFX;
 };
