@@ -98,7 +98,7 @@ void AMyTeleport::Reset()
 	}
 	if (APlayerController* PC = GetWorld()->GetFirstPlayerController())
 	{
-		APawn* PlayerPawn = PC->GetPawn(); // Get the controlled Pawn
+		APawn* PlayerPawn = PC->GetPawn();
 		if (PlayerPawn)
 		{
 			UPlayerVision* VisionComp = PlayerPawn->FindComponentByClass<UPlayerVision>();
