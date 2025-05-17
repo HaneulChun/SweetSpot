@@ -28,6 +28,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI")
 	FString Text = "";
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI")
+	FString GotoText = "";
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI", meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<UMyUserWidget> WidgetClass;
 
@@ -50,8 +53,8 @@ public:
 	UPROPERTY(EditAnywhere, BluePrintReadWrite)
 	TArray<UMaterialInterface*> Material;
 
-	UFUNCTION()
-	void emptyText();
+	UFUNCTION(BlueprintCallable)
+	void SetTextTodo(FString setText);
 
 	UFUNCTION(BlueprintCallable)
 	void SetText(FString setText);
