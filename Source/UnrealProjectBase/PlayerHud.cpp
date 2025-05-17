@@ -32,7 +32,6 @@ void APlayerHud::BeginPlay()
 		}
 	}
 	Text = TEXT("");
-	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &APlayerHud::emptyText, 0.1, false);
 }
 
 void APlayerHud::DrawHUD()
@@ -41,8 +40,12 @@ void APlayerHud::DrawHUD()
 	
 	FCanvasTextItem TextItem(FVector2D(500, 40), FText::FromString(Text), GEngine->GetLargeFont(), FLinearColor::Red);
 	TextItem.Scale = FVector2D(2.5f, 2.5f);
+
+	FCanvasTextItem TextItemGoto(FVector2D(1000, 40), FText::FromString(GotoText), GEngine->GetLargeFont(), FLinearColor::Red);
+	TextItemGoto.Scale = FVector2D(2.5f, 2.5f);
 	
 	Canvas->DrawItem(TextItem);
+	Canvas->DrawItem(TextItemGoto);
 }
 
 UMyUserWidget* APlayerHud::GetWidget() const
@@ -50,9 +53,10 @@ UMyUserWidget* APlayerHud::GetWidget() const
 	return CurrentWidget;
 }
 
-void APlayerHud::emptyText()
+
+void APlayerHud::SetTextTodo(FString setText)
 {
-	Text = TEXT("");
+	GotoText = setText;
 }
 
 void APlayerHud::SetText(FString setText)
