@@ -25,12 +25,16 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-private:
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
 	UMyUserWidget* UserWidgetRef;
 
-	UPROPERTY()
-	UTextBlock* BPMText;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
+	UTextBlock* Text_BPM_Numbers;
+
+	UFUNCTION(BlueprintCallable, Category = "UI")
+	void FreezeLook();
+	
+private:
 
 	void UpdateBPMDisplay();
 };

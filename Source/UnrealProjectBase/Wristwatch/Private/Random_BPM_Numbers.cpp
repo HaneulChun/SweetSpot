@@ -16,23 +16,13 @@ void ARandom_BPM_Numbers::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// Find any instance of UMyUserWidget that is in the viewport
-	for (TObjectIterator<UMyUserWidget> WidgetItr; WidgetItr; ++WidgetItr)
-	{
-		if (WidgetItr->IsValidLowLevel() && WidgetItr->IsInViewport())
-		{
-			UserWidgetRef = *WidgetItr;
-			break;
-		}
-	}
-
 	if (UserWidgetRef && UserWidgetRef->CurrentWidget)
 	{
 		// Attempt to get the BPM text block from the widget
-		BPMText = Cast<UTextBlock>(
+		Text_BPM_Numbers = Cast<UTextBlock>(
 			UserWidgetRef->CurrentWidget->GetWidgetFromName(TEXT("Text_BPM_Numbers")));
 
-		if (!BPMText)
+		if (!Text_BPM_Numbers)
 		{
 			UE_LOG(LogTemp, Warning, TEXT("Text_BPM_Numbers not found in widget."));
 		}
@@ -47,13 +37,16 @@ void ARandom_BPM_Numbers::BeginPlay()
 void ARandom_BPM_Numbers::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+}
 
+void ARandom_BPM_Numbers::FreezeLook()
+{
 	UpdateBPMDisplay();
 }
 
 void ARandom_BPM_Numbers::UpdateBPMDisplay()
 {
-	if (!UserWidgetRef || !BPMText) return;
+	if (!UserWidgetRef || !Text_BPM_Numbers) return;
 
 	// Get madness state values
 	const float Madness = UserWidgetRef->GetCurrentValue();
@@ -78,5 +71,5 @@ void ARandom_BPM_Numbers::UpdateBPMDisplay()
 
 	// Update the text block
 	const FString BPMString = FString::Printf(TEXT("%d BPM"), BPM);
-	BPMText->SetText(FText::FromString(BPMString));
+	Text_BPM_Numbers->SetText(FText::FromString(BPMString));
 }
