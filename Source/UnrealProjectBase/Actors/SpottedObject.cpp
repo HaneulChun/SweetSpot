@@ -3,8 +3,8 @@
 
 #include "SpottedObject.h"
 
-#include "MyUserWidget.h"
-#include "PlayerHud.h"
+#include "UnrealProjectBase/UI/PlayerHud.h"
+#include "UnrealProjectBase/UI/MyUserWidget.h"
 
 // Sets default values for this component's properties
 USpottedObject::USpottedObject()
