@@ -4,13 +4,10 @@
 #include "Room.h"
 #include "Components/BoxComponent.h"
 #include "Blueprint/UserWidget.h"
-#include "MyUserWidget.h"
+#include "UnrealProjectBase/UI/PlayerHud.h"
+#include "UnrealProjectBase/UI/MyUserWidget.h"
 #include "GameFramework/Character.h"
 #include "Camera/CameraComponent.h"
-#include <string>
-#include  "GameFramework/Character.h"
-#include "PlayerHud.h"
-#include "Misc/OutputDeviceNull.h"
 
 // Sets default values
 ARoom::ARoom()

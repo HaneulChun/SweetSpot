@@ -8,9 +8,9 @@
 #include "Engine/Engine.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/Character.h"
-#include "PlayerHud.h"
-#include "MyUserWidget.h"
-#include "PlayerVision.h"
+#include "UnrealProjectBase/UI/PlayerHud.h"
+#include "UnrealProjectBase/UI/MyUserWidget.h"
+#include "UnrealProjectBase/PlayerComponent/PlayerVision.h"
 
 // Sets default values
 AMyTeleport::AMyTeleport()

@@ -6,8 +6,8 @@
 #include "ElevatorPart.h"
 #include "FMODBlueprintStatics.h"
 #include "MyTeleport.h"
-#include "PlayerHud.h"
-#include "PlayerInventory.h"
+#include "UnrealProjectBase/UI/PlayerHud.h"
+#include "UnrealProjectBase/PlayerComponent/PlayerInventory.h"
 #include "GameFramework/Character.h"
 
 // Sets default values

@@ -3,7 +3,7 @@
 
 #include "ElevatorPart.h"
 
-#include "PlayerInventory.h"
+#include "UnrealProjectBase/PlayerComponent/PlayerInventory.h"
 
 // Sets default values
 AElevatorPart::AElevatorPart()
