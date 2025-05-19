@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Components/TextBlock.h"
-#include "UnrealProjectBase/MyUserWidget.h"
+#include "UnrealProjectBase/UI/MyUserWidget.h"
 #include "Random_BPM_Numbers.generated.h"
 
 UCLASS()
