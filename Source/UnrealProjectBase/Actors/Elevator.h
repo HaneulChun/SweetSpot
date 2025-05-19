@@ -25,7 +25,7 @@ protected:
 	
 	EElevatorPart ElevatorPart;
 
-	void InitPart(UChildActorComponent* Component, EElevatorPart Type);
+	void SetChildPart(UChildActorComponent* Component, EElevatorPart Type);
 public:	
 
 

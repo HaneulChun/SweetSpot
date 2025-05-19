@@ -41,16 +41,22 @@ AActor* UPlayerLook::LookAtActor()
 	if (Camera)
 	{
 		FVector Start = Camera->GetComponentLocation();
-		FVector End = Camera->GetForwardVector() * 1000.0f;
+		FVector End = Start + Camera->GetForwardVector() * 1000.0f;
 
 		FHitResult HitResult;
-		FCollisionQueryParams Params;
+		FCollisionQueryParams Params(SCENE_QUERY_STAT(MyTrace), true);
 
 		if (GetWorld()->LineTraceSingleByChannel(HitResult, Start, End, ECC_Visibility, Params))
 		{
-			return Cast<AActor>(HitResult.GetActor());
+			AActor* HitActor = HitResult.GetActor();
+			if (HitActor)
+			{
+				UE_LOG(LogTemp, Log, TEXT("Hit actor: %s"), *HitActor->GetName());
+				return HitActor;
+			}
 		}
 	}
 	return nullptr;
+
 }
 
