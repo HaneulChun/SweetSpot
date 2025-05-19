@@ -26,6 +26,9 @@ protected:
 
 	UPROPERTY()
 	TArray<FVector> location;
+
+	UPROPERTY()
+	TArray<FRotator> rotation;
 public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
@@ -39,6 +42,9 @@ public:
 		UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,
 		bool bFromSweep, const FHitResult& SweepResult);
 
+	UFUNCTION()
+	void SetActors();
+	
 	UFUNCTION()
 	void Reset();
 

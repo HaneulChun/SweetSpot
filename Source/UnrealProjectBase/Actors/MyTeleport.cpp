@@ -29,14 +29,8 @@ void AMyTeleport::BeginPlay()
 {
 	Super::BeginPlay();
 
-	for (AActor* objects : Actors)
-	{
-		if (objects)
-		{
-			location.Add(objects->GetActorLocation());
-		}
-	}
-
+	SetActors();
+	
 	if (triggerBox)
 	{
 		triggerBox->OnComponentBeginOverlap.AddDynamic(this, &AMyTeleport::OnOverlapBegin);
@@ -77,6 +71,18 @@ void AMyTeleport::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 	}
 }
 
+void AMyTeleport::SetActors()
+{
+	for (AActor* objects : Actors)
+	{
+		if (objects)
+		{
+			location.Add(objects->GetActorLocation());
+			rotation.Add(objects->GetActorRotation());
+		}
+	}
+}
+
 void AMyTeleport::Reset()
 {
 	int32 i = 0;
@@ -85,14 +91,13 @@ void AMyTeleport::Reset()
 		if (object)
 		{
 			object->Destroy();
-		
-			FRotator SpawnRotation = FRotator::ZeroRotator;
+			
 			FActorSpawnParameters SpawnParams;
 			SpawnParams.Owner = this;
 			SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
 
 
-			GetWorld()->SpawnActor<AActor>(object->GetClass(), location[i], SpawnRotation, SpawnParams);
+			GetWorld()->SpawnActor<AActor>(object->GetClass(), location[i], rotation[i], SpawnParams);
 			i++;
 		}
 	}
