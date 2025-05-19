@@ -38,7 +38,7 @@ void AElevator::BeginPlay()
 		if (UStaticMeshComponent* Mesh = Switch->GetChildActor()->FindComponentByClass<UStaticMeshComponent>())
 		{
 			Mesh->SetVisibility(false);
-			Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+			Mesh->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 		}
 	}
 	if (Button && Button->GetChildActor())
@@ -47,7 +47,7 @@ void AElevator::BeginPlay()
 		if (UStaticMeshComponent* Mesh = Button->GetChildActor()->FindComponentByClass<UStaticMeshComponent>())
 		{
 			Mesh->SetVisibility(false);
-			Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+			Mesh->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 		}
 	}
 	if (Cranck && Cranck->GetChildActor())
@@ -56,16 +56,16 @@ void AElevator::BeginPlay()
 		if (UStaticMeshComponent* Mesh = Cranck->GetChildActor()->FindComponentByClass<UStaticMeshComponent>())
 		{
 			Mesh->SetVisibility(false);
-			Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+			Mesh->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 		}
 	}
 
-	InitPart(Switch, EElevatorPart::Switch);
-	InitPart(Button, EElevatorPart::Button);
-	InitPart(Cranck, EElevatorPart::Cranck);
+	SetChildPart(Switch, EElevatorPart::Switch);
+	SetChildPart(Button, EElevatorPart::Button);
+	SetChildPart(Cranck, EElevatorPart::Cranck);
 }
 
-void AElevator::InitPart(UChildActorComponent* Component, EElevatorPart Type)
+void AElevator::SetChildPart(UChildActorComponent* Component, EElevatorPart Type)
 {
 	if (Component && Component->GetChildActor())
 	{
