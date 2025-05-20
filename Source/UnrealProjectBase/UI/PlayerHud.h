@@ -22,7 +22,11 @@ protected:
 	virtual void BeginPlay() override;
 
 	virtual void DrawHUD() override;
-	
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
+	UTexture2D* MyTexture;
+
+	bool isShowImage = false;
 public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI")
@@ -30,7 +34,10 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI")
 	FString GotoText = "";
-
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI")
+	FString ChocoleteText = "LMB";
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI", meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<UMyUserWidget> WidgetClass;
 
@@ -58,4 +65,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetText(FString setText);
+
+	UFUNCTION(BlueprintCallable)
+	void SetTextLMB(bool img);
 };

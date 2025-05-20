@@ -2,6 +2,7 @@
 
 
 #include "PlayerInventory.h"
+#include "UnrealProjectBase/UI/PlayerHud.h"
 
 // Sets default values for this component's properties
 UPlayerInventory::UPlayerInventory()
@@ -37,6 +38,14 @@ bool UPlayerInventory::AddChocolate()
 	if (currentChocolate < 6)
 	{
 		currentChocolate++;
+
+		if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
+		{
+			if (APlayerHud* PlayerHud = Cast<APlayerHud>(PlayerController->GetHUD()))
+			{
+				PlayerHud->SetTextLMB(true);
+			}
+		}
 		return true;
 	}
 	return false;
@@ -44,9 +53,20 @@ bool UPlayerInventory::AddChocolate()
 
 bool UPlayerInventory::EatChocolate()
 {
+	if (currentChocolate <= 1)
+	{
+		if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
+		{
+			if (APlayerHud* PlayerHud = Cast<APlayerHud>(PlayerController->GetHUD()))
+			{
+				PlayerHud->SetTextLMB(false);
+			}
+		}
+	}
 	if (currentChocolate > 0)
 	{
 		currentChocolate--;
+		
 		return true;
 	}
 	return false;
