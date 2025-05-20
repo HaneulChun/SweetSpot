@@ -21,6 +21,9 @@ protected:
 
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 
+	FTimerHandle TimerHandle;
+	bool isDying = false;
+	int dyingCount = 0;
 public:
 	FString mvalue = "";
 
@@ -85,6 +88,12 @@ public:
 	
 	UFUNCTION(BlueprintCallable)
 	void IncreaseMadnessBar(float value);
+
+	UFUNCTION(BlueprintCallable)
+	void Dying();
+
+	UFUNCTION(BlueprintCallable)
+	void Dead();
 
 	UFUNCTION(BlueprintCallable)
 	TArray<float> GetCameraSettings();

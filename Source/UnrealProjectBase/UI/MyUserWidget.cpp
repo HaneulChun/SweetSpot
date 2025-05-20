@@ -73,27 +73,11 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 	}
 	else if(mmadnessBarValue >= 1) // dead 
 	{
-		// find object with spawn tag and teleport to spawn
-		if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
+		if (mvalue != "dead")
 		{
-			if (APawn* Player = PlayerController->GetPawn())
-			{
-				for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
-				{
-					AActor* Actor = *ActorItr;
-		
-					if (Actor->Tags.Contains("Spawn"))
-					{
-						Player->SetActorLocation(Actor->GetActorLocation());
-						
-						if (FullyMadSFX)
-						{
-							UFMODBlueprintStatics::PlayEventAtLocation(this, FullyMadSFX, Player->GetActorTransform(), true);	
-						}
-					}
-				}
-			}
-			mmadnessBarValue = 0;
+			isDying = true;
+			GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &UMyUserWidget::Dying, 0.1, isDying);
+			mvalue = "dead";
 		}
 	}
 	else if(mmadnessBarValue >= mad) // mad
@@ -288,6 +272,52 @@ void UMyUserWidget::DecreaseMadness(float value)
 void UMyUserWidget::IncreaseMadnessBar(float value)
 {
 	mmadnessBarValue += value;
+}
+
+void UMyUserWidget::Dying()
+{
+	dyingCount++;
+	if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
+	{
+		// point at the player's camera
+		if (UCameraComponent* Camera = PlayerController->PlayerCameraManager->GetOwningPlayerController()->PlayerCameraManager->ViewTarget.Target->FindComponentByClass<UCameraComponent>())
+		{
+			FPostProcessSettings& Settings = Camera->PostProcessSettings;
+			ChangeCameraSettings(Settings, 10.0, (dyingCount * 0.5) + 1.5);
+		}
+	}
+	if (dyingCount >= 10)
+	{
+		isDying = false;
+		GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &UMyUserWidget::Dead, 0.1, isDying);
+		dyingCount = 0;
+	}
+}
+
+void UMyUserWidget::Dead()
+{
+	// find object with spawn tag and teleport to spawn
+	if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
+	{
+		if (APawn* Player = PlayerController->GetPawn())
+		{
+			for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+			{
+				AActor* Actor = *ActorItr;
+		
+				if (Actor->Tags.Contains("Spawn"))
+				{
+					Player->SetActorLocation(Actor->GetActorLocation());
+						
+					if (FullyMadSFX)
+					{
+						UFMODBlueprintStatics::PlayEventAtLocation(this, FullyMadSFX, Player->GetActorTransform(), true);	
+					}
+				}
+			}
+		}
+		mmadnessBarValue = 0;
+	}
 }
 
 TArray<float> UMyUserWidget::GetCameraSettings()
