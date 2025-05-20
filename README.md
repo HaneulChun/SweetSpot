@@ -73,8 +73,14 @@ Debug Menu           | Z
 
 ### Team  
 Parker Mise - Project Manager  
+
 Natalie Wong - Artist 
+
 Harnoor Garcha- Level Design
+
 Jason Saltenis - Programmer 
+
 Haneul Chan - Programmer 
+
 Jacob Tallio - Programmer 
+
