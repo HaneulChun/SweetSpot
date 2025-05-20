@@ -58,10 +58,12 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 				if (Actor->Tags.Contains("Sane"))
 				{
 					Actor->SetActorHiddenInGame(true);
+					Actor->SetActorEnableCollision(false);
 				}
 				if (Actor->Tags.Contains("Sweet"))
 				{
 					Actor->SetActorHiddenInGame(false);
+					Actor->SetActorEnableCollision(true);
 				}
 			}
 			mvalue = "sane";
@@ -130,10 +132,12 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 				if (Actor->Tags.Contains("Sane"))
 				{
 					Actor->SetActorHiddenInGame(false);
+					Actor->SetActorEnableCollision(true);
 				}
 				if (Actor->Tags.Contains("Sweet"))
 				{
 					Actor->SetActorHiddenInGame(false);
+					Actor->SetActorEnableCollision(true);
 				}
 			}
 		}
@@ -144,6 +148,8 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 		{
 			mvalue = "sweat";
 
+			// check if player can focus in an object
+			// if there is no object to focus dont show text
 			for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
 			{
 				AActor* Actor = *ActorItr;
@@ -153,7 +159,7 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 					{
 						if (MeshComp->CustomDepthStencilValue == 1)
 						{
-							if (APlayerController* PlayerController = UGameplayStatics::GetPlayerController(this, 0))
+							if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
 							{
 								APlayerHud* PlayerHud = Cast<APlayerHud>(PlayerController->GetHUD());
 								if (PlayerHud)
@@ -175,10 +181,12 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 				if (Actor->Tags.Contains("Sane"))
 				{
 					Actor->SetActorHiddenInGame(false);
+					Actor->SetActorEnableCollision(true);
 				}
 				if (Actor->Tags.Contains("Sweet"))
 				{
 					Actor->SetActorHiddenInGame(true);
+					Actor->SetActorEnableCollision(false);
 				}
 			}
 		}
@@ -218,7 +226,7 @@ void UMyUserWidget::ChangeCameraMaterial(float intensity)
 {
 	if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
 	{
-		// point at the player's camera
+		// point at the player's camera and add material
 		if (UCameraComponent* Camera = PlayerController->PlayerCameraManager->GetOwningPlayerController()->PlayerCameraManager->ViewTarget.Target->FindComponentByClass<UCameraComponent>())
 		{
 			FPostProcessSettings& Settings = Camera->PostProcessSettings;
@@ -259,7 +267,7 @@ void UMyUserWidget::DecreaseMadness(float value)
 	mmadnessBarValue -= value;
 	if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
 	{
-		// point at the player's camera
+		// point at the player's camera change the settings
 		if (UCameraComponent* Camera = PlayerController->PlayerCameraManager->GetOwningPlayerController()->PlayerCameraManager->ViewTarget.Target->FindComponentByClass<UCameraComponent>())
 		{
 			FPostProcessSettings& Settings = Camera->PostProcessSettings;

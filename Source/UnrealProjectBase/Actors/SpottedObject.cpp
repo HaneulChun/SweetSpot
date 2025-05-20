@@ -34,6 +34,7 @@ void USpottedObject::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 	{
 		if (spotted == false)
 		{
+			// increase madness when object is sopoted
 			if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
 			{
 				APlayerHud* hud = Cast<APlayerHud>(PlayerController->GetHUD());
@@ -46,6 +47,8 @@ void USpottedObject::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 			}
 			spotted = true;
 		}
+
+		// move the object
 		FVector Direction = -GetOwner()->GetActorForwardVector();
 		FVector CurrentLocation = GetOwner()->GetActorLocation();
 		FVector NewLocation = CurrentLocation + (Direction * speed);
