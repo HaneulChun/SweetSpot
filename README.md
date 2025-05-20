@@ -48,7 +48,7 @@ Sweet Spot
 Sweet Spot is a First Person Eye Level, 3D Horror, Puzzle Solving game. You play as a concierge working at a remote hotel that's being haunted by an Eldritch Horror that shows itself via Tentacles and Eyeballs. It has trapped the Player in a Looping Hallway and an Elevator with missing pieces scattered throughout the Levels. The Player has access to a Wrist Watch which checks the time left in the Level and the state of their Madness. The Madness Meter is a Resource with 3 states: Sane, The Sweet Spot and Mad. The Ideal state the Player wants to be in is The Sweet Spot, this state will cause important items key to solving puzzles to glow. Use the Madness Meter to your advantage and solve the puzzles to find the missing elevator pieces and escape the loop.
 
 ### Documentation  
-https://drive.google.com/drive/folders/1iGh71J26g5hfqgEvMaGSsHmyDN9VofN6?usp=sharing
+Google Drive: https://drive.google.com/drive/folders/1iGh71J26g5hfqgEvMaGSsHmyDN9VofN6?usp=sharing
 
 Level Design Factors: https://docs.google.com/document/d/1hXD6std1pi3a1aUoCEsk88-umzxhnqcsFkJGQE6jV9E/edit?tab=t.0
 
