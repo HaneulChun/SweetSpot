@@ -46,12 +46,13 @@ AActor* UPlayerLook::LookAtActor()
 		FHitResult HitResult;
 		FCollisionQueryParams Params(SCENE_QUERY_STAT(MyTrace), true);
 
+		// ray traceing
 		if (GetWorld()->LineTraceSingleByChannel(HitResult, Start, End, ECC_Visibility, Params))
 		{
+			// return the actor that was hit
 			AActor* HitActor = HitResult.GetActor();
 			if (HitActor)
 			{
-				UE_LOG(LogTemp, Log, TEXT("Hit actor: %s"), *HitActor->GetName());
 				return HitActor;
 			}
 		}

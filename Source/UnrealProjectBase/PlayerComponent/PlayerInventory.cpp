@@ -39,6 +39,7 @@ bool UPlayerInventory::AddChocolate()
 	{
 		currentChocolate++;
 
+		// show LMB text
 		if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
 		{
 			if (APlayerHud* PlayerHud = Cast<APlayerHud>(PlayerController->GetHUD()))
@@ -55,6 +56,7 @@ bool UPlayerInventory::EatChocolate()
 {
 	if (currentChocolate <= 1)
 	{
+		// remove LMB text
 		if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
 		{
 			if (APlayerHud* PlayerHud = Cast<APlayerHud>(PlayerController->GetHUD()))
@@ -74,16 +76,7 @@ bool UPlayerInventory::EatChocolate()
 
 void UPlayerInventory::GetElevatorPart(EElevatorPart newElevatorPart)
 {
-	if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
-	{
-		if (APawn* Pawn = PlayerController->GetPawn())
-		{
-			if (UPlayerInventory* Inventory = Pawn->FindComponentByClass<UPlayerInventory>())
-			{
-				Inventory->ElevatorPart = newElevatorPart;
-			}	
-		}
-	}
+	ElevatorPart = newElevatorPart;
 }
 
 void UPlayerInventory::UseElevatorPart()

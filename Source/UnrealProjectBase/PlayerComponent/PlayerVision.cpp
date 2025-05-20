@@ -33,6 +33,7 @@ void UPlayerVision::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	FrameCounter++;
+	// check every 10 frames
 	if (FrameCounter % 10 == 0)
 	{
 		APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
@@ -42,7 +43,8 @@ void UPlayerVision::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 			return;
 		
 		FVector PlayerLocation = PlayerPawn->GetActorLocation();
-		
+
+		// check if the eye was recently rendered
 		for (AActor* Actor : ActorArray)
 		{
 			if (Actor)
@@ -54,6 +56,7 @@ void UPlayerVision::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 						FVector Center = MeshComp->Bounds.Origin;
 						float Radius = MeshComp->Bounds.SphereRadius;
 
+						// set points to check if the player can see the object
 						TArray<FVector> PointsToCheck = {
 							Center,
 							Center + FVector(Radius, 0, 0),
@@ -63,7 +66,8 @@ void UPlayerVision::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 							Center + FVector(0, 0, Radius),
 							Center + FVector(0, 0, -Radius)
 						};
-					
+
+						// check if there is a wall between player and point
 						for (const FVector& Point : PointsToCheck)
 						{
 							FHitResult HitResult;
@@ -78,6 +82,7 @@ void UPlayerVision::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 								Params
 							);
 
+							// if see actor make it fade away
 							if (!bHit || HitResult.GetActor() == Actor)
 							{
 								if (USpottedObject* object = Cast<USpottedObject>(Actor->FindComponentByClass<USpottedObject>()))

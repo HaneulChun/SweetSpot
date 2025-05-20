@@ -13,6 +13,7 @@ void APlayerHud::BeginPlay()
 {
 	Super::BeginPlay();
 
+	// set the madness meter
 	if (WidgetClass)
 	{
 		CurrentWidget = CreateWidget<UMyUserWidget>(GetWorld(), WidgetClass);
@@ -38,6 +39,7 @@ void APlayerHud::DrawHUD()
 {
 	Super::DrawHUD();
 	
+	// set the text on sceen (only for prototype)
 	FCanvasTextItem TextItem(FVector2D(500, 40), FText::FromString(Text), GEngine->GetLargeFont(), FLinearColor::Red);
 	TextItem.Scale = FVector2D(2.5f, 2.5f);
 
