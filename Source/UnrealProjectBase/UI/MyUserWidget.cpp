@@ -58,10 +58,12 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 				if (Actor->Tags.Contains("Sane"))
 				{
 					Actor->SetActorHiddenInGame(true);
+					Actor->SetActorEnableCollision(false);
 				}
 				if (Actor->Tags.Contains("Sweet"))
 				{
 					Actor->SetActorHiddenInGame(false);
+					Actor->SetActorEnableCollision(true);
 				}
 			}
 			mvalue = "sane";
@@ -130,10 +132,12 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 				if (Actor->Tags.Contains("Sane"))
 				{
 					Actor->SetActorHiddenInGame(false);
+					Actor->SetActorEnableCollision(true);
 				}
 				if (Actor->Tags.Contains("Sweet"))
 				{
 					Actor->SetActorHiddenInGame(false);
+					Actor->SetActorEnableCollision(true);
 				}
 			}
 		}
@@ -177,10 +181,12 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 				if (Actor->Tags.Contains("Sane"))
 				{
 					Actor->SetActorHiddenInGame(false);
+					Actor->SetActorEnableCollision(true);
 				}
 				if (Actor->Tags.Contains("Sweet"))
 				{
 					Actor->SetActorHiddenInGame(true);
+					Actor->SetActorEnableCollision(false);
 				}
 			}
 		}
