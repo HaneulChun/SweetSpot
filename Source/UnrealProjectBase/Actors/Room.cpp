@@ -40,15 +40,16 @@ void ARoom::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 		{
 			if (APlayerHud* MyHUD = Cast<APlayerHud>(PlayerController->GetHUD()))
 			{
-				UUserWidget* Widget = MyHUD->GetWidget();
-				if (Widget)
+				if (UUserWidget* Widget = MyHUD->GetWidget())
 				{
 					UMyUserWidget* WidgetPtr = Cast<UMyUserWidget>(Widget);
 					if (WidgetPtr)
 					{
+						// increase Madness if player is in room
 						WidgetPtr->isInRoom = true;
 						WidgetPtr->SetIncreaseMadness(increment);
 
+						// give the player vignette
 						if (UCameraComponent* Camera = Character->FindComponentByClass<UCameraComponent>())
 						{
 							FPostProcessSettings& Settings = Camera->PostProcessSettings;
@@ -87,9 +88,11 @@ void ARoom::NotifyActorEndOverlap(AActor* OtherActor)
 			
 					if (WidgetPtr)
 					{
+						// increase Madness if player is in room
 						WidgetPtr->isInRoom = false;
 						WidgetPtr->SetIncreaseMadness(0.0);
 
+						// remove the player vignette when exiting room
 						if (UCameraComponent* Camera = Character->FindComponentByClass<UCameraComponent>())
 						{
 							FPostProcessSettings& Settings = Camera->PostProcessSettings;
