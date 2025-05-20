@@ -69,3 +69,23 @@ Harnoor Garcha- Level Design
 Jason Saltenis - Programmer 
 Haneul Chan - Programmer 
 Jacob Tallio - Programmer 
+
+## Collaborators
+
+## Gameplay Pillars 
+Nothing is as it seems. 
+The hotel is the Horror 
+Precise Management is Rewarded 
+
+## Location of Final Build 
+
+## Known Issues 
+
+## Core Loop 
+
+## Feature Summary 
+
+
+ 
+
+
