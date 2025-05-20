@@ -55,7 +55,10 @@ Action               | Keyboard Control  | Gamepad Control
 ---                  |---                |---
 Move                 | WASD            
 look                 | Mouse Look       
-interact             | e               
+interact             | E    
+Focus                | C  
+Check Watch          | TAB 
+Use                  | LMB  
 
 ### Debug Controls  
 Action               | Keyboard Control
