@@ -1,6 +1,6 @@
 // All Rights Reserved by SweetSpot 2025-2026.
 
-#include "FPS.h"
+#include "UnrealProjectBase/Debug/Public/FPS.h"
 #include "Blueprint/UserWidget.h"
 #include "Components/TextBlock.h"
 
