@@ -56,11 +56,11 @@ void ARoom::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 
 							if (WidgetPtr->mvalue == "mad")
 							{
-								Color(Settings, 0.5, WidgetPtr->vignetteIntensity);
+								Color(Settings, colorIntensity, WidgetPtr->vignetteIntensity);
 							}
 							else
 							{
-								Color(Settings, 0.5, 1);	
+								Color(Settings, colorIntensity, 1);	
 							}
 						}
 					}

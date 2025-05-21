@@ -44,10 +44,10 @@ public:
 	void SetMaterial(TArray<UMaterialInterface*> Mat);
 	
 	UFUNCTION(BlueprintCallable, Category = "Material")
-	void ChangeCameraSettings(FPostProcessSettings& settings, float chromaticAberration, float Vignette);
+	void ChangeCameraSettings(float chromaticAberration, float Vignette);
 
 	UFUNCTION(BlueprintCallable, Category = "Material")
-	void Color(FPostProcessSettings& settings, float intensity);
+	void Color(float intensity);
 	
 	UFUNCTION(BlueprintCallable, Category = "Material")
 	void ChangeCameraMaterial(float intensity);

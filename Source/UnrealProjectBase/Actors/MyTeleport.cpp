@@ -132,7 +132,6 @@ void AMyTeleport::Complete(AActor* OtherActor)
 	}
 	UObject* t = Cast<UObject>(OtherActor);
 	UGameplayStatics::OpenLevel(t, "WinScrean");
-	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Black, "win");
 }
 
 void AMyTeleport::Teleport(AActor* OtherActor, FTransform Transform)

@@ -24,22 +24,12 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 	{
 		if (mvalue != "sane")
 		{
-			// get the reference of the cameras settings 
-			if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
-			{
-				// point at the player's camera
-				if (UCameraComponent* Camera = PlayerController->PlayerCameraManager->GetOwningPlayerController()->PlayerCameraManager->ViewTarget.Target->FindComponentByClass<UCameraComponent>())
-				{
-					FPostProcessSettings& Settings = Camera->PostProcessSettings;
+			ChangeCameraSettings(0.0, 0.4);
+			chromaticAberrationIntensity = 0;
+			vignetteIntensity = 0.4;
 					
-					ChangeCameraSettings(Settings, 0.0, 0.4);
-					chromaticAberrationIntensity = 0;
-					vignetteIntensity = 0.4;
-					
-					ChangeCameraMaterial(0.0f);
-					matIntensity = 0;
-				}
-			}
+			ChangeCameraMaterial(0.0f);
+			matIntensity = 0;
 
 			// hide actor
 			for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
@@ -75,21 +65,16 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 	{
 		if (mvalue != "mad")
 		{
+			ChangeCameraSettings(10.0, 1.5);
+			vignetteIntensity = 1.5;
+			chromaticAberrationIntensity = 10;
+					
+			ChangeCameraMaterial(0.0f);
+			matIntensity = 0;
+
+			// set text 
 			if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
 			{
-				// point at the player's camera
-				if (UCameraComponent* Camera = PlayerController->PlayerCameraManager->GetOwningPlayerController()->PlayerCameraManager->ViewTarget.Target->FindComponentByClass<UCameraComponent>())
-				{
-					FPostProcessSettings& Settings = Camera->PostProcessSettings;
-
-					ChangeCameraSettings(Settings, 10.0, 1.5);
-					vignetteIntensity = 1.5;
-					chromaticAberrationIntensity = 10;
-					
-					ChangeCameraMaterial(0.0f);
-					matIntensity = 0;
-				}
-
 				APlayerHud* PlayerHud = Cast<APlayerHud>(PlayerController->GetHUD());
 				if (PlayerHud)
 				{
@@ -118,11 +103,15 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 		}
 	}
 	else // sweat spot
-	{
+	{//colorIntensity
 		if (mvalue != "sweat")
 		{
 			mvalue = "sweat";
 
+			ChangeCameraSettings(0.0, .4);
+			chromaticAberrationIntensity = 0;
+			vignetteIntensity = 0.4;
+			
 			// check if player can focus in an object
 			// if there is no object to focus dont show text
 			for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
@@ -174,23 +163,37 @@ void UMyUserWidget::SetMaterial(TArray<UMaterialInterface*> Mat)
 	Material = Mat;
 }
 
-void UMyUserWidget::ChangeCameraSettings(FPostProcessSettings& settings, float chromaticAberration, float Vignette)
+void UMyUserWidget::ChangeCameraSettings(float chromaticAberration, float Vignette)
 {
-	FPostProcessSettings& Settings = settings;
-	
-	Settings.bOverride_SceneFringeIntensity = true;
-	Settings.SceneFringeIntensity = chromaticAberration;
+	if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
+	{
+		// point at the player's camera
+		if (UCameraComponent* Camera = PlayerController->PlayerCameraManager->GetOwningPlayerController()->PlayerCameraManager->ViewTarget.Target->FindComponentByClass<UCameraComponent>())
+		{
+			FPostProcessSettings& Settings = Camera->PostProcessSettings;
 
-	Settings.bOverride_VignetteIntensity = true;
-	Settings.VignetteIntensity = Vignette;
+			Settings.bOverride_SceneFringeIntensity = true;
+			Settings.SceneFringeIntensity = chromaticAberration;
+
+			Settings.bOverride_VignetteIntensity = true;
+			Settings.VignetteIntensity = Vignette;
+		}
+	}
 }
 
-void UMyUserWidget::Color(FPostProcessSettings& settings, float intensity)
+void UMyUserWidget::Color(float intensity)
 {
-	FPostProcessSettings& Settings = settings;
-
-	Settings.bOverride_ColorSaturation = true;
-	Settings.ColorSaturation = FVector4(intensity, intensity, intensity, 1.0f);
+	if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
+	{
+		// point at the player's camera
+		if (UCameraComponent* Camera = PlayerController->PlayerCameraManager->GetOwningPlayerController()->PlayerCameraManager->ViewTarget.Target->FindComponentByClass<UCameraComponent>())
+		{
+			FPostProcessSettings& Settings = Camera->PostProcessSettings;
+			
+			Settings.bOverride_ColorSaturation = true;
+			Settings.ColorSaturation = FVector4(intensity, intensity, intensity, 1.0f);
+		}
+	}
 }
 
 void UMyUserWidget::ChangeCameraMaterial(float intensity)
@@ -236,23 +239,14 @@ void UMyUserWidget::SetIncreaseMadness(float value)
 void UMyUserWidget::DecreaseMadness(float value)
 {
 	mmadnessBarValue -= value;
-	if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
+	if (isInRoom)
 	{
-		// point at the player's camera change the settings
-		if (UCameraComponent* Camera = PlayerController->PlayerCameraManager->GetOwningPlayerController()->PlayerCameraManager->ViewTarget.Target->FindComponentByClass<UCameraComponent>())
-		{
-			FPostProcessSettings& Settings = Camera->PostProcessSettings;
-
-			if (isInRoom)
-			{
-				ChangeCameraSettings(Settings, 0.0, 1);
-				Color(Settings, 0.5);
-			}
-			else
-			{
-				ChangeCameraSettings(Settings, 0.0, .4);
-			}
-		}
+		ChangeCameraSettings(0.0, 1);
+		Color(0.5);
+	}
+	else
+	{
+		ChangeCameraSettings(0.0, .4);
 	}
 }
 
@@ -264,15 +258,7 @@ void UMyUserWidget::IncreaseMadnessBar(float value)
 void UMyUserWidget::Dying()
 {
 	dyingCount++;
-	if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
-	{
-		// point at the player's camera
-		if (UCameraComponent* Camera = PlayerController->PlayerCameraManager->GetOwningPlayerController()->PlayerCameraManager->ViewTarget.Target->FindComponentByClass<UCameraComponent>())
-		{
-			FPostProcessSettings& Settings = Camera->PostProcessSettings;
-			ChangeCameraSettings(Settings, 10.0, (dyingCount * 0.5) + 1.5);
-		}
-	}
+	ChangeCameraSettings(10.0, (dyingCount * 0.5) + 1.5);
 	if (dyingCount >= 10)
 	{
 		isDying = false;
