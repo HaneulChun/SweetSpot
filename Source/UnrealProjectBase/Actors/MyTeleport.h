@@ -37,9 +37,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	AActor* thisLoop;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	AActor* nextLoop;
-
 	UPROPERTY(BlueprintReadOnly)
 	float currentLoop = 0;
 	

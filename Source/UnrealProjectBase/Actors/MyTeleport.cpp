@@ -44,25 +44,12 @@ void AMyTeleport::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 {
 	if (Cast<ACharacter>(OtherActor))
 	{
-		// if (level[0].IsValid())
-		// {
-		// 	UWorld* world = level[0].Get();
-		//
-		// 	if (world)
-		// 	{
-		// 		FString levelName = world->GetName();
-		// 		FName levelFName(*levelName);
-		//
-		// 		FLatentActionInfo LatentInfo;
-		//
-		// 		UGameplayStatics::LoadStreamLevel(this, levelFName, true, true, LatentInfo);
-		// 		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, "sdfsf");
-		// 	}
-		// }
-
 		// check if this loop is null
 		if (thisLoop)
 		{
+			// teleport player
+			Teleport(OtherActor, thisLoop->GetTransform());
+			
 			// check if puzzle is completed
 			if (isCompleted == true)
 			{
@@ -70,9 +57,6 @@ void AMyTeleport::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 			}
 			else
 			{
-				// teleport player
-				Teleport(OtherActor, thisLoop->GetTransform());
-
 				// reset the eye and chocolate 
 				Reset();
 
@@ -139,15 +123,25 @@ void AMyTeleport::Reset()
 
 void AMyTeleport::Complete(AActor* OtherActor)
 {
-	if (nextLoop)
+	currentLoop++;
+	
+	if (levelLoop.Num() > currentLoop)
 	{
-		Teleport(OtherActor, nextLoop->GetTransform());
 		isCompleted = false;
-		currentLoop++;
+
+		// Debug the number of elements in levelLoop
+		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Black, 
+			FString::Printf(TEXT("levelLoop.Num(): %d"), levelLoop.Num()));
+
+		// Debug the current loop iteration
+		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Black, 
+			FString::Printf(TEXT("CurrentLoop: %f"), currentLoop));
+
 		return;
 	}
 	UObject* t = Cast<UObject>(OtherActor);
 	UGameplayStatics::OpenLevel(t, "WinScrean");
+	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Black, "win");
 }
 
 void AMyTeleport::Teleport(AActor* OtherActor, FTransform Transform)
