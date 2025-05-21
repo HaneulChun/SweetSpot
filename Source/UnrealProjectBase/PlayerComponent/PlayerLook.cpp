@@ -32,6 +32,7 @@ void UPlayerLook::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// ...
+	LookAtActor();
 }
 
 AActor* UPlayerLook::LookAtActor()
