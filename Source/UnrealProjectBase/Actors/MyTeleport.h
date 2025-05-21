@@ -29,13 +29,19 @@ protected:
 
 	UPROPERTY()
 	TArray<FRotator> rotation;
+
 public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<TSoftObjectPtr<UWorld>> levelLoop;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	AActor* thisLoop;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	AActor* nextLoop;
+
+	UPROPERTY(BlueprintReadOnly)
+	float currentLoop = 0;
 	
 	UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
@@ -48,7 +54,7 @@ public:
 	UFUNCTION()
 	void Reset();
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	void Complete(AActor* OtherActor);
 
 	UFUNCTION()

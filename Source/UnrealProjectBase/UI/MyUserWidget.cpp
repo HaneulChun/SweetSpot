@@ -14,15 +14,6 @@ void UMyUserWidget::NativeConstruct()
 	Super::NativeConstruct();
 
 	bIsFocusable = true;
-
-	if (WidgetClass)
-	{
-		CurrentWidget = CreateWidget<UUserWidget>(this, WidgetClass);
-		if (CurrentWidget)
-		{
-			CurrentWidget->AddToViewport();
-		}
-	}
 }
 
 void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
@@ -177,10 +168,6 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 	}
 }
 
-UUserWidget* UMyUserWidget::GetWidget() const
-{
-	return CurrentWidget;
-}
 
 void UMyUserWidget::SetMaterial(TArray<UMaterialInterface*> Mat)
 {
