@@ -128,15 +128,6 @@ void AMyTeleport::Complete(AActor* OtherActor)
 	if (levelLoop.Num() > currentLoop)
 	{
 		isCompleted = false;
-
-		// Debug the number of elements in levelLoop
-		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Black, 
-			FString::Printf(TEXT("levelLoop.Num(): %d"), levelLoop.Num()));
-
-		// Debug the current loop iteration
-		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Black, 
-			FString::Printf(TEXT("CurrentLoop: %f"), currentLoop));
-
 		return;
 	}
 	UObject* t = Cast<UObject>(OtherActor);
