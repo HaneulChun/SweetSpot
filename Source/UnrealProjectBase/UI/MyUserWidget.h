@@ -35,9 +35,6 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, Category = "UI")
 	UUserWidget* CurrentWidget;
-	
-	UFUNCTION(BlueprintCallable, Category = "UI")
-	UUserWidget* GetWidget() const;
 
 	
 	UPROPERTY(EditAnywhere, BluePrintReadWrite)

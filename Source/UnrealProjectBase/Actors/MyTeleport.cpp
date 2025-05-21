@@ -44,6 +44,22 @@ void AMyTeleport::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 {
 	if (Cast<ACharacter>(OtherActor))
 	{
+		// if (level[0].IsValid())
+		// {
+		// 	UWorld* world = level[0].Get();
+		//
+		// 	if (world)
+		// 	{
+		// 		FString levelName = world->GetName();
+		// 		FName levelFName(*levelName);
+		//
+		// 		FLatentActionInfo LatentInfo;
+		//
+		// 		UGameplayStatics::LoadStreamLevel(this, levelFName, true, true, LatentInfo);
+		// 		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, "sdfsf");
+		// 	}
+		// }
+
 		// check if this loop is null
 		if (thisLoop)
 		{
@@ -126,6 +142,8 @@ void AMyTeleport::Complete(AActor* OtherActor)
 	if (nextLoop)
 	{
 		Teleport(OtherActor, nextLoop->GetTransform());
+		isCompleted = false;
+		currentLoop++;
 		return;
 	}
 	UObject* t = Cast<UObject>(OtherActor);
