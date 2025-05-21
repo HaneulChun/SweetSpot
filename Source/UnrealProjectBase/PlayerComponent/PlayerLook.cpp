@@ -32,7 +32,6 @@ void UPlayerLook::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// ...
-	LookAtActor();
 }
 
 AActor* UPlayerLook::LookAtActor()
@@ -42,7 +41,7 @@ AActor* UPlayerLook::LookAtActor()
 	if (Camera)
 	{
 		FVector Start = Camera->GetComponentLocation();
-		FVector End = Start + Camera->GetForwardVector() * 1000.0f;
+		FVector End = Start + Camera->GetForwardVector() * 200.0f;
 
 		FHitResult HitResult;
 		FCollisionQueryParams Params(SCENE_QUERY_STAT(MyTrace), true);
