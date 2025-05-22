@@ -21,6 +21,9 @@ protected:
 
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 
+	FTimerHandle TimerHandle;
+	bool isDying = false;
+	int dyingCount = 0;
 public:
 	FString mvalue = "";
 
@@ -32,9 +35,6 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, Category = "UI")
 	UUserWidget* CurrentWidget;
-	
-	UFUNCTION(BlueprintCallable, Category = "UI")
-	UUserWidget* GetWidget() const;
 
 	
 	UPROPERTY(EditAnywhere, BluePrintReadWrite)
@@ -44,10 +44,10 @@ public:
 	void SetMaterial(TArray<UMaterialInterface*> Mat);
 	
 	UFUNCTION(BlueprintCallable, Category = "Material")
-	void ChangeCameraSettings(FPostProcessSettings& settings, float chromaticAberration, float Vignette);
+	void ChangeCameraSettings(float chromaticAberration, float Vignette);
 
 	UFUNCTION(BlueprintCallable, Category = "Material")
-	void Color(FPostProcessSettings& settings, float intensity);
+	void Color(float intensity);
 	
 	UFUNCTION(BlueprintCallable, Category = "Material")
 	void ChangeCameraMaterial(float intensity);
@@ -85,6 +85,12 @@ public:
 	
 	UFUNCTION(BlueprintCallable)
 	void IncreaseMadnessBar(float value);
+
+	UFUNCTION(BlueprintCallable)
+	void Dying();
+
+	UFUNCTION(BlueprintCallable)
+	void Dead();
 
 	UFUNCTION(BlueprintCallable)
 	TArray<float> GetCameraSettings();

@@ -43,4 +43,7 @@ public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float increment = 0.01;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float colorIntensity = 0.5;
 };

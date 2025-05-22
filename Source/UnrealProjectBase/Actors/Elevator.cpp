@@ -16,6 +16,7 @@ AElevator::AElevator()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	//set the childs
 	Switch = CreateDefaultSubobject<UChildActorComponent>(TEXT("Switch"));
 	Switch->SetupAttachment(RootComponent);
 	
@@ -31,7 +32,8 @@ AElevator::AElevator()
 void AElevator::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	//make the child invisible
 	if (Switch && Switch->GetChildActor())
 	{
 		Switch->GetChildActor()->SetOwner(this);
@@ -67,6 +69,7 @@ void AElevator::BeginPlay()
 
 void AElevator::SetChildPart(UChildActorComponent* Component, EElevatorPart Type)
 {
+	// give the child enum
 	if (Component && Component->GetChildActor())
 	{
 		if (AElevatorPart* Part = Cast<AElevatorPart>(Component->GetChildActor()))
@@ -78,6 +81,7 @@ void AElevator::SetChildPart(UChildActorComponent* Component, EElevatorPart Type
 
 void AElevator::FixElevator()
 {
+	// if players inventory match the elevator part then fix elevator
 	if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
 	{
 		if (APawn* Pawn = PlayerController->GetPawn())
@@ -121,6 +125,7 @@ void AElevator::FixElevator()
 
 void AElevator::ShowElevatorPart(UChildActorComponent* Part)
 {
+	// helper function make elevator parts appear 
 	if (UStaticMeshComponent* Mesh = Part->GetChildActor()->FindComponentByClass<UStaticMeshComponent>())
 	{
 		Mesh->SetVisibility(true);

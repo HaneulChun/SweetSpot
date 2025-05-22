@@ -18,6 +18,7 @@ AMyTeleport::AMyTeleport()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	// set trigger-box for default
 	triggerBox = CreateDefaultSubobject<UBoxComponent>(TEXT("TriggerBox"));
 	triggerBox->SetupAttachment(RootComponent);
 	triggerBox->SetCollisionProfileName(TEXT("Trigger"));
@@ -43,18 +44,23 @@ void AMyTeleport::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 {
 	if (Cast<ACharacter>(OtherActor))
 	{
+		// check if this loop is null
 		if (thisLoop)
 		{
+			// teleport player
+			Teleport(OtherActor, thisLoop->GetTransform());
+			
+			// check if puzzle is completed
 			if (isCompleted == true)
 			{
 				Complete(OtherActor);
 			}
 			else
 			{
-				Teleport(OtherActor, thisLoop->GetTransform());
-				
+				// reset the eye and chocolate 
 				Reset();
 
+				// increase their madness
 				APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
 				if (APlayerController* character = Cast<APlayerController>(PlayerController))
 				{
@@ -117,9 +123,11 @@ void AMyTeleport::Reset()
 
 void AMyTeleport::Complete(AActor* OtherActor)
 {
-	if (nextLoop)
+	currentLoop++;
+	
+	if (levelLoop.Num() > currentLoop)
 	{
-		Teleport(OtherActor, nextLoop->GetTransform());
+		isCompleted = false;
 		return;
 	}
 	UObject* t = Cast<UObject>(OtherActor);
