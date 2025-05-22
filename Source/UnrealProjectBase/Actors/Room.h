@@ -27,9 +27,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<UBoxComponent*> TriggerVolume;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UUserWidget* MadnessWidget;
-	
 	UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 		UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,
@@ -39,7 +36,7 @@ public:
 	void NotifyActorEndOverlap(AActor* OtherActor) override;
 
 	UFUNCTION(BlueprintCallable)
-	void Color(FPostProcessSettings& settings, float intensity, float Vignette);
+	void Color(float intensity, float Vignette);
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float increment = 0.01;

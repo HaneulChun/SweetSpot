@@ -50,18 +50,13 @@ void ARoom::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 						WidgetPtr->SetIncreaseMadness(increment);
 
 						// give the player vignette
-						if (UCameraComponent* Camera = Character->FindComponentByClass<UCameraComponent>())
+						if (WidgetPtr->mvalue == "mad")
 						{
-							FPostProcessSettings& Settings = Camera->PostProcessSettings;
-
-							if (WidgetPtr->mvalue == "mad")
-							{
-								Color(Settings, colorIntensity, WidgetPtr->vignetteIntensity);
-							}
-							else
-							{
-								Color(Settings, colorIntensity, 1);	
-							}
+							Color(colorIntensity, WidgetPtr->vignetteIntensity);
+						}
+						else
+						{
+							Color(colorIntensity, 1);	
 						}
 					}
 				}
@@ -93,12 +88,7 @@ void ARoom::NotifyActorEndOverlap(AActor* OtherActor)
 						WidgetPtr->SetIncreaseMadness(0.0);
 
 						// remove the player vignette when exiting room
-						if (UCameraComponent* Camera = Character->FindComponentByClass<UCameraComponent>())
-						{
-							FPostProcessSettings& Settings = Camera->PostProcessSettings;
-			
-							Color(Settings, WidgetPtr->colorIntensity, WidgetPtr->vignetteIntensity);
-						}
+						Color(WidgetPtr->colorIntensity, WidgetPtr->vignetteIntensity);
 					}
 				}
 			}
@@ -106,14 +96,21 @@ void ARoom::NotifyActorEndOverlap(AActor* OtherActor)
 	}
 }
 
-void ARoom::Color(FPostProcessSettings& settings, float intensity, float Vignette)
+void ARoom::Color(float intensity, float Vignette)
 {
-	FPostProcessSettings& Settings = settings;
-	
-	Settings.bOverride_ColorSaturation = true;
-	Settings.ColorSaturation = FVector4(intensity, intensity, intensity, 1.0f);
+	if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
+	{
+		// point at the player's camera and add material
+		if (UCameraComponent* Camera = PlayerController->PlayerCameraManager->GetOwningPlayerController()->PlayerCameraManager->ViewTarget.Target->FindComponentByClass<UCameraComponent>())
+		{
+			FPostProcessSettings& Settings = Camera->PostProcessSettings;
 
-	Settings.bOverride_VignetteIntensity = true;
-	Settings.VignetteIntensity = Vignette;
+			Settings.bOverride_ColorSaturation = true;
+			Settings.ColorSaturation = FVector4(intensity, intensity, intensity, 1.0f);
+
+			Settings.bOverride_VignetteIntensity = true;
+			Settings.VignetteIntensity = Vignette;
+		}
+	}
 }
 
