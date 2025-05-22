@@ -29,13 +29,13 @@ protected:
 	bool isShowImage = false;
 public:
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI")
+	UPROPERTY(BlueprintReadOnly, Category = "UI")
 	FString Text = "";
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI")
+	UPROPERTY(BlueprintReadOnly, Category = "UI")
 	FString GotoText = "";
 	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI")
+	UPROPERTY(BlueprintReadOnly, Category = "UI")
 	FString ChocoleteText = "LMB";
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI", meta = (AllowPrivateAccess = "true"))
@@ -52,7 +52,7 @@ public:
 	
 
 	UPROPERTY(EditAnywhere, BluePrintReadWrite)
-	float sweatSpot = 0.4;
+	float sweetSpot = 0.4;
 
 	UPROPERTY(EditAnywhere, BluePrintReadWrite)
 	float mad = 0.6;

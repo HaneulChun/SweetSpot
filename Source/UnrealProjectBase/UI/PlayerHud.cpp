@@ -8,7 +8,7 @@
 #include "Blueprint/UserWidget.h"
 #include "Engine/Canvas.h"
 #include "MyUserWidget.h"
-
+//WidgetClass
 void APlayerHud::BeginPlay()
 {
 	Super::BeginPlay();
@@ -21,7 +21,7 @@ void APlayerHud::BeginPlay()
 		{
 			CurrentWidget->AddToViewport();
 			
-			CurrentWidget->sweatSpot = sweatSpot;
+			CurrentWidget->sweatSpot = sweetSpot;
 			CurrentWidget->mad = mad;
 				
 			CurrentWidget->SetMaterial(Material);
