@@ -14,6 +14,14 @@ ARoom::ARoom()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+	UBoxComponent* triggerBox;
+	
+	// set trigger-box for default
+	triggerBox = CreateDefaultSubobject<UBoxComponent>(TEXT("TriggerBox"));
+	triggerBox->SetupAttachment(RootComponent);
+	triggerBox->SetCollisionProfileName(TEXT("Trigger"));
+	triggerBox->SetGenerateOverlapEvents(true);
 }
 
 // Called when the game starts or when spawned
