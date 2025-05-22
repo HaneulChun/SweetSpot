@@ -57,7 +57,7 @@ public:
 	UFUNCTION()
 	void Teleport(AActor* OtherActor, FTransform Transform);
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite)
 	bool isCompleted = false;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)

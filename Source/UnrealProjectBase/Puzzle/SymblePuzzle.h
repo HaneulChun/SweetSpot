@@ -26,10 +26,10 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TObjectPtr<ASymblePuzzle> SymblePuzzle;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool isActive;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<ASymblePuzzle> nextSymblePuzzle;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	EElevatorPart ElevatorPart;
