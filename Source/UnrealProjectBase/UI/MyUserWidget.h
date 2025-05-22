@@ -72,7 +72,7 @@ public:
 	void DecreaseMadness(float value);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float mmadnessBarValue = 0.0;
+	float currentMadnessBarValue = 0.0;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float increaseMadness = 0.0;

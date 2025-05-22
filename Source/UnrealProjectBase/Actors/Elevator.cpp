@@ -25,7 +25,6 @@ AElevator::AElevator()
 	
 	Cranck = CreateDefaultSubobject<UChildActorComponent>(TEXT("Cranck"));
 	Cranck->SetupAttachment(RootComponent);
-
 }
 
 // Called when the game starts or when spawned
@@ -61,7 +60,7 @@ void AElevator::BeginPlay()
 			Mesh->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 		}
 	}
-
+	
 	SetChildPart(Switch, EElevatorPart::Switch);
 	SetChildPart(Button, EElevatorPart::Button);
 	SetChildPart(Cranck, EElevatorPart::Cranck);

@@ -20,7 +20,7 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {
 	Super::NativeTick(MyGeometry, InDeltaTime);
 	
-	if(mmadnessBarValue <= sweatSpot) // sane 
+	if(currentMadnessBarValue <= sweatSpot) // sane 
 	{
 		if (mvalue != "sane")
 		{
@@ -52,7 +52,7 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			//PlayerHud->Text = TEXT("");
 		}
 	}
-	else if(mmadnessBarValue >= 1) // dead 
+	else if(currentMadnessBarValue >= 1) // dead 
 	{
 		if (mvalue != "dead")
 		{
@@ -61,7 +61,7 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			mvalue = "dead";
 		}
 	}
-	else if(mmadnessBarValue >= mad) // mad
+	else if(currentMadnessBarValue >= mad) // mad
 	{
 		if (mvalue != "mad")
 		{
@@ -228,7 +228,7 @@ float UMyUserWidget::GetMadValue()
 
 float UMyUserWidget::GetCurrentValue()
 {
-	return mmadnessBarValue;
+	return currentMadnessBarValue;
 }
 
 void UMyUserWidget::SetIncreaseMadness(float value)
@@ -238,7 +238,7 @@ void UMyUserWidget::SetIncreaseMadness(float value)
 
 void UMyUserWidget::DecreaseMadness(float value)
 {
-	mmadnessBarValue -= value;
+	currentMadnessBarValue -= value;
 	if (isInRoom)
 	{
 		ChangeCameraSettings(0.0, 1);
@@ -252,7 +252,7 @@ void UMyUserWidget::DecreaseMadness(float value)
 
 void UMyUserWidget::IncreaseMadnessBar(float value)
 {
-	mmadnessBarValue += value;
+	currentMadnessBarValue += value;
 }
 
 void UMyUserWidget::Dying()
@@ -289,7 +289,7 @@ void UMyUserWidget::Dead()
 				}
 			}
 		}
-		mmadnessBarValue = 0;
+		currentMadnessBarValue = 0;
 	}
 }
 
