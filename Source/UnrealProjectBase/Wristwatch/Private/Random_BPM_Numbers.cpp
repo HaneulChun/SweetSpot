@@ -16,21 +16,21 @@ void ARandom_BPM_Numbers::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (UserWidgetRef && UserWidgetRef->CurrentWidget)
-	{
-		// Attempt to get the BPM text block from the widget
-		Text_BPM_Numbers = Cast<UTextBlock>(
-			UserWidgetRef->CurrentWidget->GetWidgetFromName(TEXT("Text_BPM_Numbers")));
-
-		if (!Text_BPM_Numbers)
-		{
-			UE_LOG(LogTemp, Warning, TEXT("Text_BPM_Numbers not found in widget."));
-		}
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("UMyUserWidget or CurrentWidget not found."));
-	}
+	// if (UserWidgetRef)
+	// {
+	// 	// Attempt to get the BPM text block from the widget
+	// 	Text_BPM_Numbers = Cast<UTextBlock>(
+	// 		UserWidgetRef->GetWidgetFromName(TEXT("Text_BPM_Numbers")));
+	//
+	// 	if (!Text_BPM_Numbers)
+	// 	{
+	// 		UE_LOG(LogTemp, Warning, TEXT("Text_BPM_Numbers not found in widget."));
+	// 	}
+	// }
+	// else
+	// {
+	// 	UE_LOG(LogTemp, Warning, TEXT("UMyUserWidget or CurrentWidget not found."));
+	// }
 }
 
 // Called every frame
@@ -46,7 +46,7 @@ void ARandom_BPM_Numbers::FreezeLook()
 
 void ARandom_BPM_Numbers::UpdateBPMDisplay()
 {
-	if (!UserWidgetRef || !Text_BPM_Numbers) return;
+	if (!Text_BPM_Numbers) return;
 
 	// Get madness state values
 	const float Madness = UserWidgetRef->GetCurrentValue();
