@@ -14,8 +14,6 @@ ARoom::ARoom()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
-	UBoxComponent* triggerBox;
 	
 	// set trigger-box for default
 	triggerBox = CreateDefaultSubobject<UBoxComponent>(TEXT("TriggerBox"));
@@ -29,6 +27,7 @@ void ARoom::BeginPlay()
 {
 	Super::BeginPlay();
 
+	triggerBox->OnComponentBeginOverlap.AddDynamic(this, &ARoom::OnOverlapBegin);
 	for (UBoxComponent* Trigger : TriggerVolume)
 	{
 		if (Trigger)

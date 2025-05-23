@@ -130,8 +130,8 @@ void AMyTeleport::Complete(AActor* OtherActor)
 		isCompleted = false;
 		return;
 	}
-	UObject* t = Cast<UObject>(OtherActor);
-	UGameplayStatics::OpenLevel(t, "WinScrean");
+	// UObject* t = Cast<UObject>(OtherActor);
+	// UGameplayStatics::OpenLevel(t, "WinScreen");
 }
 
 void AMyTeleport::Teleport(AActor* OtherActor, FTransform Transform)

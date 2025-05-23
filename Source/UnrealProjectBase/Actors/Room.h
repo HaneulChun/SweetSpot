@@ -23,6 +23,8 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	UPROPERTY();
+	UBoxComponent* triggerBox;
 public:	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<UBoxComponent*> TriggerVolume;
