@@ -24,6 +24,7 @@ protected:
 	FTimerHandle TimerHandle;
 	bool isDying = false;
 	int dyingCount = 0;
+	
 public:
 	FString mvalue = "";
 
@@ -35,9 +36,8 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, Category = "UI")
 	UUserWidget* CurrentWidget;
-
 	
-	UPROPERTY(EditAnywhere, BluePrintReadWrite)
+	UPROPERTY(EditAnywhere, BluePrintReadWrite, Category = "Material")
 	TArray<UMaterialInterface*> Material;
 
 	UFUNCTION(BlueprintCallable, Category = "Material")
@@ -95,7 +95,6 @@ public:
 	UFUNCTION(BlueprintCallable)
 	TArray<float> GetCameraSettings();
 	
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float chromaticAberrationIntensity;
 
