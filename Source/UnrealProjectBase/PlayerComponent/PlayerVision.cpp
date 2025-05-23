@@ -4,8 +4,6 @@
 #include "PlayerVision.h"
 #include "UnrealProjectBase/Actors/SpottedObject.h"
 #include "EngineUtils.h"
-#include "UnrealProjectBase/UI/PlayerHud.h"
-#include "UnrealProjectBase/UI/MyUserWidget.h"
 
 // Sets default values for this component's properties
 UPlayerVision::UPlayerVision()

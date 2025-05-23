@@ -3,10 +3,8 @@
 
 #include "MyTeleport.h"
 
-#include "EngineUtils.h"
 #include "Components/BoxComponent.h"
 #include "Engine/Engine.h"
-#include "Kismet/GameplayStatics.h"
 #include "GameFramework/Character.h"
 #include "UnrealProjectBase/UI/PlayerHud.h"
 #include "UnrealProjectBase/UI/MyUserWidget.h"
@@ -53,7 +51,7 @@ void AMyTeleport::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 			// check if puzzle is completed
 			if (isCompleted == true)
 			{
-				Complete(OtherActor);
+				Complete();
 			}
 			else
 			{
@@ -121,17 +119,14 @@ void AMyTeleport::Reset()
 	}
 }
 
-void AMyTeleport::Complete(AActor* OtherActor)
+void AMyTeleport::Complete()
 {
 	currentLoop++;
 	
 	if (levelLoop.Num() > currentLoop)
 	{
 		isCompleted = false;
-		return;
 	}
-	// UObject* t = Cast<UObject>(OtherActor);
-	// UGameplayStatics::OpenLevel(t, "WinScreen");
 }
 
 void AMyTeleport::Teleport(AActor* OtherActor, FTransform Transform)

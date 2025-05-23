@@ -7,7 +7,6 @@
 #include "Engine/Scene.h"
 #include "FMODBlueprintStatics.h"
 #include "PlayerHud.h"
-#include "Kismet/GameplayStatics.h"
 
 void UMyUserWidget::NativeConstruct()
 {

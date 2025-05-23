@@ -8,7 +8,6 @@
 #include "MyTeleport.h"
 #include "UnrealProjectBase/UI/PlayerHud.h"
 #include "UnrealProjectBase/PlayerComponent/PlayerInventory.h"
-#include "GameFramework/Character.h"
 
 // Sets default values
 AElevator::AElevator()

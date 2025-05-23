@@ -52,7 +52,7 @@ public:
 	void Reset();
 
 	UFUNCTION(BlueprintCallable)
-	void Complete(AActor* OtherActor);
+	void Complete();
 
 	UFUNCTION()
 	void Teleport(AActor* OtherActor, FTransform Transform);
