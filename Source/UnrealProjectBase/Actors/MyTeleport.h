@@ -34,8 +34,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<TSoftObjectPtr<UWorld>> levelLoop;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	AActor* thisLoop;
+	UPROPERTY(VisibleAnywhere)
+	USceneComponent* thisLoop;
 
 	UPROPERTY(BlueprintReadOnly)
 	float currentLoop = 0;
@@ -55,7 +55,7 @@ public:
 	void Complete();
 
 	UFUNCTION()
-	void Teleport(AActor* OtherActor, FTransform Transform);
+	void Teleport(AActor* OtherActor);
 	
 	UPROPERTY(BlueprintReadWrite)
 	bool isCompleted = false;
