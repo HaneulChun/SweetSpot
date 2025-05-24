@@ -30,6 +30,9 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly)
 	TArray<AActor*> SweetActors;
+
+	UPROPERTY()
+	AActor* spawnPoint;
 public:
 	FString mvalue = "";
 

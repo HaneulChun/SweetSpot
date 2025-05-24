@@ -27,6 +27,16 @@ void UMyUserWidget::NativeConstruct()
 			SweetActors.Add(Actor);
 		}
 	}
+
+	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+	{
+		AActor* Actor = *ActorItr;
+		
+		if (Actor->Tags.Contains("Spawn"))
+		{
+			spawnPoint = Actor;
+		}
+	}
 }
 
 void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
@@ -283,19 +293,11 @@ void UMyUserWidget::Dead()
 	{
 		if (APawn* Player = PlayerController->GetPawn())
 		{
-			for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
-			{
-				AActor* Actor = *ActorItr;
-		
-				if (Actor->Tags.Contains("Spawn"))
-				{
-					Player->SetActorLocation(Actor->GetActorLocation());
+			Player->SetActorLocation(spawnPoint->GetActorLocation());
 						
-					if (FullyMadSFX)
-					{
-						UFMODBlueprintStatics::PlayEventAtLocation(this, FullyMadSFX, Player->GetActorTransform(), true);	
-					}
-				}
+			if (FullyMadSFX)
+			{
+				UFMODBlueprintStatics::PlayEventAtLocation(this, FullyMadSFX, Player->GetActorTransform(), true);	
 			}
 		}
 		currentMadnessBarValue = 0;
