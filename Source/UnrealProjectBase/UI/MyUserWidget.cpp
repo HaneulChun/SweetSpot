@@ -13,6 +13,20 @@ void UMyUserWidget::NativeConstruct()
 	Super::NativeConstruct();
 
 	bIsFocusable = true;
+
+	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+	{
+		AActor* Actor = *ActorItr;
+		
+		if (Actor->Tags.Contains("Sane"))
+		{
+			SaneActors.Add(Actor);
+		}
+		if (Actor->Tags.Contains("Sweet"))
+		{
+			SweetActors.Add(Actor);
+		}
+	}
 }
 
 void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
@@ -31,13 +45,15 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			matIntensity = 0;
 
 			// hide actor
+			Fade(SaneActors, -0.1, 1);
+			
 			for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
 			{
 				AActor* Actor = *ActorItr;
 		
 				if (Actor->Tags.Contains("Sane"))
 				{
-					Actor->SetActorHiddenInGame(true);
+					//Actor->SetActorHiddenInGame(true);
 					Actor->SetActorEnableCollision(false);
 				}
 				if (Actor->Tags.Contains("Sweet"))
@@ -47,8 +63,16 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 				}
 			}
 			mvalue = "sane";
-
-			//PlayerHud->Text = TEXT("");
+			
+			// set text 
+			if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
+			{
+				APlayerHud* PlayerHud = Cast<APlayerHud>(PlayerController->GetHUD());
+				if (PlayerHud)
+				{
+					PlayerHud->SetText("");  
+				}
+			}
 		}
 	}
 	else if(currentMadnessBarValue >= 1) // dead 
@@ -137,13 +161,14 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			}
 			
 			// hide actor
+			Fade(SaneActors, 0.1, 0);
 			for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
 			{
 				AActor* Actor = *ActorItr;
 		
 				if (Actor->Tags.Contains("Sane"))
 				{
-					Actor->SetActorHiddenInGame(false);
+					//Actor->SetActorHiddenInGame(false);
 					Actor->SetActorEnableCollision(true);
 				}
 				if (Actor->Tags.Contains("Sweet"))
@@ -254,6 +279,11 @@ void UMyUserWidget::IncreaseMadnessBar(float value)
 	currentMadnessBarValue += value;
 }
 
+
+void UMyUserWidget::Fade_Implementation(const TArray<AActor*>& Actors, float Time, float StartValue)
+{
+}
+
 void UMyUserWidget::Dying()
 {
 	dyingCount++;
@@ -290,9 +320,4 @@ void UMyUserWidget::Dead()
 		}
 		currentMadnessBarValue = 0;
 	}
-}
-
-TArray<float> UMyUserWidget::GetCameraSettings()
-{
-	return {chromaticAberrationIntensity, vignetteIntensity, matIntensity, colorIntensity};
 }

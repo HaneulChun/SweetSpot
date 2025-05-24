@@ -24,7 +24,12 @@ protected:
 	FTimerHandle TimerHandle;
 	bool isDying = false;
 	int dyingCount = 0;
-	
+
+	UPROPERTY(BlueprintReadOnly)
+	TArray<AActor*> SaneActors;
+
+	UPROPERTY(BlueprintReadOnly)
+	TArray<AActor*> SweetActors;
 public:
 	FString mvalue = "";
 
@@ -85,15 +90,18 @@ public:
 	
 	UFUNCTION(BlueprintCallable)
 	void IncreaseMadnessBar(float value);
+	
 
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
+	void Fade(const TArray<AActor*>& Actors, float Time, float StartValue);
+	virtual void Fade_Implementation(const TArray<AActor*>& Actors, float Time, float StartValue);
+
+	
 	UFUNCTION(BlueprintCallable)
 	void Dying();
 
 	UFUNCTION(BlueprintCallable)
 	void Dead();
-
-	UFUNCTION(BlueprintCallable)
-	TArray<float> GetCameraSettings();
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float chromaticAberrationIntensity;
