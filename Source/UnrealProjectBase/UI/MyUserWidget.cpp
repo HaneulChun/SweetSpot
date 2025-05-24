@@ -45,22 +45,14 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			matIntensity = 0;
 
 			// hide actor
-			Fade(SaneActors, -0.1, 1);
-			
-			for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+			Fade(-0.1, 1, -0.1, 1);
+			for (AActor* Actor : SaneActors)
 			{
-				AActor* Actor = *ActorItr;
-		
-				if (Actor->Tags.Contains("Sane"))
-				{
-					//Actor->SetActorHiddenInGame(true);
-					Actor->SetActorEnableCollision(false);
-				}
-				if (Actor->Tags.Contains("Sweet"))
-				{
-					Actor->SetActorHiddenInGame(false);
-					Actor->SetActorEnableCollision(true);
-				}
+				Actor->SetActorEnableCollision(false);
+			}
+			for (AActor* Actor : SweetActors)
+			{
+				Actor->SetActorEnableCollision(false);
 			}
 			mvalue = "sane";
 			
@@ -108,20 +100,14 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			
 
 			// show actor
-			for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+			Fade(0, 1, -0.1, 1);
+			for (AActor* Actor : SaneActors)
 			{
-				AActor* Actor = *ActorItr;
-		
-				if (Actor->Tags.Contains("Sane"))
-				{
-					Actor->SetActorHiddenInGame(false);
-					Actor->SetActorEnableCollision(true);
-				}
-				if (Actor->Tags.Contains("Sweet"))
-				{
-					Actor->SetActorHiddenInGame(false);
-					Actor->SetActorEnableCollision(true);
-				}
+				Actor->SetActorEnableCollision(true);
+			}
+			for (AActor* Actor : SweetActors)
+			{
+				Actor->SetActorEnableCollision(false);
 			}
 		}
 	}
@@ -161,21 +147,14 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			}
 			
 			// hide actor
-			Fade(SaneActors, 0.1, 0);
-			for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+			Fade(0.1, 0, 0.1, 0);
+			for (AActor* Actor : SaneActors)
 			{
-				AActor* Actor = *ActorItr;
-		
-				if (Actor->Tags.Contains("Sane"))
-				{
-					//Actor->SetActorHiddenInGame(false);
-					Actor->SetActorEnableCollision(true);
-				}
-				if (Actor->Tags.Contains("Sweet"))
-				{
-					Actor->SetActorHiddenInGame(true);
-					Actor->SetActorEnableCollision(false);
-				}
+				Actor->SetActorEnableCollision(true);
+			}
+			for (AActor* Actor : SweetActors)
+			{
+				Actor->SetActorEnableCollision(true);
 			}
 		}
 	}
@@ -280,7 +259,8 @@ void UMyUserWidget::IncreaseMadnessBar(float value)
 }
 
 
-void UMyUserWidget::Fade_Implementation(const TArray<AActor*>& Actors, float Time, float StartValue)
+
+void UMyUserWidget::Fade_Implementation(float saneTime, float saneStartValue, float sweetTime, float sweetStartValue)
 {
 }
 

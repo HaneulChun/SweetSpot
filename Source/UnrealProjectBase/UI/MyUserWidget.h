@@ -93,8 +93,8 @@ public:
 	
 
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
-	void Fade(const TArray<AActor*>& Actors, float Time, float StartValue);
-	virtual void Fade_Implementation(const TArray<AActor*>& Actors, float Time, float StartValue);
+	void Fade(float saneTime, float saneStartValue, float sweetTime, float sweetStartValue);
+	virtual void Fade_Implementation(float saneTime, float saneStartValue, float sweetTime, float sweetStartValue);
 
 	
 	UFUNCTION(BlueprintCallable)
