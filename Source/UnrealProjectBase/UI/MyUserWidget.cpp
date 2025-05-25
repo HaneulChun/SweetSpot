@@ -91,7 +91,7 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 		if (mvalue != "mad")
 		{
 			ChangeCameraSettings(10.0, 1.5);
-			vignetteIntensity = 1.5;
+			//vignetteIntensity = 1.5;
 			chromaticAberrationIntensity = 10;
 					
 			ChangeCameraMaterial(0.0f);
@@ -125,11 +125,17 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 	{//colorIntensity
 		if (mvalue != "sweat")
 		{
-			mvalue = "sweat";
-
-			ChangeCameraSettings(0.0, .4);
-			chromaticAberrationIntensity = 0;
-			vignetteIntensity = 0.4;
+			if (isInRoom)
+			{
+				ChangeCameraSettings(0.0, 1);
+				chromaticAberrationIntensity = 0;
+			}
+			else
+			{
+				ChangeCameraSettings(0.0, .4);
+				chromaticAberrationIntensity = 0;
+				vignetteIntensity = 0.4;
+			}
 			
 			// check if player can focus in an object
 			// if there is no object to focus dont show text
@@ -157,7 +163,14 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			}
 			
 			// hide actor
-			Fade(0.1, 0, 0.1, 0);
+			if (mvalue == "mad")
+			{
+				Fade(0, 1, 0.1, 0);
+			}
+			else
+			{
+				Fade(0.1, 0, 0.1, 0);
+			}
 			for (AActor* Actor : SaneActors)
 			{
 				Actor->SetActorEnableCollision(true);
@@ -166,6 +179,8 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			{
 				Actor->SetActorEnableCollision(true);
 			}
+			
+			mvalue = "sweat";
 		}
 	}
 }
