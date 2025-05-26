@@ -67,18 +67,15 @@ void AElevator::BeginPlay()
 
 void AElevator::SetChildPart(UChildActorComponent* Component, EElevatorPart Type)
 {
-	// give the child enum
-	// if (Component && Component->GetChildActor())
-	// {
-	// 	if (AElevatorPart* Part = Cast<AElevatorPart>(Component->GetChildActor()))
-	// 	{
-	// 		Part->ElevatorPart = Type;
-	// 	}
-	// }
-	if (AElevatorPart* Part = Cast<AElevatorPart>(Component->GetChildActor()))
-	{
-		Part->ElevatorPart = Type;
-	}
+	
+	 //give the child enum
+	 if (Component && Component->GetChildActor())
+	 {
+	 	if (AElevatorPart* Part = Cast<AElevatorPart>(Component->GetChildActor()))
+	 	{
+	 		Part->ElevatorPart = Type;
+	 	}
+	 }
 }
 
 void AElevator::FixElevator()
