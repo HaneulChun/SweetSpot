@@ -40,27 +40,30 @@ void ARoom::BeginPlay()
 void ARoom::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 	int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
+	if (APawn* OverlappingPawn = Cast<APawn>(OtherActor))
 	{
-		if (APlayerHud* MyHUD = Cast<APlayerHud>(PlayerController->GetHUD()))
+		if (APlayerController* PlayerController = Cast<APlayerController>(OverlappingPawn->GetController()))
 		{
-			if (UUserWidget* Widget = MyHUD->GetWidget())
+			if (APlayerHud* MyHUD = Cast<APlayerHud>(PlayerController->GetHUD()))
 			{
-				UMyUserWidget* WidgetPtr = Cast<UMyUserWidget>(Widget);
-				if (WidgetPtr)
+				if (UUserWidget* Widget = MyHUD->GetWidget())
 				{
-					// increase Madness if player is in room
-					WidgetPtr->isInRoom = true;
-					WidgetPtr->SetIncreaseMadness(increment);
+					UMyUserWidget* WidgetPtr = Cast<UMyUserWidget>(Widget);
+					if (WidgetPtr)
+					{
+						// increase Madness if player is in room
+						WidgetPtr->isInRoom = true;
+						WidgetPtr->SetIncreaseMadness(increment);
 
-					// give the player vignette
-					if (WidgetPtr->mvalue == "mad")
-					{
-						Color(colorIntensity, WidgetPtr->vignetteIntensity);
-					}
-					else
-					{
-						Color(colorIntensity, 1);	
+						// give the player vignette
+						if (WidgetPtr->mvalue == "mad")
+						{
+							Color(colorIntensity, WidgetPtr->vignetteIntensity);
+						}
+						else
+						{
+							Color(colorIntensity, 1);	
+						}
 					}
 				}
 			}
@@ -73,23 +76,26 @@ void ARoom::NotifyActorEndOverlap(AActor* OtherActor)
 {
 	Super::NotifyActorEndOverlap(OtherActor);
 
-	if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
+	if (APawn* OverlappingPawn = Cast<APawn>(OtherActor))
 	{
-		if (APlayerHud* MyHUD = Cast<APlayerHud>(PlayerController->GetHUD()))
+		if (APlayerController* PlayerController = Cast<APlayerController>(OverlappingPawn->GetController()))
 		{
-			UUserWidget* Widget = MyHUD->GetWidget();
-			if (Widget)
+			if (APlayerHud* MyHUD = Cast<APlayerHud>(PlayerController->GetHUD()))
 			{
-				UMyUserWidget* WidgetPtr = Cast<UMyUserWidget>(Widget);
-			
-				if (WidgetPtr)
+				UUserWidget* Widget = MyHUD->GetWidget();
+				if (Widget)
 				{
-					// increase Madness if player is in room
-					WidgetPtr->isInRoom = false;
-					WidgetPtr->SetIncreaseMadness(0.0);
+					UMyUserWidget* WidgetPtr = Cast<UMyUserWidget>(Widget);
+			
+					if (WidgetPtr)
+					{
+						// increase Madness if player is in room
+						WidgetPtr->isInRoom = false;
+						WidgetPtr->SetIncreaseMadness(0.0);
 
-					// remove the player vignette when exiting room
-					Color(WidgetPtr->colorIntensity, WidgetPtr->vignetteIntensity);
+						// remove the player vignette when exiting room
+						Color(WidgetPtr->colorIntensity, WidgetPtr->vignetteIntensity);
+					}
 				}
 			}
 		}
