@@ -4,6 +4,7 @@
 #include "PlayerVision.h"
 #include "UnrealProjectBase/Actors/SpottedObject.h"
 #include "EngineUtils.h"
+#include "UnrealProjectBase/BigEye.h"
 
 // Sets default values for this component's properties
 UPlayerVision::UPlayerVision()
@@ -32,7 +33,7 @@ void UPlayerVision::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 
 	FrameCounter++;
 	// check every 10 frames
-	if (FrameCounter % 10 == 0)
+	if (FrameCounter % 20 == 0)
 	{
 		APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
 		APawn* PlayerPawn = PlayerController->GetPawn();
@@ -86,6 +87,14 @@ void UPlayerVision::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 								if (USpottedObject* object = Cast<USpottedObject>(Actor->FindComponentByClass<USpottedObject>()))
 								{
 									object->FadeAway();
+								}
+								else if (ABigEye* object2 = Cast<ABigEye>(Actor))
+								{
+									if (isFocusing)
+									{
+										object2->FadeAway();
+									}
+									object2->IncreaseMadness();
 								}
 								break; 
 							}
