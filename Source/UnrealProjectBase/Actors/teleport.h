@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "teleport.generated.h"
 
+class UBoxComponent;
+
 UCLASS()
 class UNREALPROJECTBASE_API Ateleport : public AActor
 {
@@ -18,9 +20,20 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	
+	UPROPERTY()
+	UBoxComponent* triggerBox;
 
+	UFUNCTION()
+	void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+		UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,
+		bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+	void Teleport(AActor* OtherActor);
+	
 public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
 
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<Ateleport> teleportTo;
 };

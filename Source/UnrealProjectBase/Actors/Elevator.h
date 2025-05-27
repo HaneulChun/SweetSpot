@@ -25,6 +25,7 @@ protected:
 	
 	EElevatorPart ElevatorPart;
 
+	UFUNCTION(blueprintCallable)
 	void SetChildPart(UChildActorComponent* Component, EElevatorPart Type);
 public:	
 
