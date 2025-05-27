@@ -23,7 +23,9 @@ protected:
 
 	UPROPERTY()
 	TArray<AActor*> ActorArray;
-	
+
+	UPROPERTY(blueprintReadWrite)
+	bool isFocusing = false;
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
