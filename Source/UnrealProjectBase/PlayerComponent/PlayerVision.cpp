@@ -6,6 +6,7 @@
 #include "EngineUtils.h"
 #include "UnrealProjectBase/Actors/BigEye.h"
 #include "Math/Vector.h"
+#include "Camera/CameraComponent.h"
 
 // Sets default values for this component's properties
 UPlayerVision::UPlayerVision()
@@ -24,6 +25,8 @@ void UPlayerVision::BeginPlay()
 	Super::BeginPlay();
 
 	SetActorArray();
+
+	PlayerCamera = GetOwner()->FindComponentByClass<UCameraComponent>();
 }
 
 
@@ -93,22 +96,21 @@ void UPlayerVision::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 								// big eyeball
 								else if (ABigEye* object2 = Cast<ABigEye>(Actor))
 								{
-									// FVector VectorA = GetOwner()->GetActorForwardVector();
-									// FVector VectorB = Actor->GetActorLocation();
-									//
-									// float DotProduct = FVector::DotProduct(VectorA, VectorB);
-									// FString t = FString::SanitizeFloat(DotProduct);
-									//
-									// if (FMath::IsNearlyZero(DotProduct))
-									// {
-									// 	//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, "dotproduct");
-									// }
+									FVector PlayerForward = PlayerCamera->GetForwardVector();
+									FVector ToObject = (Actor->GetActorLocation() - PlayerLocation).GetSafeNormal();
 
-									if (isFocusing)
+									float Dot = FVector::DotProduct(PlayerForward, ToObject);
+
+									// check if player is looking at big eye
+									if (Dot > 0.9f)
 									{
-										object2->FadeAway();
+										// if player is focusing fade the object 
+										if (isFocusing)
+										{
+											object2->FadeAway();
+										}
+										object2->IncreaseMadness();
 									}
-									object2->IncreaseMadness();
 								}
 								break; 
 							}
