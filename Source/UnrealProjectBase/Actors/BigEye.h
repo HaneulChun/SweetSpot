@@ -39,6 +39,6 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ResetPosition();
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "BigEye")
 	float increaseMadnessAmount = 0.01;
 };

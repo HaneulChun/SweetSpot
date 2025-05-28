@@ -2,8 +2,8 @@
 
 
 #include "BigEye.h"
-#include "UI/PlayerHud.h"
-#include "UI/MyUserWidget.h"
+#include "UnrealProjectBase/UI/PlayerHud.h"
+#include "UnrealProjectBase/UI/MyUserWidget.h"
 
 // Sets default values
 ABigEye::ABigEye()

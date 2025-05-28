@@ -4,7 +4,7 @@
 #include "PlayerVision.h"
 #include "UnrealProjectBase/Actors/SpottedObject.h"
 #include "EngineUtils.h"
-#include "UnrealProjectBase/BigEye.h"
+#include "UnrealProjectBase/Actors/BigEye.h"
 
 // Sets default values for this component's properties
 UPlayerVision::UPlayerVision()
