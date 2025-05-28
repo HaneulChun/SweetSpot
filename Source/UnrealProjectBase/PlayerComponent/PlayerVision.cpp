@@ -4,6 +4,8 @@
 #include "PlayerVision.h"
 #include "UnrealProjectBase/Actors/SpottedObject.h"
 #include "EngineUtils.h"
+#include "UnrealProjectBase/Actors/BigEye.h"
+#include "Math/Vector.h"
 
 // Sets default values for this component's properties
 UPlayerVision::UPlayerVision()
@@ -83,9 +85,30 @@ void UPlayerVision::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 							// if see actor make it fade away
 							if (!bHit || HitResult.GetActor() == Actor)
 							{
+								// normal eyeball fading
 								if (USpottedObject* object = Cast<USpottedObject>(Actor->FindComponentByClass<USpottedObject>()))
 								{
 									object->FadeAway();
+								}
+								// big eyeball
+								else if (ABigEye* object2 = Cast<ABigEye>(Actor))
+								{
+									// FVector VectorA = GetOwner()->GetActorForwardVector();
+									// FVector VectorB = Actor->GetActorLocation();
+									//
+									// float DotProduct = FVector::DotProduct(VectorA, VectorB);
+									// FString t = FString::SanitizeFloat(DotProduct);
+									//
+									// if (FMath::IsNearlyZero(DotProduct))
+									// {
+									// 	//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, "dotproduct");
+									// }
+
+									if (isFocusing)
+									{
+										object2->FadeAway();
+									}
+									object2->IncreaseMadness();
 								}
 								break; 
 							}

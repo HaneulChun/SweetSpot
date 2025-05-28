@@ -15,6 +15,8 @@ AElevator::AElevator()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
+
 	//set the childs
 	Switch = CreateDefaultSubobject<UChildActorComponent>(TEXT("Switch"));
 	Switch->SetupAttachment(RootComponent);
