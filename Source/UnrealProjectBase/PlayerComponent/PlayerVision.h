@@ -30,6 +30,9 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly)
 	UCameraComponent* PlayerCamera;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float IntensitySpeed = 1.0f;
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;

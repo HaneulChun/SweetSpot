@@ -96,14 +96,24 @@ void UPlayerVision::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 								// big eyeball
 								else if (ABigEye* object2 = Cast<ABigEye>(Actor))
 								{
-									FVector PlayerForward = PlayerCamera->GetForwardVector();
-									FVector ToObject = (Actor->GetActorLocation() - PlayerLocation).GetSafeNormal();
-
-									float Dot = FVector::DotProduct(PlayerForward, ToObject);
+									// dot product 
+									FVector playerForward = PlayerCamera->GetForwardVector();
+									FVector objectToLookAt = (Actor->GetActorLocation() - PlayerCamera->GetComponentLocation()).GetSafeNormal();
+									float Dot = FVector::DotProduct(playerForward, objectToLookAt);
 
 									// check if player is looking at big eye
-									if (Dot > 0.9f)
+									if (Dot > 0.99f)
 									{
+										// Direction *away* from object
+										FVector LookAwayDirection = -objectToLookAt;
+
+										FRotator CurrentRotation = PlayerController->GetControlRotation();
+										FRotator TargetRotation = LookAwayDirection.Rotation();
+
+										// Interpolate rotation
+										FRotator NewRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, DeltaTime, IntensitySpeed);
+										PlayerController->SetControlRotation(NewRotation);
+										
 										// if player is focusing fade the object 
 										if (isFocusing)
 										{
