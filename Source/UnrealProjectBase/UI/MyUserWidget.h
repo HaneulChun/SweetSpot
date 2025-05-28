@@ -121,4 +121,7 @@ public:
 
 	UPROPERTY()
 	bool isInRoom = false;
+
+	UPROPERTY(BlueprintReadOnly)
+	bool isImmune = false;
 };

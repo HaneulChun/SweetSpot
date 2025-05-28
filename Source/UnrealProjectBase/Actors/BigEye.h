@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "BigEye.generated.h"
 
+class UMyUserWidget;
 UCLASS()
 class UNREALPROJECTBASE_API ABigEye : public AActor
 {
@@ -19,6 +20,9 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	UPROPERTY(EditAnywhere)
+	UMyUserWidget* MadnessWidget;
+	
 	UPROPERTY()
 	FTransform startTransform;
 
@@ -26,6 +30,8 @@ protected:
 	int count = 0;
 
 	FTimerHandle TimerHandle;
+	
+	FTimerHandle TimerHandleImmune;
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -38,6 +44,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void ResetPosition();
+
+	UFUNCTION(BlueprintCallable)
+	void RemoveImmunity();
 
 	UPROPERTY(EditAnywhere, Category = "BigEye")
 	float increaseMadnessAmount = 0.01;
