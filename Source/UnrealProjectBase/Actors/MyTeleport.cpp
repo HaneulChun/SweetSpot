@@ -22,8 +22,8 @@ AMyTeleport::AMyTeleport()
 	triggerBox->SetCollisionProfileName(TEXT("Trigger"));
 	triggerBox->SetGenerateOverlapEvents(true);
 
-	thisLoop = CreateDefaultSubobject<USceneComponent>(TEXT("TeleportPoint"));
-	thisLoop->SetupAttachment(RootComponent);
+	teleportTo = CreateDefaultSubobject<USceneComponent>(TEXT("TeleportPoint"));
+	teleportTo->SetupAttachment(RootComponent);
 }
 
 // Called when the game starts or when spawned
@@ -46,7 +46,7 @@ void AMyTeleport::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 	if (Cast<ACharacter>(OtherActor))
 	{
 		// check if this loop is null
-		if (thisLoop)
+		if (teleportTo)
 		{
 			// teleport player
 			Teleport(OtherActor);
@@ -134,7 +134,7 @@ void AMyTeleport::Complete()
 
 void AMyTeleport::Teleport(AActor* OtherActor)
 {
-	FTransform destanation = thisLoop->GetComponentTransform();
+	FTransform destanation = teleportTo->GetComponentTransform();
 	FTransform teleportStartPoint = this->GetTransform();
 	FTransform player = OtherActor->GetTransform();
 		
