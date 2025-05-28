@@ -32,7 +32,7 @@ void ABigEye::Tick(float DeltaTime)
 
 void ABigEye::IncreaseMadness()
 {
-	if (count <= 10)
+	if (count <= 20)
 	{
 		// increase madness when object is sopoted
 		if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
@@ -49,22 +49,26 @@ void ABigEye::IncreaseMadness()
 
 void ABigEye::FadeAway()
 {
-	if (count <= 10)
+	if (count <= 20)
 	{
 		FVector Direction = -GetActorForwardVector();
 		FVector CurrentLocation = GetActorLocation();
-		FVector NewLocation = CurrentLocation + (Direction * 2);
+		FVector NewLocation = CurrentLocation + (Direction * 1);
 		SetActorLocation(NewLocation);
 		
 		count++;
 
-		GetWorldTimerManager().SetTimer(TimerHandle, this, &ABigEye::ResetPosition, 1.0f, false, 0.3f);
+		GetWorldTimerManager().SetTimer(TimerHandle, this, &ABigEye::ResetPosition, 1.0f, false, 0.4f);
+	}
+	else
+	{
+		this->Destroy();
 	}
 }
 
 void ABigEye::ResetPosition()
 {
-	if (count <= 10)
+	if (count <= 20)
 	{
 		SetActorTransform(startTransform);
 		count = 0;
