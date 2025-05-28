@@ -91,9 +91,9 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 		if (mvalue != "mad")
 		{
 			ChangeCameraSettings(10.0, 1.5);
-			//vignetteIntensity = 1.5;
 			chromaticAberrationIntensity = 10;
-					
+			vignetteIntensity = 1.5;
+			
 			ChangeCameraMaterial(0.0f);
 			matIntensity = 0;
 
@@ -122,13 +122,14 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 		}
 	}
 	else // sweat spot
-	{//colorIntensity
+	{
 		if (mvalue != "sweat")
 		{
 			if (isInRoom)
 			{
 				ChangeCameraSettings(0.0, 1);
 				chromaticAberrationIntensity = 0;
+				vignetteIntensity = 0.4;
 			}
 			else
 			{

@@ -33,7 +33,7 @@ void UPlayerVision::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 
 	FrameCounter++;
 	// check every 10 frames
-	if (FrameCounter % 20 == 0)
+	if (FrameCounter % 10 == 0)
 	{
 		APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
 		APawn* PlayerPawn = PlayerController->GetPawn();
