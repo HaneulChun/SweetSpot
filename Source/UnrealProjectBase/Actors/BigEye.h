@@ -32,6 +32,7 @@ protected:
 	FTimerHandle TimerHandle;
 	
 	FTimerHandle TimerHandleImmune;
+	
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -50,4 +51,7 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "BigEye")
 	float increaseMadnessAmount = 0.01;
+
+	UPROPERTY(EditAnywhere, Category = "BigEye")
+	float immunityTime = 10;
 };

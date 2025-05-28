@@ -21,14 +21,15 @@ void ABigEye::BeginPlay()
 	startTransform = GetTransform();
 	Tags.Add("SeeMe");
 
-	
-	if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
+	GetWorld()->GetTimerManager().SetTimerForNextTick([this]()
 	{
-		APlayerHud* hud = Cast<APlayerHud>(PlayerController->GetHUD());
-			
-		MadnessWidget = Cast<UMyUserWidget>(hud->GetWidget());
-	}
+		if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
+		{
+			APlayerHud* hud = Cast<APlayerHud>(PlayerController->GetHUD());
 
+			MadnessWidget = Cast<UMyUserWidget>(hud->GetWidget());
+		}
+	});
 }
 
 // Called every frame
@@ -58,13 +59,13 @@ void ABigEye::FadeAway()
 		SetActorLocation(NewLocation);
 		
 		count++;
-
 		GetWorldTimerManager().SetTimer(TimerHandle, this, &ABigEye::ResetPosition, 1.0f, false, 0.4f);
 	}
 	else
 	{
+		this->SetActorHiddenInGame(true);
 		MadnessWidget->isImmune = true;
-		GetWorldTimerManager().SetTimer(TimerHandleImmune, this, &ABigEye::RemoveImmunity, 1.0f, false, 5.0f);
+		GetWorldTimerManager().SetTimer(TimerHandleImmune, this, &ABigEye::RemoveImmunity, 1.0f, false, immunityTime);
 	}
 }
 
@@ -80,5 +81,6 @@ void ABigEye::ResetPosition()
 void ABigEye::RemoveImmunity()
 {
 	MadnessWidget->isImmune = false;
+	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, "Removing Immunity");
 	this->Destroy();
 }
