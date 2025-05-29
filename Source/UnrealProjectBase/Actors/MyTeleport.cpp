@@ -57,13 +57,12 @@ void AMyTeleport::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 			// check if puzzle is completed
 			if (isCompleted == true)
 			{
-				TeleportNext(OtherActor);
-				Complete();
+				Teleport(OtherActor, NextteleportTo->GetComponentTransform());
 			}
 			else
 			{
 				// teleport player
-				Teleport(OtherActor);
+				Teleport(OtherActor, teleportTo->GetComponentTransform());
 				
 				// reset the eye and chocolate 
 				Reset();
@@ -129,19 +128,9 @@ void AMyTeleport::Reset()
 	}
 }
 
-void AMyTeleport::Complete()
+void AMyTeleport::Teleport(AActor* OtherActor, FTransform Transform)
 {
-	//currentLoop++;
-	
-	// if (levelLoop.Num() > currentLoopIndex)
-	// {
-	// 	//isCompleted = false;
-	// }
-}
-
-void AMyTeleport::Teleport(AActor* OtherActor)
-{
-	FTransform destanation = teleportTo->GetComponentTransform();
+	FTransform destanation = Transform;
 	FTransform teleportStartPoint = this->GetTransform();
 	FTransform player = OtherActor->GetTransform();
 		
@@ -151,17 +140,3 @@ void AMyTeleport::Teleport(AActor* OtherActor)
 	FTransform finalTeleport = FTransform(destanation.GetRotation(), final, OtherActor->GetTransform().GetScale3D());
 	OtherActor->SetActorTransform(finalTeleport, false);
 }
-
-void AMyTeleport::TeleportNext(AActor* OtherActor)
-{
-	FTransform destanation = NextteleportTo->GetComponentTransform();
-	FTransform teleportStartPoint = this->GetTransform();
-	FTransform player = OtherActor->GetTransform();
-		
-	FVector offset = player.GetLocation() - teleportStartPoint.GetLocation();
-	FVector final = offset + destanation.GetLocation();
-		
-	FTransform finalTeleport = FTransform(destanation.GetRotation(), final, OtherActor->GetTransform().GetScale3D());
-	OtherActor->SetActorTransform(finalTeleport, false);
-}
-
