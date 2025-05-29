@@ -133,10 +133,10 @@ void AMyTeleport::Complete()
 {
 	//currentLoop++;
 	
-	if (levelLoop.Num() > currentLoop)
-	{
-		//isCompleted = false;
-	}
+	// if (levelLoop.Num() > currentLoopIndex)
+	// {
+	// 	//isCompleted = false;
+	// }
 }
 
 void AMyTeleport::Teleport(AActor* OtherActor)
