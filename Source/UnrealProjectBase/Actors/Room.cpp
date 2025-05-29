@@ -56,7 +56,7 @@ void ARoom::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 						WidgetPtr->SetIncreaseMadness(increment);
 
 						// give the player vignette
-						if (WidgetPtr->mvalue == "mad")
+						if (WidgetPtr->CurrentState == ECurrentState::Mad)
 						{
 							Color(colorIntensity, WidgetPtr->vignetteIntensity);
 						}

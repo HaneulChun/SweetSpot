@@ -26,6 +26,9 @@ AMyTeleport::AMyTeleport()
 
 	teleportTo = CreateDefaultSubobject<USceneComponent>(TEXT("TeleportPoint"));
 	teleportTo->SetupAttachment(RootComponent);
+
+	NextteleportTo = CreateDefaultSubobject<USceneComponent>(TEXT("NextTeleportPoint"));
+	NextteleportTo->SetupAttachment(RootComponent);
 }
 
 // Called when the game starts or when spawned
@@ -50,16 +53,18 @@ void AMyTeleport::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 		// check if this loop is null
 		if (teleportTo)
 		{
-			// teleport player
-			Teleport(OtherActor);
 			
 			// check if puzzle is completed
 			if (isCompleted == true)
 			{
+				TeleportNext(OtherActor);
 				Complete();
 			}
 			else
 			{
+				// teleport player
+				Teleport(OtherActor);
+				
 				// reset the eye and chocolate 
 				Reset();
 
@@ -126,17 +131,30 @@ void AMyTeleport::Reset()
 
 void AMyTeleport::Complete()
 {
-	currentLoop++;
+	//currentLoop++;
 	
-	if (levelLoop.Num() > currentLoop)
-	{
-		isCompleted = false;
-	}
+	// if (levelLoop.Num() > currentLoopIndex)
+	// {
+	// 	//isCompleted = false;
+	// }
 }
 
 void AMyTeleport::Teleport(AActor* OtherActor)
 {
 	FTransform destanation = teleportTo->GetComponentTransform();
+	FTransform teleportStartPoint = this->GetTransform();
+	FTransform player = OtherActor->GetTransform();
+		
+	FVector offset = player.GetLocation() - teleportStartPoint.GetLocation();
+	FVector final = offset + destanation.GetLocation();
+		
+	FTransform finalTeleport = FTransform(destanation.GetRotation(), final, OtherActor->GetTransform().GetScale3D());
+	OtherActor->SetActorTransform(finalTeleport, false);
+}
+
+void AMyTeleport::TeleportNext(AActor* OtherActor)
+{
+	FTransform destanation = NextteleportTo->GetComponentTransform();
 	FTransform teleportStartPoint = this->GetTransform();
 	FTransform player = OtherActor->GetTransform();
 		

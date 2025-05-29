@@ -6,6 +6,7 @@
 #include "EngineUtils.h"
 #include "UnrealProjectBase/Actors/BigEye.h"
 #include "Math/Vector.h"
+#include "Camera/CameraComponent.h"
 
 // Sets default values for this component's properties
 UPlayerVision::UPlayerVision()
@@ -24,6 +25,8 @@ void UPlayerVision::BeginPlay()
 	Super::BeginPlay();
 
 	SetActorArray();
+
+	PlayerCamera = GetOwner()->FindComponentByClass<UCameraComponent>();
 }
 
 
@@ -93,22 +96,31 @@ void UPlayerVision::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 								// big eyeball
 								else if (ABigEye* object2 = Cast<ABigEye>(Actor))
 								{
-									// FVector VectorA = GetOwner()->GetActorForwardVector();
-									// FVector VectorB = Actor->GetActorLocation();
-									//
-									// float DotProduct = FVector::DotProduct(VectorA, VectorB);
-									// FString t = FString::SanitizeFloat(DotProduct);
-									//
-									// if (FMath::IsNearlyZero(DotProduct))
-									// {
-									// 	//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, "dotproduct");
-									// }
+									// dot product 
+									FVector playerForward = PlayerCamera->GetForwardVector();
+									FVector objectToLookAt = (Actor->GetActorLocation() - PlayerCamera->GetComponentLocation()).GetSafeNormal();
+									float Dot = FVector::DotProduct(playerForward, objectToLookAt);
 
-									if (isFocusing)
+									// check if player is looking at big eye
+									if (Dot > 0.99f)
 									{
-										object2->FadeAway();
+										// Direction *away* from object
+										FVector LookAwayDirection = -objectToLookAt;
+
+										FRotator CurrentRotation = PlayerController->GetControlRotation();
+										FRotator TargetRotation = LookAwayDirection.Rotation();
+
+										// Interpolate rotation
+										FRotator NewRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, DeltaTime, IntensitySpeed);
+										PlayerController->SetControlRotation(NewRotation);
+										
+										// if player is focusing fade the object 
+										if (isFocusing)
+										{
+											object2->FadeAway();
+										}
+										object2->IncreaseMadness();
 									}
-									object2->IncreaseMadness();
 								}
 								break; 
 							}
