@@ -36,6 +36,8 @@ void AElevator::BeginPlay()
 	//make the child invisible
 	if (Switch && Switch->GetChildActor())
 	{
+		if (TurnOnSwitch == true) return;
+		
 		Switch->GetChildActor()->SetOwner(this);
 		if (UStaticMeshComponent* Mesh = Switch->GetChildActor()->FindComponentByClass<UStaticMeshComponent>())
 		{
@@ -45,6 +47,8 @@ void AElevator::BeginPlay()
 	}
 	if (Button && Button->GetChildActor())
 	{
+		if (TurnOnButton == true) return;
+		
 		Button->GetChildActor()->SetOwner(this);
 		if (UStaticMeshComponent* Mesh = Button->GetChildActor()->FindComponentByClass<UStaticMeshComponent>())
 		{
@@ -54,6 +58,8 @@ void AElevator::BeginPlay()
 	}
 	if (Cranck && Cranck->GetChildActor())
 	{
+		if (TurnOnCranck == true) return;
+		
 		Cranck->GetChildActor()->SetOwner(this);
 		if (UStaticMeshComponent* Mesh = Cranck->GetChildActor()->FindComponentByClass<UStaticMeshComponent>())
 		{
