@@ -50,4 +50,13 @@ public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
 	UFMODEvent* FixElevatorSFX;
+
+	UPROPERTY(EditAnywhere, Category = "Parts")
+	bool TurnOnSwitch = false;
+
+	UPROPERTY(EditAnywhere, Category = "Parts")
+	bool TurnOnButton = false;
+
+	UPROPERTY(EditAnywhere, Category = "Parts")
+	bool TurnOnCranck = false;
 };

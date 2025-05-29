@@ -31,12 +31,15 @@ protected:
 	TArray<FRotator> rotation;
 
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TeleportLoop")
 	TArray<TSoftObjectPtr<UWorld>> levelLoop;
 	
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, Category = "TeleportLoop")
 	USceneComponent* teleportTo;
 
+	UPROPERTY(VisibleAnywhere, Category = "TeleportLoop")
+	USceneComponent* NextteleportTo;
+	
 	UPROPERTY(BlueprintReadOnly)
 	float currentLoop = 0;
 	
@@ -56,14 +59,17 @@ public:
 
 	UFUNCTION()
 	void Teleport(AActor* OtherActor);
+
+	UFUNCTION()
+	void TeleportNext(AActor* OtherActor);
 	
 	UPROPERTY(BlueprintReadWrite)
 	bool isCompleted = false;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TeleportLoop")
 	TArray<TObjectPtr<AActor>> Actors;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TeleportLoop")
 	float increaseMadness = 0.1;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Trigger")
