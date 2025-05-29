@@ -32,7 +32,7 @@ protected:
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TeleportLoop")
-	TArray<TSoftObjectPtr<UWorld>> NextLoop;
+	TSoftObjectPtr<UWorld> NextLoop;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TeleportLoop")
 	TSoftObjectPtr<UWorld> currentLoop;
@@ -57,14 +57,8 @@ public:
 	UFUNCTION()
 	void Reset();
 
-	UFUNCTION(BlueprintCallable)
-	void Complete();
-
 	UFUNCTION()
-	void Teleport(AActor* OtherActor);
-
-	UFUNCTION()
-	void TeleportNext(AActor* OtherActor);
+	void Teleport(AActor* OtherActor, FTransform Transform);
 	
 	UPROPERTY(BlueprintReadWrite)
 	bool isCompleted = false;
