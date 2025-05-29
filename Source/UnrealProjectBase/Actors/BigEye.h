@@ -1,0 +1,57 @@
+// All Rights Reserved by SweetSpot 2025-2026.
+
+#pragma once
+
+#include "CoreMinimal.h"
+#include "GameFramework/Actor.h"
+#include "BigEye.generated.h"
+
+class UMyUserWidget;
+UCLASS()
+class UNREALPROJECTBASE_API ABigEye : public AActor
+{
+	GENERATED_BODY()
+	
+public:	
+	// Sets default values for this actor's properties
+	ABigEye();
+
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+
+	UPROPERTY(EditAnywhere)
+	UMyUserWidget* MadnessWidget;
+	
+	UPROPERTY()
+	FTransform startTransform;
+
+	UPROPERTY()
+	int count = 0;
+
+	FTimerHandle TimerHandle;
+	
+	FTimerHandle TimerHandleImmune;
+	
+public:	
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
+	UFUNCTION()
+	void IncreaseMadness();
+	
+	UFUNCTION(BlueprintCallable)
+	void FadeAway();
+
+	UFUNCTION(BlueprintCallable)
+	void ResetPosition();
+
+	UFUNCTION(BlueprintCallable)
+	void RemoveImmunity();
+
+	UPROPERTY(EditAnywhere, Category = "BigEye")
+	float increaseMadnessAmount = 0.01;
+
+	UPROPERTY(EditAnywhere, Category = "BigEye")
+	float immunityTime = 10;
+};

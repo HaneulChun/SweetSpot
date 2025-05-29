@@ -1,0 +1,62 @@
+// All Rights Reserved by SweetSpot 2025-2026.
+
+#pragma once
+
+#include "CoreMinimal.h"
+#include "GameFramework/Actor.h"
+#include "Elevator.generated.h"
+
+class UFMODEvent;
+enum class EElevatorPart : uint8;
+class AMyTeleport;
+class UBoxComponent;
+UCLASS()
+class UNREALPROJECTBASE_API AElevator : public AActor
+{
+	GENERATED_BODY()
+	
+public:	
+	// Sets default values for this actor's properties
+	AElevator();
+
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+	
+	EElevatorPart ElevatorPart;
+
+	UFUNCTION(blueprintCallable)
+	void SetChildPart(UChildActorComponent* Component, EElevatorPart Type);
+public:	
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<AMyTeleport> Teleport;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite ,Category = "Parts")
+	UChildActorComponent* Switch;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite ,Category = "Parts")
+	UChildActorComponent* Button;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite ,Category = "Parts")
+	UChildActorComponent* Cranck;
+	
+	UFUNCTION(BlueprintCallable)
+	void FixElevator();
+
+	UFUNCTION()
+	void ShowElevatorPart(UChildActorComponent* Part);
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
+	UFMODEvent* FixElevatorSFX;
+
+	UPROPERTY(EditAnywhere, Category = "Parts")
+	bool TurnOnSwitch = false;
+
+	UPROPERTY(EditAnywhere, Category = "Parts")
+	bool TurnOnButton = false;
+
+	UPROPERTY(EditAnywhere, Category = "Parts")
+	bool TurnOnCranck = false;
+};
