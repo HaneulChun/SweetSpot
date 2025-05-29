@@ -45,7 +45,7 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 	
 	if(currentMadnessBarValue <= sweatSpot) // sane 
 	{
-		if (mvalue != "sane")
+		if (CurrentState != ECurrentState::Sane)
 		{
 			ChangeCameraSettings(0.0, 0.4);
 			chromaticAberrationIntensity = 0;
@@ -64,7 +64,7 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			{
 				Actor->SetActorEnableCollision(false);
 			}
-			mvalue = "sane";
+			CurrentState = ECurrentState::Sane;
 			
 			// set text 
 			if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
@@ -79,16 +79,16 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 	}
 	else if(currentMadnessBarValue >= 1) // dead 
 	{
-		if (mvalue != "dead")
+		if (CurrentState != ECurrentState::Dead)
 		{
 			isDying = true;
 			GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &UMyUserWidget::Dying, 0.1, isDying);
-			mvalue = "dead";
+			CurrentState = ECurrentState::Dead;
 		}
 	}
 	else if(currentMadnessBarValue >= mad) // mad
 	{
-		if (mvalue != "mad")
+		if (CurrentState != ECurrentState::Mad)
 		{
 			ChangeCameraSettings(10.0, 1.5);
 			chromaticAberrationIntensity = 10;
@@ -106,7 +106,7 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 					PlayerHud->SetText("");  
 				}
 			}
-			mvalue = "mad";
+			CurrentState = ECurrentState::Mad;
 			
 
 			// show actor
@@ -123,7 +123,7 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 	}
 	else // sweat spot
 	{
-		if (mvalue != "sweat")
+		if (CurrentState != ECurrentState::SweetSpot)
 		{
 			if (isInRoom)
 			{
@@ -164,7 +164,7 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			}
 			
 			// hide actor
-			if (mvalue == "mad")
+			if (CurrentState == ECurrentState::Mad)
 			{
 				Fade(0, 1, 0.1, 0);
 			}
@@ -181,7 +181,7 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 				Actor->SetActorEnableCollision(true);
 			}
 			
-			mvalue = "sweat";
+			CurrentState = ECurrentState::SweetSpot;
 		}
 	}
 }
