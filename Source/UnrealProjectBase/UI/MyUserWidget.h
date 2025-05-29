@@ -10,6 +10,16 @@
 /**
  * 
  */
+UENUM(BlueprintType)
+enum class ECurrentState : uint8
+{
+	Sane       UMETA(DisplayName = "Sane"),
+	SweetSpot  UMETA(DisplayName = "Sweet Spot"),
+	Mad        UMETA(DisplayName = "Mad"),
+	Dead       UMETA(DisplayName = "Dead")
+};
+
+
 class APlayerHud;
 UCLASS()
 class UNREALPROJECTBASE_API UMyUserWidget : public UUserWidget
@@ -34,7 +44,7 @@ protected:
 	UPROPERTY()
 	AActor* spawnPoint;
 public:
-	FString mvalue = "";
+	ECurrentState CurrentState = ECurrentState::Sane;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
 	TSubclassOf<APlayerHud> PlayerHudClass;
@@ -121,4 +131,7 @@ public:
 
 	UPROPERTY()
 	bool isInRoom = false;
+
+	UPROPERTY(BlueprintReadOnly)
+	bool isImmune = false;
 };

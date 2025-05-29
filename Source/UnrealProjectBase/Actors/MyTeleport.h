@@ -35,7 +35,7 @@ public:
 	TArray<TSoftObjectPtr<UWorld>> levelLoop;
 	
 	UPROPERTY(VisibleAnywhere)
-	USceneComponent* thisLoop;
+	USceneComponent* teleportTo;
 
 	UPROPERTY(BlueprintReadOnly)
 	float currentLoop = 0;

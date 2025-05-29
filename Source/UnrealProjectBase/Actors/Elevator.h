@@ -33,13 +33,13 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TObjectPtr<AMyTeleport> Teleport;
 	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly ,Category = "Parts")
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite ,Category = "Parts")
 	UChildActorComponent* Switch;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly ,Category = "Parts")
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite ,Category = "Parts")
 	UChildActorComponent* Button;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly ,Category = "Parts")
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite ,Category = "Parts")
 	UChildActorComponent* Cranck;
 	
 	UFUNCTION(BlueprintCallable)

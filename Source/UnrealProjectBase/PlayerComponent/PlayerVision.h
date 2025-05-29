@@ -7,6 +7,7 @@
 #include "PlayerVision.generated.h"
 
 
+class UCameraComponent;
 class UMeshComponent;
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class UNREALPROJECTBASE_API UPlayerVision : public UActorComponent
@@ -26,6 +27,12 @@ protected:
 
 	UPROPERTY(blueprintReadWrite)
 	bool isFocusing = false;
+
+	UPROPERTY(BlueprintReadOnly)
+	UCameraComponent* PlayerCamera;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float IntensitySpeed = 1.0f;
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;

@@ -16,14 +16,16 @@ AMyTeleport::AMyTeleport()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
+	
 	// set trigger-box for default
 	triggerBox = CreateDefaultSubobject<UBoxComponent>(TEXT("TriggerBox"));
 	triggerBox->SetupAttachment(RootComponent);
 	triggerBox->SetCollisionProfileName(TEXT("Trigger"));
 	triggerBox->SetGenerateOverlapEvents(true);
 
-	thisLoop = CreateDefaultSubobject<USceneComponent>(TEXT("TeleportPoint"));
-	thisLoop->SetupAttachment(RootComponent);
+	teleportTo = CreateDefaultSubobject<USceneComponent>(TEXT("TeleportPoint"));
+	teleportTo->SetupAttachment(RootComponent);
 }
 
 // Called when the game starts or when spawned
@@ -46,7 +48,7 @@ void AMyTeleport::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 	if (Cast<ACharacter>(OtherActor))
 	{
 		// check if this loop is null
-		if (thisLoop)
+		if (teleportTo)
 		{
 			// teleport player
 			Teleport(OtherActor);
@@ -134,7 +136,7 @@ void AMyTeleport::Complete()
 
 void AMyTeleport::Teleport(AActor* OtherActor)
 {
-	FTransform destanation = thisLoop->GetComponentTransform();
+	FTransform destanation = teleportTo->GetComponentTransform();
 	FTransform teleportStartPoint = this->GetTransform();
 	FTransform player = OtherActor->GetTransform();
 		
