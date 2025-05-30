@@ -54,4 +54,7 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "BigEye")
 	float immunityTime = 10;
+
+	UPROPERTY(EditAnywhere)
+	int focusedLookTicks = 20;
 };

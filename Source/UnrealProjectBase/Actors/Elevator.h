@@ -48,15 +48,20 @@ public:
 	UFUNCTION()
 	void ShowElevatorPart(UChildActorComponent* Part);
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UFMODEvent* FixElevatorSFX;
 
-	UPROPERTY(EditAnywhere, Category = "Parts")
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void Exit();
+	virtual void Exit_Implementation();
+	
+	
+	UPROPERTY(EditAnywhere)
 	bool TurnOnSwitch = false;
 
-	UPROPERTY(EditAnywhere, Category = "Parts")
+	UPROPERTY(EditAnywhere)
 	bool TurnOnButton = false;
 
-	UPROPERTY(EditAnywhere, Category = "Parts")
+	UPROPERTY(EditAnywhere)
 	bool TurnOnCranck = false;
 };
