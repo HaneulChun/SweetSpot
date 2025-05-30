@@ -41,7 +41,7 @@ public:
 	USceneComponent* teleportTo;
 
 	UPROPERTY(VisibleAnywhere, Category = "TeleportLoop")
-	USceneComponent* NextteleportTo;
+	USceneComponent* NextTeleportTo;
 	
 	UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,

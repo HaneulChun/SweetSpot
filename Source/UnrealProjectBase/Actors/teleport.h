@@ -34,6 +34,6 @@ protected:
 	
 public:	
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TObjectPtr<Ateleport> teleportTo;
 };

@@ -31,9 +31,12 @@ void Ateleport::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor*
 {
 	if (Cast<ACharacter>(OtherActor))
 	{
-		if (teleportTo)
+		if (OtherComp->GetName() == "CollisionCylinder")
 		{
-			Teleport(OtherActor);
+			if (teleportTo)
+			{
+				Teleport(OtherActor);
+			}	
 		}
 	}
 }
