@@ -27,8 +27,8 @@ AMyTeleport::AMyTeleport()
 	teleportTo = CreateDefaultSubobject<USceneComponent>(TEXT("TeleportPoint"));
 	teleportTo->SetupAttachment(RootComponent);
 
-	NextteleportTo = CreateDefaultSubobject<USceneComponent>(TEXT("NextTeleportPoint"));
-	NextteleportTo->SetupAttachment(RootComponent);
+	NextTeleportTo = CreateDefaultSubobject<USceneComponent>(TEXT("NextTeleportPoint"));
+	NextTeleportTo->SetupAttachment(RootComponent);
 }
 
 // Called when the game starts or when spawned
@@ -57,7 +57,7 @@ void AMyTeleport::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 			// check if puzzle is completed
 			if (isCompleted == true)
 			{
-				Teleport(OtherActor, NextteleportTo->GetComponentTransform());
+				Teleport(OtherActor, NextTeleportTo->GetComponentTransform());
 			}
 			else
 			{
