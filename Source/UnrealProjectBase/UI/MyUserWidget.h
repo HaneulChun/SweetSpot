@@ -44,7 +44,7 @@ protected:
 	UPROPERTY()
 	AActor* spawnPoint;
 public:
-	ECurrentState CurrentState = ECurrentState::Sane;
+	ECurrentState CurrentState = ECurrentState::SweetSpot;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
 	TSubclassOf<APlayerHud> PlayerHudClass;
