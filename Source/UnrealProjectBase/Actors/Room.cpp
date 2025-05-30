@@ -48,13 +48,19 @@ void ARoom::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 			{
 				if (UUserWidget* Widget = MyHUD->GetWidget())
 				{
-					UMyUserWidget* WidgetPtr = Cast<UMyUserWidget>(Widget);
-					if (WidgetPtr)
+					if (UMyUserWidget* WidgetPtr = Cast<UMyUserWidget>(Widget))
 					{
+						if (increment < 0)
+						{
+							WidgetPtr->isInLight = true;
+						}
+						else
+						{
+							WidgetPtr->isInRoom = true;
+						}
 						// increase Madness if player is in room
-						WidgetPtr->isInRoom = true;
 						WidgetPtr->SetIncreaseMadness(increment);
-
+						
 						// give the player vignette
 						if (WidgetPtr->CurrentState == ECurrentState::Mad)
 						{
@@ -82,19 +88,35 @@ void ARoom::NotifyActorEndOverlap(AActor* OtherActor)
 		{
 			if (APlayerHud* MyHUD = Cast<APlayerHud>(PlayerController->GetHUD()))
 			{
-				UUserWidget* Widget = MyHUD->GetWidget();
-				if (Widget)
+				if (UUserWidget* Widget = MyHUD->GetWidget())
 				{
-					UMyUserWidget* WidgetPtr = Cast<UMyUserWidget>(Widget);
-			
-					if (WidgetPtr)
+					if (UMyUserWidget* WidgetPtr = Cast<UMyUserWidget>(Widget))
 					{
 						// increase Madness if player is in room
-						WidgetPtr->isInRoom = false;
-						WidgetPtr->SetIncreaseMadness(0.0);
+						if (increment < 0)
+						{
+							WidgetPtr->isInLight = false;
+							if (WidgetPtr->isInRoom == true)
+							{
+								WidgetPtr->SetIncreaseMadness(0.05);
+								Color(.5, 1);
+							}
+							else
+							{
+								WidgetPtr->SetIncreaseMadness(0.0);
 
-						// remove the player vignette when exiting room
-						Color(WidgetPtr->colorIntensity, WidgetPtr->vignetteIntensity);
+								// remove the player vignette when exiting room
+								Color(WidgetPtr->colorIntensity, WidgetPtr->vignetteIntensity);
+							}
+						}
+						else
+						{
+							WidgetPtr->isInRoom = false;
+							WidgetPtr->SetIncreaseMadness(0.0);
+
+							// remove the player vignette when exiting room
+							Color(WidgetPtr->colorIntensity, WidgetPtr->vignetteIntensity);
+						}
 					}
 				}
 			}

@@ -135,6 +135,9 @@ public:
 	UPROPERTY()
 	bool isInRoom = false;
 
+	UPROPERTY()
+	bool isInLight = false;
+	
 	UPROPERTY(BlueprintReadOnly)
 	bool isImmune = false;
 };
