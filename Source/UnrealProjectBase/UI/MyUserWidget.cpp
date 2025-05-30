@@ -306,9 +306,14 @@ void UMyUserWidget::Dead()
 
 void UMyUserWidget::StartLoop()
 {
+	SaneActors.Empty();
+	SweetActors.Empty();
+	spawnPoint = nullptr;
+	
 	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
 	{
 		AActor* Actor = *ActorItr;
+
 		
 		if (Actor->Tags.Contains("Sane"))
 		{
