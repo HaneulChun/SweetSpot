@@ -135,6 +135,8 @@ void UPlayerVision::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 
 void UPlayerVision::SetActorArray()
 {
+	ActorArray.Empty();
+
 	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
 	{
 		AActor* Actor = *ActorItr;
