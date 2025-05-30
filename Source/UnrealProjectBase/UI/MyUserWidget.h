@@ -115,6 +115,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void Dead();
+
+	UFUNCTION(BlueprintCallable)
+	void StartLoop();
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float chromaticAberrationIntensity;

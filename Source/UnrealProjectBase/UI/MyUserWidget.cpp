@@ -14,29 +14,7 @@ void UMyUserWidget::NativeConstruct()
 
 	bIsFocusable = true;
 
-	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
-	{
-		AActor* Actor = *ActorItr;
-		
-		if (Actor->Tags.Contains("Sane"))
-		{
-			SaneActors.Add(Actor);
-		}
-		if (Actor->Tags.Contains("Sweet"))
-		{
-			SweetActors.Add(Actor);
-		}
-	}
-
-	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
-	{
-		AActor* Actor = *ActorItr;
-		
-		if (Actor->Tags.Contains("Spawn"))
-		{
-			spawnPoint = Actor;
-		}
-	}
+	StartLoop();
 }
 
 void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
@@ -320,5 +298,26 @@ void UMyUserWidget::Dead()
 			}
 		}
 		currentMadnessBarValue = 0;
+	}
+}
+
+void UMyUserWidget::StartLoop()
+{
+	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+	{
+		AActor* Actor = *ActorItr;
+		
+		if (Actor->Tags.Contains("Sane"))
+		{
+			SaneActors.Add(Actor);
+		}
+		if (Actor->Tags.Contains("Sweet"))
+		{
+			SweetActors.Add(Actor);
+		}
+		if (Actor->Tags.Contains("Spawn"))
+		{
+			spawnPoint = Actor;
+		}
 	}
 }
