@@ -122,6 +122,7 @@ void AMyTeleport::Reset()
 			UPlayerVision* VisionComp = PlayerPawn->FindComponentByClass<UPlayerVision>();
 			if (VisionComp)
 			{
+				
 				VisionComp->SetActorArray();
 			}
 		}

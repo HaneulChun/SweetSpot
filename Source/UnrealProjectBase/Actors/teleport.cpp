@@ -3,6 +3,7 @@
 
 #include "teleport.h"
 #include "Components/BoxComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "GameFramework/Character.h"
 
 // Sets default values
@@ -31,7 +32,7 @@ void Ateleport::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor*
 {
 	if (Cast<ACharacter>(OtherActor))
 	{
-		if (OtherComp->GetName() == "CollisionCylinder")
+		if (Cast<UCapsuleComponent>(OtherComp))
 		{
 			if (teleportTo)
 			{
