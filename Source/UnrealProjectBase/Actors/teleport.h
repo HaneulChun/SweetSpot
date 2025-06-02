@@ -31,6 +31,9 @@ protected:
 
 	UFUNCTION()
 	void Teleport(AActor* OtherActor);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void ShowElevatorPart();
 	
 public:	
 
