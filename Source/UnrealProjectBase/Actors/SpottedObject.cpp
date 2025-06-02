@@ -61,8 +61,6 @@ void USpottedObject::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 	}
 }
 
-void USpottedObject::FadeAway()
+void USpottedObject::FadeAway_Implementation()
 {
-	isFading = true;
 }
-
