@@ -148,6 +148,10 @@ void AElevator::ShowElevatorPart(UChildActorComponent* Part)
 	{
 		UFMODBlueprintStatics::PlayEventAtLocation(this, FixElevatorSFX, this->GetActorTransform(), true);	
 	}
+	Exit();
 }
 
+void AElevator::Exit_Implementation()
+{
+}
 

@@ -131,10 +131,16 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float colorIntensity = 1;
 
+	// value roomMadnessDamage
+	UPROPERTY()
+	float roomMadnessDamage = 0;
 
 	UPROPERTY()
 	bool isInRoom = false;
 
+	UPROPERTY()
+	bool isInLight = false;
+	
 	UPROPERTY(BlueprintReadOnly)
 	bool isImmune = false;
 };

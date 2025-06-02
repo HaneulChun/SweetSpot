@@ -22,8 +22,23 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+	FTimerHandle TimerHandle;
+	
+	FTimerHandle BigTimerHandle;
+	
 	UPROPERTY()
-	TArray<AActor*> ActorArray;
+	TArray<AActor*> eyeArray;
+	UPROPERTY()
+	TArray<UMeshComponent*> eyeMeshArray;
+	UPROPERTY()
+	int32 EyeIndex = 0;
+	
+	UPROPERTY()
+	TArray<AActor*> bigEyeArray;
+	UPROPERTY()
+	TArray<UMeshComponent*> bigEyeMeshArray;
+	UPROPERTY()
+	int32 bigEyeIndex = 0;
 
 	UPROPERTY(blueprintReadWrite)
 	bool isFocusing = false;
@@ -32,13 +47,27 @@ protected:
 	UCameraComponent* PlayerCamera;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float IntensitySpeed = 1.0f;
+	float IntensitySpeed = .5f;
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	UFUNCTION()
+	void LookForEye();
+
+	UFUNCTION()
+	void LookForBigEye();
+	
+	
 	UFUNCTION(BlueprintCallable)
 	void SetActorArray();
-private:
-	int32 FrameCounter = 0;	
+
+	
+	UPROPERTY()
+	TObjectPtr<APlayerController> PlayerController;
+
+	UPROPERTY()
+	TObjectPtr<APawn> PlayerPawn;
+
+	FVector PlayerLocation;
 };

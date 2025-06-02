@@ -25,10 +25,11 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 	{
 		if (CurrentState != ECurrentState::Sane)
 		{
+			// change camera settings and matreial
 			ChangeCameraSettings(0.0, 0.4);
 			chromaticAberrationIntensity = 0;
 			vignetteIntensity = 0.4;
-					
+			
 			ChangeCameraMaterial(0.0f);
 			matIntensity = 0;
 
@@ -59,6 +60,7 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 	{
 		if (CurrentState != ECurrentState::Dead)
 		{
+			// reset the player
 			isDying = true;
 			GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &UMyUserWidget::Dying, 0.1, isDying);
 			CurrentState = ECurrentState::Dead;
@@ -68,6 +70,7 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 	{
 		if (CurrentState != ECurrentState::Mad)
 		{
+			// change camera settings and material
 			ChangeCameraSettings(10.0, 1.5);
 			chromaticAberrationIntensity = 10;
 			vignetteIntensity = 1.5;
@@ -117,7 +120,7 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			}
 			
 			// check if player can focus in an object
-			// if there is no object to focus dont show text
+			// if there is no object to focus don't show text
 			for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
 			{
 				AActor* Actor = *ActorItr;
@@ -240,6 +243,10 @@ float UMyUserWidget::GetCurrentValue()
 
 void UMyUserWidget::SetIncreaseMadness(float value)
 {
+	if (value > 0)
+	{
+		roomMadnessDamage = value;
+	}
 	increaseMadness = value;
 }
 
@@ -303,9 +310,14 @@ void UMyUserWidget::Dead()
 
 void UMyUserWidget::StartLoop()
 {
+	SaneActors.Empty();
+	SweetActors.Empty();
+	spawnPoint = nullptr;
+	
 	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
 	{
 		AActor* Actor = *ActorItr;
+
 		
 		if (Actor->Tags.Contains("Sane"))
 		{
