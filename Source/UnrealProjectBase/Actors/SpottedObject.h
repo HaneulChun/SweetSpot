@@ -7,7 +7,7 @@
 #include "SpottedObject.generated.h"
 
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent), Blueprintable)
 class UNREALPROJECTBASE_API USpottedObject : public UActorComponent
 {
 	GENERATED_BODY()
@@ -16,8 +16,10 @@ public:
 	// Sets default values for this component's properties
 	USpottedObject();
 
+	UPROPERTY(BlueprintReadWrite)
 	bool isFading = false;
 
+	UPROPERTY(BlueprintReadWrite)
 	bool spotted = false;
 protected:
 	// Called when the game starts
@@ -27,9 +29,12 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Fade")
 	void FadeAway();
+	virtual void FadeAway_Implementation();
 
+
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Property")
 	float speed = 1.0f;
 
