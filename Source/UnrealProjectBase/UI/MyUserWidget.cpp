@@ -243,6 +243,10 @@ float UMyUserWidget::GetCurrentValue()
 
 void UMyUserWidget::SetIncreaseMadness(float value)
 {
+	if (value > 0)
+	{
+		roomMadnessDamage = value;
+	}
 	increaseMadness = value;
 }
 

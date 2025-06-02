@@ -106,7 +106,7 @@ void ARoom::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor
 								WidgetPtr->isInLight = false;
 								if (WidgetPtr->isInRoom == true)
 								{
-									WidgetPtr->SetIncreaseMadness(0.05);
+									WidgetPtr->SetIncreaseMadness(WidgetPtr->roomMadnessDamage);
 									Color(.5, 1);
 								}
 								else
