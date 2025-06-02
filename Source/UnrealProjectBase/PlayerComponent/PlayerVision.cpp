@@ -89,7 +89,10 @@ void UPlayerVision::LookForEye()
 						// normal eyeball fading
 						if (USpottedObject* object = Cast<USpottedObject>(Actor->FindComponentByClass<USpottedObject>()))
 						{
-							object->FadeAway();
+							if (object->isFading == false)
+							{
+								object->FadeAway();	
+							}
 						}
 						break; 
 					}
