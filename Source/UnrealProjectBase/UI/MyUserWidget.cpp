@@ -297,7 +297,10 @@ void UMyUserWidget::Dead()
 	{
 		if (APawn* Player = PlayerController->GetPawn())
 		{
-			Player->SetActorLocation(spawnPoint->GetActorLocation());
+			if (spawnPoint)
+			{
+				Player->SetActorLocation(spawnPoint->GetActorLocation());
+			}
 						
 			if (FullyMadSFX)
 			{
