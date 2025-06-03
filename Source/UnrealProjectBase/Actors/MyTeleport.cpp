@@ -4,6 +4,7 @@
 #include "MyTeleport.h"
 
 #include "Components/BoxComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "Engine/Engine.h"
 #include "GameFramework/Character.h"
 #include "UnrealProjectBase/UI/PlayerHud.h"
@@ -48,40 +49,45 @@ void AMyTeleport::BeginPlay()
 // if next stage is null go to end screen
 void AMyTeleport::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (Cast<ACharacter>(OtherActor))
+	if (!Cast<ACharacter>(OtherActor)) return;
+	if (!Cast<UCapsuleComponent>(OtherComp)) return;
+		
+	// check if this loop is null
+	if (teleportTo)
 	{
-		// check if this loop is null
-		if (teleportTo)
+		LoadSubLevel();
+		// check if puzzle is completed
+		if (isCompleted == true)
 		{
-			
-			// check if puzzle is completed
-			if (isCompleted == true)
-			{
-				Teleport(OtherActor, NextTeleportTo->GetComponentTransform());
-			}
-			else
-			{
-				// teleport player
-				Teleport(OtherActor, teleportTo->GetComponentTransform());
+			Teleport(OtherActor, NextTeleportTo->GetComponentTransform());
+		}
+		else
+		{
+			// teleport player
+			Teleport(OtherActor, teleportTo->GetComponentTransform());
 				
-				// reset the eye and chocolate 
-				Reset();
+			// reset the eye and chocolate 
+			Reset();
 
-				// increase their madness
-				APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
-				if (APlayerController* character = Cast<APlayerController>(PlayerController))
+			// increase their madness
+			APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
+			if (APlayerController* character = Cast<APlayerController>(PlayerController))
+			{
+				APlayerHud* hud = Cast<APlayerHud>(character->GetHUD());
+
+				UMyUserWidget* widget = Cast<UMyUserWidget>(hud->GetWidget());
+				if (widget)
 				{
-					APlayerHud* hud = Cast<APlayerHud>(character->GetHUD());
-
-					UMyUserWidget* widget = Cast<UMyUserWidget>(hud->GetWidget());
-					if (widget)
-					{
-						widget->IncreaseMadnessBar(increaseMadness);
-					}	
-				}
+					widget->IncreaseMadnessBar(increaseMadness);
+				}	
 			}
-		}	
+		}
 	}
+	
+}
+
+void AMyTeleport::LoadSubLevel_Implementation()
+{
 }
 
 void AMyTeleport::SetActors()
