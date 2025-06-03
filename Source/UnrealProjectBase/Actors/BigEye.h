@@ -20,8 +20,8 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditAnywhere)
-	UMyUserWidget* MadnessWidget;
+	UPROPERTY()
+	TObjectPtr<UMyUserWidget> MadnessWidget;
 	
 	UPROPERTY()
 	FTransform startTransform;
@@ -49,10 +49,13 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void RemoveImmunity();
 
-	UPROPERTY(EditAnywhere, Category = "BigEye")
+	UPROPERTY(EditAnywhere)
+	float PushBackForce = .5f;
+	
+	UPROPERTY(EditAnywhere)
 	float increaseMadnessAmount = 0.01;
 
-	UPROPERTY(EditAnywhere, Category = "BigEye")
+	UPROPERTY(EditAnywhere)
 	float immunityTime = 10;
 
 	UPROPERTY(EditAnywhere)
