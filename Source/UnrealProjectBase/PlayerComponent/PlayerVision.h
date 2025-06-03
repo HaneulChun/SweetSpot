@@ -46,8 +46,6 @@ protected:
 	UPROPERTY(BlueprintReadOnly)
 	UCameraComponent* PlayerCamera;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float IntensitySpeed = .5f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float eyeCheckInterval = .5f;
@@ -63,7 +61,6 @@ public:
 
 	UFUNCTION()
 	void LookForBigEye();
-	
 	
 	UFUNCTION(BlueprintCallable)
 	void SetActorArray();
