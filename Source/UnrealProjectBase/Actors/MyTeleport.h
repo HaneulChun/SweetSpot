@@ -47,7 +47,11 @@ public:
 	void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 		UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,
 		bool bFromSweep, const FHitResult& SweepResult);
-
+	
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Fade")
+	void LoadSubLevel();
+	virtual void LoadSubLevel_Implementation();
+	
 	UFUNCTION()
 	void SetActors();
 	

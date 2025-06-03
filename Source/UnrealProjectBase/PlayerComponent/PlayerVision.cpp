@@ -159,7 +159,7 @@ void UPlayerVision::LookForBigEye()
 							float Dot = FVector::DotProduct(playerForward, objectToLookAt);
 	
 							// check if player is looking at big eye
-							if (Dot > 0.99f)
+							if (Dot > object2->radius)
 							{
 								// Direction away from object
 								FVector LookAwayDirection = -objectToLookAt;
