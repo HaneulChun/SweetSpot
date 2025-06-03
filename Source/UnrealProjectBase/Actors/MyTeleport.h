@@ -8,8 +8,10 @@
 
 #include "MyTeleport.generated.h"
 
+class UMyUserWidget;
 class ACharacter;
 class UBoxComponent;
+class UMyUSerWidgetComponent;
 UCLASS()
 class UNREALPROJECTBASE_API AMyTeleport : public AActor
 {
@@ -22,14 +24,15 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-
+	
 	UPROPERTY()
 	TArray<FVector> location;
-
 	UPROPERTY()
 	TArray<FRotator> rotation;
 
+	UPROPERTY()
+	TObjectPtr<UMyUserWidget> widget;
+	
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TeleportLoop")
 	TSoftObjectPtr<UWorld> NextLoopLevel;
@@ -38,17 +41,17 @@ public:
 	TSoftObjectPtr<UWorld> thisLoopLevel;
 	
 	UPROPERTY(VisibleAnywhere, Category = "TeleportLoop")
-	USceneComponent* teleportTo;
+	TObjectPtr<USceneComponent> teleportTo;
 
 	UPROPERTY(VisibleAnywhere, Category = "TeleportLoop")
-	USceneComponent* NextTeleportTo;
+	TObjectPtr<USceneComponent> NextTeleportTo;
 	
 	UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 		UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,
 		bool bFromSweep, const FHitResult& SweepResult);
 	
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Fade")
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void LoadSubLevel();
 	virtual void LoadSubLevel_Implementation();
 	
@@ -71,5 +74,5 @@ public:
 	float increaseMadness = 0.1;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Trigger")
-	UBoxComponent* triggerBox;
+	TObjectPtr<UBoxComponent> triggerBox;
 };

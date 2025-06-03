@@ -43,6 +43,14 @@ void AMyTeleport::BeginPlay()
 	{
 		triggerBox->OnComponentBeginOverlap.AddDynamic(this, &AMyTeleport::OnOverlapBegin);
 	}
+	
+	GetWorld()->GetTimerManager().SetTimerForNextTick([this]()
+	{
+		APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
+		APlayerHud* hud = Cast<APlayerHud>(PlayerController->GetHUD());
+
+		widget = Cast<UMyUserWidget>(hud->GetWidget());
+	});
 }
 
 // loop player if puzzle is completed loop to next stage
@@ -51,39 +59,29 @@ void AMyTeleport::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 {
 	if (!Cast<ACharacter>(OtherActor)) return;
 	if (!Cast<UCapsuleComponent>(OtherComp)) return;
-		
 	// check if this loop is null
-	if (teleportTo)
+	if (!teleportTo) return;
+
+	LoadSubLevel();
+	// check if puzzle is completed
+	if (isCompleted == true)
 	{
-		LoadSubLevel();
-		// check if puzzle is completed
-		if (isCompleted == true)
-		{
-			Teleport(OtherActor, NextTeleportTo->GetComponentTransform());
-		}
-		else
-		{
-			// teleport player
-			Teleport(OtherActor, teleportTo->GetComponentTransform());
+		Teleport(OtherActor, NextTeleportTo->GetComponentTransform());
+	}
+	else
+	{
+		// teleport player
+		Teleport(OtherActor, teleportTo->GetComponentTransform());
 				
-			// reset the eye and chocolate 
-			Reset();
+		// reset the eye and chocolate 
+		Reset();
 
-			// increase their madness
-			APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
-			if (APlayerController* character = Cast<APlayerController>(PlayerController))
-			{
-				APlayerHud* hud = Cast<APlayerHud>(character->GetHUD());
-
-				UMyUserWidget* widget = Cast<UMyUserWidget>(hud->GetWidget());
-				if (widget)
-				{
-					widget->IncreaseMadnessBar(increaseMadness);
-				}	
-			}
+		// increase their madness
+		if (widget)
+		{
+			widget->IncreaseMadnessBar(increaseMadness);	
 		}
 	}
-	
 }
 
 void AMyTeleport::LoadSubLevel_Implementation()
@@ -114,7 +112,6 @@ void AMyTeleport::Reset()
 			FActorSpawnParameters SpawnParams;
 			SpawnParams.Owner = this;
 			SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
-
 
 			GetWorld()->SpawnActor<AActor>(object->GetClass(), location[i], rotation[i], SpawnParams);
 			i++;
