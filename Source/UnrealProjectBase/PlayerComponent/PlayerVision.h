@@ -46,8 +46,12 @@ protected:
 	UPROPERTY(BlueprintReadOnly)
 	UCameraComponent* PlayerCamera;
 	
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float IntensitySpeed = .5f;
+	float eyeCheckInterval = .5f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float bigEyeCheckInterval = .1f;
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
@@ -57,7 +61,6 @@ public:
 
 	UFUNCTION()
 	void LookForBigEye();
-	
 	
 	UFUNCTION(BlueprintCallable)
 	void SetActorArray();
