@@ -36,35 +36,38 @@ void AElevator::BeginPlay()
 	//make the child invisible
 	if (Switch && Switch->GetChildActor())
 	{
-		if (TurnOnSwitch == true) return;
-		
-		Switch->GetChildActor()->SetOwner(this);
-		if (UStaticMeshComponent* Mesh = Switch->GetChildActor()->FindComponentByClass<UStaticMeshComponent>())
+		if (TurnOnSwitch == false)
 		{
-			Mesh->SetVisibility(false);
-			Mesh->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+			Switch->GetChildActor()->SetOwner(this);
+			if (UStaticMeshComponent* Mesh = Switch->GetChildActor()->FindComponentByClass<UStaticMeshComponent>())
+			{
+				Mesh->SetVisibility(false);
+				Mesh->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+			}	
 		}
 	}
 	if (Button && Button->GetChildActor())
 	{
-		if (TurnOnButton == true) return;
-		
-		Button->GetChildActor()->SetOwner(this);
-		if (UStaticMeshComponent* Mesh = Button->GetChildActor()->FindComponentByClass<UStaticMeshComponent>())
+		if (TurnOnButton == false)
 		{
-			Mesh->SetVisibility(false);
-			Mesh->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+			Button->GetChildActor()->SetOwner(this);
+			if (UStaticMeshComponent* Mesh = Button->GetChildActor()->FindComponentByClass<UStaticMeshComponent>())
+			{
+				Mesh->SetVisibility(false);
+				Mesh->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+			}	
 		}
 	}
 	if (Cranck && Cranck->GetChildActor())
 	{
-		if (TurnOnCranck == true) return;
-		
-		Cranck->GetChildActor()->SetOwner(this);
-		if (UStaticMeshComponent* Mesh = Cranck->GetChildActor()->FindComponentByClass<UStaticMeshComponent>())
+		if (TurnOnCranck == false)
 		{
-			Mesh->SetVisibility(false);
-			Mesh->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+			Cranck->GetChildActor()->SetOwner(this);
+			if (UStaticMeshComponent* Mesh = Cranck->GetChildActor()->FindComponentByClass<UStaticMeshComponent>())
+			{
+				Mesh->SetVisibility(false);
+				Mesh->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+			}	
 		}
 	}
 	
@@ -145,6 +148,10 @@ void AElevator::ShowElevatorPart(UChildActorComponent* Part)
 	{
 		UFMODBlueprintStatics::PlayEventAtLocation(this, FixElevatorSFX, this->GetActorTransform(), true);	
 	}
+	Exit();
 }
 
+void AElevator::Exit_Implementation()
+{
+}
 

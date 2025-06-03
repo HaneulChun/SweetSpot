@@ -32,19 +32,16 @@ protected:
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TeleportLoop")
-	TSoftObjectPtr<UWorld> NextLoop;
+	TSoftObjectPtr<UWorld> NextLoopLevel;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TeleportLoop")
-	TSoftObjectPtr<UWorld> currentLoop;
+	TSoftObjectPtr<UWorld> thisLoopLevel;
 	
 	UPROPERTY(VisibleAnywhere, Category = "TeleportLoop")
 	USceneComponent* teleportTo;
 
 	UPROPERTY(VisibleAnywhere, Category = "TeleportLoop")
-	USceneComponent* NextteleportTo;
-	
-	UPROPERTY(BlueprintReadOnly)
-	float currentLoopIndex = 0;
+	USceneComponent* NextTeleportTo;
 	
 	UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,

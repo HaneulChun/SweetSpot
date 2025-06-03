@@ -19,7 +19,7 @@ void ABigEye::BeginPlay()
 	Super::BeginPlay();
 
 	startTransform = GetTransform();
-	Tags.Add("SeeMe");
+	Tags.Add("BigEye");
 
 	GetWorld()->GetTimerManager().SetTimerForNextTick([this]()
 	{
@@ -42,7 +42,7 @@ void ABigEye::Tick(float DeltaTime)
 
 void ABigEye::IncreaseMadness()
 {
-	if (count <= 20)
+	if (count <= focusedLookTicks)
 	{
 		// increase madness when object is spotted
 		MadnessWidget->IncreaseMadnessBar(increaseMadnessAmount);
@@ -51,8 +51,9 @@ void ABigEye::IncreaseMadness()
 
 void ABigEye::FadeAway()
 {
-	if (count <= 20)
+	if (count <= focusedLookTicks)
 	{
+		// make eye disappear 
 		FVector Direction = -GetActorForwardVector();
 		FVector CurrentLocation = GetActorLocation();
 		FVector NewLocation = CurrentLocation + (Direction * 1);
@@ -71,7 +72,7 @@ void ABigEye::FadeAway()
 
 void ABigEye::ResetPosition()
 {
-	if (count <= 20)
+	if (count <= focusedLookTicks)
 	{
 		SetActorTransform(startTransform);
 		count = 0;
