@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.03.00">
-	<object class="AudioFile" id="{7ff77498-012a-4062-961a-ee31a1044a38}">
+	<object class="AudioFile" id="{f824b9fc-2ff3-4e10-a587-a11759b7f354}">
 		<property name="assetPath">
-			<value>Sweet_Spot_AMB.wav</value>
+			<value>Environment/Sweet_Spot_AMB.wav</value>
 		</property>
 		<property name="isStreaming">
 			<value>true</value>
