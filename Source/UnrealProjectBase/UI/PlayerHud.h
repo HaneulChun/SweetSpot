@@ -58,7 +58,7 @@ public:
 	float mad = 0.6;
 	
 	UPROPERTY(EditAnywhere, BluePrintReadWrite)
-	TArray<UMaterialInterface*> Material;
+	TArray<TObjectPtr<UMaterialInterface>> Material;
 
 	UFUNCTION(BlueprintCallable)
 	void SetTextTodo(FString setText);

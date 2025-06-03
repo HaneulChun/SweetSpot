@@ -30,7 +30,6 @@ protected:
 	int count = 0;
 
 	FTimerHandle TimerHandle;
-	
 	FTimerHandle TimerHandleImmune;
 	
 public:	
