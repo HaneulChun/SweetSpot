@@ -21,7 +21,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite)
 	UBoxComponent* triggerBox;
 
 	UFUNCTION()
@@ -31,9 +31,12 @@ protected:
 
 	UFUNCTION()
 	void Teleport(AActor* OtherActor);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void ShowElevatorPart();
 	
 public:	
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TObjectPtr<Ateleport> teleportTo;
 };
