@@ -30,7 +30,6 @@ protected:
 	int count = 0;
 
 	FTimerHandle TimerHandle;
-	
 	FTimerHandle TimerHandleImmune;
 	
 public:	
@@ -51,6 +50,9 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	float PushBackForce = .5f;
+
+	UPROPERTY(EditAnywhere)
+	float radius = 0.95f;
 	
 	UPROPERTY(EditAnywhere)
 	float increaseMadnessAmount = 0.01;
