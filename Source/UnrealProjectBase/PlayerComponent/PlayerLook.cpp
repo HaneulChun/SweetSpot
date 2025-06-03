@@ -50,7 +50,7 @@ AActor* UPlayerLook::LookAtActor()
 		if (GetWorld()->LineTraceSingleByChannel(HitResult, Start, End, ECC_Visibility, Params))
 		{
 			// return the actor that was hit
-			AActor* HitActor = HitResult.GetActor();
+			TObjectPtr<AActor> HitActor = HitResult.GetActor();
 			if (HitActor)
 			{
 				return HitActor;

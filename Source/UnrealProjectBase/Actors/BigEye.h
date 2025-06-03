@@ -33,8 +33,6 @@ protected:
 	FTimerHandle TimerHandleImmune;
 	
 public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION()
 	void IncreaseMadness();
