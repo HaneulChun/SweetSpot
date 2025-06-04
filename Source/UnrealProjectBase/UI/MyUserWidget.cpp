@@ -313,6 +313,7 @@ void UMyUserWidget::Dead()
 
 void UMyUserWidget::StartLoop()
 {
+	CurrentState = ECurrentState::Dead;
 	SaneActors.Empty();
 	SweetActors.Empty();
 	spawnPoint = nullptr;
