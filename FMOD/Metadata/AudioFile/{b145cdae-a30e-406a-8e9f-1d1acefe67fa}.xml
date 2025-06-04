@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.03.00">
-	<object class="AudioFile" id="{745aab44-739b-499d-9e7e-9be9d0cb7e48}">
+	<object class="AudioFile" id="{b145cdae-a30e-406a-8e9f-1d1acefe67fa}">
 		<property name="assetPath">
 			<value>SFX/Door/Creaking_Door_Creak_Wood_Squeak.wav</value>
-		</property>
-		<property name="isStreaming">
-			<value>true</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>44.0999985</value>
@@ -14,7 +11,7 @@
 			<value>1</value>
 		</property>
 		<property name="length">
-			<value>29.046643990929706</value>
+			<value>1.4068253968253968</value>
 		</property>
 		<relationship name="masterAssetFolder">
 			<destination>{0007398a-8526-4222-84a0-9fc057cc09e5}</destination>
