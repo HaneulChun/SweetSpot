@@ -22,6 +22,14 @@ void USpottedObject::BeginPlay()
 	Super::BeginPlay();
 	
 	GetOwner()->Tags.Add("SeeMe");
+
+	GetWorld()->GetTimerManager().SetTimerForNextTick([this]()
+{
+	APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
+	APlayerHud* hud = Cast<APlayerHud>(PlayerController->GetHUD());
+
+	widget = Cast<UMyUserWidget>(hud->GetWidget());
+});
 }
 
 
@@ -32,22 +40,6 @@ void USpottedObject::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 
 	if (isFading == true)
 	{
-		if (spotted == false)
-		{
-			// increase madness when object is sopoted
-			if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
-			{
-				APlayerHud* hud = Cast<APlayerHud>(PlayerController->GetHUD());
-
-				UMyUserWidget* widget = Cast<UMyUserWidget>(hud->GetWidget());
-				if (widget)
-				{
-					widget->IncreaseMadnessBar(increaseMadness);
-				}	
-			}
-			spotted = true;
-		}
-
 		// move the object
 		FVector Direction = -GetOwner()->GetActorForwardVector();
 		FVector CurrentLocation = GetOwner()->GetActorLocation();
@@ -57,10 +49,19 @@ void USpottedObject::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 		if (CurrentLocation.Z <= -400)
 		{
 			isFading = false;
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "done");
 		}
 	}
 }
 
 void USpottedObject::FadeAway_Implementation()
 {
+}
+
+void USpottedObject::IncreasePlayerMadness()
+{
+	if (widget)
+	{
+		widget->IncreaseMadnessBar(increaseMadness);
+	}	
 }
