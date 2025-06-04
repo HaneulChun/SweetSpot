@@ -31,12 +31,11 @@ void UPlayerVision::BeginPlay()
 	PlayerController = GetWorld()->GetFirstPlayerController();
 	PlayerPawn = PlayerController->GetPawn();
 
-
 	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &UPlayerVision::LookForEye, eyeCheckInterval, true);
 	
 	GetWorld()->GetTimerManager().SetTimer(BigTimerHandle, this, &UPlayerVision::LookForBigEye, bigEyeCheckInterval, true);
 }
-
+//isFocusing
 
 // Called every frame
 void UPlayerVision::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -46,10 +45,12 @@ void UPlayerVision::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 
 void UPlayerVision::LookForEye()
 {
+	if (!isFocusing) return;
+	
 	PlayerLocation = PlayerPawn->GetActorLocation();
 
 	// check if the eye was recently rendered
-	for (AActor* Actor : eyeArray)
+	for (TObjectPtr<AActor> Actor : eyeArray)
 	{
 		if (Actor)
 		{
@@ -109,7 +110,7 @@ void UPlayerVision::LookForBigEye()
 	PlayerLocation = PlayerPawn->GetActorLocation();
 	
 	// check if the eye was recently rendered
-	for (AActor* Actor : bigEyeArray)
+	for (TObjectPtr<AActor> Actor : bigEyeArray)
 	{
 		if (Actor)
 		{
@@ -199,7 +200,7 @@ void UPlayerVision::SetActorArray()
 
 	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
 	{
-		AActor* Actor = *ActorItr;
+		TObjectPtr<AActor> Actor = *ActorItr;
 		
 		if (Actor->Tags.Contains("SeeMe"))
 		{

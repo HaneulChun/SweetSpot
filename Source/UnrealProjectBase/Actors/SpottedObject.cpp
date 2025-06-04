@@ -54,7 +54,7 @@ void USpottedObject::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 		FVector NewLocation = CurrentLocation + (Direction * speed);
 
 		GetOwner()->SetActorLocation(NewLocation);
-		if (CurrentLocation.Z <= -200)
+		if (CurrentLocation.Z <= -400)
 		{
 			isFading = false;
 		}
