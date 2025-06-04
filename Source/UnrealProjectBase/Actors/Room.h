@@ -10,6 +10,7 @@
 
 class ACharacter;
 class UBoxComponent;
+class UMyUserWidget;
 UCLASS()
 class UNREALPROJECTBASE_API ARoom : public AActor
 {
@@ -25,6 +26,10 @@ protected:
 
 	UPROPERTY(BlueprintReadWrite);
 	TObjectPtr<UBoxComponent> triggerBox;
+
+	UPROPERTY()
+	TObjectPtr<UMyUserWidget> widget;
+	
 public:	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<TObjectPtr<UBoxComponent>> TriggerVolume;
