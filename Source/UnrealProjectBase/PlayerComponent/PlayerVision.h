@@ -52,6 +52,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float bigEyeCheckInterval = .1f;
+
+	UFUNCTION()
+	float DotProduct(FVector TargetVector);
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;

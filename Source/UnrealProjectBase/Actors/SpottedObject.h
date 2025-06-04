@@ -7,6 +7,8 @@
 #include "SpottedObject.generated.h"
 
 
+class UMyUserWidget;
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent), Blueprintable)
 class UNREALPROJECTBASE_API USpottedObject : public UActorComponent
 {
@@ -25,6 +27,8 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+	UPROPERTY()
+	TObjectPtr<UMyUserWidget> widget;
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
@@ -33,11 +37,12 @@ public:
 	void FadeAway();
 	virtual void FadeAway_Implementation();
 
-
+	UFUNCTION()
+	void IncreasePlayerMadness();
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Property")
 	float speed = 1.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Property")
-	float increaseMadness = 0.1;
+	float increaseMadness = 0.02;
 };

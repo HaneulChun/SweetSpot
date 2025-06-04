@@ -35,7 +35,16 @@ void UPlayerVision::BeginPlay()
 	
 	GetWorld()->GetTimerManager().SetTimer(BigTimerHandle, this, &UPlayerVision::LookForBigEye, bigEyeCheckInterval, true);
 }
-//isFocusing
+
+
+float UPlayerVision::DotProduct(FVector TargetVector)
+{
+	FVector playerForward = PlayerCamera->GetForwardVector();
+	FVector objectToLookAt = (TargetVector - PlayerCamera->GetComponentLocation()).GetSafeNormal();
+	float Dot = FVector::DotProduct(playerForward, objectToLookAt);
+	
+	return Dot;
+}
 
 // Called every frame
 void UPlayerVision::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -45,16 +54,14 @@ void UPlayerVision::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 
 void UPlayerVision::LookForEye()
 {
-	if (!isFocusing) return;
-	
 	PlayerLocation = PlayerPawn->GetActorLocation();
 
 	// check if the eye was recently rendered
 	for (TObjectPtr<AActor> Actor : eyeArray)
 	{
-		if (Actor)
+		if (Actor && Actor->WasRecentlyRendered(0.1f))
 		{
-			if (Actor && Actor->WasRecentlyRendered(0.1f))
+			if (DotProduct(Actor->GetActorLocation()) > 0.54)
 			{
 				FVector Center = eyeMeshArray[EyeIndex]->Bounds.Origin;
 				float Radius = eyeMeshArray[EyeIndex]->Bounds.SphereRadius;
@@ -90,9 +97,13 @@ void UPlayerVision::LookForEye()
 						// normal eyeball fading
 						if (USpottedObject* object = Cast<USpottedObject>(Actor->FindComponentByClass<USpottedObject>()))
 						{
-							if (object->isFading == false)
+							object->IncreasePlayerMadness();
+							if (isFocusing)
 							{
-								object->FadeAway();	
+								if (object->isFading == false)
+								{
+									object->FadeAway();	
+								}
 							}
 						}
 						break; 
@@ -112,76 +123,71 @@ void UPlayerVision::LookForBigEye()
 	// check if the eye was recently rendered
 	for (TObjectPtr<AActor> Actor : bigEyeArray)
 	{
-		if (Actor)
+		if (Actor && Actor->WasRecentlyRendered(0.1f))
 		{
-			if (Actor && Actor->WasRecentlyRendered(0.1f))
-			{
-				FVector Center = bigEyeMeshArray[bigEyeIndex]->Bounds.Origin;
-				float Radius = bigEyeMeshArray[bigEyeIndex]->Bounds.SphereRadius;
+			FVector Center = bigEyeMeshArray[bigEyeIndex]->Bounds.Origin;
+			float Radius = bigEyeMeshArray[bigEyeIndex]->Bounds.SphereRadius;
 	
 	
 				// set points to check if the player can see the object
-				TArray<FVector> PointsToCheck = {
-					Center,
-					Center + FVector(Radius, 0, 0),
-					Center + FVector(-Radius, 0, 0),
-					Center + FVector(0, Radius, 0),
-					Center + FVector(0, -Radius, 0),
-					Center + FVector(0, 0, Radius),
-					Center + FVector(0, 0, -Radius)
-				};
+			TArray<FVector> PointsToCheck = {
+				Center,
+				Center + FVector(Radius, 0, 0),
+				Center + FVector(-Radius, 0, 0),
+				Center + FVector(0, Radius, 0),
+				Center + FVector(0, -Radius, 0),
+				Center + FVector(0, 0, Radius),
+				Center + FVector(0, 0, -Radius)
+			};
 	
 	
-				// check if there is a wall between player and point
-				for (const FVector& Point : PointsToCheck)
+			// check if there is a wall between player and point
+			for (const FVector& Point : PointsToCheck)
+			{
+				FHitResult HitResult;
+				FCollisionQueryParams Params;
+				Params.AddIgnoredActor(PlayerPawn);
+	
+	
+				bool bHit = GetWorld()->LineTraceSingleByChannel(
+					HitResult,
+					PlayerLocation,
+					Point,
+					ECC_Visibility,
+					Params);
+	
+	
+				// if see actor make it fade away
+				if (!bHit || HitResult.GetActor() == Actor)
 				{
-					FHitResult HitResult;
-					FCollisionQueryParams Params;
-					Params.AddIgnoredActor(PlayerPawn);
-	
-	
-					bool bHit = GetWorld()->LineTraceSingleByChannel(
-						HitResult,
-						PlayerLocation,
-						Point,
-						ECC_Visibility,
-						Params);
-	
-	
-					// if see actor make it fade away
-					if (!bHit || HitResult.GetActor() == Actor)
+					// big eyeball
+					if (ABigEye* object2 = Cast<ABigEye>(Actor))
 					{
-						// big eyeball
-						if (ABigEye* object2 = Cast<ABigEye>(Actor))
+						// dot product
+						// check if player is looking at big eye
+						if (DotProduct(Actor->GetActorLocation()) > object2->radius)
 						{
-							// dot product 
-							FVector playerForward = PlayerCamera->GetForwardVector();
 							FVector objectToLookAt = (Actor->GetActorLocation() - PlayerCamera->GetComponentLocation()).GetSafeNormal();
-							float Dot = FVector::DotProduct(playerForward, objectToLookAt);
-	
-							// check if player is looking at big eye
-							if (Dot > object2->radius)
+							
+							// Direction away from object
+							FVector LookAwayDirection = -objectToLookAt;
+							
+							FRotator CurrentRotation = PlayerCamera->GetComponentRotation();
+							FRotator TargetRotation = LookAwayDirection.Rotation();
+							
+							// Interpolate rotation
+							FRotator NewRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), object2->PushBackForce);
+							PlayerController->SetControlRotation(NewRotation);
+							
+							// if player is focusing fade the object 
+							if (isFocusing)
 							{
-								// Direction away from object
-								FVector LookAwayDirection = -objectToLookAt;
-								
-								FRotator CurrentRotation = PlayerCamera->GetComponentRotation();
-								FRotator TargetRotation = LookAwayDirection.Rotation();
-								
-								// Interpolate rotation
-								FRotator NewRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), object2->PushBackForce);
-								PlayerController->SetControlRotation(NewRotation);
-								
-								// if player is focusing fade the object 
-								if (isFocusing)
-								{
-									object2->FadeAway();
-								}
-								object2->IncreaseMadness();
+								object2->FadeAway();
 							}
+							object2->IncreaseMadness();
 						}
-						break; 
 					}
+					break; 
 				}
 			}
 		}
