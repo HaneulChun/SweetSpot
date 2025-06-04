@@ -158,18 +158,17 @@ void UPlayerVision::LookForBigEye()
 							FVector objectToLookAt = (Actor->GetActorLocation() - PlayerCamera->GetComponentLocation()).GetSafeNormal();
 							float Dot = FVector::DotProduct(playerForward, objectToLookAt);
 	
-	
 							// check if player is looking at big eye
-							if (Dot > 0.99f)
+							if (Dot > object2->radius)
 							{
-								// Direction *away* from object
+								// Direction away from object
 								FVector LookAwayDirection = -objectToLookAt;
 								
-								FRotator CurrentRotation = PlayerController->GetControlRotation();
+								FRotator CurrentRotation = PlayerCamera->GetComponentRotation();
 								FRotator TargetRotation = LookAwayDirection.Rotation();
 								
 								// Interpolate rotation
-								FRotator NewRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), IntensitySpeed);
+								FRotator NewRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), object2->PushBackForce);
 								PlayerController->SetControlRotation(NewRotation);
 								
 								// if player is focusing fade the object 
@@ -189,6 +188,7 @@ void UPlayerVision::LookForBigEye()
 	}
 	bigEyeIndex = 0;
 }
+
 
 void UPlayerVision::SetActorArray()
 {

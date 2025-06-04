@@ -23,21 +23,13 @@ void ABigEye::BeginPlay()
 
 	GetWorld()->GetTimerManager().SetTimerForNextTick([this]()
 	{
-		if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
+		if (TObjectPtr<APlayerController> PlayerController = GetWorld()->GetFirstPlayerController())
 		{
-			APlayerHud* hud = Cast<APlayerHud>(PlayerController->GetHUD());
+			TObjectPtr<APlayerHud> hud = Cast<APlayerHud>(PlayerController->GetHUD());
 
 			MadnessWidget = Cast<UMyUserWidget>(hud->GetWidget());
 		}
 	});
-}
-
-// Called every frame
-void ABigEye::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-	
 }
 
 void ABigEye::IncreaseMadness()

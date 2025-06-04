@@ -4,6 +4,7 @@
 #include "MyTeleport.h"
 
 #include "Components/BoxComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "Engine/Engine.h"
 #include "GameFramework/Character.h"
 #include "UnrealProjectBase/UI/PlayerHud.h"
@@ -42,46 +43,49 @@ void AMyTeleport::BeginPlay()
 	{
 		triggerBox->OnComponentBeginOverlap.AddDynamic(this, &AMyTeleport::OnOverlapBegin);
 	}
+	
+	GetWorld()->GetTimerManager().SetTimerForNextTick([this]()
+	{
+		APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
+		APlayerHud* hud = Cast<APlayerHud>(PlayerController->GetHUD());
+
+		widget = Cast<UMyUserWidget>(hud->GetWidget());
+	});
 }
 
 // loop player if puzzle is completed loop to next stage
 // if next stage is null go to end screen
 void AMyTeleport::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (Cast<ACharacter>(OtherActor))
+	if (!Cast<ACharacter>(OtherActor)) return;
+	if (!Cast<UCapsuleComponent>(OtherComp)) return;
+	// check if this loop is null
+	if (!teleportTo) return;
+
+	LoadSubLevel();
+	// check if puzzle is completed
+	if (isCompleted == true)
 	{
-		// check if this loop is null
-		if (teleportTo)
-		{
-			
-			// check if puzzle is completed
-			if (isCompleted == true)
-			{
-				Teleport(OtherActor, NextTeleportTo->GetComponentTransform());
-			}
-			else
-			{
-				// teleport player
-				Teleport(OtherActor, teleportTo->GetComponentTransform());
-				
-				// reset the eye and chocolate 
-				Reset();
-
-				// increase their madness
-				APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
-				if (APlayerController* character = Cast<APlayerController>(PlayerController))
-				{
-					APlayerHud* hud = Cast<APlayerHud>(character->GetHUD());
-
-					UMyUserWidget* widget = Cast<UMyUserWidget>(hud->GetWidget());
-					if (widget)
-					{
-						widget->IncreaseMadnessBar(increaseMadness);
-					}	
-				}
-			}
-		}	
+		Teleport(OtherActor, NextTeleportTo->GetComponentTransform());
 	}
+	else
+	{
+		// teleport player
+		Teleport(OtherActor, teleportTo->GetComponentTransform());
+				
+		// reset the eye and chocolate 
+		Reset();
+
+		// increase their madness
+		if (widget)
+		{
+			widget->IncreaseMadnessBar(increaseMadness);	
+		}
+	}
+}
+
+void AMyTeleport::LoadSubLevel_Implementation()
+{
 }
 
 void AMyTeleport::SetActors()
@@ -108,7 +112,6 @@ void AMyTeleport::Reset()
 			FActorSpawnParameters SpawnParams;
 			SpawnParams.Owner = this;
 			SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
-
 
 			GetWorld()->SpawnActor<AActor>(object->GetClass(), location[i], rotation[i], SpawnParams);
 			i++;

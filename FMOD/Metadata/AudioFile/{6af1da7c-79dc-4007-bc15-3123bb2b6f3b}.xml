@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.03.00">
-	<object class="AudioFile" id="{7ff77498-012a-4062-961a-ee31a1044a38}">
+	<object class="AudioFile" id="{6af1da7c-79dc-4007-bc15-3123bb2b6f3b}">
 		<property name="assetPath">
-			<value>Sweet_Spot_AMB.wav</value>
+			<value>SFX/Monster_Noises/Guts_Gore_Gushy_Squishy.wav</value>
 		</property>
 		<property name="isStreaming">
 			<value>true</value>
 		</property>
 		<property name="frequencyInKHz">
-			<value>48</value>
+			<value>96</value>
 		</property>
 		<property name="channelCount">
 			<value>2</value>
 		</property>
 		<property name="length">
-			<value>238</value>
+			<value>142.73599999999999</value>
 		</property>
 		<relationship name="masterAssetFolder">
 			<destination>{0007398a-8526-4222-84a0-9fc057cc09e5}</destination>
