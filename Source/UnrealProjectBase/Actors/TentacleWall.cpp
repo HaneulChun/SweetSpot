@@ -41,6 +41,8 @@ void ATentacleWall::BeginPlay()
 
 		widget = Cast<UMyUserWidget>(hud->GetWidget());
 	});
+
+	finalLocation = GetActorLocation().Z - 400;
 }
 
 void ATentacleWall::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
@@ -73,5 +75,20 @@ void ATentacleWall::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if (isFading == true)
+	{
+		// move the object
+		FVector CurrentLocation = GetActorLocation();
+		SetActorLocation(CurrentLocation + (-GetActorUpVector() * speed));
+		
+		if (CurrentLocation.Z <= finalLocation)
+		{
+			this->Destroy();
+		}
+	}
+}
+
+void ATentacleWall::FadeAway()
+{
 }
 
