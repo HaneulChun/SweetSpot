@@ -7,6 +7,7 @@
 #include "UnrealProjectBase/Actors/BigEye.h"
 #include "Math/Vector.h"
 #include "Camera/CameraComponent.h"
+#include "UnrealProjectBase/Actors/TentacleWall.h"
 
 // Sets default values for this component's properties
 UPlayerVision::UPlayerVision()
@@ -31,6 +32,8 @@ void UPlayerVision::BeginPlay()
 	PlayerController = GetWorld()->GetFirstPlayerController();
 	PlayerPawn = PlayerController->GetPawn();
 
+	GetWorld()->GetTimerManager().SetTimer(tenticalTimerHandle, this, &UPlayerVision::LookForTenticalWall, tenticalCheckInterval, true);
+	
 	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &UPlayerVision::LookForEye, eyeCheckInterval, true);
 	
 	GetWorld()->GetTimerManager().SetTimer(BigTimerHandle, this, &UPlayerVision::LookForBigEye, bigEyeCheckInterval, true);
@@ -46,10 +49,61 @@ float UPlayerVision::DotProduct(FVector TargetVector)
 	return Dot;
 }
 
-// Called every frame
-void UPlayerVision::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void UPlayerVision::LookForTenticalWall()
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	PlayerLocation = PlayerPawn->GetActorLocation();
+
+	// check if the eye was recently rendered
+	for (TObjectPtr<AActor> Actor : tenticalArray)
+	{
+		if (Actor && Actor->WasRecentlyRendered(0.1f))
+		{
+			if (DotProduct(Actor->GetActorLocation()) > 0.54)
+			{
+				FVector Center = tenticalMeshArray[tenticalIndex]->Bounds.Origin;
+				float Radius = tenticalMeshArray[tenticalIndex]->Bounds.BoxExtent.X; // Half-size of the bounding box
+
+
+				// set points to check if the player can see the object
+				TArray<FVector> PointsToCheck = {
+					Center,
+					Center + FVector(Radius, 0, 0),
+					Center + FVector(-Radius, 0, 0),
+					Center + FVector(0, Radius, 0),
+					Center + FVector(0, -Radius, 0),
+					Center + FVector(0, 0, Radius),
+					Center + FVector(0, 0, -Radius)
+				};
+
+				// check if there is a wall between player and point
+				for (const FVector& Point : PointsToCheck)
+				{
+					FHitResult HitResult;
+					FCollisionQueryParams Params;
+					Params.AddIgnoredActor(PlayerPawn);
+
+					bool bHit = GetWorld()->LineTraceSingleByChannel(
+						HitResult,
+						PlayerLocation,
+						Point,
+						ECC_Visibility,
+						Params);
+
+					// if see actor make it fade away
+					if (!bHit || HitResult.GetActor() == Actor)
+					{
+						if (ATentacleWall* object = Cast<ATentacleWall>(Actor))
+						{
+							GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, "Tentacle Wall");
+						}
+						break; 
+					}
+				}
+			}
+		}
+		tenticalIndex++;
+	}
+	tenticalIndex = 0;
 }
 
 void UPlayerVision::LookForEye()
@@ -199,6 +253,8 @@ void UPlayerVision::LookForBigEye()
 
 void UPlayerVision::SetActorArray()
 {
+	tenticalArray.Empty();
+	tenticalMeshArray.Empty();
 	eyeArray.Empty();
 	eyeMeshArray.Empty();
 	bigEyeArray.Empty();
@@ -207,8 +263,13 @@ void UPlayerVision::SetActorArray()
 	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
 	{
 		TObjectPtr<AActor> Actor = *ActorItr;
-		
-		if (Actor->Tags.Contains("SeeMe"))
+
+		if (Actor->Tags.Contains("Tentical"))
+		{
+			tenticalArray.Add(Actor);
+			tenticalMeshArray.Add(Actor->FindComponentByClass<UMeshComponent>());
+		}
+		else if (Actor->Tags.Contains("SeeMe"))
 		{
 			eyeArray.Add(Actor);
 			eyeMeshArray.Add(Actor->FindComponentByClass<UMeshComponent>());
