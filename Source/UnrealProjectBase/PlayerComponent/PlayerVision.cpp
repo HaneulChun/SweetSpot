@@ -94,7 +94,10 @@ void UPlayerVision::LookForTenticalWall()
 					{
 						if (ATentacleWall* object = Cast<ATentacleWall>(Actor))
 						{
-							GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, "Tentacle Wall");
+							if (isFocusing)
+							{
+								object->isFading = true;
+							}
 						}
 						break; 
 					}
