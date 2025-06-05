@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.03.00">
-	<object class="AudioFile" id="{cb0209cf-96fc-4ebb-9817-2f5ca97545e6}">
+	<object class="AudioFile" id="{128b613c-ddf9-4e76-8864-8e90019228e7}">
 		<property name="assetPath">
 			<value>Misc/Radio_Static_On_Buzz.wav</value>
 		</property>
@@ -14,7 +14,7 @@
 			<value>1</value>
 		</property>
 		<property name="length">
-			<value>31.479666666666667</value>
+			<value>30.957999999999998</value>
 		</property>
 		<relationship name="masterAssetFolder">
 			<destination>{0007398a-8526-4222-84a0-9fc057cc09e5}</destination>
