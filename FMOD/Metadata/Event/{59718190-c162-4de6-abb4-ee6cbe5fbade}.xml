@@ -5,7 +5,7 @@
 			<value>Exit_Sign</value>
 		</property>
 		<property name="outputFormat">
-			<value>0</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{5f0e255a-8f4f-42ca-9226-c7d4dbd1b513}</destination>
@@ -61,7 +61,7 @@
 	</object>
 	<object class="EventAutomatableProperties" id="{351bc96e-a10c-44c1-898e-b408f033299a}">
 		<property name="maximumDistance">
-			<value>50</value>
+			<value>70</value>
 		</property>
 	</object>
 	<object class="MarkerTrack" id="{df17189a-5c2f-4c93-a6ca-5f436a881824}" />
@@ -100,6 +100,7 @@
 	<object class="MixerBusEffectChain" id="{f6277b6f-1fe5-4d41-bd70-f56bdfe0adbf}">
 		<relationship name="effects">
 			<destination>{1b99192e-39d2-48df-8d48-54b510389338}</destination>
+			<destination>{216f0801-7338-4006-adea-9fe42ffa5d4c}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{81020ae9-100e-4417-8e8c-b4e619f76859}" />
@@ -110,4 +111,5 @@
 	</object>
 	<object class="MixerBusFader" id="{c6966815-5f47-4219-91b8-fc27328a9755}" />
 	<object class="MixerBusFader" id="{1b99192e-39d2-48df-8d48-54b510389338}" />
+	<object class="SpatialiserEffect" id="{216f0801-7338-4006-adea-9fe42ffa5d4c}" />
 </objects>
