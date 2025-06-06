@@ -32,7 +32,9 @@ protected:
 
 	UPROPERTY()
 	TObjectPtr<UMyUserWidget> widget;
-	
+
+	UPROPERTY()
+	TObjectPtr<AActor> Player;
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TeleportLoop")
 	TSoftObjectPtr<UWorld> NextLoopLevel;
@@ -54,6 +56,8 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void LoadSubLevel();
 	virtual void LoadSubLevel_Implementation();
+
+	FTimerHandle TimerHandleLevel;
 	
 	UFUNCTION()
 	void SetActors();

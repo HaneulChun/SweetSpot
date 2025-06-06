@@ -226,8 +226,9 @@ void UMyUserWidget::ChangeCameraMaterial(float intensity)
 	}
 }
 
-void UMyUserWidget::CheckforSubLevel(TSoftObjectPtr<UWorld> unloadedSubLevel)
+void UMyUserWidget::CheckForSubLevel(TSoftObjectPtr<UWorld> unloadedSubLevel)
 {
+	// loop until the loop is unloaded to set the SweetSpotActors
 	GetWorld()->GetTimerManager().SetTimer(TimerHandleLevel, [this, unloadedSubLevel]()
 	{
 		if (!unloadedSubLevel.IsValid())

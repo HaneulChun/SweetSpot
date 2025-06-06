@@ -75,7 +75,7 @@ public:
 
 
 	UFUNCTION(BlueprintCallable)
-	void CheckforSubLevel(TSoftObjectPtr<UWorld> unloadedSubLevel);
+	void CheckForSubLevel(TSoftObjectPtr<UWorld> unloadedSubLevel);
 
 	FTimerHandle TimerHandleLevel;
 	
