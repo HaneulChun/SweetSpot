@@ -17,11 +17,11 @@ class UNREALPROJECTBASE_API UPlayerVision : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	UPlayerVision();
-
+	
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
-
+	
 	// timer 
 	FTimerHandle tenticalTimerHandle;
 	FTimerHandle TimerHandle;
@@ -63,7 +63,7 @@ protected:
 	float tenticalCheckInterval = .5f;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float eyeCheckInterval = .5f;
+	float eyeCheckInterval = .1f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float bigEyeCheckInterval = .1f;
