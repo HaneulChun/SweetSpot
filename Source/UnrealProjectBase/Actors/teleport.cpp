@@ -2,6 +2,8 @@
 
 
 #include "teleport.h"
+
+#include "Components/ArrowComponent.h"
 #include "Components/BoxComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/Character.h"
@@ -18,6 +20,12 @@ Ateleport::Ateleport()
 	triggerBox->SetupAttachment(RootComponent);
 	triggerBox->SetCollisionProfileName(TEXT("Trigger"));
 	triggerBox->SetGenerateOverlapEvents(true);
+
+
+	// Create the Arrow Component
+	ArrowComponent = CreateDefaultSubobject<UArrowComponent>(TEXT("SpawnPoint"));
+	ArrowComponent->SetupAttachment(RootComponent); 
+	ArrowComponent->ArrowColor = FColor::Green;
 }
 
 void Ateleport::BeginPlay()
@@ -46,18 +54,24 @@ void Ateleport::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor*
 
 void Ateleport::Teleport(AActor* OtherActor)
 {
-	// save the player position relative to the actor
-	FTransform destanation = teleportTo->GetTransform();
-	FTransform teleportStartPoint = this->GetTransform();
-	FTransform player = OtherActor->GetTransform();
+	if (ACharacter* Character = Cast<ACharacter>(OtherActor))
+	{
+		FVector location = teleportTo->ArrowComponent->GetComponentLocation();
+		FRotator rotation = teleportTo->ArrowComponent->GetComponentRotation();
 
-	// give player offset
-	FVector offset = player.GetLocation() - teleportStartPoint.GetLocation();
-	FVector final = offset + destanation.GetLocation();
+		// Ensure the controller gets rotated too, or it will snap back
+		Character->Controller->SetControlRotation(rotation);
 
-	// teleport player
-	FTransform finalTeleport = FTransform(destanation.GetRotation(), final, OtherActor->GetTransform().GetScale3D());
-	OtherActor->SetActorTransform(finalTeleport, false);
+		// Teleport character using proper function
+		Character->TeleportTo(location, rotation);
+	}
+	else
+	{
+		// Fallback for non-character actors
+		FVector location = teleportTo->ArrowComponent->GetComponentLocation();
+		FRotator rotation = teleportTo->ArrowComponent->GetComponentRotation();
+		OtherActor->SetActorLocationAndRotation(location, rotation, false, nullptr, ETeleportType::TeleportPhysics);
+	}
 }
 
 

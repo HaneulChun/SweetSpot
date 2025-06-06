@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "teleport.generated.h"
 
+class UArrowComponent;
 class UBoxComponent;
 
 UCLASS()
@@ -21,7 +22,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UBoxComponent* triggerBox;
 
 	UFUNCTION()
@@ -39,4 +40,8 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TObjectPtr<Ateleport> teleportTo;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<UArrowComponent> ArrowComponent;
+
 };
