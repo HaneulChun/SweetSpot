@@ -42,6 +42,6 @@ public:
 	TObjectPtr<Ateleport> teleportTo;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TObjectPtr<UArrowComponent> ArrowComponent;
+	TObjectPtr<UArrowComponent> Arrow;
 
 };
