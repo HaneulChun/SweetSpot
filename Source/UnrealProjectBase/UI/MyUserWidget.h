@@ -43,6 +43,9 @@ protected:
 
 	UPROPERTY()
 	AActor* spawnPoint;
+
+	UPROPERTY()
+	TSoftObjectPtr<UWorld> checkUnloadedLevel;
 public:
 	ECurrentState CurrentState = ECurrentState::SweetSpot;
 
@@ -69,6 +72,12 @@ public:
 	
 	UFUNCTION(BlueprintCallable, Category = "Material")
 	void ChangeCameraMaterial(float intensity);
+
+
+	UFUNCTION(BlueprintCallable)
+	void CheckForSubLevel(TSoftObjectPtr<UWorld> unloadedSubLevel);
+
+	FTimerHandle TimerHandleLevel;
 	
 	UPROPERTY()
 	UFMODEvent* FullyMadSFX;

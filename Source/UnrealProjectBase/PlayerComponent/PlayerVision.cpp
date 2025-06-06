@@ -49,6 +49,7 @@ float UPlayerVision::DotProduct(FVector TargetVector)
 	return Dot;
 }
 
+
 void UPlayerVision::LookForTenticalWall()
 {
 	PlayerLocation = PlayerPawn->GetActorLocation();
@@ -94,7 +95,10 @@ void UPlayerVision::LookForTenticalWall()
 					{
 						if (ATentacleWall* object = Cast<ATentacleWall>(Actor))
 						{
-							GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, "Tentacle Wall");
+							if (isFocusing)
+							{
+								object->isFading = true;
+							}
 						}
 						break; 
 					}
@@ -151,13 +155,13 @@ void UPlayerVision::LookForEye()
 						// normal eyeball fading
 						if (USpottedObject* object = Cast<USpottedObject>(Actor->FindComponentByClass<USpottedObject>()))
 						{
-							object->IncreasePlayerMadness();
 							if (isFocusing)
 							{
-								if (object->isFading == false)
-								{
-									object->FadeAway();	
-								}
+								object->FadeAway_Implementation();
+							}
+							else
+							{
+								object->IncreaseMadness();
 							}
 						}
 						break; 

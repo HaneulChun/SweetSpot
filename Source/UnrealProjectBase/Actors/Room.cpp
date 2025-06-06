@@ -76,7 +76,14 @@ void ARoom::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 	}
 	else
 	{
-		Color(colorIntensity, 1);	
+		if (increment < 0)
+		{
+			Color(colorIntensity, 0.4);	
+		}
+		else
+		{
+			Color(colorIntensity, 1);	
+		}
 	}
 }
 

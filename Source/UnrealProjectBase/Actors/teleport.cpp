@@ -2,6 +2,8 @@
 
 
 #include "teleport.h"
+
+#include "Components/ArrowComponent.h"
 #include "Components/BoxComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/Character.h"
@@ -18,6 +20,11 @@ Ateleport::Ateleport()
 	triggerBox->SetupAttachment(RootComponent);
 	triggerBox->SetCollisionProfileName(TEXT("Trigger"));
 	triggerBox->SetGenerateOverlapEvents(true);
+	
+	// Create the Arrow
+	Arrow = CreateDefaultSubobject<UArrowComponent>(TEXT("SpawnPoint"));
+	Arrow->SetupAttachment(RootComponent); 
+	Arrow->ArrowColor = FColor::Green;
 }
 
 void Ateleport::BeginPlay()
@@ -31,33 +38,26 @@ void Ateleport::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor*
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	// check if other actor is player and check if they are close enough 
-	if (Cast<ACharacter>(OtherActor))
+	if (!Cast<ACharacter>(OtherActor)) return;
+	if (!Cast<UCapsuleComponent>(OtherComp)) return;
+
+	if (teleportTo)
 	{
-		if (Cast<UCapsuleComponent>(OtherComp))
-		{
-			if (teleportTo)
-			{
-				Teleport(OtherActor);
-			}
-			ShowElevatorPart();
-		}
+		Teleport(OtherActor);
 	}
+	ShowElevatorPart();
 }
 
 void Ateleport::Teleport(AActor* OtherActor)
 {
-	// save the player position relative to the actor
-	FTransform destanation = teleportTo->GetTransform();
-	FTransform teleportStartPoint = this->GetTransform();
-	FTransform player = OtherActor->GetTransform();
-
-	// give player offset
-	FVector offset = player.GetLocation() - teleportStartPoint.GetLocation();
-	FVector final = offset + destanation.GetLocation();
-
-	// teleport player
-	FTransform finalTeleport = FTransform(destanation.GetRotation(), final, OtherActor->GetTransform().GetScale3D());
-	OtherActor->SetActorTransform(finalTeleport, false);
+	if (ACharacter* Character = Cast<ACharacter>(OtherActor))
+	{
+		// Rotation
+		Character->Controller->SetControlRotation(teleportTo->Arrow->GetComponentRotation());
+		
+		// Location
+		OtherActor->SetActorLocation(teleportTo->Arrow->GetComponentLocation(), false);
+	}
 }
 
 

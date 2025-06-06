@@ -41,6 +41,9 @@ void ATentacleWall::BeginPlay()
 
 		widget = Cast<UMyUserWidget>(hud->GetWidget());
 	});
+
+	startLocation = GetActorLocation().Z;
+	finalLocation = GetActorLocation().Z - 400;
 }
 
 void ATentacleWall::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
@@ -73,5 +76,43 @@ void ATentacleWall::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if (isFading == true)
+	{
+		// move the object
+		FVector CurrentLocation = GetActorLocation();
+		SetActorLocation(CurrentLocation + (-GetActorUpVector() * speed));
+		
+		if (CurrentLocation.Z <= finalLocation)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, "Tentacle Wall");
+			this->Destroy();
+		}
+	}
+	else if (isSpawning)
+	{
+		// move the object
+		FVector CurrentLocation = GetActorLocation();
+		SetActorLocation(CurrentLocation + (GetActorUpVector() * speed));
+		
+		if (CurrentLocation.Z >= startLocation)
+		{
+			isSpawning = false;
+		}
+	}
+}
+
+void ATentacleWall::FadeAway()
+{
+	isFading = true;
+}
+
+void ATentacleWall::Spawn()
+{
+	isSpawning = true;
+}
+
+void ATentacleWall::StartDown()
+{
+	SetActorLocation(FVector(GetActorLocation().X, GetActorLocation().Y, finalLocation));
 }
 
