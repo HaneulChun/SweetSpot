@@ -18,31 +18,43 @@ public:
 	// Sets default values for this component's properties
 	USpottedObject();
 
-	UPROPERTY(BlueprintReadWrite)
-	bool isFading = false;
-
-	UPROPERTY(BlueprintReadWrite)
-	bool spotted = false;
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool isClosingAnim = false;
+	
 	UPROPERTY()
 	TObjectPtr<UMyUserWidget> widget;
-public:	
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Fade")
+	UPROPERTY()
+	FTransform startTransform;
+
+	UPROPERTY()
+	int count = 0;
+
+	FTimerHandle TimerHandle;
+	
+public:	
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void FadeAway();
 	virtual void FadeAway_Implementation();
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void ResetPosition();
+	virtual void ResetPosition_Implementation();
+	
 	UFUNCTION()
-	void IncreasePlayerMadness();
+	void IncreaseMadness();
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Property")
-	float speed = 1.0f;
+	float speed = 5.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Property")
-	float increaseMadness = 0.02;
+	float increaseMadnessAmount = 0.004;
+
+	UPROPERTY(EditAnywhere, Category = "Property")
+	int focusedLookTicks = 20;
 };

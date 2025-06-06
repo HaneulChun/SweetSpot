@@ -20,9 +20,10 @@ USpottedObject::USpottedObject()
 void USpottedObject::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	GetOwner()->Tags.Add("SeeMe");
 
+	startTransform = GetOwner()->GetTransform();
+	GetOwner()->Tags.Add("SeeMe");
+	
 	GetWorld()->GetTimerManager().SetTimerForNextTick([this]()
 {
 	APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
@@ -32,36 +33,41 @@ void USpottedObject::BeginPlay()
 });
 }
 
-
-// Called every frame
-void USpottedObject::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void USpottedObject::FadeAway_Implementation()
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	if (isFading == true)
+	FadeAway();
+	if (count <= focusedLookTicks)
 	{
-		// move the object
+		isClosingAnim = true;
+		
+		// make eye disappear 
 		FVector Direction = -GetOwner()->GetActorForwardVector();
 		FVector CurrentLocation = GetOwner()->GetActorLocation();
 		FVector NewLocation = CurrentLocation + (Direction * speed);
-
 		GetOwner()->SetActorLocation(NewLocation);
-		if (CurrentLocation.Z <= -400)
-		{
-			isFading = false;
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "done");
-		}
+		
+		count++;
+		GetOwner()->GetWorldTimerManager().SetTimer(TimerHandle, this, &USpottedObject::ResetPosition_Implementation, 1.0f, false, 0.4f);
+	}
+	else
+	{
+		GetOwner()->Destroy();
 	}
 }
 
-void USpottedObject::FadeAway_Implementation()
+void USpottedObject::ResetPosition_Implementation()
 {
+	GetOwner()->SetActorTransform(startTransform);
+	count = 0;
+	
+	ResetPosition();
+	isClosingAnim = false;
 }
 
-void USpottedObject::IncreasePlayerMadness()
+void USpottedObject::IncreaseMadness()
 {
 	if (widget)
 	{
-		widget->IncreaseMadnessBar(increaseMadness);
+		widget->IncreaseMadnessBar(increaseMadnessAmount);
 	}	
 }
