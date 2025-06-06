@@ -21,7 +21,9 @@ public:
 private:
 	UPROPERTY()
 	float finalLocation;
-	
+
+	UPROPERTY()
+	float startLocation;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -52,8 +54,14 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	void FadeAway();
+
+	UFUNCTION(BlueprintCallable)
+	void Spawn();
+
+	UFUNCTION(BlueprintCallable)
+	void StartDown();
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float IncreaseMadness = 0.02f;
@@ -66,4 +74,7 @@ public:
 	
 	UPROPERTY(BlueprintReadWrite)
 	bool isFading = false;
+
+	UPROPERTY(BlueprintReadWrite)
+	bool isSpawning = false;
 };
