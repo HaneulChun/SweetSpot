@@ -84,6 +84,7 @@ void ATentacleWall::Tick(float DeltaTime)
 		
 		if (CurrentLocation.Z <= finalLocation)
 		{
+			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, "Tentacle Wall");
 			this->Destroy();
 		}
 	}

@@ -23,7 +23,7 @@ Ateleport::Ateleport()
 	
 	// Create the Arrow
 	Arrow = CreateDefaultSubobject<UArrowComponent>(TEXT("SpawnPoint"));
-	RootComponent = Arrow;
+	Arrow->SetupAttachment(RootComponent); 
 	Arrow->ArrowColor = FColor::Green;
 }
 
