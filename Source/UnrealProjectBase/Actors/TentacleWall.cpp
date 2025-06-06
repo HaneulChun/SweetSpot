@@ -42,6 +42,7 @@ void ATentacleWall::BeginPlay()
 		widget = Cast<UMyUserWidget>(hud->GetWidget());
 	});
 
+	startLocation = GetActorLocation().Z;
 	finalLocation = GetActorLocation().Z - 400;
 }
 
@@ -86,9 +87,31 @@ void ATentacleWall::Tick(float DeltaTime)
 			this->Destroy();
 		}
 	}
+	else if (isSpawning)
+	{
+		// move the object
+		FVector CurrentLocation = GetActorLocation();
+		SetActorLocation(CurrentLocation + (GetActorUpVector() * speed));
+		
+		if (CurrentLocation.Z >= startLocation)
+		{
+			isSpawning = false;
+		}
+	}
 }
 
 void ATentacleWall::FadeAway()
 {
+	isFading = true;
+}
+
+void ATentacleWall::Spawn()
+{
+	isSpawning = true;
+}
+
+void ATentacleWall::StartDown()
+{
+	SetActorLocation(FVector(GetActorLocation().X, GetActorLocation().Y, finalLocation));
 }
 
