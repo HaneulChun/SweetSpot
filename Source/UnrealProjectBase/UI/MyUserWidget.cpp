@@ -226,6 +226,18 @@ void UMyUserWidget::ChangeCameraMaterial(float intensity)
 	}
 }
 
+void UMyUserWidget::CheckforSubLevel(TSoftObjectPtr<UWorld> unloadedSubLevel)
+{
+	GetWorld()->GetTimerManager().SetTimer(TimerHandleLevel, [this, unloadedSubLevel]()
+	{
+		if (!unloadedSubLevel.IsValid())
+		{
+			StartLoop();
+			GetWorld()->GetTimerManager().ClearTimer(TimerHandleLevel);
+		}
+	}, 0.2f, true);
+}
+
 float UMyUserWidget::GetSweatSpotValue()
 {
 	return sweatSpot;

@@ -49,6 +49,7 @@ float UPlayerVision::DotProduct(FVector TargetVector)
 	return Dot;
 }
 
+
 void UPlayerVision::LookForTenticalWall()
 {
 	PlayerLocation = PlayerPawn->GetActorLocation();
