@@ -255,27 +255,24 @@ void UPlayerVision::SetActorArray()
 	bigEyeArray.Empty();
 	bigEyeMeshArray.Empty();
 
-	GetWorld()->GetTimerManager().SetTimerForNextTick([this]()
+	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
 	{
-		for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
-		{
-			TObjectPtr<AActor> Actor = *ActorItr;
+		TObjectPtr<AActor> Actor = *ActorItr;
 
-			if (Actor->Tags.Contains("Tentical"))
-			{
-				tenticalArray.Add(Actor);
-				tenticalMeshArray.Add(Actor->FindComponentByClass<UMeshComponent>());
-			}
-			else if (Actor->Tags.Contains("SeeMe"))
-			{
-				eyeArray.Add(Actor);
-				eyeMeshArray.Add(Actor->FindComponentByClass<UMeshComponent>());
-			}
-			else if (Actor->Tags.Contains("BigEye"))
-			{
-				bigEyeArray.Add(Actor);
-				bigEyeMeshArray.Add(Actor->FindComponentByClass<UMeshComponent>());
-			}
+		if (Actor->Tags.Contains("Tentical"))
+		{
+			tenticalArray.Add(Actor);
+			tenticalMeshArray.Add(Actor->FindComponentByClass<UMeshComponent>());
 		}
-	});
+		else if (Actor->Tags.Contains("SeeMe"))
+		{
+			eyeArray.Add(Actor);
+			eyeMeshArray.Add(Actor->FindComponentByClass<UMeshComponent>());
+		}
+		else if (Actor->Tags.Contains("BigEye"))
+		{
+			bigEyeArray.Add(Actor);
+			bigEyeMeshArray.Add(Actor->FindComponentByClass<UMeshComponent>());
+		}
+	}
 }
