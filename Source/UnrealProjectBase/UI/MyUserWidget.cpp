@@ -294,8 +294,8 @@ void UMyUserWidget::Fade_Implementation(float saneTime, float saneStartValue, fl
 void UMyUserWidget::Dying()
 {
 	dyingCount++;
-	ChangeCameraSettings(10.0, (dyingCount * 0.5) + 1.5);
-	if (dyingCount >= 10)
+	ChangeCameraSettings(10.0, (dyingCount * 1) + 1.5);
+	if (dyingCount >= 20)
 	{
 		isDying = false;
 		GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &UMyUserWidget::Dead, 0.1, isDying);
