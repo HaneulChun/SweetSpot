@@ -20,47 +20,54 @@ USpottedObject::USpottedObject()
 void USpottedObject::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	startTransform = GetOwner()->GetTransform();
 	GetOwner()->Tags.Add("SeeMe");
-}
-
-
-// Called every frame
-void USpottedObject::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+	
+	GetWorld()->GetTimerManager().SetTimerForNextTick([this]()
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
+	APlayerHud* hud = Cast<APlayerHud>(PlayerController->GetHUD());
 
-	if (isFading == true)
-	{
-		if (spotted == false)
-		{
-			// increase madness when object is sopoted
-			if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
-			{
-				APlayerHud* hud = Cast<APlayerHud>(PlayerController->GetHUD());
-
-				UMyUserWidget* widget = Cast<UMyUserWidget>(hud->GetWidget());
-				if (widget)
-				{
-					widget->IncreaseMadnessBar(increaseMadness);
-				}	
-			}
-			spotted = true;
-		}
-
-		// move the object
-		FVector Direction = -GetOwner()->GetActorForwardVector();
-		FVector CurrentLocation = GetOwner()->GetActorLocation();
-		FVector NewLocation = CurrentLocation + (Direction * speed);
-
-		GetOwner()->SetActorLocation(NewLocation);
-		if (CurrentLocation.Z <= -200)
-		{
-			isFading = false;
-		}
-	}
+	widget = Cast<UMyUserWidget>(hud->GetWidget());
+});
 }
 
 void USpottedObject::FadeAway_Implementation()
 {
+	FadeAway();
+	if (count <= focusedLookTicks)
+	{
+		isClosingAnim = true;
+		
+		// make eye disappear 
+		FVector Direction = -GetOwner()->GetActorForwardVector();
+		FVector CurrentLocation = GetOwner()->GetActorLocation();
+		FVector NewLocation = CurrentLocation + (Direction * speed);
+		GetOwner()->SetActorLocation(NewLocation);
+		
+		count++;
+		GetOwner()->GetWorldTimerManager().SetTimer(TimerHandle, this, &USpottedObject::ResetPosition_Implementation, 1.0f, false, 0.4f);
+	}
+	else
+	{
+		GetOwner()->Destroy();
+	}
+}
+
+void USpottedObject::ResetPosition_Implementation()
+{
+	GetOwner()->SetActorTransform(startTransform);
+	count = 0;
+	
+	ResetPosition();
+	isClosingAnim = false;
+}
+
+void USpottedObject::IncreaseMadness()
+{
+	if (widget)
+	{
+		widget->IncreaseMadnessBar(increaseMadnessAmount);
+	}	
 }

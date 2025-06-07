@@ -7,6 +7,7 @@
 #include "UnrealProjectBase/Actors/BigEye.h"
 #include "Math/Vector.h"
 #include "Camera/CameraComponent.h"
+#include "UnrealProjectBase/Actors/TentacleWall.h"
 
 // Sets default values for this component's properties
 UPlayerVision::UPlayerVision()
@@ -31,17 +32,82 @@ void UPlayerVision::BeginPlay()
 	PlayerController = GetWorld()->GetFirstPlayerController();
 	PlayerPawn = PlayerController->GetPawn();
 
-
+	GetWorld()->GetTimerManager().SetTimer(tenticalTimerHandle, this, &UPlayerVision::LookForTenticalWall, tenticalCheckInterval, true);
+	
 	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &UPlayerVision::LookForEye, eyeCheckInterval, true);
 	
 	GetWorld()->GetTimerManager().SetTimer(BigTimerHandle, this, &UPlayerVision::LookForBigEye, bigEyeCheckInterval, true);
 }
 
 
-// Called every frame
-void UPlayerVision::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+float UPlayerVision::DotProduct(FVector TargetVector)
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	FVector playerForward = PlayerCamera->GetForwardVector();
+	FVector objectToLookAt = (TargetVector - PlayerCamera->GetComponentLocation()).GetSafeNormal();
+	float Dot = FVector::DotProduct(playerForward, objectToLookAt);
+	
+	return Dot;
+}
+
+
+void UPlayerVision::LookForTenticalWall()
+{
+	PlayerLocation = PlayerPawn->GetActorLocation();
+
+	// check if the eye was recently rendered
+	for (TObjectPtr<AActor> Actor : tenticalArray)
+	{
+		if (Actor && Actor->WasRecentlyRendered(0.1f))
+		{
+			if (DotProduct(Actor->GetActorLocation()) > 0.54)
+			{
+				FVector Center = tenticalMeshArray[tenticalIndex]->Bounds.Origin;
+				float Radius = tenticalMeshArray[tenticalIndex]->Bounds.BoxExtent.X; // Half-size of the bounding box
+
+
+				// set points to check if the player can see the object
+				TArray<FVector> PointsToCheck = {
+					Center,
+					Center + FVector(Radius, 0, 0),
+					Center + FVector(-Radius, 0, 0),
+					Center + FVector(0, Radius, 0),
+					Center + FVector(0, -Radius, 0),
+					Center + FVector(0, 0, Radius),
+					Center + FVector(0, 0, -Radius)
+				};
+
+				// check if there is a wall between player and point
+				for (const FVector& Point : PointsToCheck)
+				{
+					FHitResult HitResult;
+					FCollisionQueryParams Params;
+					Params.AddIgnoredActor(PlayerPawn);
+
+					bool bHit = GetWorld()->LineTraceSingleByChannel(
+						HitResult,
+						PlayerLocation,
+						Point,
+						ECC_Visibility,
+						Params);
+
+					// if see actor make it fade away
+					if (!bHit || HitResult.GetActor() == Actor)
+					{
+						if (ATentacleWall* object = Cast<ATentacleWall>(Actor))
+						{
+							if (isFocusing)
+							{
+								object->isFading = true;
+							}
+						}
+						break; 
+					}
+				}
+			}
+		}
+		tenticalIndex++;
+	}
+	tenticalIndex = 0;
 }
 
 void UPlayerVision::LookForEye()
@@ -49,11 +115,11 @@ void UPlayerVision::LookForEye()
 	PlayerLocation = PlayerPawn->GetActorLocation();
 
 	// check if the eye was recently rendered
-	for (AActor* Actor : eyeArray)
+	for (TObjectPtr<AActor> Actor : eyeArray)
 	{
-		if (Actor)
+		if (Actor && Actor->WasRecentlyRendered(0.1f))
 		{
-			if (Actor && Actor->WasRecentlyRendered(0.1f))
+			if (DotProduct(Actor->GetActorLocation()) > 0.54)
 			{
 				FVector Center = eyeMeshArray[EyeIndex]->Bounds.Origin;
 				float Radius = eyeMeshArray[EyeIndex]->Bounds.SphereRadius;
@@ -89,9 +155,13 @@ void UPlayerVision::LookForEye()
 						// normal eyeball fading
 						if (USpottedObject* object = Cast<USpottedObject>(Actor->FindComponentByClass<USpottedObject>()))
 						{
-							if (object->isFading == false)
+							if (isFocusing)
 							{
-								object->FadeAway();	
+								object->FadeAway_Implementation();
+							}
+							else
+							{
+								object->IncreaseMadness();
 							}
 						}
 						break; 
@@ -109,78 +179,73 @@ void UPlayerVision::LookForBigEye()
 	PlayerLocation = PlayerPawn->GetActorLocation();
 	
 	// check if the eye was recently rendered
-	for (AActor* Actor : bigEyeArray)
+	for (TObjectPtr<AActor> Actor : bigEyeArray)
 	{
-		if (Actor)
+		if (Actor && Actor->WasRecentlyRendered(0.1f))
 		{
-			if (Actor && Actor->WasRecentlyRendered(0.1f))
-			{
-				FVector Center = bigEyeMeshArray[bigEyeIndex]->Bounds.Origin;
-				float Radius = bigEyeMeshArray[bigEyeIndex]->Bounds.SphereRadius;
+			FVector Center = bigEyeMeshArray[bigEyeIndex]->Bounds.Origin;
+			float Radius = bigEyeMeshArray[bigEyeIndex]->Bounds.SphereRadius;
 	
 	
 				// set points to check if the player can see the object
-				TArray<FVector> PointsToCheck = {
-					Center,
-					Center + FVector(Radius, 0, 0),
-					Center + FVector(-Radius, 0, 0),
-					Center + FVector(0, Radius, 0),
-					Center + FVector(0, -Radius, 0),
-					Center + FVector(0, 0, Radius),
-					Center + FVector(0, 0, -Radius)
-				};
+			TArray<FVector> PointsToCheck = {
+				Center,
+				Center + FVector(Radius, 0, 0),
+				Center + FVector(-Radius, 0, 0),
+				Center + FVector(0, Radius, 0),
+				Center + FVector(0, -Radius, 0),
+				Center + FVector(0, 0, Radius),
+				Center + FVector(0, 0, -Radius)
+			};
 	
 	
-				// check if there is a wall between player and point
-				for (const FVector& Point : PointsToCheck)
+			// check if there is a wall between player and point
+			for (const FVector& Point : PointsToCheck)
+			{
+				FHitResult HitResult;
+				FCollisionQueryParams Params;
+				Params.AddIgnoredActor(PlayerPawn);
+	
+	
+				bool bHit = GetWorld()->LineTraceSingleByChannel(
+					HitResult,
+					PlayerLocation,
+					Point,
+					ECC_Visibility,
+					Params);
+	
+	
+				// if see actor make it fade away
+				if (!bHit || HitResult.GetActor() == Actor)
 				{
-					FHitResult HitResult;
-					FCollisionQueryParams Params;
-					Params.AddIgnoredActor(PlayerPawn);
-	
-	
-					bool bHit = GetWorld()->LineTraceSingleByChannel(
-						HitResult,
-						PlayerLocation,
-						Point,
-						ECC_Visibility,
-						Params);
-	
-	
-					// if see actor make it fade away
-					if (!bHit || HitResult.GetActor() == Actor)
+					// big eyeball
+					if (ABigEye* object2 = Cast<ABigEye>(Actor))
 					{
-						// big eyeball
-						if (ABigEye* object2 = Cast<ABigEye>(Actor))
+						// dot product
+						// check if player is looking at big eye
+						if (DotProduct(Actor->GetActorLocation()) > object2->radius)
 						{
-							// dot product 
-							FVector playerForward = PlayerCamera->GetForwardVector();
 							FVector objectToLookAt = (Actor->GetActorLocation() - PlayerCamera->GetComponentLocation()).GetSafeNormal();
-							float Dot = FVector::DotProduct(playerForward, objectToLookAt);
-	
-							// check if player is looking at big eye
-							if (Dot > object2->radius)
+							
+							// Direction away from object
+							FVector LookAwayDirection = -objectToLookAt;
+							
+							FRotator CurrentRotation = PlayerCamera->GetComponentRotation();
+							FRotator TargetRotation = LookAwayDirection.Rotation();
+							
+							// Interpolate rotation
+							FRotator NewRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), object2->PushBackForce);
+							PlayerController->SetControlRotation(NewRotation);
+							
+							// if player is focusing fade the object 
+							if (isFocusing)
 							{
-								// Direction away from object
-								FVector LookAwayDirection = -objectToLookAt;
-								
-								FRotator CurrentRotation = PlayerCamera->GetComponentRotation();
-								FRotator TargetRotation = LookAwayDirection.Rotation();
-								
-								// Interpolate rotation
-								FRotator NewRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), object2->PushBackForce);
-								PlayerController->SetControlRotation(NewRotation);
-								
-								// if player is focusing fade the object 
-								if (isFocusing)
-								{
-									object2->FadeAway();
-								}
-								object2->IncreaseMadness();
+								object2->FadeAway();
 							}
+							object2->IncreaseMadness();
 						}
-						break; 
 					}
+					break; 
 				}
 			}
 		}
@@ -192,6 +257,8 @@ void UPlayerVision::LookForBigEye()
 
 void UPlayerVision::SetActorArray()
 {
+	tenticalArray.Empty();
+	tenticalMeshArray.Empty();
 	eyeArray.Empty();
 	eyeMeshArray.Empty();
 	bigEyeArray.Empty();
@@ -199,9 +266,14 @@ void UPlayerVision::SetActorArray()
 
 	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
 	{
-		AActor* Actor = *ActorItr;
-		
-		if (Actor->Tags.Contains("SeeMe"))
+		TObjectPtr<AActor> Actor = *ActorItr;
+
+		if (Actor->Tags.Contains("Tentical"))
+		{
+			tenticalArray.Add(Actor);
+			tenticalMeshArray.Add(Actor->FindComponentByClass<UMeshComponent>());
+		}
+		else if (Actor->Tags.Contains("SeeMe"))
 		{
 			eyeArray.Add(Actor);
 			eyeMeshArray.Add(Actor->FindComponentByClass<UMeshComponent>());

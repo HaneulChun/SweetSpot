@@ -226,6 +226,19 @@ void UMyUserWidget::ChangeCameraMaterial(float intensity)
 	}
 }
 
+void UMyUserWidget::CheckForSubLevel(TSoftObjectPtr<UWorld> unloadedSubLevel)
+{
+	// loop until the loop is unloaded to set the SweetSpotActors
+	GetWorld()->GetTimerManager().SetTimer(TimerHandleLevel, [this, unloadedSubLevel]()
+	{
+		if (!unloadedSubLevel.IsValid())
+		{
+			StartLoop();
+			GetWorld()->GetTimerManager().ClearTimer(TimerHandleLevel);
+		}
+	}, 0.2f, true);
+}
+
 float UMyUserWidget::GetSweatSpotValue()
 {
 	return sweatSpot;
@@ -313,6 +326,7 @@ void UMyUserWidget::Dead()
 
 void UMyUserWidget::StartLoop()
 {
+	CurrentState = ECurrentState::Dead;
 	SaneActors.Empty();
 	SweetActors.Empty();
 	spawnPoint = nullptr;

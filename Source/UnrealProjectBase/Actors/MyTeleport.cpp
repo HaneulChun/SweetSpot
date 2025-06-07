@@ -61,12 +61,12 @@ void AMyTeleport::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 	if (!Cast<UCapsuleComponent>(OtherComp)) return;
 	// check if this loop is null
 	if (!teleportTo) return;
-
-	LoadSubLevel();
+	
 	// check if puzzle is completed
 	if (isCompleted == true)
 	{
-		Teleport(OtherActor, NextTeleportTo->GetComponentTransform());
+		Player = OtherActor;
+		LoadSubLevel_Implementation();
 	}
 	else
 	{
@@ -86,6 +86,17 @@ void AMyTeleport::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 
 void AMyTeleport::LoadSubLevel_Implementation()
 {
+	LoadSubLevel();
+
+	// loop until the loop is loaded to spawn the player
+	GetWorld()->GetTimerManager().SetTimer(TimerHandleLevel, [this]()
+	{
+		if (NextLoopLevel.IsValid())
+		{
+			Teleport(Player, NextTeleportTo->GetComponentTransform());
+			GetWorld()->GetTimerManager().ClearTimer(TimerHandleLevel);
+		}
+	}, 0.1f, true);
 }
 
 void AMyTeleport::SetActors()

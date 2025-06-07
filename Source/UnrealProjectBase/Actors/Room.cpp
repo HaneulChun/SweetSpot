@@ -8,6 +8,7 @@
 #include "UnrealProjectBase/UI/MyUserWidget.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "GameFramework/Character.h"
 
 // Sets default values
 ARoom::ARoom()
@@ -38,48 +39,50 @@ void ARoom::BeginPlay()
 			Trigger->OnComponentEndOverlap.AddDynamic(this, &ARoom::OnOverlapEnd);
 		}
 	}
+
+	GetWorld()->GetTimerManager().SetTimerForNextTick([this]()
+	{
+		APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
+		APlayerHud* hud = Cast<APlayerHud>(PlayerController->GetHUD());
+
+		widget = Cast<UMyUserWidget>(hud->GetWidget());
+	});
 }
 
 // increment madness when enter the collision
 void ARoom::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 	int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (APawn* OverlappingPawn = Cast<APawn>(OtherActor))
+	if (!Cast<ACharacter>(OtherActor)) return;
+	if (!Cast<UCapsuleComponent>(OtherComp)) return;
+
+	if (!widget) return;
+	
+	if (increment < 0)
 	{
-		if (APlayerController* PlayerController = Cast<APlayerController>(OverlappingPawn->GetController()))
-		{
-			if (Cast<UCapsuleComponent>(OtherComp))
-			{
-				if (APlayerHud* MyHUD = Cast<APlayerHud>(PlayerController->GetHUD()))
-				{
-					if (UUserWidget* Widget = MyHUD->GetWidget())
-					{
-						if (UMyUserWidget* WidgetPtr = Cast<UMyUserWidget>(Widget))
-						{
-							if (increment < 0)
-							{
-								WidgetPtr->isInLight = true;
-							}
-							else
-							{
-								WidgetPtr->isInRoom = true;
-							}
-							// increase Madness if player is in room
-							WidgetPtr->SetIncreaseMadness(increment);
+		widget->isInLight = true;
+	}
+	else
+	{
+		widget->isInRoom = true;
+	}
+	// increase Madness if player is in room
+	widget->SetIncreaseMadness(increment);
 						
-							// give the player vignette
-							if (WidgetPtr->CurrentState == ECurrentState::Mad)
-							{
-								Color(colorIntensity, WidgetPtr->vignetteIntensity);
-							}
-							else
-							{
-								Color(colorIntensity, 1);	
-							}
-						}
-					}
-				}
-			}
+	// give the player vignette
+	if (widget->CurrentState == ECurrentState::Mad)
+	{
+		Color(colorIntensity, widget->vignetteIntensity);
+	}
+	else
+	{
+		if (increment < 0)
+		{
+			Color(colorIntensity, 0.4);	
+		}
+		else
+		{
+			Color(colorIntensity, 1);	
 		}
 	}
 }
@@ -88,48 +91,35 @@ void ARoom::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 void ARoom::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 	int32 OtherBodyIndex)
 {
-	if (APawn* OverlappingPawn = Cast<APawn>(OtherActor))
+	if (!Cast<ACharacter>(OtherActor)) return;
+	if (!Cast<UCapsuleComponent>(OtherComp)) return;
+
+	if (!widget) return;
+	
+	// increase Madness if player is in room
+	if (increment < 0)
 	{
-		if (APlayerController* PlayerController = Cast<APlayerController>(OverlappingPawn->GetController()))
+		widget->isInLight = false;
+		if (widget->isInRoom == true)
 		{
-			if (Cast<UCapsuleComponent>(OtherComp))
-			{
-				if (APlayerHud* MyHUD = Cast<APlayerHud>(PlayerController->GetHUD()))
-				{
-					if (UUserWidget* Widget = MyHUD->GetWidget())
-					{
-						if (UMyUserWidget* WidgetPtr = Cast<UMyUserWidget>(Widget))
-						{
-							// increase Madness if player is in room
-							if (increment < 0)
-							{
-								WidgetPtr->isInLight = false;
-								if (WidgetPtr->isInRoom == true)
-								{
-									WidgetPtr->SetIncreaseMadness(WidgetPtr->roomMadnessDamage);
-									Color(.5, 1);
-								}
-								else
-								{
-									WidgetPtr->SetIncreaseMadness(0.0);
-
-									// remove the player vignette when exiting room
-									Color(WidgetPtr->colorIntensity, WidgetPtr->vignetteIntensity);
-								}
-							}
-							else
-							{
-								WidgetPtr->isInRoom = false;
-								WidgetPtr->SetIncreaseMadness(0.0);
-
-								// remove the player vignette when exiting room
-								Color(WidgetPtr->colorIntensity, WidgetPtr->vignetteIntensity);
-							}
-						}
-					}
-				}
-			}
+			widget->SetIncreaseMadness(widget->roomMadnessDamage);
+			Color(.5, 1);
 		}
+		else
+		{
+			widget->SetIncreaseMadness(0.0);
+
+			// remove the player vignette when exiting room
+			Color(widget->colorIntensity, widget->vignetteIntensity);
+		}
+	}
+	else
+	{
+		widget->isInRoom = false;
+		widget->SetIncreaseMadness(0.0);
+
+		// remove the player vignette when exiting room
+		Color(widget->colorIntensity, widget->vignetteIntensity);
 	}
 }
 
