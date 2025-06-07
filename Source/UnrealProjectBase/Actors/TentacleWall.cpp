@@ -48,8 +48,25 @@ void ATentacleWall::BeginPlay()
 	finalLocation = GetActorLocation().Z - 400;
 }
 
+void ATentacleWall::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	if (isSpawning)
+	{
+		// move the object
+		FVector CurrentLocation = GetActorLocation();
+		SetActorLocation(CurrentLocation + (GetActorUpVector() * 1));
+		
+		if (CurrentLocation.Z >= startLocation)
+		{
+			isSpawning = false;
+		}
+	}
+}
+
 void ATentacleWall::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+                                   UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	if (!Cast<ACharacter>(OtherActor)) return;
 	if (!Cast<UCapsuleComponent>(OtherComp)) return;

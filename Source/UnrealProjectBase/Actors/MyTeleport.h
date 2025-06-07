@@ -57,6 +57,10 @@ public:
 	void LoadSubLevel();
 	virtual void LoadSubLevel_Implementation();
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void unLoadSubLevel();
+	virtual void unLoadSubLevel_Implementation();
+
 	FTimerHandle TimerHandleLevel;
 	
 	UFUNCTION()

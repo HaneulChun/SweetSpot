@@ -53,6 +53,7 @@ void AMyTeleport::BeginPlay()
 	});
 }
 
+
 // loop player if puzzle is completed loop to next stage
 // if next stage is null go to end screen
 void AMyTeleport::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -86,8 +87,6 @@ void AMyTeleport::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 
 void AMyTeleport::LoadSubLevel_Implementation()
 {
-	LoadSubLevel();
-
 	// loop until the loop is loaded to spawn the player
 	GetWorld()->GetTimerManager().SetTimer(TimerHandleLevel, [this]()
 	{
@@ -108,8 +107,15 @@ void AMyTeleport::LoadSubLevel_Implementation()
 					}
 				}
 			}
+			unLoadSubLevel();
 		}
 	}, 0.1f, true);
+
+	LoadSubLevel();
+}
+
+void AMyTeleport::unLoadSubLevel_Implementation()
+{
 }
 
 void AMyTeleport::SetActors()
