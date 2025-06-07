@@ -47,6 +47,7 @@ protected:
 	UPROPERTY()
 	TSoftObjectPtr<UWorld> checkUnloadedLevel;
 public:
+	UPROPERTY(BlueprintReadOnly)
 	ECurrentState CurrentState = ECurrentState::SweetSpot;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
@@ -140,6 +141,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float colorIntensity = 1;
 
+	
 	// value roomMadnessDamage
 	UPROPERTY()
 	float roomMadnessDamage = 0;
