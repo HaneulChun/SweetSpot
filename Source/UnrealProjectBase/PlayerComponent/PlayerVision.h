@@ -60,7 +60,7 @@ protected:
 
 	// Interval for checking object
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float tenticalCheckInterval = .5f;
+	float tenticalCheckInterval = .1f;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float eyeCheckInterval = .1f;

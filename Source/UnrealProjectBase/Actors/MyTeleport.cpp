@@ -95,6 +95,19 @@ void AMyTeleport::LoadSubLevel_Implementation()
 		{
 			Teleport(Player, NextTeleportTo->GetComponentTransform());
 			GetWorld()->GetTimerManager().ClearTimer(TimerHandleLevel);
+
+			if (APlayerController* PC = GetWorld()->GetFirstPlayerController())
+			{
+				APawn* PlayerPawn = PC->GetPawn();
+				if (PlayerPawn)
+				{
+					UPlayerVision* VisionComp = PlayerPawn->FindComponentByClass<UPlayerVision>();
+					if (VisionComp)
+					{
+						VisionComp->SetActorArray();
+					}
+				}
+			}
 		}
 	}, 0.1f, true);
 }

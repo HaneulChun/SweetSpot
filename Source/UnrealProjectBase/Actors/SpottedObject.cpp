@@ -46,13 +46,13 @@ void USpottedObject::FadeAway_Implementation()
 		FVector NewLocation = CurrentLocation + (Direction * speed);
 		GetOwner()->SetActorLocation(NewLocation);
 		
-		count++;
 		GetOwner()->GetWorldTimerManager().SetTimer(TimerHandle, this, &USpottedObject::ResetPosition_Implementation, 1.0f, false, 0.4f);
 	}
 	else
 	{
 		GetOwner()->Destroy();
 	}
+	count++;
 }
 
 void USpottedObject::ResetPosition_Implementation()
