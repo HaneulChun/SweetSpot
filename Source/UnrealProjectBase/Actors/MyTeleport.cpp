@@ -104,7 +104,6 @@ void AMyTeleport::LoadSubLevel_Implementation()
 					UPlayerVision* VisionComp = PlayerPawn->FindComponentByClass<UPlayerVision>();
 					if (VisionComp)
 					{
-				
 						VisionComp->SetActorArray();
 					}
 				}

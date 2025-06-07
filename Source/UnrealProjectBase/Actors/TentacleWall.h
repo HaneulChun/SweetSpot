@@ -50,9 +50,14 @@ protected:
 	
 	UFUNCTION()
 	void IncreaseMadnessBar();
+
+	
+	UPROPERTY()
+	FTransform startTransform;
+
+	UPROPERTY()
+	int count = 0;
 public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION(BlueprintCallable)
 	void FadeAway();
@@ -62,6 +67,12 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void StartDown();
+
+	UFUNCTION()
+	void ResetPosition();
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void DestroyTentacle();
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float IncreaseMadness = 0.02f;
@@ -70,11 +81,15 @@ public:
 	float MadnessTickInterval = 0.4f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float speed = 1.0f;
+	float speed = 9.0f;
 	
 	UPROPERTY(BlueprintReadWrite)
 	bool isFading = false;
 
 	UPROPERTY(BlueprintReadWrite)
 	bool isSpawning = false;
+	
+	
+	UPROPERTY(EditAnywhere)
+	int focusedLookTicks = 20;
 };

@@ -57,42 +57,45 @@ void UPlayerVision::LookForTenticalWall()
 	// check if the eye was recently rendered
 	for (TObjectPtr<AActor> Actor : tenticalArray)
 	{
-		if (DotProduct(Actor->GetActorLocation()) > 0.54)
+		if (Actor)
 		{
-			FVector bottom = tenticalMeshArray[tenticalIndex]->Bounds.Origin;
-			float height = 100;
-			
-			TArray<FVector> PointsToCheck = {
-				bottom,
-				bottom + FVector(0, 0, height), 
-				bottom + FVector(0, 0, height * 2)
-			};
-			
-			// check if there is a wall between player and point
-			for (const FVector& Point : PointsToCheck)
+			if (DotProduct(Actor->GetActorLocation()) > 0.54)
 			{
-				FHitResult HitResult;
-				FCollisionQueryParams Params;
-				Params.AddIgnoredActor(PlayerPawn);
-
-				bool bHit = GetWorld()->LineTraceSingleByChannel(
-					HitResult,
-					PlayerLocation,
-					Point,
-					ECC_Visibility,
-					Params);
-				
-				// if see actor make it fade away
-				if (!bHit || HitResult.GetActor() == Actor)
+				FVector bottom = tenticalMeshArray[tenticalIndex]->Bounds.Origin;
+				float height = 105;
+			
+				TArray<FVector> PointsToCheck = {
+					bottom,
+					bottom + FVector(0, 0, height), 
+					bottom + FVector(0, 0, height * 2)
+				};
+			
+				// check if there is a wall between player and point
+				for (const FVector& Point : PointsToCheck)
 				{
-					if (ATentacleWall* object = Cast<ATentacleWall>(Actor))
+					FHitResult HitResult;
+					FCollisionQueryParams Params;
+					Params.AddIgnoredActor(PlayerPawn);
+
+					bool bHit = GetWorld()->LineTraceSingleByChannel(
+						HitResult,
+						PlayerLocation,
+						Point,
+						ECC_Visibility,
+						Params);
+				
+					// if see actor make it fade away
+					if (!bHit || HitResult.GetActor() == Actor)
 					{
-						if (isFocusing)
+						if (ATentacleWall* object = Cast<ATentacleWall>(Actor))
 						{
-							object->isFading = true;
+							if (isFocusing)
+							{
+								object->FadeAway();
+							}
 						}
+						break; 
 					}
-					break; 
 				}
 			}
 		}
