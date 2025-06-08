@@ -15,6 +15,14 @@ void UMyUserWidget::NativeConstruct()
 	bIsFocusable = true;
 
 	StartLoop();
+	
+	GetWorld()->GetTimerManager().SetTimerForNextTick([this]()
+	{
+		if (TObjectPtr<APlayerController> PlayerController = GetWorld()->GetFirstPlayerController())
+		{
+			PlayerHud = Cast<APlayerHud>(PlayerController->GetHUD());
+		}
+	});
 }
 
 void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
@@ -45,14 +53,10 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			}
 			CurrentState = ECurrentState::Sane;
 			
-			// set text 
-			if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
+			// set text
+			if (PlayerHud)
 			{
-				APlayerHud* PlayerHud = Cast<APlayerHud>(PlayerController->GetHUD());
-				if (PlayerHud)
-				{
-					PlayerHud->SetText("");  
-				}
+				PlayerHud->SetText("");  
 			}
 		}
 	}
@@ -79,13 +83,9 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			matIntensity = 0;
 
 			// set text 
-			if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
+			if (PlayerHud)
 			{
-				APlayerHud* PlayerHud = Cast<APlayerHud>(PlayerController->GetHUD());
-				if (PlayerHud)
-				{
-					PlayerHud->SetText("");  
-				}
+				PlayerHud->SetText("");  
 			}
 			CurrentState = ECurrentState::Mad;
 			
@@ -130,13 +130,9 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 					{
 						if (MeshComp->CustomDepthStencilValue == 1)
 						{
-							if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
+							if (PlayerHud)
 							{
-								APlayerHud* PlayerHud = Cast<APlayerHud>(PlayerController->GetHUD());
-								if (PlayerHud)
-								{
-									PlayerHud->SetText("C to Focus");  
-								}
+								PlayerHud->SetText("C to Focus");  
 							}
 							break;
 						}
@@ -324,6 +320,7 @@ void UMyUserWidget::Dead()
 	}
 }
 
+//
 void UMyUserWidget::StartLoop()
 {
 	CurrentState = ECurrentState::Dead;

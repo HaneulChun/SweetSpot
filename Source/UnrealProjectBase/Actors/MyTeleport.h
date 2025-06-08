@@ -8,6 +8,7 @@
 
 #include "MyTeleport.generated.h"
 
+class UPlayerVision;
 class UMyUserWidget;
 class ACharacter;
 class UBoxComponent;
@@ -21,6 +22,9 @@ public:
 	// Sets default values for this actor's properties
 	AMyTeleport();
 
+private:
+	TObjectPtr<UPlayerVision> playerVision;
+	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

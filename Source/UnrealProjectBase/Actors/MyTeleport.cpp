@@ -46,10 +46,12 @@ void AMyTeleport::BeginPlay()
 	
 	GetWorld()->GetTimerManager().SetTimerForNextTick([this]()
 	{
-		APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
-		APlayerHud* hud = Cast<APlayerHud>(PlayerController->GetHUD());
+		TObjectPtr<APlayerController> PlayerController = GetWorld()->GetFirstPlayerController();
+		TObjectPtr<APlayerHud> hud = Cast<APlayerHud>(PlayerController->GetHUD());
 
 		widget = Cast<UMyUserWidget>(hud->GetWidget());
+
+		playerVision = PlayerController->GetPawn()->FindComponentByClass<UPlayerVision>();
 	});
 }
 
@@ -95,18 +97,10 @@ void AMyTeleport::LoadSubLevel_Implementation()
 			Teleport(Player, NextTeleportTo->GetComponentTransform());
 			GetWorld()->GetTimerManager().ClearTimer(TimerHandleLevel);
 
-			if (APlayerController* PC = GetWorld()->GetFirstPlayerController())
-			{
-				APawn* PlayerPawn = PC->GetPawn();
-				if (PlayerPawn)
-				{
-					UPlayerVision* VisionComp = PlayerPawn->FindComponentByClass<UPlayerVision>();
-					if (VisionComp)
-					{
-						VisionComp->SetActorArray();
-					}
-				}
-			}
+			// set the array for tentacle and eyes
+			playerVision->SetActorArray();
+
+			//unload current level
 			unLoadSubLevel();
 		}
 	}, 0.1f, true);
@@ -147,19 +141,9 @@ void AMyTeleport::Reset()
 			i++;
 		}
 	}
-	if (APlayerController* PC = GetWorld()->GetFirstPlayerController())
-	{
-		APawn* PlayerPawn = PC->GetPawn();
-		if (PlayerPawn)
-		{
-			UPlayerVision* VisionComp = PlayerPawn->FindComponentByClass<UPlayerVision>();
-			if (VisionComp)
-			{
-				
-				VisionComp->SetActorArray();
-			}
-		}
-	}
+
+	// set the array for tentacle and eyes
+	playerVision->SetActorArray();
 }
 
 void AMyTeleport::Teleport(AActor* OtherActor, FTransform Transform)
@@ -172,5 +156,6 @@ void AMyTeleport::Teleport(AActor* OtherActor, FTransform Transform)
 	FVector final = offset + destanation.GetLocation();
 		
 	FTransform finalTeleport = FTransform(destanation.GetRotation(), final, OtherActor->GetTransform().GetScale3D());
-	OtherActor->SetActorTransform(finalTeleport, false);
+	
+	OtherActor->SetActorTransform(finalTeleport, false, nullptr, ETeleportType::TeleportPhysics);
 }

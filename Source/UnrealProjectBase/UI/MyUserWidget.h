@@ -26,11 +26,15 @@ class UNREALPROJECTBASE_API UMyUserWidget : public UUserWidget
 {
 	GENERATED_BODY()
 
+private:
+	TObjectPtr<APlayerHud> PlayerHud;
+	
 protected:
 	virtual void NativeConstruct() override;
 
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 
+	
 	FTimerHandle TimerHandle;
 	bool isDying = false;
 	int dyingCount = 0;
