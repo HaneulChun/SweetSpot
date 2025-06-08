@@ -26,15 +26,11 @@ class UNREALPROJECTBASE_API UMyUserWidget : public UUserWidget
 {
 	GENERATED_BODY()
 
-private:
-	TObjectPtr<APlayerHud> PlayerHud;
-	
 protected:
 	virtual void NativeConstruct() override;
 
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 
-	
 	FTimerHandle TimerHandle;
 	bool isDying = false;
 	int dyingCount = 0;
@@ -51,7 +47,6 @@ protected:
 	UPROPERTY()
 	TSoftObjectPtr<UWorld> checkUnloadedLevel;
 public:
-	UPROPERTY(BlueprintReadOnly)
 	ECurrentState CurrentState = ECurrentState::SweetSpot;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
@@ -145,7 +140,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float colorIntensity = 1;
 
-	
 	// value roomMadnessDamage
 	UPROPERTY()
 	float roomMadnessDamage = 0;

@@ -5,7 +5,7 @@
 			<value>Smoke,Tobbacco,Pipe,Burn</value>
 		</property>
 		<property name="outputFormat">
-			<value>2</value>
+			<value>0</value>
 		</property>
 		<relationship name="folder">
 			<destination>{5f0e255a-8f4f-42ca-9226-c7d4dbd1b513}</destination>
@@ -59,11 +59,7 @@
 			<destination>{fd354eed-d229-4a55-a0ab-8ed4aa1f6b44}</destination>
 		</relationship>
 	</object>
-	<object class="EventAutomatableProperties" id="{f08fe44d-14ea-4c4a-a0d4-80b77a6fbe93}">
-		<property name="maximumDistance">
-			<value>8</value>
-		</property>
-	</object>
+	<object class="EventAutomatableProperties" id="{f08fe44d-14ea-4c4a-a0d4-80b77a6fbe93}" />
 	<object class="MarkerTrack" id="{8244c951-ec47-4d2b-acae-b3e061183680}" />
 	<object class="Timeline" id="{07c72b43-d286-4c3a-8fcd-311d5c3cc552}">
 		<property name="isProxyEnabled">
@@ -76,9 +72,6 @@
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{96f660d5-621c-4139-94e2-5e235d1d23ca}">
-		<property name="volume">
-			<value>-6.5</value>
-		</property>
 		<relationship name="effectChain">
 			<destination>{86a59620-79d2-4ad2-8ad1-02e9c1d8a2ab}</destination>
 		</relationship>
@@ -103,9 +96,6 @@
 	<object class="MixerBusEffectChain" id="{86a59620-79d2-4ad2-8ad1-02e9c1d8a2ab}">
 		<relationship name="effects">
 			<destination>{4cf08dda-1215-445a-ba8d-e303529ed198}</destination>
-			<destination>{d6168fa1-3069-48c9-b3cb-14f91bbadd68}</destination>
-			<destination>{dfc345ba-ffde-4e61-8dd4-7a91a1120e38}</destination>
-			<destination>{18117096-1aa6-4d6f-be59-9fc61d465bc1}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{1f313c73-fe35-4686-b473-631bdd6348e5}" />
@@ -116,21 +106,4 @@
 	</object>
 	<object class="MixerBusFader" id="{f7c907ef-279e-4e49-9cb0-df1055b1682a}" />
 	<object class="MixerBusFader" id="{4cf08dda-1215-445a-ba8d-e303529ed198}" />
-	<object class="SpatialiserEffect" id="{d6168fa1-3069-48c9-b3cb-14f91bbadd68}" />
-	<object class="DistortionEffect" id="{dfc345ba-ffde-4e61-8dd4-7a91a1120e38}">
-		<property name="level">
-			<value>0.699999988</value>
-		</property>
-	</object>
-	<object class="FlangerEffect" id="{18117096-1aa6-4d6f-be59-9fc61d465bc1}">
-		<property name="rate">
-			<value>11.5</value>
-		</property>
-		<property name="delay">
-			<value>0.529999971</value>
-		</property>
-		<property name="mix">
-			<value>84</value>
-		</property>
-	</object>
 </objects>
