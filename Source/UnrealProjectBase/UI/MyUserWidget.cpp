@@ -15,6 +15,14 @@ void UMyUserWidget::NativeConstruct()
 	bIsFocusable = true;
 
 	StartLoop();
+	
+	GetWorld()->GetTimerManager().SetTimerForNextTick([this]()
+	{
+		if (TObjectPtr<APlayerController> PlayerController = GetWorld()->GetFirstPlayerController())
+		{
+			PlayerHud = Cast<APlayerHud>(PlayerController->GetHUD());
+		}
+	});
 }
 
 void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
@@ -45,14 +53,10 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			}
 			CurrentState = ECurrentState::Sane;
 			
-			// set text 
-			if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
+			// set text
+			if (PlayerHud)
 			{
-				APlayerHud* PlayerHud = Cast<APlayerHud>(PlayerController->GetHUD());
-				if (PlayerHud)
-				{
-					PlayerHud->SetText("");  
-				}
+				PlayerHud->SetText("");  
 			}
 		}
 	}
@@ -79,13 +83,9 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			matIntensity = 0;
 
 			// set text 
-			if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
+			if (PlayerHud)
 			{
-				APlayerHud* PlayerHud = Cast<APlayerHud>(PlayerController->GetHUD());
-				if (PlayerHud)
-				{
-					PlayerHud->SetText("");  
-				}
+				PlayerHud->SetText("");  
 			}
 			CurrentState = ECurrentState::Mad;
 			
@@ -130,13 +130,9 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 					{
 						if (MeshComp->CustomDepthStencilValue == 1)
 						{
-							if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
+							if (PlayerHud)
 							{
-								APlayerHud* PlayerHud = Cast<APlayerHud>(PlayerController->GetHUD());
-								if (PlayerHud)
-								{
-									PlayerHud->SetText("C to Focus");  
-								}
+								PlayerHud->SetText("C to Focus");  
 							}
 							break;
 						}
@@ -294,8 +290,8 @@ void UMyUserWidget::Fade_Implementation(float saneTime, float saneStartValue, fl
 void UMyUserWidget::Dying()
 {
 	dyingCount++;
-	ChangeCameraSettings(10.0, (dyingCount * 0.5) + 1.5);
-	if (dyingCount >= 10)
+	ChangeCameraSettings(10.0, (dyingCount * 1) + 1.5);
+	if (dyingCount >= 20)
 	{
 		isDying = false;
 		GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &UMyUserWidget::Dead, 0.1, isDying);
@@ -324,6 +320,7 @@ void UMyUserWidget::Dead()
 	}
 }
 
+//
 void UMyUserWidget::StartLoop()
 {
 	CurrentState = ECurrentState::Dead;

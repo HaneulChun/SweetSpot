@@ -42,12 +42,31 @@ void ATentacleWall::BeginPlay()
 		widget = Cast<UMyUserWidget>(hud->GetWidget());
 	});
 
+	startTransform = GetTransform();
+	
 	startLocation = GetActorLocation().Z;
 	finalLocation = GetActorLocation().Z - 400;
 }
 
+void ATentacleWall::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	if (isSpawning)
+	{
+		// move the object
+		FVector CurrentLocation = GetActorLocation();
+		SetActorLocation(CurrentLocation + (GetActorUpVector() * 1));
+		
+		if (CurrentLocation.Z >= startLocation)
+		{
+			isSpawning = false;
+		}
+	}
+}
+
 void ATentacleWall::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+                                   UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	if (!Cast<ACharacter>(OtherActor)) return;
 	if (!Cast<UCapsuleComponent>(OtherComp)) return;
@@ -71,39 +90,25 @@ void ATentacleWall::IncreaseMadnessBar()
 	widget->IncreaseMadnessBar(IncreaseMadness);
 }
 
-// Called every frame
-void ATentacleWall::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-	if (isFading == true)
-	{
-		// move the object
-		FVector CurrentLocation = GetActorLocation();
-		SetActorLocation(CurrentLocation + (-GetActorUpVector() * speed));
-		
-		if (CurrentLocation.Z <= finalLocation)
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, "Tentacle Wall");
-			this->Destroy();
-		}
-	}
-	else if (isSpawning)
-	{
-		// move the object
-		FVector CurrentLocation = GetActorLocation();
-		SetActorLocation(CurrentLocation + (GetActorUpVector() * speed));
-		
-		if (CurrentLocation.Z >= startLocation)
-		{
-			isSpawning = false;
-		}
-	}
-}
 
 void ATentacleWall::FadeAway()
 {
-	isFading = true;
+	// move the object
+	if (count <= focusedLookTicks)
+	{
+		// make eye disappear 
+		FVector Direction = -GetActorUpVector();
+		FVector CurrentLocation = GetActorLocation();
+		FVector NewLocation = CurrentLocation + (Direction * speed);
+		SetActorLocation(NewLocation);
+		
+		GetWorldTimerManager().SetTimer(TimerHandle, this, &ATentacleWall::ResetPosition, 1.0f, false, 0.4f);
+	}
+	else
+	{
+		DestroyTentacle();
+	}
+	count++;
 }
 
 void ATentacleWall::Spawn()
@@ -114,5 +119,11 @@ void ATentacleWall::Spawn()
 void ATentacleWall::StartDown()
 {
 	SetActorLocation(FVector(GetActorLocation().X, GetActorLocation().Y, finalLocation));
+}
+
+void ATentacleWall::ResetPosition()
+{
+	SetActorTransform(startTransform);
+	count = 0;
 }
 

@@ -46,12 +46,15 @@ void AMyTeleport::BeginPlay()
 	
 	GetWorld()->GetTimerManager().SetTimerForNextTick([this]()
 	{
-		APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
-		APlayerHud* hud = Cast<APlayerHud>(PlayerController->GetHUD());
+		TObjectPtr<APlayerController> PlayerController = GetWorld()->GetFirstPlayerController();
+		TObjectPtr<APlayerHud> hud = Cast<APlayerHud>(PlayerController->GetHUD());
 
 		widget = Cast<UMyUserWidget>(hud->GetWidget());
+
+		playerVision = PlayerController->GetPawn()->FindComponentByClass<UPlayerVision>();
 	});
 }
+
 
 // loop player if puzzle is completed loop to next stage
 // if next stage is null go to end screen
@@ -86,8 +89,6 @@ void AMyTeleport::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 
 void AMyTeleport::LoadSubLevel_Implementation()
 {
-	LoadSubLevel();
-
 	// loop until the loop is loaded to spawn the player
 	GetWorld()->GetTimerManager().SetTimer(TimerHandleLevel, [this]()
 	{
@@ -95,8 +96,20 @@ void AMyTeleport::LoadSubLevel_Implementation()
 		{
 			Teleport(Player, NextTeleportTo->GetComponentTransform());
 			GetWorld()->GetTimerManager().ClearTimer(TimerHandleLevel);
+
+			// set the array for tentacle and eyes
+			playerVision->SetActorArray();
+
+			//unload current level
+			unLoadSubLevel();
 		}
 	}, 0.1f, true);
+
+	LoadSubLevel();
+}
+
+void AMyTeleport::unLoadSubLevel_Implementation()
+{
 }
 
 void AMyTeleport::SetActors()
@@ -128,19 +141,9 @@ void AMyTeleport::Reset()
 			i++;
 		}
 	}
-	if (APlayerController* PC = GetWorld()->GetFirstPlayerController())
-	{
-		APawn* PlayerPawn = PC->GetPawn();
-		if (PlayerPawn)
-		{
-			UPlayerVision* VisionComp = PlayerPawn->FindComponentByClass<UPlayerVision>();
-			if (VisionComp)
-			{
-				
-				VisionComp->SetActorArray();
-			}
-		}
-	}
+
+	// set the array for tentacle and eyes
+	playerVision->SetActorArray();
 }
 
 void AMyTeleport::Teleport(AActor* OtherActor, FTransform Transform)
@@ -153,5 +156,6 @@ void AMyTeleport::Teleport(AActor* OtherActor, FTransform Transform)
 	FVector final = offset + destanation.GetLocation();
 		
 	FTransform finalTeleport = FTransform(destanation.GetRotation(), final, OtherActor->GetTransform().GetScale3D());
-	OtherActor->SetActorTransform(finalTeleport, false);
+	
+	OtherActor->SetActorTransform(finalTeleport, false, nullptr, ETeleportType::TeleportPhysics);
 }
