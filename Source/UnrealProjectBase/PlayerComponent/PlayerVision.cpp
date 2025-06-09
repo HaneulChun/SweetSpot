@@ -32,7 +32,7 @@ void UPlayerVision::BeginPlay()
 	PlayerController = GetWorld()->GetFirstPlayerController();
 	PlayerPawn = PlayerController->GetPawn();
 
-	GetWorld()->GetTimerManager().SetTimer(tenticalTimerHandle, this, &UPlayerVision::LookForTenticalWall, tenticalCheckInterval, true);
+	GetWorld()->GetTimerManager().SetTimer(tenticalTimerHandle, this, &UPlayerVision::LookForTentacleWall, tenticalCheckInterval, true);
 	
 	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &UPlayerVision::LookForEye, eyeCheckInterval, true);
 	
@@ -40,7 +40,7 @@ void UPlayerVision::BeginPlay()
 }
 
 
-float UPlayerVision::DotProduct(FVector TargetVector)
+float UPlayerVision::DotProduct(const FVector &TargetVector)
 {
 	FVector playerForward = PlayerCamera->GetForwardVector();
 	FVector objectToLookAt = (TargetVector - PlayerCamera->GetComponentLocation()).GetSafeNormal();
@@ -50,32 +50,26 @@ float UPlayerVision::DotProduct(FVector TargetVector)
 }
 
 
-void UPlayerVision::LookForTenticalWall()
+void UPlayerVision::LookForTentacleWall()
 {
 	PlayerLocation = PlayerPawn->GetActorLocation();
 
 	// check if the eye was recently rendered
 	for (TObjectPtr<AActor> Actor : tenticalArray)
 	{
-		if (Actor && Actor->WasRecentlyRendered(0.1f))
+		if (IsValid(Actor))
 		{
 			if (DotProduct(Actor->GetActorLocation()) > 0.54)
 			{
-				FVector Center = tenticalMeshArray[tenticalIndex]->Bounds.Origin;
-				float Radius = tenticalMeshArray[tenticalIndex]->Bounds.BoxExtent.X; // Half-size of the bounding box
-
-
-				// set points to check if the player can see the object
+				FVector bottom = tenticalMeshArray[tenticalIndex]->Bounds.Origin;
+				float height = 105;
+			
 				TArray<FVector> PointsToCheck = {
-					Center,
-					Center + FVector(Radius, 0, 0),
-					Center + FVector(-Radius, 0, 0),
-					Center + FVector(0, Radius, 0),
-					Center + FVector(0, -Radius, 0),
-					Center + FVector(0, 0, Radius),
-					Center + FVector(0, 0, -Radius)
+					bottom,
+					bottom + FVector(0, 0, height), 
+					bottom + FVector(0, 0, height * 2)
 				};
-
+			
 				// check if there is a wall between player and point
 				for (const FVector& Point : PointsToCheck)
 				{
@@ -89,15 +83,15 @@ void UPlayerVision::LookForTenticalWall()
 						Point,
 						ECC_Visibility,
 						Params);
-
-					// if see actor make it fade away
+				
+					// if you see actor make it fade away
 					if (!bHit || HitResult.GetActor() == Actor)
 					{
 						if (ATentacleWall* object = Cast<ATentacleWall>(Actor))
 						{
 							if (isFocusing)
 							{
-								object->isFading = true;
+								object->FadeAway();
 							}
 						}
 						break; 
@@ -117,7 +111,7 @@ void UPlayerVision::LookForEye()
 	// check if the eye was recently rendered
 	for (TObjectPtr<AActor> Actor : eyeArray)
 	{
-		if (Actor && Actor->WasRecentlyRendered(0.1f))
+		if (IsValid(Actor) && Actor->WasRecentlyRendered(0.1f))
 		{
 			if (DotProduct(Actor->GetActorLocation()) > 0.54)
 			{
@@ -149,7 +143,7 @@ void UPlayerVision::LookForEye()
 						ECC_Visibility,
 						Params);
 
-					// if see actor make it fade away
+					// if you see actor make it fade away
 					if (!bHit || HitResult.GetActor() == Actor)
 					{
 						// normal eyeball fading
@@ -181,7 +175,7 @@ void UPlayerVision::LookForBigEye()
 	// check if the eye was recently rendered
 	for (TObjectPtr<AActor> Actor : bigEyeArray)
 	{
-		if (Actor && Actor->WasRecentlyRendered(0.1f))
+		if (IsValid(Actor) && Actor->WasRecentlyRendered(0.1f))
 		{
 			FVector Center = bigEyeMeshArray[bigEyeIndex]->Bounds.Origin;
 			float Radius = bigEyeMeshArray[bigEyeIndex]->Bounds.SphereRadius;
@@ -215,7 +209,7 @@ void UPlayerVision::LookForBigEye()
 					Params);
 	
 	
-				// if see actor make it fade away
+				// if you see actor make it fade away
 				if (!bHit || HitResult.GetActor() == Actor)
 				{
 					// big eyeball
@@ -269,7 +263,7 @@ void UPlayerVision::SetActorArray()
 	{
 		TObjectPtr<AActor> Actor = *ActorItr;
 
-		if (Actor->Tags.Contains("Tentical"))
+		if (Actor->Tags.Contains("Tentacle"))
 		{
 			tenticalArray.Add(Actor);
 			tenticalMeshArray.Add(Actor->FindComponentByClass<UMeshComponent>());

@@ -7,6 +7,7 @@
 #include "Engine/Scene.h"
 #include "FMODBlueprintStatics.h"
 #include "PlayerHud.h"
+#include "UnrealProjectBase/PlayerComponent/PlayerVision.h"
 
 void UMyUserWidget::NativeConstruct()
 {
@@ -15,6 +16,24 @@ void UMyUserWidget::NativeConstruct()
 	bIsFocusable = true;
 
 	StartLoop();
+	
+	
+	GetWorld()->GetTimerManager().SetTimerForNextTick([this]()
+	{
+		if (TObjectPtr<APlayerController> PlayerController = GetWorld()->GetFirstPlayerController())
+		{
+			if (TObjectPtr<APlayerHud> PlayerHud = Cast<APlayerHud>(PlayerController->GetHUD()))
+			{
+				playerHud = PlayerHud;  
+			}
+
+			// point at the player's camera
+			if (TObjectPtr<UCameraComponent> Camera = PlayerController->PlayerCameraManager->GetOwningPlayerController()->PlayerCameraManager->ViewTarget.Target->FindComponentByClass<UCameraComponent>())
+			{
+				playerCamera = Camera;
+			}
+		}
+	});
 }
 
 void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
@@ -46,14 +65,7 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			CurrentState = ECurrentState::Sane;
 			
 			// set text 
-			if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
-			{
-				APlayerHud* PlayerHud = Cast<APlayerHud>(PlayerController->GetHUD());
-				if (PlayerHud)
-				{
-					PlayerHud->SetText("");  
-				}
-			}
+			playerHud->SetText("");  
 		}
 	}
 	else if(currentMadnessBarValue >= 1) // dead 
@@ -78,18 +90,11 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			ChangeCameraMaterial(0.0f);
 			matIntensity = 0;
 
-			// set text 
-			if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
-			{
-				APlayerHud* PlayerHud = Cast<APlayerHud>(PlayerController->GetHUD());
-				if (PlayerHud)
-				{
-					PlayerHud->SetText("");  
-				}
-			}
+			// set text
+			playerHud->SetText("");  
+
 			CurrentState = ECurrentState::Mad;
 			
-
 			// show actor
 			Fade(0, 1, -0.1, 1);
 			for (AActor* Actor : SaneActors)
@@ -130,14 +135,8 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 					{
 						if (MeshComp->CustomDepthStencilValue == 1)
 						{
-							if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
-							{
-								APlayerHud* PlayerHud = Cast<APlayerHud>(PlayerController->GetHUD());
-								if (PlayerHud)
-								{
-									PlayerHud->SetText("C to Focus");  
-								}
-							}
+							playerHud->SetText("C to Focus");
+							
 							break;
 						}
 					}
@@ -175,53 +174,32 @@ void UMyUserWidget::SetMaterial(TArray<UMaterialInterface*> Mat)
 
 void UMyUserWidget::ChangeCameraSettings(float chromaticAberration, float Vignette)
 {
-	if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
-	{
-		// point at the player's camera
-		if (UCameraComponent* Camera = PlayerController->PlayerCameraManager->GetOwningPlayerController()->PlayerCameraManager->ViewTarget.Target->FindComponentByClass<UCameraComponent>())
-		{
-			FPostProcessSettings& Settings = Camera->PostProcessSettings;
+	FPostProcessSettings& Settings = playerCamera->PostProcessSettings;
 
-			Settings.bOverride_SceneFringeIntensity = true;
-			Settings.SceneFringeIntensity = chromaticAberration;
+	Settings.bOverride_SceneFringeIntensity = true;
+	Settings.SceneFringeIntensity = chromaticAberration;
 
-			Settings.bOverride_VignetteIntensity = true;
-			Settings.VignetteIntensity = Vignette;
-		}
-	}
+	Settings.bOverride_VignetteIntensity = true;
+	Settings.VignetteIntensity = Vignette;
 }
 
 void UMyUserWidget::Color(float intensity)
 {
-	if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
-	{
-		// point at the player's camera
-		if (UCameraComponent* Camera = PlayerController->PlayerCameraManager->GetOwningPlayerController()->PlayerCameraManager->ViewTarget.Target->FindComponentByClass<UCameraComponent>())
-		{
-			FPostProcessSettings& Settings = Camera->PostProcessSettings;
+	FPostProcessSettings& Settings = playerCamera->PostProcessSettings;
 			
-			Settings.bOverride_ColorSaturation = true;
-			Settings.ColorSaturation = FVector4(intensity, intensity, intensity, 1.0f);
-		}
-	}
+	Settings.bOverride_ColorSaturation = true;
+	Settings.ColorSaturation = FVector4(intensity, intensity, intensity, 1.0f);
 }
 
 void UMyUserWidget::ChangeCameraMaterial(float intensity)
 {
-	if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
-	{
-		// point at the player's camera and add material
-		if (UCameraComponent* Camera = PlayerController->PlayerCameraManager->GetOwningPlayerController()->PlayerCameraManager->ViewTarget.Target->FindComponentByClass<UCameraComponent>())
-		{
-			FPostProcessSettings& Settings = Camera->PostProcessSettings;
+	FPostProcessSettings& Settings = playerCamera->PostProcessSettings;
 
-			for (int32 i = 0; i < Material.Num(); i++)
-			{
-				if (Material.IsValidIndex(i))
-				{
-					Settings.AddBlendable(Material[i], intensity);
-				}
-			}
+	for (int32 i = 0; i < Material.Num(); i++)
+	{
+		if (Material.IsValidIndex(i))
+		{
+			Settings.AddBlendable(Material[i], intensity);
 		}
 	}
 }
@@ -234,6 +212,16 @@ void UMyUserWidget::CheckForSubLevel(TSoftObjectPtr<UWorld> unloadedSubLevel)
 		if (!unloadedSubLevel.IsValid())
 		{
 			StartLoop();
+
+			// set the array for tentacle and eyes
+			if (TObjectPtr<APlayerController> PlayerController = GetWorld()->GetFirstPlayerController())
+			{
+				if (TObjectPtr<UPlayerVision> playerVision = PlayerController->GetPawn()->FindComponentByClass<UPlayerVision>())
+				{
+					playerVision->SetActorArray();	
+				}
+			}
+			
 			GetWorld()->GetTimerManager().ClearTimer(TimerHandleLevel);
 		}
 	}, 0.2f, true);
@@ -304,9 +292,9 @@ void UMyUserWidget::Dying()
 void UMyUserWidget::Dead()
 {
 	// find object with spawn tag and teleport to spawn
-	if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
+	if (TObjectPtr<APlayerController> PlayerController = GetWorld()->GetFirstPlayerController())
 	{
-		if (APawn* Player = PlayerController->GetPawn())
+		if (TObjectPtr<APawn> Player = PlayerController->GetPawn())
 		{
 			if (spawnPoint)
 			{
@@ -331,7 +319,7 @@ void UMyUserWidget::StartLoop()
 	
 	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
 	{
-		AActor* Actor = *ActorItr;
+		TObjectPtr<AActor> Actor = *ActorItr;
 
 		
 		if (Actor->Tags.Contains("Sane"))
