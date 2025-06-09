@@ -48,6 +48,7 @@ public:
 	
 	UFUNCTION()
 	void IncreaseMadness();
+
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Property")
 	float speed = 5.0f;

@@ -102,18 +102,6 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "UI")
 	void DecreaseMadness(float value);
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float currentMadnessBarValue = 0.0;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float increaseMadness = 0.0;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float sweatSpot = 0;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float mad = 0;
 	
 	UFUNCTION(BlueprintCallable)
 	void IncreaseMadnessBar(float value);
@@ -158,4 +146,17 @@ public:
 	
 	UPROPERTY(BlueprintReadOnly)
 	bool isImmune = false;
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float currentMadnessBarValue = 0.0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float increaseMadness = 0.0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float sweatSpot = 0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float mad = 0;
 };

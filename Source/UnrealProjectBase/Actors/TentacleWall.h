@@ -71,10 +71,16 @@ public:
 	void StartDown();
 
 	UFUNCTION()
-	void ResetPosition();
+	void ResetTentaclePosition();
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void DestroyTentacle();
+	
+	UPROPERTY(BlueprintReadWrite)
+	bool isFading = false;
+
+	UPROPERTY(BlueprintReadWrite)
+	bool isSpawning = false;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float IncreaseMadness = 0.02f;
@@ -84,13 +90,6 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float speed = 9.0f;
-	
-	UPROPERTY(BlueprintReadWrite)
-	bool isFading = false;
-
-	UPROPERTY(BlueprintReadWrite)
-	bool isSpawning = false;
-	
 	
 	UPROPERTY(EditAnywhere)
 	int focusedLookTicks = 20;

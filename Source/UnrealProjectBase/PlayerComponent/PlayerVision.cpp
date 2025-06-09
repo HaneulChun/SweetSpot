@@ -258,6 +258,7 @@ void UPlayerVision::SetActorArray()
 	bigEyeArray.Empty();
 	bigEyeMeshArray.Empty();
 
+	// add objects to array
 	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
 	{
 		TObjectPtr<AActor> Actor = *ActorItr;

@@ -43,7 +43,6 @@ void ATentacleWall::BeginPlay()
 	});
 
 	startTransform = GetTransform();
-	
 	startLocation = GetActorLocation().Z;
 	finalLocation = GetActorLocation().Z - 400;
 }
@@ -52,6 +51,7 @@ void ATentacleWall::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	// tentacle fading up
 	if (isSpawning)
 	{
 		// move the object
@@ -102,10 +102,11 @@ void ATentacleWall::FadeAway()
 		FVector NewLocation = CurrentLocation + (Direction * speed);
 		SetActorLocation(NewLocation);
 		
-		GetWorldTimerManager().SetTimer(TimerHandle, this, &ATentacleWall::ResetPosition, 1.0f, false, 0.4f);
+		GetWorldTimerManager().SetTimer(TimerHandle, this, &ATentacleWall::ResetTentaclePosition, 1.0f, false, 0.4f);
 	}
 	else
 	{
+		// destroy actor
 		DestroyTentacle();
 	}
 	count++;
@@ -121,7 +122,7 @@ void ATentacleWall::StartDown()
 	SetActorLocation(FVector(GetActorLocation().X, GetActorLocation().Y, finalLocation));
 }
 
-void ATentacleWall::ResetPosition()
+void ATentacleWall::ResetTentaclePosition()
 {
 	SetActorTransform(startTransform);
 	count = 0;

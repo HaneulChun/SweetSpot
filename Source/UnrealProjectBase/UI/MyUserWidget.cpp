@@ -281,8 +281,6 @@ void UMyUserWidget::IncreaseMadnessBar(float value)
 	}
 }
 
-
-
 void UMyUserWidget::Fade_Implementation(float saneTime, float saneStartValue, float sweetTime, float sweetStartValue)
 {
 }
