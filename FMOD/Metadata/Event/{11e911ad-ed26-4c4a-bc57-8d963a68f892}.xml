@@ -5,7 +5,7 @@
 			<value>Amplifier_Hum_Fender_Vintage</value>
 		</property>
 		<property name="outputFormat">
-			<value>0</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{5f0e255a-8f4f-42ca-9226-c7d4dbd1b513}</destination>
@@ -59,7 +59,11 @@
 			<destination>{fd354eed-d229-4a55-a0ab-8ed4aa1f6b44}</destination>
 		</relationship>
 	</object>
-	<object class="EventAutomatableProperties" id="{a1675973-35a8-4843-8912-e7c975c70504}" />
+	<object class="EventAutomatableProperties" id="{a1675973-35a8-4843-8912-e7c975c70504}">
+		<property name="maximumDistance">
+			<value>9</value>
+		</property>
+	</object>
 	<object class="MarkerTrack" id="{2be85d06-79e9-4e53-a4e2-0ad37f413256}" />
 	<object class="Timeline" id="{1c7587e4-4be1-4b31-8b77-f03f8c8a9082}">
 		<property name="isProxyEnabled">
@@ -72,6 +76,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{ec156c20-748b-437d-b91a-ffcefed26405}">
+		<property name="volume">
+			<value>-7</value>
+		</property>
 		<relationship name="effectChain">
 			<destination>{74d594c1-cd04-4c39-bb5e-8a19344e479d}</destination>
 		</relationship>
@@ -96,14 +103,40 @@
 	<object class="MixerBusEffectChain" id="{74d594c1-cd04-4c39-bb5e-8a19344e479d}">
 		<relationship name="effects">
 			<destination>{f2acbde6-7773-4214-a342-43684a20abfc}</destination>
+			<destination>{9126210d-cbb5-47c2-8865-22504e4feafe}</destination>
+			<destination>{48326d6e-05fd-46ec-a8c4-f9c721a4ba86}</destination>
+			<destination>{df8e5dd1-320c-4c62-b4aa-98c653605910}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{df37e60a-5caa-422f-a544-953ae464cd66}" />
 	<object class="SingleSound" id="{74407234-0935-4ecd-8aba-0a1988d59a35}">
+		<property name="looping">
+			<value>true</value>
+		</property>
 		<relationship name="audioFile">
 			<destination>{5d259ef8-cffd-46ae-979e-809d55a85e89}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusFader" id="{012865f1-f727-4f5b-86db-945fc892b9c8}" />
 	<object class="MixerBusFader" id="{f2acbde6-7773-4214-a342-43684a20abfc}" />
+	<object class="LowpassEffect" id="{9126210d-cbb5-47c2-8865-22504e4feafe}">
+		<property name="cutoff">
+			<value>300</value>
+		</property>
+		<property name="resonance">
+			<value>1.55999994</value>
+		</property>
+	</object>
+	<object class="FlangerEffect" id="{48326d6e-05fd-46ec-a8c4-f9c721a4ba86}">
+		<property name="rate">
+			<value>4.30000019</value>
+		</property>
+		<property name="delay">
+			<value>0.239999995</value>
+		</property>
+		<property name="mix">
+			<value>58</value>
+		</property>
+	</object>
+	<object class="SpatialiserEffect" id="{df8e5dd1-320c-4c62-b4aa-98c653605910}" />
 </objects>
