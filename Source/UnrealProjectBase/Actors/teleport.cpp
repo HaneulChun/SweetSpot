@@ -48,6 +48,7 @@ void Ateleport::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor*
 	ShowElevatorPart();
 }
 
+
 void Ateleport::Teleport(AActor* OtherActor)
 {
 	if (ACharacter* Character = Cast<ACharacter>(OtherActor))
@@ -59,6 +60,3 @@ void Ateleport::Teleport(AActor* OtherActor)
 		OtherActor->SetActorLocation(teleportTo->Arrow->GetComponentLocation(), false);
 	}
 }
-
-
-
