@@ -82,9 +82,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TeleportLoop")
 	TArray<TObjectPtr<AActor>> Actors;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TeleportLoop")
-	float increaseMadness = 0.1;
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Trigger")
 	TObjectPtr<UBoxComponent> triggerBox;
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TeleportLoop")
+	float increaseMadness = 0.1;
 };

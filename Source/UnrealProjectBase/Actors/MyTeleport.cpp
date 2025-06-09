@@ -76,7 +76,7 @@ void AMyTeleport::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 		// teleport player
 		Teleport(OtherActor, teleportTo->GetComponentTransform());
 				
-		// reset the eye and chocolate 
+		// reset the eyes
 		Reset();
 
 		// increase their madness
@@ -124,6 +124,7 @@ void AMyTeleport::SetActors()
 	}
 }
 
+// respawn the selected objects
 void AMyTeleport::Reset()
 {
 	int32 i = 0;
