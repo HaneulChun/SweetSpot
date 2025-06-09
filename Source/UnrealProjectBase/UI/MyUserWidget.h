@@ -7,6 +7,7 @@
 #include "FMODEvent.h"
 #include "MyUserWidget.generated.h"
 
+class UCameraComponent;
 /**
  * 
  */
@@ -36,13 +37,13 @@ protected:
 	int dyingCount = 0;
 
 	UPROPERTY(BlueprintReadOnly)
-	TArray<AActor*> SaneActors;
+	TArray<TObjectPtr<AActor>> SaneActors;
 
 	UPROPERTY(BlueprintReadOnly)
-	TArray<AActor*> SweetActors;
+	TArray<TObjectPtr<AActor>> SweetActors;
 
 	UPROPERTY()
-	AActor* spawnPoint;
+	TObjectPtr<AActor> spawnPoint;
 
 	UPROPERTY()
 	TSoftObjectPtr<UWorld> checkUnloadedLevel;
@@ -50,17 +51,19 @@ public:
 	UPROPERTY(BlueprintReadOnly)
 	ECurrentState CurrentState = ECurrentState::SweetSpot;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
-	TSubclassOf<APlayerHud> PlayerHudClass;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
-	TSubclassOf<UUserWidget> WidgetClass;
 
 	UPROPERTY(BlueprintReadWrite, Category = "UI")
-	UUserWidget* CurrentWidget;
+	TObjectPtr<APlayerHud> playerHud;
+	
+	UPROPERTY(BlueprintReadWrite, Category = "UI")
+	TObjectPtr<UUserWidget> CurrentWidget;
+
+	UPROPERTY(BlueprintReadWrite)
+	TObjectPtr<UCameraComponent> playerCamera;
+
 	
 	UPROPERTY(EditAnywhere, BluePrintReadWrite, Category = "Material")
-	TArray<UMaterialInterface*> Material;
+	TArray<TObjectPtr<UMaterialInterface>> Material;
 
 	UFUNCTION(BlueprintCallable, Category = "Material")
 	void SetMaterial(TArray<UMaterialInterface*> Mat);
