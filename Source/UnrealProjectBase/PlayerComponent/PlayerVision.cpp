@@ -279,4 +279,9 @@ void UPlayerVision::SetActorArray()
 			bigEyeMeshArray.Add(Actor->FindComponentByClass<UMeshComponent>());
 		}
 	}
+
+	if (eyeArray.Num() != eyeMeshArray.Num())
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, "Eye Array Size");
+	}
 }
