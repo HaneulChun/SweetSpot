@@ -59,11 +59,11 @@ protected:
 
 	
 	UFUNCTION()
-	float DotProduct(const FVector &TargetVector);
+	float DotProduct(FVector TargetVector);
 public:	
 
 	UFUNCTION()
-	void LookForTentacleWall();
+	void LookForTenticalWall();
 	
 	UFUNCTION()
 	void LookForEye();

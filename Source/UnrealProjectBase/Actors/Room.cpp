@@ -46,12 +46,6 @@ void ARoom::BeginPlay()
 		APlayerHud* hud = Cast<APlayerHud>(PlayerController->GetHUD());
 
 		widget = Cast<UMyUserWidget>(hud->GetWidget());
-
-		// point at the player's camera
-		if (TObjectPtr<UCameraComponent> Camera = PlayerController->PlayerCameraManager->GetOwningPlayerController()->PlayerCameraManager->ViewTarget.Target->FindComponentByClass<UCameraComponent>())
-		{
-			playerCamera = Camera;
-		}
 	});
 }
 
@@ -131,11 +125,18 @@ void ARoom::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor
 
 void ARoom::Color(float intensity, float Vignette)
 {
-	FPostProcessSettings& Settings = playerCamera->PostProcessSettings;
+	if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
+	{
+		// point at the player's camera and add material
+		if (UCameraComponent* Camera = PlayerController->PlayerCameraManager->GetOwningPlayerController()->PlayerCameraManager->ViewTarget.Target->FindComponentByClass<UCameraComponent>())
+		{
+			FPostProcessSettings& Settings = Camera->PostProcessSettings;
 
-	Settings.bOverride_ColorSaturation = true;
-	Settings.ColorSaturation = FVector4(intensity, intensity, intensity, 1.0f);
+			Settings.bOverride_ColorSaturation = true;
+			Settings.ColorSaturation = FVector4(intensity, intensity, intensity, 1.0f);
 
-	Settings.bOverride_VignetteIntensity = true;
-	Settings.VignetteIntensity = Vignette;
+			Settings.bOverride_VignetteIntensity = true;
+			Settings.VignetteIntensity = Vignette;
+		}
+	}
 }

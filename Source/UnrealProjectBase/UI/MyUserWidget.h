@@ -7,7 +7,6 @@
 #include "FMODEvent.h"
 #include "MyUserWidget.generated.h"
 
-class UCameraComponent;
 /**
  * 
  */
@@ -32,43 +31,36 @@ protected:
 
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 
-	// cache
 	FTimerHandle TimerHandle;
 	bool isDying = false;
 	int dyingCount = 0;
 
 	UPROPERTY(BlueprintReadOnly)
-	TArray<TObjectPtr<AActor>> SaneActors;
+	TArray<AActor*> SaneActors;
 
 	UPROPERTY(BlueprintReadOnly)
-	TArray<TObjectPtr<AActor>> SweetActors;
+	TArray<AActor*> SweetActors;
 
 	UPROPERTY()
-	TObjectPtr<AActor> spawnPoint;
+	AActor* spawnPoint;
 
-	UPROPERTY()
-	TObjectPtr<UCameraComponent> playerCamera;
-
-	UPROPERTY()
-	TObjectPtr<APawn> Player;
-
-	
 	UPROPERTY()
 	TSoftObjectPtr<UWorld> checkUnloadedLevel;
 public:
 	UPROPERTY(BlueprintReadOnly)
 	ECurrentState CurrentState = ECurrentState::SweetSpot;
 
-
-	UPROPERTY(BlueprintReadWrite, Category = "UI")
-	TObjectPtr<APlayerHud> playerHud;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
+	TSubclassOf<APlayerHud> PlayerHudClass;
 	
-	UPROPERTY(BlueprintReadWrite, Category = "UI")
-	TObjectPtr<UUserWidget> CurrentWidget;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
+	TSubclassOf<UUserWidget> WidgetClass;
 
+	UPROPERTY(BlueprintReadWrite, Category = "UI")
+	UUserWidget* CurrentWidget;
 	
 	UPROPERTY(EditAnywhere, BluePrintReadWrite, Category = "Material")
-	TArray<TObjectPtr<UMaterialInterface>> Material;
+	TArray<UMaterialInterface*> Material;
 
 	UFUNCTION(BlueprintCallable, Category = "Material")
 	void SetMaterial(TArray<UMaterialInterface*> Mat);
@@ -89,7 +81,7 @@ public:
 	FTimerHandle TimerHandleLevel;
 	
 	UPROPERTY()
-	TObjectPtr<UFMODEvent> FullyMadSFX;
+	UFMODEvent* FullyMadSFX;
 	
 
 	UFUNCTION(BlueprintCallable)
