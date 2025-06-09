@@ -7,6 +7,7 @@
 #include "Engine/Scene.h"
 #include "FMODBlueprintStatics.h"
 #include "PlayerHud.h"
+#include "UnrealProjectBase/PlayerComponent/PlayerVision.h"
 
 void UMyUserWidget::NativeConstruct()
 {
@@ -228,12 +229,22 @@ void UMyUserWidget::ChangeCameraMaterial(float intensity)
 
 void UMyUserWidget::CheckForSubLevel(TSoftObjectPtr<UWorld> unloadedSubLevel)
 {
-	// loop until the loop is unloaded to set the SweetSpotActors
+	// loop until the level is unloaded to set the SweetSpotActors
 	GetWorld()->GetTimerManager().SetTimer(TimerHandleLevel, [this, unloadedSubLevel]()
 	{
 		if (!unloadedSubLevel.IsValid())
 		{
 			StartLoop();
+
+			// set the array for tentacle and eyes
+			if (TObjectPtr<APlayerController> PlayerController = GetWorld()->GetFirstPlayerController())
+			{
+				if (UPlayerVision* playerVision = PlayerController->GetPawn()->FindComponentByClass<UPlayerVision>())
+				{
+					playerVision->SetActorArray();		
+				}
+			}
+			
 			GetWorld()->GetTimerManager().ClearTimer(TimerHandleLevel);
 		}
 	}, 0.2f, true);
@@ -284,8 +295,6 @@ void UMyUserWidget::IncreaseMadnessBar(float value)
 		currentMadnessBarValue += value;
 	}
 }
-
-
 
 void UMyUserWidget::Fade_Implementation(float saneTime, float saneStartValue, float sweetTime, float sweetStartValue)
 {

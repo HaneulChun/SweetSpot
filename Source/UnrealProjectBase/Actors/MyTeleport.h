@@ -8,6 +8,7 @@
 
 #include "MyTeleport.generated.h"
 
+class UPlayerVision;
 class UMyUserWidget;
 class ACharacter;
 class UBoxComponent;
@@ -21,6 +22,9 @@ public:
 	// Sets default values for this actor's properties
 	AMyTeleport();
 
+private:
+	TObjectPtr<UPlayerVision> playerVision;
+	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -57,6 +61,10 @@ public:
 	void LoadSubLevel();
 	virtual void LoadSubLevel_Implementation();
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void unLoadSubLevel();
+	virtual void unLoadSubLevel_Implementation();
+
 	FTimerHandle TimerHandleLevel;
 	
 	UFUNCTION()
@@ -74,9 +82,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TeleportLoop")
 	TArray<TObjectPtr<AActor>> Actors;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TeleportLoop")
-	float increaseMadness = 0.1;
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Trigger")
 	TObjectPtr<UBoxComponent> triggerBox;
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TeleportLoop")
+	float increaseMadness = 0.1;
 };
