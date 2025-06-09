@@ -47,6 +47,7 @@ protected:
 	UPROPERTY()
 	TSoftObjectPtr<UWorld> checkUnloadedLevel;
 public:
+	UPROPERTY(BlueprintReadOnly)
 	ECurrentState CurrentState = ECurrentState::SweetSpot;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
