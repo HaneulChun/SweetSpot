@@ -8,6 +8,7 @@
 
 #include "Room.generated.h"
 
+class UCameraComponent;
 class ACharacter;
 class UBoxComponent;
 class UMyUserWidget;
@@ -24,6 +25,11 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+
+	UPROPERTY(BlueprintReadWrite)
+	TObjectPtr<UCameraComponent> playerCamera;
+	
+	
 	UPROPERTY(BlueprintReadWrite);
 	TObjectPtr<UBoxComponent> triggerBox;
 

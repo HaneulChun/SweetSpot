@@ -32,6 +32,7 @@ protected:
 
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 
+	// cache
 	FTimerHandle TimerHandle;
 	bool isDying = false;
 	int dyingCount = 0;
@@ -46,6 +47,13 @@ protected:
 	TObjectPtr<AActor> spawnPoint;
 
 	UPROPERTY()
+	TObjectPtr<UCameraComponent> playerCamera;
+
+	UPROPERTY()
+	TObjectPtr<APawn> Player;
+
+	
+	UPROPERTY()
 	TSoftObjectPtr<UWorld> checkUnloadedLevel;
 public:
 	UPROPERTY(BlueprintReadOnly)
@@ -57,9 +65,6 @@ public:
 	
 	UPROPERTY(BlueprintReadWrite, Category = "UI")
 	TObjectPtr<UUserWidget> CurrentWidget;
-
-	UPROPERTY(BlueprintReadWrite)
-	TObjectPtr<UCameraComponent> playerCamera;
 
 	
 	UPROPERTY(EditAnywhere, BluePrintReadWrite, Category = "Material")
@@ -84,7 +89,7 @@ public:
 	FTimerHandle TimerHandleLevel;
 	
 	UPROPERTY()
-	UFMODEvent* FullyMadSFX;
+	TObjectPtr<UFMODEvent> FullyMadSFX;
 	
 
 	UFUNCTION(BlueprintCallable)

@@ -32,6 +32,11 @@ void UMyUserWidget::NativeConstruct()
 			{
 				playerCamera = Camera;
 			}
+
+			if (TObjectPtr<APawn> t = PlayerController->GetPawn())
+			{
+				Player = t;
+			}
 		}
 	});
 }
@@ -128,8 +133,7 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			// if there is no object to focus don't show text
 			for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
 			{
-				AActor* Actor = *ActorItr;
-				if (Actor)
+				if (AActor* Actor = *ActorItr)
 				{
 					if (UMeshComponent* MeshComp = Actor->FindComponentByClass<UMeshComponent>())
 					{
@@ -292,22 +296,16 @@ void UMyUserWidget::Dying()
 void UMyUserWidget::Dead()
 {
 	// find object with spawn tag and teleport to spawn
-	if (TObjectPtr<APlayerController> PlayerController = GetWorld()->GetFirstPlayerController())
+	if (spawnPoint)
 	{
-		if (TObjectPtr<APawn> Player = PlayerController->GetPawn())
-		{
-			if (spawnPoint)
-			{
-				Player->SetActorLocation(spawnPoint->GetActorLocation());
-			}
-						
-			if (FullyMadSFX)
-			{
-				UFMODBlueprintStatics::PlayEventAtLocation(this, FullyMadSFX, Player->GetActorTransform(), true);	
-			}
-		}
-		currentMadnessBarValue = 0;
+		Player->SetActorLocation(spawnPoint->GetActorLocation());
 	}
+						
+	if (FullyMadSFX)
+	{
+		UFMODBlueprintStatics::PlayEventAtLocation(this, FullyMadSFX, Player->GetActorTransform(), true);	
+	}
+	currentMadnessBarValue = 0;
 }
 
 void UMyUserWidget::StartLoop()
@@ -326,11 +324,11 @@ void UMyUserWidget::StartLoop()
 		{
 			SaneActors.Add(Actor);
 		}
-		if (Actor->Tags.Contains("Sweet"))
+		else if (Actor->Tags.Contains("Sweet"))
 		{
 			SweetActors.Add(Actor);
 		}
-		if (Actor->Tags.Contains("Spawn"))
+		else if (Actor->Tags.Contains("Spawn"))
 		{
 			spawnPoint = Actor;
 		}
