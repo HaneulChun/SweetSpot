@@ -143,6 +143,7 @@ public:
 	bool isImmune = false;
 
 
+	// property
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float currentMadnessBarValue = 0.0;
 
