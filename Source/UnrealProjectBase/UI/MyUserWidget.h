@@ -10,6 +10,16 @@
 /**
  * 
  */
+UENUM(BlueprintType)
+enum class ECurrentState : uint8
+{
+	Sane       UMETA(DisplayName = "Sane"),
+	SweetSpot  UMETA(DisplayName = "Sweet Spot"),
+	Mad        UMETA(DisplayName = "Mad"),
+	Dead       UMETA(DisplayName = "Dead")
+};
+
+
 class APlayerHud;
 UCLASS()
 class UNREALPROJECTBASE_API UMyUserWidget : public UUserWidget
@@ -33,8 +43,12 @@ protected:
 
 	UPROPERTY()
 	AActor* spawnPoint;
+
+	UPROPERTY()
+	TSoftObjectPtr<UWorld> checkUnloadedLevel;
 public:
-	FString mvalue = "";
+	UPROPERTY(BlueprintReadOnly)
+	ECurrentState CurrentState = ECurrentState::SweetSpot;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
 	TSubclassOf<APlayerHud> PlayerHudClass;
@@ -59,6 +73,12 @@ public:
 	
 	UFUNCTION(BlueprintCallable, Category = "Material")
 	void ChangeCameraMaterial(float intensity);
+
+
+	UFUNCTION(BlueprintCallable)
+	void CheckForSubLevel(TSoftObjectPtr<UWorld> unloadedSubLevel);
+
+	FTimerHandle TimerHandleLevel;
 	
 	UPROPERTY()
 	UFMODEvent* FullyMadSFX;
@@ -78,18 +98,6 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "UI")
 	void DecreaseMadness(float value);
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float currentMadnessBarValue = 0.0;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float increaseMadness = 0.0;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float sweatSpot = 0;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float mad = 0;
 	
 	UFUNCTION(BlueprintCallable)
 	void IncreaseMadnessBar(float value);
@@ -105,6 +113,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void Dead();
+
+	UFUNCTION(BlueprintCallable)
+	void StartLoop();
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float chromaticAberrationIntensity;
@@ -118,7 +129,30 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float colorIntensity = 1;
 
+	// value roomMadnessDamage
+	UPROPERTY()
+	float roomMadnessDamage = 0;
 
 	UPROPERTY()
 	bool isInRoom = false;
+
+	UPROPERTY()
+	bool isInLight = false;
+	
+	UPROPERTY(BlueprintReadOnly)
+	bool isImmune = false;
+
+
+	// property
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float currentMadnessBarValue = 0.0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float increaseMadness = 0.0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float sweatSpot = 0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float mad = 0;
 };

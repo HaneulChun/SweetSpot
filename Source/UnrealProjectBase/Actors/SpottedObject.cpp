@@ -20,49 +20,55 @@ USpottedObject::USpottedObject()
 void USpottedObject::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	startTransform = GetOwner()->GetTransform();
 	GetOwner()->Tags.Add("SeeMe");
+	
+	GetWorld()->GetTimerManager().SetTimerForNextTick([this]()
+{
+	APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
+	APlayerHud* hud = Cast<APlayerHud>(PlayerController->GetHUD());
+
+	widget = Cast<UMyUserWidget>(hud->GetWidget());
+});
 }
 
-
-// Called every frame
-void USpottedObject::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+// make object fade into wall/floor
+void USpottedObject::FadeAway_Implementation()
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	if (isFading == true)
+	FadeAway();
+	if (count <= focusedLookTicks)
 	{
-		if (spotted == false)
-		{
-			// increase madness when object is sopoted
-			if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
-			{
-				APlayerHud* hud = Cast<APlayerHud>(PlayerController->GetHUD());
-
-				UMyUserWidget* widget = Cast<UMyUserWidget>(hud->GetWidget());
-				if (widget)
-				{
-					widget->IncreaseMadnessBar(increaseMadness);
-				}	
-			}
-			spotted = true;
-		}
-
-		// move the object
+		isClosingAnim = true;
+		
+		// make eye disappear 
 		FVector Direction = -GetOwner()->GetActorForwardVector();
 		FVector CurrentLocation = GetOwner()->GetActorLocation();
 		FVector NewLocation = CurrentLocation + (Direction * speed);
-
 		GetOwner()->SetActorLocation(NewLocation);
-		if (CurrentLocation.Z <= -200)
-		{
-			isFading = false;
-		}
+		
+		count++;
+		GetOwner()->GetWorldTimerManager().SetTimer(TimerHandle, this, &USpottedObject::ResetPosition_Implementation, 1.0f, false, 0.4f);
+	}
+	else
+	{
+		GetOwner()->Destroy();
 	}
 }
 
-void USpottedObject::FadeAway()
+void USpottedObject::ResetPosition_Implementation()
 {
-	isFading = true;
+	GetOwner()->SetActorTransform(startTransform);
+	count = 0;
+	
+	ResetPosition();
+	isClosingAnim = false;
 }
 
+void USpottedObject::IncreaseMadness()
+{
+	if (widget)
+	{
+		widget->IncreaseMadnessBar(increaseMadnessAmount);
+	}	
+}

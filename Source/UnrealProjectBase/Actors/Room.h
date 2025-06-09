@@ -10,6 +10,7 @@
 
 class ACharacter;
 class UBoxComponent;
+class UMyUserWidget;
 UCLASS()
 class UNREALPROJECTBASE_API ARoom : public AActor
 {
@@ -24,10 +25,14 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(BlueprintReadWrite);
-	UBoxComponent* triggerBox;
+	TObjectPtr<UBoxComponent> triggerBox;
+
+	UPROPERTY()
+	TObjectPtr<UMyUserWidget> widget;
+	
 public:	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TArray<UBoxComponent*> TriggerVolume;
+	TArray<TObjectPtr<UBoxComponent>> TriggerVolume;
 	
 	UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
@@ -35,10 +40,12 @@ public:
 		bool bFromSweep, const FHitResult& SweepResult);
 
 	UFUNCTION()
-	void NotifyActorEndOverlap(AActor* OtherActor) override;
+	void OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, 
+					  UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
 	UFUNCTION(BlueprintCallable)
 	void Color(float intensity, float Vignette);
+
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float increment = 0.01;

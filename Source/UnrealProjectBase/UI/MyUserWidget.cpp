@@ -7,6 +7,7 @@
 #include "Engine/Scene.h"
 #include "FMODBlueprintStatics.h"
 #include "PlayerHud.h"
+#include "UnrealProjectBase/PlayerComponent/PlayerVision.h"
 
 void UMyUserWidget::NativeConstruct()
 {
@@ -14,29 +15,7 @@ void UMyUserWidget::NativeConstruct()
 
 	bIsFocusable = true;
 
-	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
-	{
-		AActor* Actor = *ActorItr;
-		
-		if (Actor->Tags.Contains("Sane"))
-		{
-			SaneActors.Add(Actor);
-		}
-		if (Actor->Tags.Contains("Sweet"))
-		{
-			SweetActors.Add(Actor);
-		}
-	}
-
-	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
-	{
-		AActor* Actor = *ActorItr;
-		
-		if (Actor->Tags.Contains("Spawn"))
-		{
-			spawnPoint = Actor;
-		}
-	}
+	StartLoop();
 }
 
 void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
@@ -45,12 +24,13 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 	
 	if(currentMadnessBarValue <= sweatSpot) // sane 
 	{
-		if (mvalue != "sane")
+		if (CurrentState != ECurrentState::Sane)
 		{
+			// change camera settings and matreial
 			ChangeCameraSettings(0.0, 0.4);
 			chromaticAberrationIntensity = 0;
 			vignetteIntensity = 0.4;
-					
+			
 			ChangeCameraMaterial(0.0f);
 			matIntensity = 0;
 
@@ -64,7 +44,7 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			{
 				Actor->SetActorEnableCollision(false);
 			}
-			mvalue = "sane";
+			CurrentState = ECurrentState::Sane;
 			
 			// set text 
 			if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
@@ -79,21 +59,23 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 	}
 	else if(currentMadnessBarValue >= 1) // dead 
 	{
-		if (mvalue != "dead")
+		if (CurrentState != ECurrentState::Dead)
 		{
+			// reset the player
 			isDying = true;
 			GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &UMyUserWidget::Dying, 0.1, isDying);
-			mvalue = "dead";
+			CurrentState = ECurrentState::Dead;
 		}
 	}
 	else if(currentMadnessBarValue >= mad) // mad
 	{
-		if (mvalue != "mad")
+		if (CurrentState != ECurrentState::Mad)
 		{
+			// change camera settings and material
 			ChangeCameraSettings(10.0, 1.5);
-			//vignetteIntensity = 1.5;
 			chromaticAberrationIntensity = 10;
-					
+			vignetteIntensity = 1.5;
+			
 			ChangeCameraMaterial(0.0f);
 			matIntensity = 0;
 
@@ -106,7 +88,7 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 					PlayerHud->SetText("");  
 				}
 			}
-			mvalue = "mad";
+			CurrentState = ECurrentState::Mad;
 			
 
 			// show actor
@@ -122,13 +104,14 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 		}
 	}
 	else // sweat spot
-	{//colorIntensity
-		if (mvalue != "sweat")
+	{
+		if (CurrentState != ECurrentState::SweetSpot)
 		{
 			if (isInRoom)
 			{
 				ChangeCameraSettings(0.0, 1);
 				chromaticAberrationIntensity = 0;
+				vignetteIntensity = 0.4;
 			}
 			else
 			{
@@ -138,7 +121,7 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			}
 			
 			// check if player can focus in an object
-			// if there is no object to focus dont show text
+			// if there is no object to focus don't show text
 			for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
 			{
 				AActor* Actor = *ActorItr;
@@ -163,7 +146,7 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			}
 			
 			// hide actor
-			if (mvalue == "mad")
+			if (CurrentState == ECurrentState::Mad)
 			{
 				Fade(0, 1, 0.1, 0);
 			}
@@ -180,7 +163,7 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 				Actor->SetActorEnableCollision(true);
 			}
 			
-			mvalue = "sweat";
+			CurrentState = ECurrentState::SweetSpot;
 		}
 	}
 }
@@ -244,6 +227,29 @@ void UMyUserWidget::ChangeCameraMaterial(float intensity)
 	}
 }
 
+void UMyUserWidget::CheckForSubLevel(TSoftObjectPtr<UWorld> unloadedSubLevel)
+{
+	// loop until the level is unloaded to set the SweetSpotActors
+	GetWorld()->GetTimerManager().SetTimer(TimerHandleLevel, [this, unloadedSubLevel]()
+	{
+		if (!unloadedSubLevel.IsValid())
+		{
+			StartLoop();
+
+			// set the array for tentacle and eyes
+			if (TObjectPtr<APlayerController> PlayerController = GetWorld()->GetFirstPlayerController())
+			{
+				if (UPlayerVision* playerVision = PlayerController->GetPawn()->FindComponentByClass<UPlayerVision>())
+				{
+					playerVision->SetActorArray();		
+				}
+			}
+			
+			GetWorld()->GetTimerManager().ClearTimer(TimerHandleLevel);
+		}
+	}, 0.2f, true);
+}
+
 float UMyUserWidget::GetSweatSpotValue()
 {
 	return sweatSpot;
@@ -261,6 +267,10 @@ float UMyUserWidget::GetCurrentValue()
 
 void UMyUserWidget::SetIncreaseMadness(float value)
 {
+	if (value > 0)
+	{
+		roomMadnessDamage = value;
+	}
 	increaseMadness = value;
 }
 
@@ -280,10 +290,11 @@ void UMyUserWidget::DecreaseMadness(float value)
 
 void UMyUserWidget::IncreaseMadnessBar(float value)
 {
-	currentMadnessBarValue += value;
+	if (isImmune == false)
+	{
+		currentMadnessBarValue += value;
+	}
 }
-
-
 
 void UMyUserWidget::Fade_Implementation(float saneTime, float saneStartValue, float sweetTime, float sweetStartValue)
 {
@@ -308,7 +319,10 @@ void UMyUserWidget::Dead()
 	{
 		if (APawn* Player = PlayerController->GetPawn())
 		{
-			Player->SetActorLocation(spawnPoint->GetActorLocation());
+			if (spawnPoint)
+			{
+				Player->SetActorLocation(spawnPoint->GetActorLocation());
+			}
 						
 			if (FullyMadSFX)
 			{
@@ -316,5 +330,32 @@ void UMyUserWidget::Dead()
 			}
 		}
 		currentMadnessBarValue = 0;
+	}
+}
+
+void UMyUserWidget::StartLoop()
+{
+	CurrentState = ECurrentState::Dead;
+	SaneActors.Empty();
+	SweetActors.Empty();
+	spawnPoint = nullptr;
+	
+	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+	{
+		AActor* Actor = *ActorItr;
+
+		
+		if (Actor->Tags.Contains("Sane"))
+		{
+			SaneActors.Add(Actor);
+		}
+		if (Actor->Tags.Contains("Sweet"))
+		{
+			SweetActors.Add(Actor);
+		}
+		if (Actor->Tags.Contains("Spawn"))
+		{
+			spawnPoint = Actor;
+		}
 	}
 }

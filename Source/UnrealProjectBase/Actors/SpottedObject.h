@@ -7,7 +7,9 @@
 #include "SpottedObject.generated.h"
 
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+class UMyUserWidget;
+
+UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent), Blueprintable)
 class UNREALPROJECTBASE_API USpottedObject : public UActorComponent
 {
 	GENERATED_BODY()
@@ -16,23 +18,44 @@ public:
 	// Sets default values for this component's properties
 	USpottedObject();
 
-	bool isFading = false;
-
-	bool spotted = false;
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool isClosingAnim = false;
+	
+	UPROPERTY()
+	TObjectPtr<UMyUserWidget> widget;
+
+	UPROPERTY()
+	FTransform startTransform;
+
+	UPROPERTY()
+	int count = 0;
+
+	FTimerHandle TimerHandle;
+	
 public:	
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void FadeAway();
+	virtual void FadeAway_Implementation();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void ResetPosition();
+	virtual void ResetPosition_Implementation();
+	
+	UFUNCTION()
+	void IncreaseMadness();
+
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Property")
+	float speed = 5.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Property")
-	float speed = 1.0f;
+	float increaseMadnessAmount = 0.004;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Property")
-	float increaseMadness = 0.1;
+	UPROPERTY(EditAnywhere, Category = "Property")
+	int focusedLookTicks = 20;
 };

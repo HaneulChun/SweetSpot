@@ -33,13 +33,13 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TObjectPtr<AMyTeleport> Teleport;
 	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly ,Category = "Parts")
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite ,Category = "Parts")
 	UChildActorComponent* Switch;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly ,Category = "Parts")
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite ,Category = "Parts")
 	UChildActorComponent* Button;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly ,Category = "Parts")
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite ,Category = "Parts")
 	UChildActorComponent* Cranck;
 	
 	UFUNCTION(BlueprintCallable)
@@ -48,6 +48,20 @@ public:
 	UFUNCTION()
 	void ShowElevatorPart(UChildActorComponent* Part);
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UFMODEvent* FixElevatorSFX;
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void Exit();
+	virtual void Exit_Implementation();
+	
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool TurnOnSwitch = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool TurnOnButton = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool TurnOnCranck = false;
 };
