@@ -257,6 +257,7 @@ void UPlayerVision::LookForBigEye()
 
 void UPlayerVision::SetActorArray()
 {
+	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, "SetActorArray");
 	tenticalArray.Empty();
 	tenticalMeshArray.Empty();
 	eyeArray.Empty();

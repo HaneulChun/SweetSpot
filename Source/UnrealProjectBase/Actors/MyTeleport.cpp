@@ -89,6 +89,8 @@ void AMyTeleport::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 
 void AMyTeleport::LoadSubLevel_Implementation()
 {
+	LoadSubLevel();
+	
 	// loop until the loop is loaded to spawn the player
 	GetWorld()->GetTimerManager().SetTimer(TimerHandleLevel, [this]()
 	{
@@ -97,15 +99,10 @@ void AMyTeleport::LoadSubLevel_Implementation()
 			Teleport(Player, NextTeleportTo->GetComponentTransform());
 			GetWorld()->GetTimerManager().ClearTimer(TimerHandleLevel);
 
-			// set the array for tentacle and eyes
-			playerVision->SetActorArray();
-
 			//unload current level
 			unLoadSubLevel();
 		}
 	}, 0.1f, true);
-
-	LoadSubLevel();
 }
 
 void AMyTeleport::unLoadSubLevel_Implementation()
