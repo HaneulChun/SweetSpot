@@ -111,7 +111,7 @@ void AMyTeleport::unLoadSubLevel_Implementation()
 
 void AMyTeleport::SetActors()
 {
-	for (AActor* objects : Actors)
+	for (TObjectPtr<AActor> objects : Actors)
 	{
 		if (objects)
 		{
