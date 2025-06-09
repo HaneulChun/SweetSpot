@@ -33,6 +33,7 @@ void USpottedObject::BeginPlay()
 });
 }
 
+// make object fade into wall/floor
 void USpottedObject::FadeAway_Implementation()
 {
 	FadeAway();

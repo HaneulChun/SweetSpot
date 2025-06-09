@@ -43,5 +43,4 @@ public:
 
 	UPROPERTY(BlueprintReadWrite)
 	TObjectPtr<UArrowComponent> Arrow;
-
 };

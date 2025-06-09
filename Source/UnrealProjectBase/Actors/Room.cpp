@@ -140,4 +140,3 @@ void ARoom::Color(float intensity, float Vignette)
 		}
 	}
 }
-

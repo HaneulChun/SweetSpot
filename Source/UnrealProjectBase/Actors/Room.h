@@ -45,6 +45,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void Color(float intensity, float Vignette);
+
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float increment = 0.01;
