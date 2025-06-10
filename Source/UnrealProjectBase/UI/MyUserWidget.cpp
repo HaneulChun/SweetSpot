@@ -61,11 +61,17 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			Fade(-0.1, 1, -0.1, 1);
 			for (AActor* Actor : SaneActors)
 			{
-				Actor->SetActorEnableCollision(false);
+				if (IsValid(Actor))
+				{
+					Actor->SetActorEnableCollision(false);
+				}
 			}
 			for (AActor* Actor : SweetActors)
 			{
-				Actor->SetActorEnableCollision(false);
+				if (IsValid(Actor))
+				{
+					Actor->SetActorEnableCollision(false);
+				}
 			}
 			CurrentState = ECurrentState::Sane;
 			
@@ -104,11 +110,17 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			Fade(0, 1, -0.1, 1);
 			for (AActor* Actor : SaneActors)
 			{
-				Actor->SetActorEnableCollision(true);
+				if (IsValid(Actor))
+				{
+					Actor->SetActorEnableCollision(true);
+				}
 			}
 			for (AActor* Actor : SweetActors)
 			{
-				Actor->SetActorEnableCollision(false);
+				if (IsValid(Actor))
+				{
+					Actor->SetActorEnableCollision(false);
+				}
 			}
 		}
 	}
@@ -158,11 +170,17 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			}
 			for (AActor* Actor : SaneActors)
 			{
-				Actor->SetActorEnableCollision(true);
+				if (IsValid(Actor))
+				{
+					Actor->SetActorEnableCollision(true);
+				}
 			}
 			for (AActor* Actor : SweetActors)
 			{
-				Actor->SetActorEnableCollision(true);
+				if (IsValid(Actor))
+				{
+					Actor->SetActorEnableCollision(true);
+				}
 			}
 			
 			CurrentState = ECurrentState::SweetSpot;
