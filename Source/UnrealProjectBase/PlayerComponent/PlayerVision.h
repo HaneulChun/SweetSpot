@@ -57,24 +57,13 @@ protected:
 	UPROPERTY(BlueprintReadOnly)
 	UCameraComponent* PlayerCamera;
 
-
-	// Interval for checking object
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float tenticalCheckInterval = .5f;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float eyeCheckInterval = .1f;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float bigEyeCheckInterval = .1f;
-
 	
 	UFUNCTION()
-	float DotProduct(FVector TargetVector);
+	float DotProduct(const FVector &TargetVector);
 public:	
 
 	UFUNCTION()
-	void LookForTenticalWall();
+	void LookForTentacleWall();
 	
 	UFUNCTION()
 	void LookForEye();
@@ -93,4 +82,15 @@ public:
 	TObjectPtr<APawn> PlayerPawn;
 
 	FVector PlayerLocation;
+
+
+	// Interval for checking object
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float tenticalCheckInterval = .1f;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float eyeCheckInterval = .1f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float bigEyeCheckInterval = .1f;
 };

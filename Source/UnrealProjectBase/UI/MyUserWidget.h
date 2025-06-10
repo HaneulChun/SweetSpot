@@ -7,6 +7,7 @@
 #include "FMODEvent.h"
 #include "MyUserWidget.generated.h"
 
+class UCameraComponent;
 /**
  * 
  */
@@ -31,35 +32,43 @@ protected:
 
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 
+	// cache
 	FTimerHandle TimerHandle;
 	bool isDying = false;
 	int dyingCount = 0;
 
 	UPROPERTY(BlueprintReadOnly)
-	TArray<AActor*> SaneActors;
+	TArray<TObjectPtr<AActor>> SaneActors;
 
 	UPROPERTY(BlueprintReadOnly)
-	TArray<AActor*> SweetActors;
+	TArray<TObjectPtr<AActor>> SweetActors;
 
 	UPROPERTY()
-	AActor* spawnPoint;
+	TObjectPtr<AActor> spawnPoint;
 
+	UPROPERTY()
+	TObjectPtr<UCameraComponent> playerCamera;
+
+	UPROPERTY()
+	TObjectPtr<APawn> Player;
+
+	
 	UPROPERTY()
 	TSoftObjectPtr<UWorld> checkUnloadedLevel;
 public:
+	UPROPERTY(BlueprintReadOnly)
 	ECurrentState CurrentState = ECurrentState::SweetSpot;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
-	TSubclassOf<APlayerHud> PlayerHudClass;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
-	TSubclassOf<UUserWidget> WidgetClass;
 
 	UPROPERTY(BlueprintReadWrite, Category = "UI")
-	UUserWidget* CurrentWidget;
+	TObjectPtr<APlayerHud> playerHud;
+	
+	UPROPERTY(BlueprintReadWrite, Category = "UI")
+	TObjectPtr<UUserWidget> CurrentWidget;
+
 	
 	UPROPERTY(EditAnywhere, BluePrintReadWrite, Category = "Material")
-	TArray<UMaterialInterface*> Material;
+	TArray<TObjectPtr<UMaterialInterface>> Material;
 
 	UFUNCTION(BlueprintCallable, Category = "Material")
 	void SetMaterial(TArray<UMaterialInterface*> Mat);
@@ -80,7 +89,7 @@ public:
 	FTimerHandle TimerHandleLevel;
 	
 	UPROPERTY()
-	UFMODEvent* FullyMadSFX;
+	TObjectPtr<UFMODEvent> FullyMadSFX;
 	
 
 	UFUNCTION(BlueprintCallable)
@@ -97,18 +106,6 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "UI")
 	void DecreaseMadness(float value);
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float currentMadnessBarValue = 0.0;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float increaseMadness = 0.0;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float sweatSpot = 0;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float mad = 0;
 	
 	UFUNCTION(BlueprintCallable)
 	void IncreaseMadnessBar(float value);
@@ -152,4 +149,18 @@ public:
 	
 	UPROPERTY(BlueprintReadOnly)
 	bool isImmune = false;
+
+
+	// property
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float currentMadnessBarValue = 0.0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float increaseMadness = 0.0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float sweatSpot = 0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float mad = 0;
 };

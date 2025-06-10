@@ -5,7 +5,7 @@
 			<value>Amplifier_Hum_Fender_Vintage</value>
 		</property>
 		<property name="outputFormat">
-			<value>0</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{5f0e255a-8f4f-42ca-9226-c7d4dbd1b513}</destination>
@@ -59,7 +59,14 @@
 			<destination>{fd354eed-d229-4a55-a0ab-8ed4aa1f6b44}</destination>
 		</relationship>
 	</object>
-	<object class="EventAutomatableProperties" id="{a1675973-35a8-4843-8912-e7c975c70504}" />
+	<object class="EventAutomatableProperties" id="{a1675973-35a8-4843-8912-e7c975c70504}">
+		<property name="minimumDistance">
+			<value>0.900000036</value>
+		</property>
+		<property name="maximumDistance">
+			<value>7</value>
+		</property>
+	</object>
 	<object class="MarkerTrack" id="{2be85d06-79e9-4e53-a4e2-0ad37f413256}" />
 	<object class="Timeline" id="{1c7587e4-4be1-4b31-8b77-f03f8c8a9082}">
 		<property name="isProxyEnabled">
@@ -95,15 +102,38 @@
 	<object class="MixerBusPanner" id="{cae47621-1529-4dd7-a27e-dc5bc70a3a7d}" />
 	<object class="MixerBusEffectChain" id="{74d594c1-cd04-4c39-bb5e-8a19344e479d}">
 		<relationship name="effects">
+			<destination>{41fd1d4e-6e62-4caa-a497-1d75e4dda3ac}</destination>
 			<destination>{f2acbde6-7773-4214-a342-43684a20abfc}</destination>
+			<destination>{5b304ecf-ac09-445c-a4be-f3ce88acded6}</destination>
+			<destination>{ec76e3a7-fd83-440a-afa1-a439ec9d021a}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{df37e60a-5caa-422f-a544-953ae464cd66}" />
 	<object class="SingleSound" id="{74407234-0935-4ecd-8aba-0a1988d59a35}">
+		<property name="looping">
+			<value>true</value>
+		</property>
 		<relationship name="audioFile">
 			<destination>{5d259ef8-cffd-46ae-979e-809d55a85e89}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusFader" id="{012865f1-f727-4f5b-86db-945fc892b9c8}" />
+	<object class="SpatialiserEffect" id="{41fd1d4e-6e62-4caa-a497-1d75e4dda3ac}" />
 	<object class="MixerBusFader" id="{f2acbde6-7773-4214-a342-43684a20abfc}" />
+	<object class="LowpassEffect" id="{5b304ecf-ac09-445c-a4be-f3ce88acded6}">
+		<property name="cutoff">
+			<value>220</value>
+		</property>
+	</object>
+	<object class="FlangerEffect" id="{ec76e3a7-fd83-440a-afa1-a439ec9d021a}">
+		<property name="rate">
+			<value>3.5</value>
+		</property>
+		<property name="delay">
+			<value>0.299999982</value>
+		</property>
+		<property name="mix">
+			<value>33</value>
+		</property>
+	</object>
 </objects>
