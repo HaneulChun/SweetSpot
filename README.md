@@ -45,26 +45,26 @@ NormalDX [RGB] ( BC5 )
 ### ---------------------------------------------------------------
 
 Sweet Spot  
-Sweet Spot is a First Person Eye Level, 3D Horror, Puzzle Solving game. You play as a concierge working at a remote hotel that's being haunted by an Eldritch Horror that shows itself via Tentacles and Eyeballs. It has trapped the Player in a Looping Hallway and an Elevator with missing pieces scattered throughout the Levels. The Player has access to a Wrist Watch which checks the time left in the Level and the state of their Madness. The Madness Meter is a Resource with 3 states: Sane, The Sweet Spot and Mad. The Ideal state the Player wants to be in is The Sweet Spot, this state will cause important items key to solving puzzles to glow. Use the Madness Meter to your advantage and solve the puzzles to find the missing elevator pieces and escape the loop.
+Sweet Spot is a 3D, First Person, Puzzle Solving game with Horror Elements. You play as a concierge working in a remote hotel known for its classical aesthetics, things get weird when the Elevator breaks down and its Control Panel pieces go missing. The environment progressively gets more unsettling driving you mad, manage your Madness Meter and stay in the Sweet Spot to see the incomprehensible and find the missing Elevator Pieces to escape.
 
 ### Documentation  
 Google Drive: https://drive.google.com/drive/folders/1iGh71J26g5hfqgEvMaGSsHmyDN9VofN6?usp=sharing
 
 Level Design Factors: https://docs.google.com/document/d/1hXD6std1pi3a1aUoCEsk88-umzxhnqcsFkJGQE6jV9E/edit?tab=t.0
 
-Playtest Form Spreadsheet: https://docs.google.com/spreadsheets/d/11DrYaIR1jehA7rSHKE8nITsrQn_mF4wI-l3fsoDJtas/edit?resourcekey=&gid=1963157713#gid=1963157713
+Playtest Form Spreadsheet: https://docs.google.com/spreadsheets/d/11DrYaIR1jehA7rSHKE8nITsrQn_mF4wI-l3fsoDJtas/edit?resourcekey=&gid=1963157713#gid=1963157713](https://docs.google.com/spreadsheets/d/1Ly6EOHT7N3kgYfrjwPQnzIvG6zQdnk95tuIP7uqlDwg/edit?resourcekey=&gid=340294650#gid=340294650
 
-Playtest Form Google Forms: https://docs.google.com/forms/d/1kY4D8-weO0FFKldytF6hvWVzqHhdKvB0pWe-xeXYvxo/edit?ts=682ba923#responses
+Playtest Form Google Forms: https://docs.google.com/forms/d/1kY4D8-weO0FFKldytF6hvWVzqHhdKvB0pWe-xeXYvxo/edit?ts=682ba923#responses](https://docs.google.com/forms/d/e/1FAIpQLSfpWB7qxcmVBaY5hGQr4RNzGKUmK1E6m6Pxmznvx1XzQ2IEPQ/viewform?usp=sharing&ouid=113901013285546762999
 
 ### Gameplay Controls  
 Action               | Keyboard Control  | Gamepad Control
 ---                  |---                |---
 Move                 | WASD            
 look                 | Mouse Look       
-interact             | E    
+Interact             | E    
 Focus                | C  
 Check Watch          | TAB 
-Use                  | LMB  
+
 
 ### Debug Controls  
 Action               | Keyboard Control
