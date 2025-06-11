@@ -77,6 +77,7 @@ bool UPlayerInventory::EatChocolate()
 void UPlayerInventory::GetElevatorPart(EElevatorPart newElevatorPart)
 {
 	ElevatorPart = newElevatorPart;
+	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, "ElevatorPart");
 }
 
 void UPlayerInventory::UseElevatorPart()
