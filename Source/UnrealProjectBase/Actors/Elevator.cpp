@@ -126,8 +126,8 @@ void AElevator::FixElevator()
 				default:
 					break;
 				}
-
-				Inventory->ElevatorPart =  EElevatorPart::None;
+				
+				Inventory->GetElevatorPart(EElevatorPart::None);
 			}
 		}
 	}
@@ -155,3 +155,6 @@ void AElevator::Exit_Implementation()
 {
 }
 
+void AElevator::Highlight(EElevatorPart Part)
+{
+}

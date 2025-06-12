@@ -107,7 +107,7 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			CurrentState = ECurrentState::Mad;
 			
 			// show actor
-			Fade(0, 1, -0.1, 1);
+			Fade(0, 1, 0, 1);
 			for (AActor* Actor : SaneActors)
 			{
 				if (IsValid(Actor))
@@ -119,7 +119,7 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			{
 				if (IsValid(Actor))
 				{
-					Actor->SetActorEnableCollision(false);
+					Actor->SetActorEnableCollision(true);
 				}
 			}
 		}
