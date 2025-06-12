@@ -22,7 +22,10 @@ void UPlayerLook::BeginPlay()
 	Super::BeginPlay();
 
 	// ...
-	
+	Camera = Cast<UCameraComponent>(GetOwner()->FindComponentByClass<UCameraComponent>());
+
+	CameraLocation = Camera->GetComponentLocation();
+	CameraForward = Camera->GetForwardVector();
 }
 
 
@@ -34,30 +37,77 @@ void UPlayerLook::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 	// ...
 }
 
-AActor* UPlayerLook::LookAtActor()
+AActor* UPlayerLook::LookAtActor(const TArray<AActor*>& Actors)
 {
-	UCameraComponent* Camera = Cast<UCameraComponent>(GetOwner()->FindComponentByClass<UCameraComponent>());
-
-	if (Camera)
+	// check if there is interactable actors
+	if (!Camera || Actors.Num() == 0)
 	{
-		FVector Start = Camera->GetComponentLocation();
-		FVector End = Start + Camera->GetForwardVector() * 200.0f;
+		return nullptr;
+	}
 
-		FHitResult HitResult;
-		FCollisionQueryParams Params(SCENE_QUERY_STAT(MyTrace), true);
+	CameraLocation = Camera->GetComponentLocation();
+	CameraForward = Camera->GetForwardVector();
 
-		// ray traceing
-		if (GetWorld()->LineTraceSingleByChannel(HitResult, Start, End, ECC_Visibility, Params))
+	BestActor = nullptr;
+	float BestDot = 0.97f;
+
+	// dot product to see witch actor is the best actor
+	for (AActor* Actor : Actors)
+	{
+		if (!Actor) continue;
+
+		FVector DirectionToActor = (Actor->GetActorLocation() - CameraLocation).GetSafeNormal();
+		float Dot = FVector::DotProduct(CameraForward, DirectionToActor);
+
+		if (Dot > BestDot)
 		{
-			// return the actor that was hit
-			TObjectPtr<AActor> HitActor = HitResult.GetActor();
-			if (HitActor)
+			BestDot = Dot;
+			BestActor = Actor;
+		}
+
+	}
+	if (BestActor)
+	{
+		return BestActor;
+	}
+
+	// return early without ray-casting if there is no actor in the pov
+	for (AActor* Actor : Actors)
+	{
+		if (Actor)
+		{
+			FVector Direction = (Actor->GetActorLocation() - CameraLocation).GetSafeNormal();
+			float Dot = FVector::DotProduct(CameraForward, Direction);
+
+			if (Dot > 0)
 			{
-				return HitActor;
+				break;
+			}
+		}
+	}
+	
+	
+	FVector End = CameraLocation + CameraForward * 200.0f;
+
+	FHitResult HitResult;
+	FCollisionQueryParams Params(SCENE_QUERY_STAT(MyTrace), true);
+
+	// ray tracing
+	if (GetWorld()->LineTraceSingleByChannel(HitResult, CameraLocation, End, ECC_Visibility, Params))
+	{
+		if (TObjectPtr<AActor> HitActor = HitResult.GetActor())
+		{
+			for (AActor* Actor : Actors)
+			{
+				if (HitActor == Actor)
+				{
+					// return the actor that was hit
+					return HitActor;
+				}
 			}
 		}
 	}
 	return nullptr;
-
 }
+
 

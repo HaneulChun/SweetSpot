@@ -57,8 +57,11 @@ void ABigEye::FadeAway()
 	else
 	{
 		this->SetActorHiddenInGame(true);
-		MadnessWidget->isImmune = true;
-		GetWorldTimerManager().SetTimer(TimerHandleImmune, this, &ABigEye::RemoveImmunity, 1.0f, false, immunityTime);
+		MadnessWidget->IncreaseMadnessBar(-restoreMadnessValue);
+		
+		// give immune to player madness meter 
+		//MadnessWidget->isImmune = true;
+		//GetWorldTimerManager().SetTimer(TimerHandleImmune, this, &ABigEye::RemoveImmunity, 1.0f, false, immunityTime);
 	}
 }
 
