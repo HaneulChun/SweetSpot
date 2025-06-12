@@ -27,15 +27,15 @@ protected:
 	
 	UPROPERTY()
 	TObjectPtr<UMyUserWidget> widget;
-
-	UPROPERTY()
+	
 	FTransform startTransform;
-
-	UPROPERTY()
 	int count = 0;
 
 	FTimerHandle TimerHandle;
-	
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float restoreMadnessValue = 0.1;
 public:	
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
@@ -45,6 +45,10 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void ResetPosition();
 	virtual void ResetPosition_Implementation();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void LookAtPlayer();
+	virtual void LookAtPlayer_Implementation();
 	
 	UFUNCTION()
 	void IncreaseMadness();
