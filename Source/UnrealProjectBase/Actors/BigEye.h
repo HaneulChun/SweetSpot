@@ -23,15 +23,15 @@ protected:
 	UPROPERTY()
 	TObjectPtr<UMyUserWidget> MadnessWidget;
 	
-	UPROPERTY()
 	FTransform startTransform;
-
-	UPROPERTY()
 	int count = 0;
 
 	FTimerHandle TimerHandle;
 	FTimerHandle TimerHandleImmune;
+
 	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float restoreMadnessValue = 0.1;
 public:	
 
 	UFUNCTION()
