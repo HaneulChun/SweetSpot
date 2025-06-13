@@ -20,7 +20,7 @@ void APlayerHud::BeginPlay()
 		{
 			CurrentWidget->AddToViewport();
 			
-			CurrentWidget->sweatSpot = sweetSpot;
+			CurrentWidget->sweetSpot = sweetSpot;
 			CurrentWidget->mad = mad;
 				
 			CurrentWidget->SetMaterial(Material);
