@@ -40,6 +40,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void FadeAway();
 
+	UFUNCTION(BlueprintImplementableEvent , BlueprintCallable)
+	void LookAtPlayer();
+	
 	UFUNCTION(BlueprintCallable)
 	void ResetPosition();
 
