@@ -23,9 +23,6 @@ protected:
 
 	virtual void DrawHUD() override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
-	UTexture2D* MyTexture;
-
 	bool isShowImage = false;
 public:
 
@@ -35,20 +32,18 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category = "UI")
 	FString GotoText = "";
 	
-	UPROPERTY(BlueprintReadOnly, Category = "UI")
-	FString ChocoleteText = "LMB";
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI", meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<UMyUserWidget> WidgetClass;
 
 	UPROPERTY(BlueprintReadWrite, Category = "UI", meta = (AllowPrivateAccess = "true"))
-	UMyUserWidget* CurrentWidget;
+	TObjectPtr<UMyUserWidget> CurrentWidget;
 	
 	UFUNCTION(BlueprintCallable, Category = "UI")
-	UMyUserWidget* GetWidget() const;
+	UMyUserWidget* GetMadnessMeterWidget() const;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
-	UFMODEvent* FullyMadSFX;
+	TObjectPtr<UFMODEvent> FullyMadSFX;
 	
 
 	UPROPERTY(EditAnywhere, BluePrintReadWrite)
@@ -65,7 +60,4 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetText(FString setText);
-
-	UFUNCTION(BlueprintCallable)
-	void SetTextLMB(bool img);
 };
