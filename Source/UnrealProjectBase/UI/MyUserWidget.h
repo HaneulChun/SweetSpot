@@ -93,7 +93,7 @@ public:
 	
 
 	UFUNCTION(BlueprintCallable)
-	float GetSweatSpotValue();
+	float GetSweetSpotValue();
 
 	UFUNCTION(BlueprintCallable)
 	float GetMadValue();
@@ -147,7 +147,7 @@ public:
 	UPROPERTY()
 	bool isInLight = false;
 	
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadWrite)
 	bool isImmune = false;
 
 
@@ -159,7 +159,7 @@ public:
 	float increaseMadness = 0.0;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float sweatSpot = 0;
+	float sweetSpot = 0;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float mad = 0;
