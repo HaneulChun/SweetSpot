@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.03.00">
-	<object class="AudioFile" id="{e098a873-75ea-4731-a906-ad374be6a2b1}">
+	<object class="AudioFile" id="{62cf5dbe-3f91-47ae-9d5b-f78e901a5fb7}">
 		<property name="assetPath">
 			<value>SFX_Teleport.wav</value>
 		</property>
@@ -11,7 +11,7 @@
 			<value>2</value>
 		</property>
 		<property name="length">
-			<value>2.3662585034013603</value>
+			<value>0.99573696145124713</value>
 		</property>
 		<relationship name="masterAssetFolder">
 			<destination>{0007398a-8526-4222-84a0-9fc057cc09e5}</destination>
