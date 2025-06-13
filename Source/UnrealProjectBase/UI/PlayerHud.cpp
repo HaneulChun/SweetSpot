@@ -20,7 +20,7 @@ void APlayerHud::BeginPlay()
 		{
 			CurrentWidget->AddToViewport();
 			
-			CurrentWidget->sweatSpot = sweetSpot;
+			CurrentWidget->sweetSpot = sweetSpot;
 			CurrentWidget->mad = mad;
 				
 			CurrentWidget->SetMaterial(Material);
@@ -47,28 +47,9 @@ void APlayerHud::DrawHUD()
 	
 	Canvas->DrawItem(TextItem);
 	Canvas->DrawItem(TextItemGoto);
-	
-	if (MyTexture && isShowImage)
-	{
-		FVector2D ImageSize(128, 128);
-		FVector2D ImagePosition(Canvas->ClipX - ImageSize.X, Canvas->ClipY - ImageSize.Y);
-	
-		FCanvasTileItem TileItem(ImagePosition, MyTexture->GetResource(), ImageSize, FLinearColor::White);
-		TileItem.BlendMode = SE_BLEND_Translucent;
-		
-		Canvas->DrawItem(TileItem);
-	
-		
-		FVector2D position = ImagePosition - FVector2D(ImageSize.X, -70);
-		
-		FCanvasTextItem LMBText(position, FText::FromString(ChocoleteText), GEngine->GetLargeFont(), FLinearColor::Red);
-		LMBText.Scale = FVector2D(2.5f, 2.5f);
-		
-		Canvas->DrawItem(LMBText);
-	}
 }
 
-UMyUserWidget* APlayerHud::GetWidget() const
+UMyUserWidget* APlayerHud::GetMadnessMeterWidget() const
 {
 	return CurrentWidget;
 }
@@ -82,9 +63,4 @@ void APlayerHud::SetTextTodo(FString setText)
 void APlayerHud::SetText(FString setText)
 {
 	Text = setText;
-}
-
-void APlayerHud::SetTextLMB(bool img)
-{
-	isShowImage = img;
 }

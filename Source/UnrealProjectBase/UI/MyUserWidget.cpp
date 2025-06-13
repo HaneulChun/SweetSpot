@@ -45,7 +45,7 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {
 	Super::NativeTick(MyGeometry, InDeltaTime);
 	
-	if(currentMadnessBarValue <= sweatSpot) // sane 
+	if(currentMadnessBarValue <= sweetSpot) // sane 
 	{
 		if (CurrentState != ECurrentState::Sane)
 		{
@@ -249,9 +249,9 @@ void UMyUserWidget::CheckForSubLevel(TSoftObjectPtr<UWorld> unloadedSubLevel)
 	}, 0.2f, true);
 }
 
-float UMyUserWidget::GetSweatSpotValue()
+float UMyUserWidget::GetSweetSpotValue()
 {
-	return sweatSpot;
+	return sweetSpot;
 }
 
 float UMyUserWidget::GetMadValue()

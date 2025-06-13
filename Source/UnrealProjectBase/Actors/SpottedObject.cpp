@@ -29,7 +29,7 @@ void USpottedObject::BeginPlay()
 	APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
 	APlayerHud* hud = Cast<APlayerHud>(PlayerController->GetHUD());
 
-	widget = Cast<UMyUserWidget>(hud->GetWidget());
+	widget = Cast<UMyUserWidget>(hud->GetMadnessMeterWidget());
 });
 }
 
@@ -52,6 +52,7 @@ void USpottedObject::FadeAway_Implementation()
 	}
 	else
 	{
+		widget->IncreaseMadnessBar(-restoreMadnessValue);
 		GetOwner()->Destroy();
 	}
 }
@@ -65,10 +66,14 @@ void USpottedObject::ResetPosition_Implementation()
 	isClosingAnim = false;
 }
 
+void USpottedObject::LookAtPlayer_Implementation()
+{
+}
+
 void USpottedObject::IncreaseMadness()
 {
 	if (widget)
 	{
 		widget->IncreaseMadnessBar(increaseMadnessAmount);
-	}	
+	}
 }

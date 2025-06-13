@@ -50,7 +50,7 @@ void ARandom_BPM_Numbers::UpdateBPMDisplay()
 
 	// Get madness state values
 	const float Madness = UserWidgetRef->GetCurrentValue();
-	const float Sweat = UserWidgetRef->GetSweatSpotValue();
+	const float Sweat = UserWidgetRef->GetSweetSpotValue();
 	const float Mad = UserWidgetRef->GetMadValue();
 
 	int32 BPM = 0;
