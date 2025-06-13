@@ -27,7 +27,7 @@ void ABigEye::BeginPlay()
 		{
 			TObjectPtr<APlayerHud> hud = Cast<APlayerHud>(PlayerController->GetHUD());
 
-			MadnessWidget = Cast<UMyUserWidget>(hud->GetWidget());
+			MadnessWidget = Cast<UMyUserWidget>(hud->GetMadnessMeterWidget());
 		}
 	});
 }

@@ -29,7 +29,7 @@ void USpottedObject::BeginPlay()
 	APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
 	APlayerHud* hud = Cast<APlayerHud>(PlayerController->GetHUD());
 
-	widget = Cast<UMyUserWidget>(hud->GetWidget());
+	widget = Cast<UMyUserWidget>(hud->GetMadnessMeterWidget());
 });
 }
 

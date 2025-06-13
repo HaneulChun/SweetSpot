@@ -25,24 +25,7 @@ public:
 	// Sets default values for this component's properties
 	UPlayerInventory();
 
-	int currentChocolate = 0;
-protected:
-	// Called when the game starts
-	virtual void BeginPlay() override;
-
 public:	
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
-	UFUNCTION(BlueprintCallable)
-	bool AddChocolate();
-
-	UFUNCTION(BlueprintCallable)
-	bool EatChocolate();
-	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	int maxChocolate = 6;
-
 	UFUNCTION(BlueprintCallable)
 	void GetElevatorPart(EElevatorPart newElevatorPart);
 
