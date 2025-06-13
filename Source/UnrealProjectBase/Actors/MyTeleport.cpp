@@ -49,7 +49,7 @@ void AMyTeleport::BeginPlay()
 		TObjectPtr<APlayerController> PlayerController = GetWorld()->GetFirstPlayerController();
 		TObjectPtr<APlayerHud> hud = Cast<APlayerHud>(PlayerController->GetHUD());
 
-		widget = Cast<UMyUserWidget>(hud->GetWidget());
+		widget = Cast<UMyUserWidget>(hud->GetMadnessMeterWidget());
 
 		playerVision = PlayerController->GetPawn()->FindComponentByClass<UPlayerVision>();
 	});
