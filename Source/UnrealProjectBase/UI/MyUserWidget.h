@@ -7,6 +7,7 @@
 #include "FMODEvent.h"
 #include "MyUserWidget.generated.h"
 
+class UFadeObjectComponent;
 class UCameraComponent;
 /**
  * 
@@ -65,6 +66,8 @@ public:
 	
 	UPROPERTY(BlueprintReadWrite, Category = "UI")
 	TObjectPtr<UUserWidget> CurrentWidget;
+
+	TObjectPtr<UFadeObjectComponent> FadeObject;
 
 	
 	UPROPERTY(EditAnywhere, BluePrintReadWrite, Category = "Material")

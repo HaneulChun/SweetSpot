@@ -7,6 +7,7 @@
 #include "Engine/Scene.h"
 #include "FMODBlueprintStatics.h"
 #include "PlayerHud.h"
+#include "UnrealProjectBase/PlayerComponent/FadeObjectComponent.h"
 #include "UnrealProjectBase/PlayerComponent/PlayerVision.h"
 
 void UMyUserWidget::NativeConstruct()
@@ -14,8 +15,6 @@ void UMyUserWidget::NativeConstruct()
 	Super::NativeConstruct();
 
 	bIsFocusable = true;
-
-	StartLoop();
 	
 	
 	GetWorld()->GetTimerManager().SetTimerForNextTick([this]()
@@ -37,6 +36,8 @@ void UMyUserWidget::NativeConstruct()
 			{
 				Player = t;
 			}
+
+			FadeObject = PlayerController->GetPawn()->FindComponentByClass<UFadeObjectComponent>();
 		}
 	});
 }
@@ -58,7 +59,7 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			matIntensity = 0;
 
 			// hide actor
-			Fade(-0.1, 1, -0.1, 1);
+			FadeObject->Fade(-0.1, 1, -0.1, 1);
 			for (AActor* Actor : SaneActors)
 			{
 				if (IsValid(Actor))
@@ -107,7 +108,7 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			CurrentState = ECurrentState::Mad;
 			
 			// show actor
-			Fade(0, 1, 0, 1);
+			FadeObject->Fade(0, 1, 0, 1);
 			for (AActor* Actor : SaneActors)
 			{
 				if (IsValid(Actor))
@@ -162,11 +163,11 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			// hide actor
 			if (CurrentState == ECurrentState::Mad)
 			{
-				Fade(0, 1, 0.1, 0);
+				FadeObject->Fade(0, 1, 0.1, 0);
 			}
 			else
 			{
-				Fade(0.1, 0, 0.1, 0);
+				FadeObject->Fade(0.1, 0, 0.1, 0);
 			}
 			for (AActor* Actor : SaneActors)
 			{
@@ -233,7 +234,8 @@ void UMyUserWidget::CheckForSubLevel(TSoftObjectPtr<UWorld> unloadedSubLevel)
 	{
 		if (!unloadedSubLevel.IsValid())
 		{
-			StartLoop();
+			FadeObject->StartLoop();
+			//StartLoop();
 
 			// set the array for tentacle and eyes
 			if (TObjectPtr<APlayerController> PlayerController = GetWorld()->GetFirstPlayerController())
@@ -328,6 +330,8 @@ void UMyUserWidget::Dead()
 
 void UMyUserWidget::StartLoop()
 {
+	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, "wrong");
+
 	CurrentState = ECurrentState::Dead;
 	SaneActors.Empty();
 	SweetActors.Empty();
