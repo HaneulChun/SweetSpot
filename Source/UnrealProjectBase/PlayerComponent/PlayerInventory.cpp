@@ -14,66 +14,6 @@ UPlayerInventory::UPlayerInventory()
 	// ...
 }
 
-
-// Called when the game starts
-void UPlayerInventory::BeginPlay()
-{
-	Super::BeginPlay();
-
-	// ...
-	
-}
-
-
-// Called every frame
-void UPlayerInventory::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
-}
-
-bool UPlayerInventory::AddChocolate()
-{
-	if (currentChocolate < 6)
-	{
-		currentChocolate++;
-
-		// show LMB text
-		if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
-		{
-			if (APlayerHud* PlayerHud = Cast<APlayerHud>(PlayerController->GetHUD()))
-			{
-				PlayerHud->SetTextLMB(true);
-			}
-		}
-		return true;
-	}
-	return false;
-}
-
-bool UPlayerInventory::EatChocolate()
-{
-	if (currentChocolate <= 1)
-	{
-		// remove LMB text
-		if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
-		{
-			if (APlayerHud* PlayerHud = Cast<APlayerHud>(PlayerController->GetHUD()))
-			{
-				PlayerHud->SetTextLMB(false);
-			}
-		}
-	}
-	if (currentChocolate > 0)
-	{
-		currentChocolate--;
-		
-		return true;
-	}
-	return false;
-}
-
 void UPlayerInventory::GetElevatorPart(EElevatorPart newElevatorPart)
 {
 	ElevatorPart = newElevatorPart;
