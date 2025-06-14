@@ -22,15 +22,15 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 	
+
+	TObjectPtr<UMyUserWidget> widget;
+public:	
 	UPROPERTY(BlueprintReadOnly)
 	TArray<TObjectPtr<AActor>> SaneActors;
 	UPROPERTY(BlueprintReadOnly)
 	TArray<TObjectPtr<AActor>> SweetActors;
 	UPROPERTY()
 	TObjectPtr<AActor> spawnPoint;
-
-	TObjectPtr<UMyUserWidget> widget;
-public:	
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void Fade(float saneTime, float saneStartValue, float sweetTime, float sweetStartValue);

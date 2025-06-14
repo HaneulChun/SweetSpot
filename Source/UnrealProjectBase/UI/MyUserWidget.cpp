@@ -60,14 +60,14 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 
 			// hide actor
 			FadeObject->Fade(-0.1, 1, -0.1, 1);
-			for (AActor* Actor : SaneActors)
+			for (AActor* Actor : FadeObject->SaneActors)
 			{
 				if (IsValid(Actor))
 				{
 					Actor->SetActorEnableCollision(false);
 				}
 			}
-			for (AActor* Actor : SweetActors)
+			for (AActor* Actor : FadeObject->SweetActors)
 			{
 				if (IsValid(Actor))
 				{
@@ -109,14 +109,14 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			
 			// show actor
 			FadeObject->Fade(0, 1, 0, 1);
-			for (AActor* Actor : SaneActors)
+			for (AActor* Actor : FadeObject->SaneActors)
 			{
 				if (IsValid(Actor))
 				{
 					Actor->SetActorEnableCollision(true);
 				}
 			}
-			for (AActor* Actor : SweetActors)
+			for (AActor* Actor : FadeObject->SweetActors)
 			{
 				if (IsValid(Actor))
 				{
@@ -169,14 +169,14 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			{
 				FadeObject->Fade(0.1, 0, 0.1, 0);
 			}
-			for (AActor* Actor : SaneActors)
+			for (AActor* Actor : FadeObject->SaneActors)
 			{
 				if (IsValid(Actor))
 				{
 					Actor->SetActorEnableCollision(true);
 				}
 			}
-			for (AActor* Actor : SweetActors)
+			for (AActor* Actor : FadeObject->SweetActors)
 			{
 				if (IsValid(Actor))
 				{
@@ -297,9 +297,7 @@ void UMyUserWidget::IncreaseMadnessBar(float value)
 	}
 }
 
-void UMyUserWidget::Fade_Implementation(float saneTime, float saneStartValue, float sweetTime, float sweetStartValue)
-{
-}
+
 
 void UMyUserWidget::Dying()
 {
@@ -316,9 +314,9 @@ void UMyUserWidget::Dying()
 void UMyUserWidget::Dead()
 {
 	// find object with spawn tag and teleport to spawn
-	if (spawnPoint)
+	if (FadeObject->spawnPoint)
 	{
-		Player->SetActorLocation(spawnPoint->GetActorLocation());
+		Player->SetActorLocation(FadeObject->spawnPoint->GetActorLocation());
 	}
 						
 	if (FullyMadSFX)
@@ -328,31 +326,3 @@ void UMyUserWidget::Dead()
 	currentMadnessBarValue = 0;
 }
 
-void UMyUserWidget::StartLoop()
-{
-	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, "wrong");
-
-	CurrentState = ECurrentState::Dead;
-	SaneActors.Empty();
-	SweetActors.Empty();
-	spawnPoint = nullptr;
-	
-	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
-	{
-		TObjectPtr<AActor> Actor = *ActorItr;
-
-		
-		if (Actor->Tags.Contains("Sane"))
-		{
-			SaneActors.Add(Actor);
-		}
-		else if (Actor->Tags.Contains("Sweet"))
-		{
-			SweetActors.Add(Actor);
-		}
-		else if (Actor->Tags.Contains("Spawn"))
-		{
-			spawnPoint = Actor;
-		}
-	}
-}

@@ -38,7 +38,6 @@ void UFadeObjectComponent::BeginPlay()
 
 void UFadeObjectComponent::StartLoop()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, "Start");
 	widget->CurrentState = ECurrentState::Dead;
 	SaneActors.Empty();
 	SweetActors.Empty();
@@ -47,7 +46,6 @@ void UFadeObjectComponent::StartLoop()
 	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
 	{
 		TObjectPtr<AActor> Actor = *ActorItr;
-
 		
 		if (Actor->Tags.Contains("Sane"))
 		{

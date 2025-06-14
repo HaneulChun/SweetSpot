@@ -38,14 +38,6 @@ protected:
 	bool isDying = false;
 	int dyingCount = 0;
 
-	UPROPERTY(BlueprintReadOnly)
-	TArray<TObjectPtr<AActor>> SaneActors;
-
-	UPROPERTY(BlueprintReadOnly)
-	TArray<TObjectPtr<AActor>> SweetActors;
-
-	UPROPERTY()
-	TObjectPtr<AActor> spawnPoint;
 
 	UPROPERTY()
 	TObjectPtr<UCameraComponent> playerCamera;
@@ -112,11 +104,6 @@ public:
 	
 	UFUNCTION(BlueprintCallable)
 	void IncreaseMadnessBar(float value);
-	
-
-	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
-	void Fade(float saneTime, float saneStartValue, float sweetTime, float sweetStartValue);
-	virtual void Fade_Implementation(float saneTime, float saneStartValue, float sweetTime, float sweetStartValue);
 
 	
 	UFUNCTION(BlueprintCallable)
@@ -124,9 +111,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void Dead();
-
-	UFUNCTION(BlueprintCallable)
-	void StartLoop();
+	
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float chromaticAberrationIntensity;
