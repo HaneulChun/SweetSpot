@@ -61,25 +61,22 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			matIntensity = 0;
 
 			// hide actor
-			GetWorld()->GetTimerManager().SetTimerForNextTick([this]()
+			FadeObject->Fade(-0.1, 1, -0.1, 1);
+			for (AActor* Actor : FadeObject->SaneActors)
 			{
-				FadeObject->Fade(-0.1, 1, -0.1, 1);
-				for (AActor* Actor : FadeObject->SaneActors)
+				if (IsValid(Actor))
 				{
-					if (IsValid(Actor))
-					{
-						Actor->SetActorEnableCollision(false);
-					}
+					Actor->SetActorEnableCollision(false);
 				}
-				for (AActor* Actor : FadeObject->SweetActors)
+			}
+			for (AActor* Actor : FadeObject->SweetActors)
+			{
+				if (IsValid(Actor))
 				{
-					if (IsValid(Actor))
-					{
-						Actor->SetActorEnableCollision(false);
-					}
+					Actor->SetActorEnableCollision(false);
 				}
-				CurrentState = ECurrentState::Sane;
-			});
+			}
+			CurrentState = ECurrentState::Sane;
 			
 			// set text 
 			playerHud->SetText("");  
@@ -240,7 +237,6 @@ void UMyUserWidget::CheckForSubLevel(TSoftObjectPtr<UWorld> unloadedSubLevel)
 		if (!unloadedSubLevel.IsValid())
 		{
 			FadeObject->StartLoop();
-			//StartLoop();
 
 			// set the array for tentacle and eyes
 			if (TObjectPtr<APlayerController> PlayerController = GetWorld()->GetFirstPlayerController())
