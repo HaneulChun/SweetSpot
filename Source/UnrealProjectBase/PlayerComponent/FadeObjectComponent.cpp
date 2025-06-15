@@ -31,8 +31,8 @@ void UFadeObjectComponent::BeginPlay()
 
 		widget = Cast<UMyUserWidget>(hud->GetMadnessMeterWidget());
 
+		StartLoop();
 	});
-	StartLoop();
 }
 
 

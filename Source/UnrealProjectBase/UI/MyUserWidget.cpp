@@ -15,7 +15,22 @@ void UMyUserWidget::NativeConstruct()
 	Super::NativeConstruct();
 
 	bIsFocusable = true;
-	
+
+	if (TObjectPtr<APlayerController> PlayerController = GetWorld()->GetFirstPlayerController())
+	{
+		// point at the player's camera
+		if (TObjectPtr<UCameraComponent> Camera = PlayerController->PlayerCameraManager->GetOwningPlayerController()->PlayerCameraManager->ViewTarget.Target->FindComponentByClass<UCameraComponent>())
+		{
+			playerCamera = Camera;
+		}
+
+		if (TObjectPtr<APawn> t = PlayerController->GetPawn())
+		{
+			Player = t;
+		}
+
+		FadeObject = PlayerController->GetPawn()->FindComponentByClass<UFadeObjectComponent>();
+	}
 	
 	GetWorld()->GetTimerManager().SetTimerForNextTick([this]()
 	{
@@ -25,19 +40,6 @@ void UMyUserWidget::NativeConstruct()
 			{
 				playerHud = PlayerHud;  
 			}
-
-			// point at the player's camera
-			if (TObjectPtr<UCameraComponent> Camera = PlayerController->PlayerCameraManager->GetOwningPlayerController()->PlayerCameraManager->ViewTarget.Target->FindComponentByClass<UCameraComponent>())
-			{
-				playerCamera = Camera;
-			}
-
-			if (TObjectPtr<APawn> t = PlayerController->GetPawn())
-			{
-				Player = t;
-			}
-
-			FadeObject = PlayerController->GetPawn()->FindComponentByClass<UFadeObjectComponent>();
 		}
 	});
 }
@@ -59,22 +61,25 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			matIntensity = 0;
 
 			// hide actor
-			FadeObject->Fade(-0.1, 1, -0.1, 1);
-			for (AActor* Actor : FadeObject->SaneActors)
+			GetWorld()->GetTimerManager().SetTimerForNextTick([this]()
 			{
-				if (IsValid(Actor))
+				FadeObject->Fade(-0.1, 1, -0.1, 1);
+				for (AActor* Actor : FadeObject->SaneActors)
 				{
-					Actor->SetActorEnableCollision(false);
+					if (IsValid(Actor))
+					{
+						Actor->SetActorEnableCollision(false);
+					}
 				}
-			}
-			for (AActor* Actor : FadeObject->SweetActors)
-			{
-				if (IsValid(Actor))
+				for (AActor* Actor : FadeObject->SweetActors)
 				{
-					Actor->SetActorEnableCollision(false);
+					if (IsValid(Actor))
+					{
+						Actor->SetActorEnableCollision(false);
+					}
 				}
-			}
-			CurrentState = ECurrentState::Sane;
+				CurrentState = ECurrentState::Sane;
+			});
 			
 			// set text 
 			playerHud->SetText("");  
