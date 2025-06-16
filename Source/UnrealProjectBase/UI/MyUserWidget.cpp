@@ -7,6 +7,7 @@
 #include "Engine/Scene.h"
 #include "FMODBlueprintStatics.h"
 #include "PlayerHud.h"
+#include "UnrealProjectBase/PlayerComponent/FadeObjectComponent.h"
 #include "UnrealProjectBase/PlayerComponent/PlayerVision.h"
 
 void UMyUserWidget::NativeConstruct()
@@ -15,8 +16,21 @@ void UMyUserWidget::NativeConstruct()
 
 	bIsFocusable = true;
 
-	StartLoop();
-	
+	if (TObjectPtr<APlayerController> PlayerController = GetWorld()->GetFirstPlayerController())
+	{
+		// point at the player's camera
+		if (TObjectPtr<UCameraComponent> Camera = PlayerController->PlayerCameraManager->GetOwningPlayerController()->PlayerCameraManager->ViewTarget.Target->FindComponentByClass<UCameraComponent>())
+		{
+			playerCamera = Camera;
+		}
+
+		if (TObjectPtr<APawn> t = PlayerController->GetPawn())
+		{
+			Player = t;
+		}
+
+		FadeObject = PlayerController->GetPawn()->FindComponentByClass<UFadeObjectComponent>();
+	}
 	
 	GetWorld()->GetTimerManager().SetTimerForNextTick([this]()
 	{
@@ -25,17 +39,6 @@ void UMyUserWidget::NativeConstruct()
 			if (TObjectPtr<APlayerHud> PlayerHud = Cast<APlayerHud>(PlayerController->GetHUD()))
 			{
 				playerHud = PlayerHud;  
-			}
-
-			// point at the player's camera
-			if (TObjectPtr<UCameraComponent> Camera = PlayerController->PlayerCameraManager->GetOwningPlayerController()->PlayerCameraManager->ViewTarget.Target->FindComponentByClass<UCameraComponent>())
-			{
-				playerCamera = Camera;
-			}
-
-			if (TObjectPtr<APawn> t = PlayerController->GetPawn())
-			{
-				Player = t;
 			}
 		}
 	});
@@ -58,25 +61,9 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			matIntensity = 0;
 
 			// hide actor
-			Fade(-0.1, 1, -0.1, 1);
-			for (AActor* Actor : SaneActors)
-			{
-				if (IsValid(Actor))
-				{
-					Actor->SetActorEnableCollision(false);
-				}
-			}
-			for (AActor* Actor : SweetActors)
-			{
-				if (IsValid(Actor))
-				{
-					Actor->SetActorEnableCollision(false);
-				}
-			}
-			CurrentState = ECurrentState::Sane;
+			FadeObject->Fade(-0.1, 1, -0.1, 1);
 			
-			// set text 
-			playerHud->SetText("");  
+			CurrentState = ECurrentState::Sane;
 		}
 	}
 	else if(currentMadnessBarValue >= 1) // dead 
@@ -103,25 +90,11 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 
 			// set text
 			playerHud->SetText("");  
-
-			CurrentState = ECurrentState::Mad;
 			
 			// show actor
-			Fade(0, 1, 0, 1);
-			for (AActor* Actor : SaneActors)
-			{
-				if (IsValid(Actor))
-				{
-					Actor->SetActorEnableCollision(true);
-				}
-			}
-			for (AActor* Actor : SweetActors)
-			{
-				if (IsValid(Actor))
-				{
-					Actor->SetActorEnableCollision(true);
-				}
-			}
+			FadeObject->Fade(0, 1, 0, 1);
+			
+			CurrentState = ECurrentState::Mad;
 		}
 	}
 	else // sweat spot
@@ -162,27 +135,13 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			// hide actor
 			if (CurrentState == ECurrentState::Mad)
 			{
-				Fade(0, 1, 0.1, 0);
+				FadeObject->Fade(0, 1, 0.1, 0);
 			}
 			else
 			{
-				Fade(0.1, 0, 0.1, 0);
+				FadeObject->Fade(0.1, 0, 0.1, 0);
 			}
-			for (AActor* Actor : SaneActors)
-			{
-				if (IsValid(Actor))
-				{
-					Actor->SetActorEnableCollision(true);
-				}
-			}
-			for (AActor* Actor : SweetActors)
-			{
-				if (IsValid(Actor))
-				{
-					Actor->SetActorEnableCollision(true);
-				}
-			}
-			
+
 			CurrentState = ECurrentState::SweetSpot;
 		}
 	}
@@ -233,7 +192,7 @@ void UMyUserWidget::CheckForSubLevel(TSoftObjectPtr<UWorld> unloadedSubLevel)
 	{
 		if (!unloadedSubLevel.IsValid())
 		{
-			StartLoop();
+			FadeObject->StartLoop();
 
 			// set the array for tentacle and eyes
 			if (TObjectPtr<APlayerController> PlayerController = GetWorld()->GetFirstPlayerController())
@@ -295,9 +254,7 @@ void UMyUserWidget::IncreaseMadnessBar(float value)
 	}
 }
 
-void UMyUserWidget::Fade_Implementation(float saneTime, float saneStartValue, float sweetTime, float sweetStartValue)
-{
-}
+
 
 void UMyUserWidget::Dying()
 {
@@ -314,9 +271,9 @@ void UMyUserWidget::Dying()
 void UMyUserWidget::Dead()
 {
 	// find object with spawn tag and teleport to spawn
-	if (spawnPoint)
+	if (FadeObject->spawnPoint)
 	{
-		Player->SetActorLocation(spawnPoint->GetActorLocation());
+		Player->SetActorLocation(FadeObject->spawnPoint->GetActorLocation());
 	}
 						
 	if (FullyMadSFX)
@@ -326,29 +283,3 @@ void UMyUserWidget::Dead()
 	currentMadnessBarValue = 0;
 }
 
-void UMyUserWidget::StartLoop()
-{
-	CurrentState = ECurrentState::Dead;
-	SaneActors.Empty();
-	SweetActors.Empty();
-	spawnPoint = nullptr;
-	
-	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
-	{
-		TObjectPtr<AActor> Actor = *ActorItr;
-
-		
-		if (Actor->Tags.Contains("Sane"))
-		{
-			SaneActors.Add(Actor);
-		}
-		else if (Actor->Tags.Contains("Sweet"))
-		{
-			SweetActors.Add(Actor);
-		}
-		else if (Actor->Tags.Contains("Spawn"))
-		{
-			spawnPoint = Actor;
-		}
-	}
-}
