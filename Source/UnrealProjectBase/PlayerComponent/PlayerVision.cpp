@@ -87,11 +87,11 @@ void UPlayerVision::LookForTentacleWall()
 					// if you see actor make it fade away
 					if (!bHit || HitResult.GetActor() == Actor)
 					{
-						if (ATentacleWall* object = Cast<ATentacleWall>(Actor))
+						if (ATentacleWall* tentacle = Cast<ATentacleWall>(Actor))
 						{
 							if (isFocusing)
 							{
-								object->FadeAway();
+								tentacle->FadeAway();
 							}
 						}
 						break; 
@@ -147,15 +147,16 @@ void UPlayerVision::LookForEye()
 					if (!bHit || HitResult.GetActor() == Actor)
 					{
 						// normal eyeball fading
-						if (USpottedObject* object = Cast<USpottedObject>(Actor->FindComponentByClass<USpottedObject>()))
+						if (USpottedObject* eye = Cast<USpottedObject>(Actor->FindComponentByClass<USpottedObject>()))
 						{
+							eye->LookAtPlayer();
 							if (isFocusing)
 							{
-								object->FadeAway_Implementation();
+								eye->FadeAway_Implementation();
 							}
 							else
 							{
-								object->IncreaseMadness();
+								eye->IncreaseMadness();
 							}
 						}
 						break; 
@@ -213,11 +214,11 @@ void UPlayerVision::LookForBigEye()
 				if (!bHit || HitResult.GetActor() == Actor)
 				{
 					// big eyeball
-					if (ABigEye* object2 = Cast<ABigEye>(Actor))
+					if (ABigEye* bigEye = Cast<ABigEye>(Actor))
 					{
 						// dot product
 						// check if player is looking at big eye
-						if (DotProduct(Actor->GetActorLocation()) > object2->radius)
+						if (DotProduct(Actor->GetActorLocation()) > bigEye->radius)
 						{
 							FVector objectToLookAt = (Actor->GetActorLocation() - PlayerCamera->GetComponentLocation()).GetSafeNormal();
 							
@@ -228,15 +229,18 @@ void UPlayerVision::LookForBigEye()
 							FRotator TargetRotation = LookAwayDirection.Rotation();
 							
 							// Interpolate rotation
-							FRotator NewRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), object2->PushBackForce);
+							FRotator NewRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), bigEye->PushBackForce);
 							PlayerController->SetControlRotation(NewRotation);
+
+							// make big eye look at player
+							bigEye->LookAtPlayer();
 							
 							// if player is focusing fade the object 
 							if (isFocusing)
 							{
-								object2->FadeAway();
+								bigEye->FadeAway();
 							}
-							object2->IncreaseMadness();
+							bigEye->IncreaseMadness();
 						}
 					}
 					break; 
@@ -278,10 +282,5 @@ void UPlayerVision::SetActorArray()
 			bigEyeArray.Add(Actor);
 			bigEyeMeshArray.Add(Actor->FindComponentByClass<UMeshComponent>());
 		}
-	}
-
-	if (eyeArray.Num() != eyeMeshArray.Num())
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, "Eye Array Size");
 	}
 }

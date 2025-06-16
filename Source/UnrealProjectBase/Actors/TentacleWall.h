@@ -31,9 +31,10 @@ protected:
 	virtual void Tick(float DeltaTime) override;
 	
 	FTimerHandle TimerHandle;
-
-	UPROPERTY()
+	
+	FTransform startTransform;
 	bool isPlayerNear = false;
+	int count = 0;
 	
 	UPROPERTY()
 	TObjectPtr<UMyUserWidget> widget;
@@ -53,12 +54,8 @@ protected:
 	UFUNCTION()
 	void IncreaseMadnessBar();
 
-	
-	UPROPERTY()
-	FTransform startTransform;
-
-	UPROPERTY()
-	int count = 0;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float restoreMadnessValue = 0.1;
 public:	
 
 	UFUNCTION(BlueprintCallable)

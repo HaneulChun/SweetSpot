@@ -39,7 +39,7 @@ void ATentacleWall::BeginPlay()
 		APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
 		APlayerHud* hud = Cast<APlayerHud>(PlayerController->GetHUD());
 
-		widget = Cast<UMyUserWidget>(hud->GetWidget());
+		widget = Cast<UMyUserWidget>(hud->GetMadnessMeterWidget());
 	});
 
 	startTransform = GetTransform();
@@ -106,6 +106,7 @@ void ATentacleWall::FadeAway()
 	}
 	else
 	{
+		widget->IncreaseMadnessBar(-restoreMadnessValue);
 		// destroy actor
 		DestroyTentacle();
 	}

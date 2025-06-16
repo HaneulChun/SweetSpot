@@ -7,7 +7,9 @@
 #include "PlayerLook.generated.h"
 
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+class UCameraComponent;
+
+UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent), Blueprintable )
 class UNREALPROJECTBASE_API UPlayerLook : public UActorComponent
 {
 	GENERATED_BODY()
@@ -20,10 +22,16 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+	TObjectPtr<UCameraComponent> Camera;
+	FVector CameraLocation;
+	FVector CameraForward;
+
+	TObjectPtr<AActor> BestActor = nullptr;
+	
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	UFUNCTION(BlueprintCallable)
-	AActor* LookAtActor();
+	AActor* LookAtActor(const TArray<AActor*>& Actors);
 };

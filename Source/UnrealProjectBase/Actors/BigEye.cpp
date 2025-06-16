@@ -27,7 +27,7 @@ void ABigEye::BeginPlay()
 		{
 			TObjectPtr<APlayerHud> hud = Cast<APlayerHud>(PlayerController->GetHUD());
 
-			MadnessWidget = Cast<UMyUserWidget>(hud->GetWidget());
+			MadnessWidget = Cast<UMyUserWidget>(hud->GetMadnessMeterWidget());
 		}
 	});
 }
@@ -57,10 +57,17 @@ void ABigEye::FadeAway()
 	else
 	{
 		this->SetActorHiddenInGame(true);
-		MadnessWidget->isImmune = true;
-		GetWorldTimerManager().SetTimer(TimerHandleImmune, this, &ABigEye::RemoveImmunity, 1.0f, false, immunityTime);
+		MadnessWidget->IncreaseMadnessBar(-restoreMadnessValue);
+		
+		// give immune to player madness meter 
+		//MadnessWidget->isImmune = true;
+		//GetWorldTimerManager().SetTimer(TimerHandleImmune, this, &ABigEye::RemoveImmunity, 1.0f, false, immunityTime);
+
+		// only if no immunity
+		this->Destroy();
 	}
 }
+
 
 void ABigEye::ResetPosition()
 {

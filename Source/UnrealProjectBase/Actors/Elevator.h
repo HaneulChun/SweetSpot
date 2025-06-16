@@ -34,13 +34,13 @@ public:
 	TObjectPtr<AMyTeleport> Teleport;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite ,Category = "Parts")
-	UChildActorComponent* Switch;
+	TObjectPtr<UChildActorComponent> Switch;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite ,Category = "Parts")
-	UChildActorComponent* Button;
+	TObjectPtr<UChildActorComponent> Button;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite ,Category = "Parts")
-	UChildActorComponent* Cranck;
+	TObjectPtr<UChildActorComponent> Cranck;
 	
 	UFUNCTION(BlueprintCallable)
 	void FixElevator();
@@ -49,12 +49,15 @@ public:
 	void ShowElevatorPart(UChildActorComponent* Part);
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UFMODEvent* FixElevatorSFX;
+	TObjectPtr<UFMODEvent> FixElevatorSFX;
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void Exit();
 	virtual void Exit_Implementation();
 	
+
+	UFUNCTION()
+	void Highlight(EElevatorPart Part);
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool TurnOnSwitch = false;
