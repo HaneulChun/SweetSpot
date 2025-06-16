@@ -7,6 +7,8 @@
 #include "Engine/Scene.h"
 #include "FMODBlueprintStatics.h"
 #include "PlayerHud.h"
+#include "Kismet/GameplayStatics.h"
+#include "UnrealProjectBase/Actors/SweetSpotCharacter.h"
 #include "UnrealProjectBase/PlayerComponent/FadeObjectComponent.h"
 #include "UnrealProjectBase/PlayerComponent/PlayerVision.h"
 
@@ -280,6 +282,11 @@ void UMyUserWidget::Dead()
 	{
 		UFMODBlueprintStatics::PlayEventAtLocation(this, FullyMadSFX, Player->GetActorTransform(), true);	
 	}
+
+
+	ASweetSpotCharacter* MyCharacter = Cast<ASweetSpotCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	MyCharacter->Dead();
+	
 	currentMadnessBarValue = 0;
 }
 
