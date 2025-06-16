@@ -62,24 +62,8 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 
 			// hide actor
 			FadeObject->Fade(-0.1, 1, -0.1, 1);
-			for (AActor* Actor : FadeObject->SaneActors)
-			{
-				if (IsValid(Actor))
-				{
-					Actor->SetActorEnableCollision(false);
-				}
-			}
-			for (AActor* Actor : FadeObject->SweetActors)
-			{
-				if (IsValid(Actor))
-				{
-					Actor->SetActorEnableCollision(false);
-				}
-			}
-			CurrentState = ECurrentState::Sane;
 			
-			// set text 
-			playerHud->SetText("");  
+			CurrentState = ECurrentState::Sane;
 		}
 	}
 	else if(currentMadnessBarValue >= 1) // dead 
@@ -106,25 +90,11 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 
 			// set text
 			playerHud->SetText("");  
-
-			CurrentState = ECurrentState::Mad;
 			
 			// show actor
 			FadeObject->Fade(0, 1, 0, 1);
-			for (AActor* Actor : FadeObject->SaneActors)
-			{
-				if (IsValid(Actor))
-				{
-					Actor->SetActorEnableCollision(true);
-				}
-			}
-			for (AActor* Actor : FadeObject->SweetActors)
-			{
-				if (IsValid(Actor))
-				{
-					Actor->SetActorEnableCollision(true);
-				}
-			}
+			
+			CurrentState = ECurrentState::Mad;
 		}
 	}
 	else // sweat spot
@@ -171,21 +141,7 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			{
 				FadeObject->Fade(0.1, 0, 0.1, 0);
 			}
-			for (AActor* Actor : FadeObject->SaneActors)
-			{
-				if (IsValid(Actor))
-				{
-					Actor->SetActorEnableCollision(true);
-				}
-			}
-			for (AActor* Actor : FadeObject->SweetActors)
-			{
-				if (IsValid(Actor))
-				{
-					Actor->SetActorEnableCollision(true);
-				}
-			}
-			
+
 			CurrentState = ECurrentState::SweetSpot;
 		}
 	}
