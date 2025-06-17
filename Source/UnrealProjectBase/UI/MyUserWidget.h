@@ -7,6 +7,7 @@
 #include "FMODEvent.h"
 #include "MyUserWidget.generated.h"
 
+class UCameraSettingsComponent;
 class UFadeObjectComponent;
 class UCameraComponent;
 /**
@@ -37,14 +38,11 @@ protected:
 	FTimerHandle TimerHandle;
 	bool isDying = false;
 	int dyingCount = 0;
-
-
-	UPROPERTY()
-	TObjectPtr<UCameraComponent> playerCamera;
-
+	
 	UPROPERTY()
 	TObjectPtr<APawn> Player;
 
+	TObjectPtr<UCameraSettingsComponent> CameraSettings;
 	
 	UPROPERTY()
 	TSoftObjectPtr<UWorld> checkUnloadedLevel;
@@ -60,22 +58,6 @@ public:
 	TObjectPtr<UUserWidget> CurrentWidget;
 
 	TObjectPtr<UFadeObjectComponent> FadeObject;
-
-	
-	UPROPERTY(EditAnywhere, BluePrintReadWrite, Category = "Material")
-	TArray<TObjectPtr<UMaterialInterface>> Material;
-
-	UFUNCTION(BlueprintCallable, Category = "Material")
-	void SetMaterial(TArray<UMaterialInterface*> Mat);
-	
-	UFUNCTION(BlueprintCallable, Category = "Material")
-	void ChangeCameraSettings(float chromaticAberration, float Vignette);
-
-	UFUNCTION(BlueprintCallable, Category = "Material")
-	void Color(float intensity);
-	
-	UFUNCTION(BlueprintCallable, Category = "Material")
-	void ChangeCameraMaterial(float intensity);
 
 
 	UFUNCTION(BlueprintCallable)
