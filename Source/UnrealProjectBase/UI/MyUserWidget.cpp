@@ -9,6 +9,7 @@
 #include "PlayerHud.h"
 #include "Kismet/GameplayStatics.h"
 #include "UnrealProjectBase/Actors/SweetSpotCharacter.h"
+#include "UnrealProjectBase/Component/CameraSettingsComponent.h"
 #include "UnrealProjectBase/PlayerComponent/FadeObjectComponent.h"
 #include "UnrealProjectBase/PlayerComponent/PlayerVision.h"
 
@@ -20,11 +21,7 @@ void UMyUserWidget::NativeConstruct()
 
 	if (TObjectPtr<APlayerController> PlayerController = GetWorld()->GetFirstPlayerController())
 	{
-		// point at the player's camera
-		if (TObjectPtr<UCameraComponent> Camera = PlayerController->PlayerCameraManager->GetOwningPlayerController()->PlayerCameraManager->ViewTarget.Target->FindComponentByClass<UCameraComponent>())
-		{
-			playerCamera = Camera;
-		}
+		CameraSettings = PlayerController->GetPawn()->FindComponentByClass<UCameraSettingsComponent>();
 
 		if (TObjectPtr<APawn> t = PlayerController->GetPawn())
 		{
@@ -55,11 +52,11 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 		if (CurrentState != ECurrentState::Sane)
 		{
 			// change camera settings and matreial
-			ChangeCameraSettings(0.0, 0.4);
+			CameraSettings->ChangeCameraSettings(0.0, 0.4);
 			chromaticAberrationIntensity = 0;
 			vignetteIntensity = 0.4;
 			
-			ChangeCameraMaterial(0.0f);
+			CameraSettings->ChangeCameraMaterial(0.0f);
 			matIntensity = 0;
 
 			// hide actor
@@ -83,11 +80,11 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 		if (CurrentState != ECurrentState::Mad)
 		{
 			// change camera settings and material
-			ChangeCameraSettings(10.0, 1.5);
+			CameraSettings->ChangeCameraSettings(10.0, 1.5);
 			chromaticAberrationIntensity = 10;
 			vignetteIntensity = 1.5;
 			
-			ChangeCameraMaterial(0.0f);
+			CameraSettings->ChangeCameraMaterial(0.0f);
 			matIntensity = 0;
 
 			// set text
@@ -105,13 +102,13 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 		{
 			if (isInRoom)
 			{
-				ChangeCameraSettings(0.0, 1);
+				CameraSettings->ChangeCameraSettings(0.0, 1);
 				chromaticAberrationIntensity = 0;
 				vignetteIntensity = 0.4;
 			}
 			else
 			{
-				ChangeCameraSettings(0.0, .4);
+				CameraSettings->ChangeCameraSettings(0.0, .4);
 				chromaticAberrationIntensity = 0;
 				vignetteIntensity = 0.4;
 			}
@@ -145,44 +142,6 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			}
 
 			CurrentState = ECurrentState::SweetSpot;
-		}
-	}
-}
-
-
-void UMyUserWidget::SetMaterial(TArray<UMaterialInterface*> Mat)
-{
-	Material = Mat;
-}
-
-void UMyUserWidget::ChangeCameraSettings(float chromaticAberration, float Vignette)
-{
-	FPostProcessSettings& Settings = playerCamera->PostProcessSettings;
-
-	Settings.bOverride_SceneFringeIntensity = true;
-	Settings.SceneFringeIntensity = chromaticAberration;
-
-	Settings.bOverride_VignetteIntensity = true;
-	Settings.VignetteIntensity = Vignette;
-}
-
-void UMyUserWidget::Color(float intensity)
-{
-	FPostProcessSettings& Settings = playerCamera->PostProcessSettings;
-			
-	Settings.bOverride_ColorSaturation = true;
-	Settings.ColorSaturation = FVector4(intensity, intensity, intensity, 1.0f);
-}
-
-void UMyUserWidget::ChangeCameraMaterial(float intensity)
-{
-	FPostProcessSettings& Settings = playerCamera->PostProcessSettings;
-
-	for (int32 i = 0; i < Material.Num(); i++)
-	{
-		if (Material.IsValidIndex(i))
-		{
-			Settings.AddBlendable(Material[i], intensity);
 		}
 	}
 }
@@ -239,12 +198,12 @@ void UMyUserWidget::DecreaseMadness(float value)
 	currentMadnessBarValue -= value;
 	if (isInRoom)
 	{
-		ChangeCameraSettings(0.0, 1);
-		Color(0.5);
+		CameraSettings->ChangeCameraSettings(0.0, 1);
+		CameraSettings->Color(0.5);
 	}
 	else
 	{
-		ChangeCameraSettings(0.0, .4);
+		CameraSettings->ChangeCameraSettings(0.0, .4);
 	}
 }
 
@@ -256,12 +215,10 @@ void UMyUserWidget::IncreaseMadnessBar(float value)
 	}
 }
 
-
-
 void UMyUserWidget::Dying()
 {
 	dyingCount++;
-	ChangeCameraSettings(10.0, (dyingCount * 0.5) + 1.5);
+	CameraSettings->ChangeCameraSettings(10.0, (dyingCount * 0.5) + 1.5);
 	if (dyingCount >= 10)
 	{
 		isDying = false;
@@ -282,11 +239,9 @@ void UMyUserWidget::Dead()
 	{
 		UFMODBlueprintStatics::PlayEventAtLocation(this, FullyMadSFX, Player->GetActorTransform(), true);	
 	}
-
-
+	
 	ASweetSpotCharacter* MyCharacter = Cast<ASweetSpotCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 	MyCharacter->Dead();
 	
 	currentMadnessBarValue = 0;
 }
-

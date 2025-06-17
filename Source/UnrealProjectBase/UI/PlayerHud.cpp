@@ -22,8 +22,6 @@ void APlayerHud::BeginPlay()
 			
 			CurrentWidget->sweetSpot = sweetSpot;
 			CurrentWidget->mad = mad;
-				
-			CurrentWidget->SetMaterial(Material);
 
 			if (FullyMadSFX)
 			{
