@@ -5,27 +5,27 @@
 #include "Blueprint/UserWidget.h"
 #include "Components/TextBlock.h"
 
-UATextMessageBox::UATextMessageBox() : WBP_MessageBox_Container(nullptr), Text_MessageBox(nullptr)
+ATextMessageBox::ATextMessageBox() : WBP_MessageBox_Container(nullptr), Text_MessageBox(nullptr)
 {
 }
 
-void UATextMessageBox::NativeConstruct()
+void ATextMessageBox::BeginPlay()
 {
-	Super::NativeConstruct();
+	Super::BeginPlay();
 
 	if (!WBP_MessageBox_Container)
 	{
 	}
+
+	MessageToDisplay = TEXT("");
 }
 
-void UATextMessageBox::NativeTick(float DeltaTime)
+void ATextMessageBox::Tick(float DeltaTime)
 {
-	NativeTick(DeltaTime);
+	Super::Tick(DeltaTime);
 
 	if (Text_MessageBox)
 	{
-		std::string const PushedPlayerMessage = "<Message>";
-		FString MessageBox_Text = "PushedPlayerMessage";
-		Text_MessageBox->SetText(FText::FromString(MessageBox_Text));
+		Text_MessageBox->SetText(FText::FromString(MessageToDisplay));
 	}
 }

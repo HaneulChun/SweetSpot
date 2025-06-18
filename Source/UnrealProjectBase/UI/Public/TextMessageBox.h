@@ -13,22 +13,22 @@ class UTextBlock;
 class UUserWidget;
 
 UCLASS()
-class UNREALPROJECTBASE_API UATextMessageBox : public UUserWidget
+class UNREALPROJECTBASE_API ATextMessageBox : public AActor
 {
 	GENERATED_BODY()
 
 	
 public:	
 	// Sets default values for this actor's properties
-	UATextMessageBox();
+	ATextMessageBox();
 
 protected:
 	// Called when the game starts or when spawned
-	virtual void NativeConstruct() override;
+	virtual void BeginPlay() override;
 
 public:	
 	// Called every frame
-	virtual void NativeTick(float DeltaTime);
+	virtual void Tick(float DeltaTime) override;
 
 	// Reference to the desired widget
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
@@ -37,4 +37,7 @@ public:
 	// Reference to the desired text block
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
 	UTextBlock* Text_MessageBox;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
+	FString MessageToDisplay;
 };
