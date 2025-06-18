@@ -123,7 +123,7 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 					{
 						if (MeshComp->CustomDepthStencilValue == 1)
 						{
-							playerHud->SetText("Hold LBM to focus");
+							playerHud->SetText("Hold LMB to focus");
 							
 							break;
 						}
