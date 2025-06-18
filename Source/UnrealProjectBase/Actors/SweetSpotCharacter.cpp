@@ -11,19 +11,6 @@ ASweetSpotCharacter::ASweetSpotCharacter()
 
 }
 
-// Called when the game starts or when spawned
-void ASweetSpotCharacter::BeginPlay()
-{
-	Super::BeginPlay();
-	
-}
-
-// Called every frame
-void ASweetSpotCharacter::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
 
 // Called to bind functionality to input
 void ASweetSpotCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)

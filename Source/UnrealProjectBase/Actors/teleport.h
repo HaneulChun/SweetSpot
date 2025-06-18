@@ -23,7 +23,7 @@ protected:
 	virtual void BeginPlay() override;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UBoxComponent* triggerBox;
+	TObjectPtr<UBoxComponent> triggerBox;
 
 	UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
