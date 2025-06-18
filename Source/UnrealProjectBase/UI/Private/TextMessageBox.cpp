@@ -27,5 +27,7 @@ void ATextMessageBox::Tick(float DeltaTime)
 	if (Text_MessageBox)
 	{
 		Text_MessageBox->SetText(FText::FromString(MessageToDisplay));
+
+		// if (Text_MessageBox->Changed)
 	}
 }
