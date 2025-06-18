@@ -227,6 +227,18 @@ void UPlayerVision::LookForBigEye()
 							
 							FRotator CurrentRotation = PlayerCamera->GetComponentRotation();
 							FRotator TargetRotation = LookAwayDirection.Rotation();
+
+							// test
+
+							// FVector Dir = (Actor->GetActorLocation() - PlayerCamera->GetComponentLocation()).GetSafeNormal();
+							//
+							//
+							// if (GEngine)
+							// {
+							// 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, FString::Printf(TEXT("Location: %s"), *Dir.ToString()));
+							// }
+							
+							//test
 							
 							// Interpolate rotation
 							FRotator NewRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), bigEye->PushBackForce);
