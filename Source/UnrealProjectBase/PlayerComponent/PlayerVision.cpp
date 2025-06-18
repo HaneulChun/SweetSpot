@@ -32,11 +32,7 @@ void UPlayerVision::BeginPlay()
 	PlayerController = GetWorld()->GetFirstPlayerController();
 	PlayerPawn = PlayerController->GetPawn();
 
-	GetWorld()->GetTimerManager().SetTimer(tenticalTimerHandle, this, &UPlayerVision::LookForTentacleWall, tenticalCheckInterval, true);
-	
-	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &UPlayerVision::LookForEye, eyeCheckInterval, true);
-	
-	GetWorld()->GetTimerManager().SetTimer(BigTimerHandle, this, &UPlayerVision::LookForBigEye, bigEyeCheckInterval, true);
+	GetWorld()->GetTimerManager().SetTimer(tenticalTimerHandle, this, &UPlayerVision::Interval, tenticalCheckInterval, true);
 }
 
 
@@ -47,6 +43,13 @@ float UPlayerVision::DotProduct(const FVector &TargetVector)
 	float Dot = FVector::DotProduct(playerForward, objectToLookAt);
 	
 	return Dot;
+}
+
+void UPlayerVision::Interval()
+{
+	LookForTentacleWall();
+	LookForEye();
+	LookForBigEye();
 }
 
 
