@@ -55,7 +55,7 @@ void UPlayerVision::Interval()
 
 void UPlayerVision::LookForTentacleWall()
 {
-	PlayerLocation = PlayerPawn->GetActorLocation();
+	PlayerLocation = PlayerCamera->GetComponentLocation();
 
 	// check if the eye was recently rendered
 	for (TObjectPtr<AActor> Actor : tenticalArray)
@@ -109,7 +109,7 @@ void UPlayerVision::LookForTentacleWall()
 
 void UPlayerVision::LookForEye()
 {
-	PlayerLocation = PlayerPawn->GetActorLocation();
+	PlayerLocation = PlayerCamera->GetComponentLocation();
 
 	// check if the eye was recently rendered
 	for (TObjectPtr<AActor> Actor : eyeArray)
@@ -174,7 +174,7 @@ void UPlayerVision::LookForEye()
 
 void UPlayerVision::LookForBigEye()
 {
-	PlayerLocation = PlayerPawn->GetActorLocation();
+	PlayerLocation = PlayerCamera->GetComponentLocation();
 	
 	// check if the eye was recently rendered
 	for (TObjectPtr<AActor> Actor : bigEyeArray)
