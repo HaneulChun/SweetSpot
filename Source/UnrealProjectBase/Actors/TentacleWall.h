@@ -85,7 +85,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float MadnessTickInterval = 0.4f;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY()
 	float speed = 9.0f;
 	
 	UPROPERTY(EditAnywhere)

@@ -72,7 +72,7 @@ void UPlayerVision::LookForTentacleWall()
 					bottom + FVector(0, 0, height), 
 					bottom + FVector(0, 0, height * 2)
 				};
-			
+				
 				// check if there is a wall between player and point
 				for (const FVector& Point : PointsToCheck)
 				{
@@ -86,7 +86,7 @@ void UPlayerVision::LookForTentacleWall()
 						Point,
 						ECC_Visibility,
 						Params);
-				
+					
 					// if you see actor make it fade away
 					if (!bHit || HitResult.GetActor() == Actor)
 					{
