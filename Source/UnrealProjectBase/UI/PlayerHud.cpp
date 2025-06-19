@@ -7,6 +7,7 @@
 #include "Blueprint/UserWidget.h"
 #include "Engine/Canvas.h"
 #include "MyUserWidget.h"
+#include "PopUpWidget.h"
 //WidgetClass
 void APlayerHud::BeginPlay()
 {
@@ -29,6 +30,14 @@ void APlayerHud::BeginPlay()
 			}
 		}
 	}
+	if (PopUpWidgetClass)
+	{
+		PopUpWidget = CreateWidget<UPopUpWidget>(GetWorld(), PopUpWidgetClass);
+		if (PopUpWidget)
+		{
+			PopUpWidget->AddToViewport();
+		}
+	}
 	Text = TEXT("");
 }
 
@@ -36,7 +45,7 @@ void APlayerHud::DrawHUD()
 {
 	Super::DrawHUD();
 	
-	// set the text on sceen (only for prototype)
+	// set the text on screen 
 	FCanvasTextItem TextItem(FVector2D(500, 40), FText::FromString(Text), GEngine->GetLargeFont(), FLinearColor::Red);
 	TextItem.Scale = FVector2D(2.5f, 2.5f);
 	
