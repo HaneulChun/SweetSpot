@@ -32,11 +32,7 @@ void UPlayerVision::BeginPlay()
 	PlayerController = GetWorld()->GetFirstPlayerController();
 	PlayerPawn = PlayerController->GetPawn();
 
-	GetWorld()->GetTimerManager().SetTimer(tenticalTimerHandle, this, &UPlayerVision::LookForTentacleWall, tenticalCheckInterval, true);
-	
-	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &UPlayerVision::LookForEye, eyeCheckInterval, true);
-	
-	GetWorld()->GetTimerManager().SetTimer(BigTimerHandle, this, &UPlayerVision::LookForBigEye, bigEyeCheckInterval, true);
+	GetWorld()->GetTimerManager().SetTimer(tenticalTimerHandle, this, &UPlayerVision::Interval, tenticalCheckInterval, true);
 }
 
 
@@ -47,6 +43,13 @@ float UPlayerVision::DotProduct(const FVector &TargetVector)
 	float Dot = FVector::DotProduct(playerForward, objectToLookAt);
 	
 	return Dot;
+}
+
+void UPlayerVision::Interval()
+{
+	LookForTentacleWall();
+	LookForEye();
+	LookForBigEye();
 }
 
 
@@ -227,6 +230,18 @@ void UPlayerVision::LookForBigEye()
 							
 							FRotator CurrentRotation = PlayerCamera->GetComponentRotation();
 							FRotator TargetRotation = LookAwayDirection.Rotation();
+
+							// test
+
+							// FVector Dir = (Actor->GetActorLocation() - PlayerCamera->GetComponentLocation()).GetSafeNormal();
+							//
+							//
+							// if (GEngine)
+							// {
+							// 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, FString::Printf(TEXT("Location: %s"), *Dir.ToString()));
+							// }
+							
+							//test
 							
 							// Interpolate rotation
 							FRotator NewRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), bigEye->PushBackForce);

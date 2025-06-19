@@ -23,7 +23,6 @@ protected:
 
 	virtual void DrawHUD() override;
 
-	bool isShowImage = false;
 public:
 
 	UPROPERTY(BlueprintReadOnly, Category = "UI")
@@ -51,9 +50,6 @@ public:
 
 	UPROPERTY(EditAnywhere, BluePrintReadWrite)
 	float mad = 0.6;
-	
-	UPROPERTY(EditAnywhere, BluePrintReadWrite)
-	TArray<TObjectPtr<UMaterialInterface>> Material;
 
 	UFUNCTION(BlueprintCallable)
 	void SetTextTodo(FString setText);

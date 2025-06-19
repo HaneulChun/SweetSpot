@@ -22,8 +22,6 @@ void APlayerHud::BeginPlay()
 			
 			CurrentWidget->sweetSpot = sweetSpot;
 			CurrentWidget->mad = mad;
-				
-			CurrentWidget->SetMaterial(Material);
 
 			if (FullyMadSFX)
 			{
@@ -38,7 +36,7 @@ void APlayerHud::DrawHUD()
 {
 	Super::DrawHUD();
 	
-	// set the text on sceen (only for prototype)
+	// set the text on screen 
 	FCanvasTextItem TextItem(FVector2D(500, 40), FText::FromString(Text), GEngine->GetLargeFont(), FLinearColor::Red);
 	TextItem.Scale = FVector2D(2.5f, 2.5f);
 	

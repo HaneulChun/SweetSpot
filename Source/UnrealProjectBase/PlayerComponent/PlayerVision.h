@@ -24,44 +24,36 @@ protected:
 	
 	// timer 
 	FTimerHandle tenticalTimerHandle;
-	FTimerHandle TimerHandle;
-	FTimerHandle BigTimerHandle;
 
 	// property for tentical 
-	UPROPERTY()
 	TArray<TObjectPtr<AActor>> tenticalArray;
-	UPROPERTY()
 	TArray<TObjectPtr<UMeshComponent>> tenticalMeshArray;
-	UPROPERTY()
 	int32 tenticalIndex = 0;
 
 	// property for eye 
-	UPROPERTY()
 	TArray<TObjectPtr<AActor>> eyeArray;
-	UPROPERTY()
 	TArray<TObjectPtr<UMeshComponent>> eyeMeshArray;
-	UPROPERTY()
 	int32 EyeIndex = 0;
 
 	// property for big eye 
-	UPROPERTY()
 	TArray<TObjectPtr<AActor>> bigEyeArray;
-	UPROPERTY()
 	TArray<TObjectPtr<UMeshComponent>> bigEyeMeshArray;
-	UPROPERTY()
 	int32 bigEyeIndex = 0;
 
 	UPROPERTY(blueprintReadWrite)
 	bool isFocusing = false;
 
 	UPROPERTY(BlueprintReadOnly)
-	UCameraComponent* PlayerCamera;
+	TObjectPtr<UCameraComponent> PlayerCamera;
 
 	
 	UFUNCTION()
 	float DotProduct(const FVector &TargetVector);
 public:	
 
+	UFUNCTION()
+	void Interval();
+	
 	UFUNCTION()
 	void LookForTentacleWall();
 	
@@ -82,15 +74,8 @@ public:
 	TObjectPtr<APawn> PlayerPawn;
 
 	FVector PlayerLocation;
-
-
+	
 	// Interval for checking object
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float tenticalCheckInterval = .1f;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float eyeCheckInterval = .1f;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float bigEyeCheckInterval = .1f;
 };
