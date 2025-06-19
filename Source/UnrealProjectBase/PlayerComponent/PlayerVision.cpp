@@ -68,7 +68,6 @@ void UPlayerVision::LookForTentacleWall()
 				float height = 105;
 			
 				TArray<FVector> PointsToCheck = {
-					bottom,
 					bottom + FVector(0, 0, height), 
 					bottom + FVector(0, 0, height * 2)
 				};
