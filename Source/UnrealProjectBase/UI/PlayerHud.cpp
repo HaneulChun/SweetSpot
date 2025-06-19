@@ -7,6 +7,7 @@
 #include "Blueprint/UserWidget.h"
 #include "Engine/Canvas.h"
 #include "MyUserWidget.h"
+#include "PopUpWidget.h"
 //WidgetClass
 void APlayerHud::BeginPlay()
 {
@@ -27,6 +28,14 @@ void APlayerHud::BeginPlay()
 			{
 				CurrentWidget->FullyMadSFX = FullyMadSFX;
 			}
+		}
+	}
+	if (PopUpWidgetClass)
+	{
+		PopUpWidget = CreateWidget<UPopUpWidget>(GetWorld(), PopUpWidgetClass);
+		if (PopUpWidget)
+		{
+			PopUpWidget->AddToViewport();
 		}
 	}
 	Text = TEXT("");
