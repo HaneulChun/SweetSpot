@@ -42,6 +42,7 @@ void AMyTeleport::BeginPlay()
 	if (triggerBox)
 	{
 		triggerBox->OnComponentBeginOverlap.AddDynamic(this, &AMyTeleport::OnOverlapBegin);
+		triggerBox->OnComponentEndOverlap.AddDynamic(this, &AMyTeleport::OnOverlapEnd);
 	}
 	
 	GetWorld()->GetTimerManager().SetTimerForNextTick([this]()
@@ -62,8 +63,8 @@ void AMyTeleport::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 {
 	if (!Cast<ACharacter>(OtherActor)) return;
 	if (!Cast<UCapsuleComponent>(OtherComp)) return;
-	// check if this loop is null
-	if (!teleportTo) return;
+
+	if (hasTeleported) return;
 	
 	// check if puzzle is completed
 	if (isCompleted == true)
@@ -85,6 +86,16 @@ void AMyTeleport::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 			widget->IncreaseMadnessBar(increaseMadness);	
 		}
 	}
+	hasTeleported = true;
+}
+
+void AMyTeleport::OnOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	if (!Cast<ACharacter>(OtherActor)) return;
+	if (!Cast<UCapsuleComponent>(OtherComp)) return;
+	
+	hasTeleported = false;
 }
 
 void AMyTeleport::LoadSubLevel_Implementation()

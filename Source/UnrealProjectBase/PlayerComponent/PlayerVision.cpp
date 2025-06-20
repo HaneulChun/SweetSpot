@@ -55,24 +55,25 @@ void UPlayerVision::Interval()
 
 void UPlayerVision::LookForTentacleWall()
 {
-	PlayerLocation = PlayerPawn->GetActorLocation();
+	PlayerLocation = PlayerCamera->GetComponentLocation();
 
 	// check if the eye was recently rendered
 	for (TObjectPtr<AActor> Actor : tenticalArray)
 	{
-		if (IsValid(Actor))
+		if (IsValid(Actor) && !Actor->IsPendingKillPending() && !Actor->IsActorBeingDestroyed())
 		{
-			if (DotProduct(Actor->GetActorLocation()) > 0.54)
+			FVector ActorLocation = Actor->GetActorLocation(); 
+			float dProduct = DotProduct(ActorLocation);
+			if (dProduct > 0.54)
 			{
 				FVector bottom = tenticalMeshArray[tenticalIndex]->Bounds.Origin;
 				float height = 105;
 			
 				TArray<FVector> PointsToCheck = {
-					bottom,
 					bottom + FVector(0, 0, height), 
 					bottom + FVector(0, 0, height * 2)
 				};
-			
+				
 				// check if there is a wall between player and point
 				for (const FVector& Point : PointsToCheck)
 				{
@@ -86,7 +87,7 @@ void UPlayerVision::LookForTentacleWall()
 						Point,
 						ECC_Visibility,
 						Params);
-				
+					
 					// if you see actor make it fade away
 					if (!bHit || HitResult.GetActor() == Actor)
 					{
@@ -109,7 +110,7 @@ void UPlayerVision::LookForTentacleWall()
 
 void UPlayerVision::LookForEye()
 {
-	PlayerLocation = PlayerPawn->GetActorLocation();
+	PlayerLocation = PlayerCamera->GetComponentLocation();
 
 	// check if the eye was recently rendered
 	for (TObjectPtr<AActor> Actor : eyeArray)
@@ -145,7 +146,7 @@ void UPlayerVision::LookForEye()
 						Point,
 						ECC_Visibility,
 						Params);
-
+					
 					// if you see actor make it fade away
 					if (!bHit || HitResult.GetActor() == Actor)
 					{
@@ -174,7 +175,7 @@ void UPlayerVision::LookForEye()
 
 void UPlayerVision::LookForBigEye()
 {
-	PlayerLocation = PlayerPawn->GetActorLocation();
+	PlayerLocation = PlayerCamera->GetComponentLocation();
 	
 	// check if the eye was recently rendered
 	for (TObjectPtr<AActor> Actor : bigEyeArray)
@@ -211,7 +212,6 @@ void UPlayerVision::LookForBigEye()
 					Point,
 					ECC_Visibility,
 					Params);
-	
 	
 				// if you see actor make it fade away
 				if (!bHit || HitResult.GetActor() == Actor)
