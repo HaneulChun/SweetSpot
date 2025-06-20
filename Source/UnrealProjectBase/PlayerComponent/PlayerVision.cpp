@@ -62,7 +62,9 @@ void UPlayerVision::LookForTentacleWall()
 	{
 		if (IsValid(Actor))
 		{
-			if (DotProduct(Actor->GetActorLocation()) > 0.54)
+			FVector ActorLocation = Actor->GetActorLocation();
+			float dProduct = DotProduct(ActorLocation);
+			if (dProduct > 0.54)
 			{
 				FVector bottom = tenticalMeshArray[tenticalIndex]->Bounds.Origin;
 				float height = 105;
@@ -284,6 +286,10 @@ void UPlayerVision::SetActorArray()
 		{
 			tenticalArray.Add(Actor);
 			tenticalMeshArray.Add(Actor->FindComponentByClass<UMeshComponent>());
+			if (Actor)
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, "Tentacle");
+			}
 		}
 		else if (Actor->Tags.Contains("SeeMe"))
 		{
