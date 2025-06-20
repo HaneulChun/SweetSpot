@@ -52,7 +52,7 @@ void APlayerHud::DrawHUD()
 	FCanvasTextItem TextItemGoto(FVector2D(1000, 40), FText::FromString(GotoText), GEngine->GetLargeFont(), FLinearColor::Red);
 	TextItemGoto.Scale = FVector2D(2.5f, 2.5f);
 	
-	Canvas->DrawItem(TextItem);
+	//Canvas->DrawItem(TextItem);
 	Canvas->DrawItem(TextItemGoto);
 }
 
