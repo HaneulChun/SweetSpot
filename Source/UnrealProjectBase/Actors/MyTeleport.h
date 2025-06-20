@@ -24,7 +24,8 @@ public:
 
 private:
 	TObjectPtr<UPlayerVision> playerVision;
-	
+
+	bool hasTeleported = false;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -51,11 +52,17 @@ public:
 
 	UPROPERTY(VisibleAnywhere, Category = "TeleportLoop")
 	TObjectPtr<USceneComponent> NextTeleportTo;
+
 	
 	UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 		UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,
 		bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+	void OnOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+		UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
 	
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void LoadSubLevel();
