@@ -60,9 +60,9 @@ void UPlayerVision::LookForTentacleWall()
 	// check if the eye was recently rendered
 	for (TObjectPtr<AActor> Actor : tenticalArray)
 	{
-		if (IsValid(Actor))
+		if (IsValid(Actor) && !Actor->IsPendingKillPending() && !Actor->IsActorBeingDestroyed())
 		{
-			FVector ActorLocation = Actor->GetActorLocation();
+			FVector ActorLocation = Actor->GetActorLocation(); 
 			float dProduct = DotProduct(ActorLocation);
 			if (dProduct > 0.54)
 			{
@@ -286,10 +286,6 @@ void UPlayerVision::SetActorArray()
 		{
 			tenticalArray.Add(Actor);
 			tenticalMeshArray.Add(Actor->FindComponentByClass<UMeshComponent>());
-			if (Actor)
-			{
-				GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, "Tentacle");
-			}
 		}
 		else if (Actor->Tags.Contains("SeeMe"))
 		{
