@@ -7,6 +7,7 @@
 #include "FMODEvent.h"
 #include "PlayerHud.generated.h"
 
+class UPopUpWidget;
 /**
  * 
  */
@@ -35,15 +36,23 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI", meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<UMyUserWidget> WidgetClass;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<UPopUpWidget> PopUpWidgetClass;
+
+	
 	UPROPERTY(BlueprintReadWrite, Category = "UI", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UMyUserWidget> CurrentWidget;
+
+	UPROPERTY(BlueprintReadWrite, Category = "UI", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UPopUpWidget> PopUpWidget;
+
 	
 	UFUNCTION(BlueprintCallable, Category = "UI")
 	UMyUserWidget* GetMadnessMeterWidget() const;
+	
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
 	TObjectPtr<UFMODEvent> FullyMadSFX;
-	
 
 	UPROPERTY(EditAnywhere, BluePrintReadWrite)
 	float sweetSpot = 0.4;
