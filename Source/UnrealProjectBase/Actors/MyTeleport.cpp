@@ -42,7 +42,6 @@ void AMyTeleport::BeginPlay()
 	if (triggerBox)
 	{
 		triggerBox->OnComponentBeginOverlap.AddDynamic(this, &AMyTeleport::OnOverlapBegin);
-		triggerBox->OnComponentEndOverlap.AddDynamic(this, &AMyTeleport::OnOverlapEnd);
 	}
 	
 	GetWorld()->GetTimerManager().SetTimerForNextTick([this]()
