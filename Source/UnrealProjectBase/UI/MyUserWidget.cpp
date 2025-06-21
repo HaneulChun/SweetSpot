@@ -7,6 +7,7 @@
 #include "Engine/Scene.h"
 #include "FMODBlueprintStatics.h"
 #include "PlayerHud.h"
+#include "Components/ArrowComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "UnrealProjectBase/Actors/SweetSpotCharacter.h"
 #include "UnrealProjectBase/Component/CameraSettingsComponent.h"
@@ -160,7 +161,7 @@ void UMyUserWidget::CheckForSubLevel(TSoftObjectPtr<UWorld> unloadedSubLevel)
 			{
 				if (TObjectPtr<UPlayerVision> playerVision = PlayerController->GetPawn()->FindComponentByClass<UPlayerVision>())
 				{
-					playerVision->SetActorArray();	
+					playerVision->SetActorArray();
 				}
 			}
 			
@@ -232,7 +233,8 @@ void UMyUserWidget::Dead()
 	// find object with spawn tag and teleport to spawn
 	if (FadeObject->spawnPoint)
 	{
-		Player->SetActorLocation(FadeObject->spawnPoint->GetActorLocation());
+		Player->Controller->SetControlRotation(FadeObject->spawnPoint->FindComponentByClass<UArrowComponent>()->GetComponentRotation());
+		Player->SetActorLocation(FadeObject->spawnPoint->FindComponentByClass<UArrowComponent>()->GetComponentLocation());
 	}
 						
 	if (FullyMadSFX)
