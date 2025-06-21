@@ -165,9 +165,3 @@ void AMyTeleport::Teleport(AActor* OtherActor, FTransform Transform)
 	
 	OtherActor->SetActorTransform(finalTeleport, false, nullptr, ETeleportType::TeleportPhysics);
 }
-
-void AMyTeleport::OnOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
-{
-	UE_LOG(LogTemp, Warning, TEXT("OnOverlapEnd triggered for actor: %s"), *OtherActor->GetName());
-}
