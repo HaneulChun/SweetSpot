@@ -25,12 +25,12 @@ void USpottedObject::BeginPlay()
 	GetOwner()->Tags.Add("SeeMe");
 	
 	GetWorld()->GetTimerManager().SetTimerForNextTick([this]()
-{
-	APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
-	APlayerHud* hud = Cast<APlayerHud>(PlayerController->GetHUD());
+	{
+		APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
+		APlayerHud* hud = Cast<APlayerHud>(PlayerController->GetHUD());
 
-	widget = Cast<UMyUserWidget>(hud->GetMadnessMeterWidget());
-});
+		widget = Cast<UMyUserWidget>(hud->GetMadnessMeterWidget());
+	});
 }
 
 // make object fade into wall/floor

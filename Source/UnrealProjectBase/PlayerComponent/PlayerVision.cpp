@@ -55,12 +55,14 @@ void UPlayerVision::Interval()
 
 void UPlayerVision::LookForTentacleWall()
 {
+	if (!isFocusing) return;
+	
 	PlayerLocation = PlayerCamera->GetComponentLocation();
 
 	// check if the eye was recently rendered
 	for (TObjectPtr<AActor> Actor : tenticalArray)
 	{
-		if (IsValid(Actor) && !Actor->IsPendingKillPending() && !Actor->IsActorBeingDestroyed())
+		if (IsValid(Actor) && !Actor->IsPendingKillPending())
 		{
 			FVector ActorLocation = Actor->GetActorLocation(); 
 			float dProduct = DotProduct(ActorLocation);
