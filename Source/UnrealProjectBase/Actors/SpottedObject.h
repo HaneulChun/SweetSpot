@@ -29,7 +29,6 @@ protected:
 	TObjectPtr<UMyUserWidget> widget;
 	
 	FTransform startTransform;
-	int count = 0;
 
 	FTimerHandle TimerHandle;
 
@@ -62,4 +61,6 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Property")
 	int focusedLookTicks = 20;
+
+	int count = 0;
 };

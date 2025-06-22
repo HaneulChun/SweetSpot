@@ -2,16 +2,15 @@
 
 #include "MyUserWidget.h"
 
-#include "EngineUtils.h"
-#include "Camera/CameraComponent.h"
 #include "Engine/Scene.h"
 #include "FMODBlueprintStatics.h"
 #include "PlayerHud.h"
+#include "Components/ArrowComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "UnrealProjectBase/Actors/SweetSpotCharacter.h"
 #include "UnrealProjectBase/Component/CameraSettingsComponent.h"
 #include "UnrealProjectBase/PlayerComponent/FadeObjectComponent.h"
-#include "UnrealProjectBase/PlayerComponent/PlayerVision.h"
+#include "Engine/LevelStreaming.h"
 
 void UMyUserWidget::NativeConstruct()
 {
@@ -86,9 +85,6 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			
 			CameraSettings->ChangeCameraMaterial(0.0f);
 			matIntensity = 0;
-
-			// set text
-			playerHud->SetText("");  
 			
 			// show actor
 			FadeObject->Fade(0, 1, 0, 1);
@@ -113,24 +109,6 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 				vignetteIntensity = 0.4;
 			}
 			
-			// check if player can focus in an object
-			// if there is no object to focus don't show text
-			for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
-			{
-				if (AActor* Actor = *ActorItr)
-				{
-					if (UMeshComponent* MeshComp = Actor->FindComponentByClass<UMeshComponent>())
-					{
-						if (MeshComp->CustomDepthStencilValue == 1)
-						{
-							playerHud->SetText("Hold LMB to focus");
-							
-							break;
-						}
-					}
-				}
-			}
-			
 			// hide actor
 			if (CurrentState == ECurrentState::Mad)
 			{
@@ -146,28 +124,6 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 	}
 }
 
-void UMyUserWidget::CheckForSubLevel(TSoftObjectPtr<UWorld> unloadedSubLevel)
-{
-	// loop until the level is unloaded to set the SweetSpotActors
-	GetWorld()->GetTimerManager().SetTimer(TimerHandleLevel, [this, unloadedSubLevel]()
-	{
-		if (!unloadedSubLevel.IsValid())
-		{
-			FadeObject->StartLoop();
-
-			// set the array for tentacle and eyes
-			if (TObjectPtr<APlayerController> PlayerController = GetWorld()->GetFirstPlayerController())
-			{
-				if (TObjectPtr<UPlayerVision> playerVision = PlayerController->GetPawn()->FindComponentByClass<UPlayerVision>())
-				{
-					playerVision->SetActorArray();	
-				}
-			}
-			
-			GetWorld()->GetTimerManager().ClearTimer(TimerHandleLevel);
-		}
-	}, 0.2f, true);
-}
 
 float UMyUserWidget::GetSweetSpotValue()
 {
@@ -232,7 +188,8 @@ void UMyUserWidget::Dead()
 	// find object with spawn tag and teleport to spawn
 	if (FadeObject->spawnPoint)
 	{
-		Player->SetActorLocation(FadeObject->spawnPoint->GetActorLocation());
+		Player->Controller->SetControlRotation(FadeObject->spawnPoint->FindComponentByClass<UArrowComponent>()->GetComponentRotation());
+		Player->SetActorLocation(FadeObject->spawnPoint->FindComponentByClass<UArrowComponent>()->GetComponentLocation());
 	}
 						
 	if (FullyMadSFX)

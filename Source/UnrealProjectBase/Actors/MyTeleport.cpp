@@ -42,7 +42,6 @@ void AMyTeleport::BeginPlay()
 	if (triggerBox)
 	{
 		triggerBox->OnComponentBeginOverlap.AddDynamic(this, &AMyTeleport::OnOverlapBegin);
-		triggerBox->OnComponentEndOverlap.AddDynamic(this, &AMyTeleport::OnOverlapEnd);
 	}
 	
 	GetWorld()->GetTimerManager().SetTimerForNextTick([this]()
@@ -65,12 +64,13 @@ void AMyTeleport::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 	if (!Cast<UCapsuleComponent>(OtherComp)) return;
 
 	if (hasTeleported) return;
+	hasTeleported = true;
 	
 	// check if puzzle is completed
 	if (isCompleted == true)
 	{
 		Player = OtherActor;
-		LoadSubLevel_Implementation();
+		LoadSubLevel();
 	}
 	else
 	{
@@ -86,38 +86,12 @@ void AMyTeleport::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 			widget->IncreaseMadnessBar(increaseMadness);	
 		}
 	}
-	hasTeleported = true;
-}
 
-void AMyTeleport::OnOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
-{
-	if (!Cast<ACharacter>(OtherActor)) return;
-	if (!Cast<UCapsuleComponent>(OtherComp)) return;
-	
-	hasTeleported = false;
-}
-
-void AMyTeleport::LoadSubLevel_Implementation()
-{
-	LoadSubLevel();
-	
-	// loop until the loop is loaded to spawn the player
-	GetWorld()->GetTimerManager().SetTimer(TimerHandleLevel, [this]()
+	// enable teleport after next frame
+	GetWorld()->GetTimerManager().SetTimerForNextTick([this]()
 	{
-		if (NextLoopLevel.IsValid())
-		{
-			Teleport(Player, NextTeleportTo->GetComponentTransform());
-			GetWorld()->GetTimerManager().ClearTimer(TimerHandleLevel);
-
-			//unload current level
-			unLoadSubLevel();
-		}
-	}, 0.1f, true);
-}
-
-void AMyTeleport::unLoadSubLevel_Implementation()
-{
+		hasTeleported = false;
+	});
 }
 
 void AMyTeleport::SetActors()

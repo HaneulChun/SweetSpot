@@ -7,6 +7,7 @@
 #include "UnrealProjectBase/Actors/BigEye.h"
 #include "Math/Vector.h"
 #include "Camera/CameraComponent.h"
+#include "UnrealProjectBase/Actors/Eye.h"
 #include "UnrealProjectBase/Actors/TentacleWall.h"
 
 // Sets default values for this component's properties
@@ -55,12 +56,14 @@ void UPlayerVision::Interval()
 
 void UPlayerVision::LookForTentacleWall()
 {
+	if (!isFocusing) return;
+	
 	PlayerLocation = PlayerCamera->GetComponentLocation();
 
 	// check if the eye was recently rendered
 	for (TObjectPtr<AActor> Actor : tenticalArray)
 	{
-		if (IsValid(Actor) && !Actor->IsPendingKillPending() && !Actor->IsActorBeingDestroyed())
+		if (IsValid(Actor) && !Actor->IsPendingKillPending())
 		{
 			FVector ActorLocation = Actor->GetActorLocation(); 
 			float dProduct = DotProduct(ActorLocation);
@@ -278,24 +281,25 @@ void UPlayerVision::SetActorArray()
 	bigEyeMeshArray.Empty();
 
 	// add objects to array
-	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+	for (TActorIterator<ATentacleWall> ActorItr(GetWorld()); ActorItr; ++ActorItr)
 	{
-		TObjectPtr<AActor> Actor = *ActorItr;
+		TObjectPtr<ATentacleWall> Actor = *ActorItr;
 
-		if (Actor->Tags.Contains("Tentacle"))
-		{
-			tenticalArray.Add(Actor);
-			tenticalMeshArray.Add(Actor->FindComponentByClass<UMeshComponent>());
-		}
-		else if (Actor->Tags.Contains("SeeMe"))
-		{
-			eyeArray.Add(Actor);
-			eyeMeshArray.Add(Actor->FindComponentByClass<UMeshComponent>());
-		}
-		else if (Actor->Tags.Contains("BigEye"))
-		{
-			bigEyeArray.Add(Actor);
-			bigEyeMeshArray.Add(Actor->FindComponentByClass<UMeshComponent>());
-		}
+		tenticalArray.Add(Actor);
+		tenticalMeshArray.Add(Actor->FindComponentByClass<UMeshComponent>());
+	}
+	
+	for (TActorIterator<ABigEye> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+	{
+		TObjectPtr<ABigEye> Actor = *ActorItr;
+		bigEyeArray.Add(Actor);
+		bigEyeMeshArray.Add(Actor->FindComponentByClass<UMeshComponent>());
+	}
+	
+	for (TActorIterator<AEye> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+	{
+		TObjectPtr<AEye> Actor = *ActorItr;
+		eyeArray.Add(Actor);
+		eyeMeshArray.Add(Actor->FindComponentByClass<UMeshComponent>());
 	}
 }

@@ -101,8 +101,10 @@ void ATentacleWall::FadeAway()
 		FVector CurrentLocation = GetActorLocation();
 		FVector NewLocation = CurrentLocation + (Direction * speed);
 		SetActorLocation(NewLocation);
+
+		CameraShake();
 		
-		GetWorldTimerManager().SetTimer(TimerHandle, this, &ATentacleWall::ResetTentaclePosition, 1.0f, false, 0.4f);
+		GetWorldTimerManager().SetTimer(TimerHandle, this, &ATentacleWall::ResetTentaclePosition_Implementation, 1.0f, false, 0.4f);
 	}
 	else
 	{
@@ -123,8 +125,9 @@ void ATentacleWall::StartDown()
 	SetActorLocation(FVector(GetActorLocation().X, GetActorLocation().Y, finalLocation));
 }
 
-void ATentacleWall::ResetTentaclePosition()
+void ATentacleWall::ResetTentaclePosition_Implementation()
 {
+	ResetTentaclePosition();
 	SetActorTransform(startTransform);
 	count = 0;
 }

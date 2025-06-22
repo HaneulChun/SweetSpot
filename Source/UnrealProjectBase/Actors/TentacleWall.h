@@ -33,8 +33,6 @@ protected:
 	FTimerHandle TimerHandle;
 	
 	FTransform startTransform;
-	bool isPlayerNear = false;
-	int count = 0;
 	
 	UPROPERTY()
 	TObjectPtr<UMyUserWidget> widget;
@@ -67,11 +65,18 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void StartDown();
 
-	UFUNCTION()
+	
+	UFUNCTION(BlueprintImplementableEvent)
+	void CameraShake();
+	
+	UFUNCTION(BlueprintNativeEvent)
 	void ResetTentaclePosition();
-
+	virtual void ResetTentaclePosition_Implementation();
+	
+	
 	UFUNCTION(BlueprintImplementableEvent)
 	void DestroyTentacle();
+
 	
 	UPROPERTY(BlueprintReadWrite)
 	bool isFading = false;
@@ -90,4 +95,7 @@ public:
 	
 	UPROPERTY(EditAnywhere)
 	int focusedLookTicks = 20;
+
+	UPROPERTY(BlueprintReadOnly)
+	int count = 0;
 };
