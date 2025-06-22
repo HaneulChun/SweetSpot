@@ -23,7 +23,7 @@ public:
 	virtual void BeginPlay() override;
 	
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
-	void CheckForSubLevel(const TSoftObjectPtr<UWorld>& UnloadedSubLevel);
+	void CheckForSubLevel(const TSoftObjectPtr<UWorld>& UnloadSubLevel);
 
 	UFUNCTION(BlueprintCallable)
 	void SetLevel();
