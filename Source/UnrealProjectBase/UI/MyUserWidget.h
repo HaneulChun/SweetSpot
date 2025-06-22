@@ -43,9 +43,7 @@ protected:
 	TObjectPtr<APawn> Player;
 
 	TObjectPtr<UCameraSettingsComponent> CameraSettings;
-	
-	UPROPERTY()
-	TSoftObjectPtr<UWorld> checkUnloadedLevel;
+
 public:
 	UPROPERTY(BlueprintReadOnly)
 	ECurrentState CurrentState = ECurrentState::SweetSpot;
@@ -58,10 +56,7 @@ public:
 	TObjectPtr<UUserWidget> CurrentWidget;
 
 	TObjectPtr<UFadeObjectComponent> FadeObject;
-
-
-	UFUNCTION(BlueprintCallable)
-	void CheckForSubLevel(TSoftObjectPtr<UWorld> unloadedSubLevel);
+	
 
 	FTimerHandle TimerHandleLevel;
 	
