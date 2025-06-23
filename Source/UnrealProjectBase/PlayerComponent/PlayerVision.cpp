@@ -7,7 +7,9 @@
 #include "UnrealProjectBase/Actors/BigEye.h"
 #include "Math/Vector.h"
 #include "Camera/CameraComponent.h"
+#include "UnrealProjectBase/Actors/Eye.h"
 #include "UnrealProjectBase/Actors/TentacleWall.h"
+#include "Math/UnrealMathUtility.h"
 
 // Sets default values for this component's properties
 UPlayerVision::UPlayerVision()
@@ -186,9 +188,8 @@ void UPlayerVision::LookForBigEye()
 		{
 			FVector Center = bigEyeMeshArray[bigEyeIndex]->Bounds.Origin;
 			float Radius = bigEyeMeshArray[bigEyeIndex]->Bounds.SphereRadius;
-	
-	
-				// set points to check if the player can see the object
+			
+			// set points to check if the player can see the object
 			TArray<FVector> PointsToCheck = {
 				Center,
 				Center + FVector(Radius, 0, 0),
@@ -198,16 +199,14 @@ void UPlayerVision::LookForBigEye()
 				Center + FVector(0, 0, Radius),
 				Center + FVector(0, 0, -Radius)
 			};
-	
-	
+			
 			// check if there is a wall between player and point
 			for (const FVector& Point : PointsToCheck)
 			{
 				FHitResult HitResult;
 				FCollisionQueryParams Params;
 				Params.AddIgnoredActor(PlayerPawn);
-	
-	
+				
 				bool bHit = GetWorld()->LineTraceSingleByChannel(
 					HitResult,
 					PlayerLocation,
@@ -225,29 +224,21 @@ void UPlayerVision::LookForBigEye()
 						// check if player is looking at big eye
 						if (DotProduct(Actor->GetActorLocation()) > bigEye->radius)
 						{
-							FVector objectToLookAt = (Actor->GetActorLocation() - PlayerCamera->GetComponentLocation()).GetSafeNormal();
+							FVector Dir = (Actor->GetActorLocation() - PlayerCamera->GetComponentLocation()).GetSafeNormal();
 							
-							// Direction away from object
-							FVector LookAwayDirection = -objectToLookAt;
+							FVector Forward = PlayerCamera->GetForwardVector();
+							FVector Cross = FVector::CrossProduct(Forward, Dir);
+							float Direction = FVector::DotProduct(Cross, PlayerCamera->GetUpVector());
 							
-							FRotator CurrentRotation = PlayerCamera->GetComponentRotation();
-							FRotator TargetRotation = LookAwayDirection.Rotation();
+							FVector Up = PlayerCamera->GetUpVector();
+							float VerticalDot = FVector::DotProduct(Dir, Up);
+							
+							FRotator RelativeRotation = FRotator(FMath::Sign(VerticalDot) * -100, FMath::Sign(Direction) * -100, 0.0f);
+							FRotator CurrentRotation = PlayerController->GetControlRotation();
+							FRotator NewRotation = RelativeRotation + CurrentRotation;
 
-							// test
-
-							// FVector Dir = (Actor->GetActorLocation() - PlayerCamera->GetComponentLocation()).GetSafeNormal();
-							//
-							//
-							// if (GEngine)
-							// {
-							// 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, FString::Printf(TEXT("Location: %s"), *Dir.ToString()));
-							// }
-							
-							//test
-							
-							// Interpolate rotation
-							FRotator NewRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), bigEye->PushBackForce);
-							PlayerController->SetControlRotation(NewRotation);
+							FRotator NewRotationt = FMath::RInterpTo(CurrentRotation, NewRotation, GetWorld()->GetDeltaSeconds(), bigEye->PushBackForce);
+							PlayerController->SetControlRotation(NewRotationt);
 
 							// make big eye look at player
 							bigEye->LookAtPlayer();
@@ -280,24 +271,25 @@ void UPlayerVision::SetActorArray()
 	bigEyeMeshArray.Empty();
 
 	// add objects to array
-	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+	for (TActorIterator<ATentacleWall> ActorItr(GetWorld()); ActorItr; ++ActorItr)
 	{
-		TObjectPtr<AActor> Actor = *ActorItr;
+		TObjectPtr<ATentacleWall> Actor = *ActorItr;
 
-		if (Actor->Tags.Contains("Tentacle"))
-		{
-			tenticalArray.Add(Actor);
-			tenticalMeshArray.Add(Actor->FindComponentByClass<UMeshComponent>());
-		}
-		else if (Actor->Tags.Contains("SeeMe"))
-		{
-			eyeArray.Add(Actor);
-			eyeMeshArray.Add(Actor->FindComponentByClass<UMeshComponent>());
-		}
-		else if (Actor->Tags.Contains("BigEye"))
-		{
-			bigEyeArray.Add(Actor);
-			bigEyeMeshArray.Add(Actor->FindComponentByClass<UMeshComponent>());
-		}
+		tenticalArray.Add(Actor);
+		tenticalMeshArray.Add(Actor->FindComponentByClass<UMeshComponent>());
+	}
+	
+	for (TActorIterator<ABigEye> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+	{
+		TObjectPtr<ABigEye> Actor = *ActorItr;
+		bigEyeArray.Add(Actor);
+		bigEyeMeshArray.Add(Actor->FindComponentByClass<UMeshComponent>());
+	}
+	
+	for (TActorIterator<AEye> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+	{
+		TObjectPtr<AEye> Actor = *ActorItr;
+		eyeArray.Add(Actor);
+		eyeMeshArray.Add(Actor->FindComponentByClass<UMeshComponent>());
 	}
 }

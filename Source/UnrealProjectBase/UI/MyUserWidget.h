@@ -31,9 +31,7 @@ class UNREALPROJECTBASE_API UMyUserWidget : public UUserWidget
 
 protected:
 	virtual void NativeConstruct() override;
-
-	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
-
+	
 	// cache
 	FTimerHandle TimerHandle;
 	bool isDying = false;
@@ -43,9 +41,7 @@ protected:
 	TObjectPtr<APawn> Player;
 
 	TObjectPtr<UCameraSettingsComponent> CameraSettings;
-	
-	UPROPERTY()
-	TSoftObjectPtr<UWorld> checkUnloadedLevel;
+
 public:
 	UPROPERTY(BlueprintReadOnly)
 	ECurrentState CurrentState = ECurrentState::SweetSpot;
@@ -58,17 +54,16 @@ public:
 	TObjectPtr<UUserWidget> CurrentWidget;
 
 	TObjectPtr<UFadeObjectComponent> FadeObject;
-
-
-	UFUNCTION(BlueprintCallable)
-	void CheckForSubLevel(TSoftObjectPtr<UWorld> unloadedSubLevel);
+	
 
 	FTimerHandle TimerHandleLevel;
 	
 	UPROPERTY()
 	TObjectPtr<UFMODEvent> FullyMadSFX;
 	
-
+	UFUNCTION(BlueprintCallable)
+	void CheckPlayerState();
+	
 	UFUNCTION(BlueprintCallable)
 	float GetSweetSpotValue();
 
