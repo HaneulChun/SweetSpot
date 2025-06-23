@@ -22,8 +22,6 @@ ATentacleWall::ATentacleWall()
 	triggerBox->SetupAttachment(RootComponent);
 	triggerBox->SetCollisionProfileName(TEXT("Trigger"));
 	triggerBox->SetGenerateOverlapEvents(true);
-
-	Tags.Add("Tentacle");
 }
 
 // Called when the game starts or when spawned

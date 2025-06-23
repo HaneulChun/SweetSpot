@@ -19,7 +19,6 @@ void ABigEye::BeginPlay()
 	Super::BeginPlay();
 
 	startTransform = GetTransform();
-	Tags.Add("BigEye");
 
 	GetWorld()->GetTimerManager().SetTimerForNextTick([this]()
 	{
