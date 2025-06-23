@@ -31,9 +31,7 @@ class UNREALPROJECTBASE_API UMyUserWidget : public UUserWidget
 
 protected:
 	virtual void NativeConstruct() override;
-
-	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
-
+	
 	// cache
 	FTimerHandle TimerHandle;
 	bool isDying = false;
@@ -63,7 +61,9 @@ public:
 	UPROPERTY()
 	TObjectPtr<UFMODEvent> FullyMadSFX;
 	
-
+	UFUNCTION(BlueprintCallable)
+	void CheckPlayerState();
+	
 	UFUNCTION(BlueprintCallable)
 	float GetSweetSpotValue();
 
