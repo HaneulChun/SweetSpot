@@ -42,10 +42,8 @@ void UMyUserWidget::NativeConstruct()
 	});
 }
 
-void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
+void UMyUserWidget::CheckPlayerState()
 {
-	Super::NativeTick(MyGeometry, InDeltaTime);
-	
 	if(currentMadnessBarValue <= sweetSpot) // sane 
 	{
 		if (CurrentState != ECurrentState::Sane)
@@ -123,7 +121,6 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 		}
 	}
 }
-
 
 float UMyUserWidget::GetSweetSpotValue()
 {
