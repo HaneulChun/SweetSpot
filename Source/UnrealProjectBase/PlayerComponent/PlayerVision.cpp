@@ -139,7 +139,7 @@ void UPlayerVision::LookForEye()
 				Point,
 				ECC_Visibility,
 				Params);
-					
+
 			// if you see actor make it fade away
 			if (!bHit || HitResult.GetActor() == Actor)
 			{
