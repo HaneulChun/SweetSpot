@@ -5,7 +5,7 @@
 #include "Blueprint/UserWidget.h"
 #include "Components/TextBlock.h"
 
-ATextMessageBox::ATextMessageBox() : WBP_MessageBox_Container(nullptr), Text_MessageBox(nullptr)
+ATextMessageBox::ATextMessageBox() : WBP_MessageBox_Container(nullptr), Text_MessageBox(nullptr), bClearingScheduled(false)
 {
 }
 
@@ -28,6 +28,24 @@ void ATextMessageBox::Tick(float DeltaTime)
 	{
 		Text_MessageBox->SetText(FText::FromString(MessageToDisplay));
 
-		// if (Text_MessageBox->Changed)
+		if (!Text_MessageBox->GetText().IsEmpty())
+		{
+			GetWorld()->GetTimerManager().SetTimer(
+				MessageClearTimerHandle,
+				this,
+				&ATextMessageBox::ClearMessageText,
+				3.0f,
+				false
+				);
+		}
+	}
+}
+
+void ATextMessageBox::ClearMessageText()
+{
+	if (Text_MessageBox)
+	{
+		MessageToDisplay = TEXT("");
+		Text_MessageBox->SetText(FText::FromString(MessageToDisplay));
 	}
 }
