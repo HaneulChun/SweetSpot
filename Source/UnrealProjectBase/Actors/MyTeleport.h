@@ -41,16 +41,16 @@ protected:
 	UPROPERTY()
 	TObjectPtr<AActor> Player;
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TeleportLoop")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSoftObjectPtr<UWorld> NextLoopLevel;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TeleportLoop")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSoftObjectPtr<UWorld> thisLoopLevel;
 	
-	UPROPERTY(VisibleAnywhere, Category = "TeleportLoop")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<USceneComponent> teleportTo;
 
-	UPROPERTY(VisibleAnywhere, Category = "TeleportLoop")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<USceneComponent> NextTeleportTo;
 
 	
@@ -60,15 +60,8 @@ public:
 		bool bFromSweep, const FHitResult& SweepResult);
 
 	
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void LoadSubLevel();
-	virtual void LoadSubLevel_Implementation();
-
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
-	void unLoadSubLevel();
-	virtual void unLoadSubLevel_Implementation();
-
-	FTimerHandle TimerHandleLevel;
 	
 	UFUNCTION()
 	void SetActors();
@@ -76,7 +69,7 @@ public:
 	UFUNCTION()
 	void Reset();
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	void Teleport(AActor* OtherActor, FTransform Transform);
 	
 	UPROPERTY(BlueprintReadWrite)
