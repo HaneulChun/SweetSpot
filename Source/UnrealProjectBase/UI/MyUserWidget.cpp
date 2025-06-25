@@ -90,7 +90,7 @@ void UMyUserWidget::CheckPlayerState()
 			CurrentState = ECurrentState::Mad;
 		}
 	}
-	else // sweat spot
+	else // sweet spot
 	{
 		if (CurrentState != ECurrentState::SweetSpot)
 		{
