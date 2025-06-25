@@ -26,5 +26,5 @@ protected:
 	TObjectPtr<UBoxComponent> triggerBox;
 public:	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TArray<TObjectPtr<UArrowComponent>> ArrowArray;
+	TObjectPtr<UArrowComponent> spawnTentacle;
 };
