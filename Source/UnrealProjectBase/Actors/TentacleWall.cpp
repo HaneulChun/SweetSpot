@@ -3,9 +3,11 @@
 
 #include "TentacleWall.h"
 
+#include "SweetSpotCharacter.h"
 #include "Components/BoxComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/Character.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "UnrealProjectBase/UI/MyUserWidget.h"
 #include "UnrealProjectBase/UI/PlayerHud.h"
 
@@ -38,6 +40,9 @@ void ATentacleWall::BeginPlay()
 		APlayerHud* hud = Cast<APlayerHud>(PlayerController->GetHUD());
 
 		widget = Cast<UMyUserWidget>(hud->GetMadnessMeterWidget());
+
+		Character = Cast<ASweetSpotCharacter>(PlayerController->GetPawn());
+		OriginalSpeed = Character->GetCharacterMovement()->MaxWalkSpeed;
 	});
 
 	startTransform = GetTransform();
@@ -54,7 +59,7 @@ void ATentacleWall::Tick(float DeltaTime)
 	{
 		// move the object
 		FVector CurrentLocation = GetActorLocation();
-		SetActorLocation(CurrentLocation + (GetActorUpVector() * 1));
+		SetActorLocation(CurrentLocation + (GetActorUpVector() * comingUpSpeed));
 		
 		if (CurrentLocation.Z >= startLocation)
 		{
@@ -66,10 +71,14 @@ void ATentacleWall::Tick(float DeltaTime)
 void ATentacleWall::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
                                    UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (!Cast<ACharacter>(OtherActor)) return;
+	if (!Cast<ASweetSpotCharacter>(OtherActor)) return;
 	if (!Cast<UCapsuleComponent>(OtherComp)) return;
-
+	
+	// give damage too player
 	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &ATentacleWall::IncreaseMadnessBar, 0.4, true);
+
+	// slow down player
+	Character->GetCharacterMovement()->MaxWalkSpeed = slowPlayer;
 }
 
 void ATentacleWall::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
@@ -78,7 +87,11 @@ void ATentacleWall::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* Ot
 	if (!Cast<ACharacter>(OtherActor)) return;
 	if (!Cast<UCapsuleComponent>(OtherComp)) return;
 
+	// end damage timer
 	GetWorld()->GetTimerManager().ClearTimer(TimerHandle);
+
+	// give player their original speed
+	Character->GetCharacterMovement()->MaxWalkSpeed = OriginalSpeed;
 }
 
 
