@@ -59,7 +59,7 @@ void UPlayerVision::LookForTentacleWall()
 	if (!isFocusing) return;
 	
 	// check if the eye was recently rendered
-	for (TObjectPtr<AActor> Actor : tenticalArray)
+	for (AActor* Actor : tenticalArray)
 	{
 		if (!IsValid(Actor) || Actor->IsPendingKillPending())
 		{
@@ -117,8 +117,16 @@ void UPlayerVision::LookForEye()
 	// check if the eye was recently rendered
 	for (TObjectPtr<AActor> Actor : eyeArray)
 	{
-		if (!IsValid(Actor) || !Actor->WasRecentlyRendered(0.1f)) continue;
-		if (DotProduct(Actor->GetActorLocation()) <= 0.54) continue;
+		if (!IsValid(Actor) || !Actor->WasRecentlyRendered(0.1f))
+		{
+			EyeIndex++;
+			continue;
+		}
+		if (DotProduct(Actor->GetActorLocation()) <= 0.54)
+		{
+			EyeIndex++;
+			continue;
+		}
 
 		FVector Center = eyeMeshArray[EyeIndex]->Bounds.Origin;
 		float Radius = eyeMeshArray[EyeIndex]->Bounds.SphereRadius;
