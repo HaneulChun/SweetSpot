@@ -182,12 +182,7 @@ void UMyUserWidget::Dying()
 
 void UMyUserWidget::Dead()
 {
-	// find object with spawn tag and teleport to spawn
-	if (FadeObject->spawnPoint)
-	{
-		Player->Controller->SetControlRotation(FadeObject->spawnPoint->FindComponentByClass<UArrowComponent>()->GetComponentRotation());
-		Player->SetActorLocation(FadeObject->spawnPoint->FindComponentByClass<UArrowComponent>()->GetComponentLocation());
-	}
+	SpawnPlayer();
 						
 	if (FullyMadSFX)
 	{
@@ -198,4 +193,14 @@ void UMyUserWidget::Dead()
 	MyCharacter->Dead();
 	
 	currentMadnessBarValue = 0;
+}
+
+void UMyUserWidget::SpawnPlayer()
+{
+	// find object with spawn tag and teleport to spawn
+	if (FadeObject->spawnPoint)
+	{
+		Player->Controller->SetControlRotation(FadeObject->spawnPoint->FindComponentByClass<UArrowComponent>()->GetComponentRotation());
+		Player->SetActorLocation(FadeObject->spawnPoint->FindComponentByClass<UArrowComponent>()->GetComponentLocation());
+	}
 }

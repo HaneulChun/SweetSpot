@@ -5,6 +5,7 @@
 
 #include "Components/ArrowComponent.h"
 #include "Components/BillboardComponent.h"
+#include "Components/BoxComponent.h"
 
 // Sets default values
 ABlackVoid::ABlackVoid()
@@ -24,6 +25,11 @@ ABlackVoid::ABlackVoid()
 
 	blackVoid = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BlackVoid"));
 	blackVoid->SetupAttachment(RootComponent);
+
+	triggerBox = CreateDefaultSubobject<UBoxComponent>(TEXT("TriggerBox"));
+	triggerBox->SetupAttachment(blackVoid);
+	triggerBox->SetCollisionProfileName(TEXT("Trigger"));
+	triggerBox->SetGenerateOverlapEvents(true);
 }
 
 // Called when the game starts or when spawned
@@ -33,8 +39,12 @@ void ABlackVoid::BeginPlay()
 
 	blackVoid->SetWorldLocation(start->GetComponentLocation());
 	
+	triggerBox->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	blackVoid->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-	//blackVoid->SetHiddenInGame(true);
+	blackVoid->SetHiddenInGame(true);
+
+	PrimaryActorTick.SetTickFunctionEnable(true);
+	SetActorTickEnabled(false);
 }
 
 // Called every frame
@@ -49,5 +59,20 @@ void ABlackVoid::Tick(float DeltaTime)
 		FVector NewLocation = FMath::Lerp(start->GetComponentLocation(), end->GetComponentLocation(), Alpha);
 		blackVoid->SetWorldLocation(NewLocation);
 	}
+	else
+	{
+		SetActorTickEnabled(false);
+	}
+	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, "BlackVoid");
+}
+
+void ABlackVoid::StartVoid()
+{
+	SetActorTickEnabled(true);
+
+	triggerBox->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+	blackVoid->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+	blackVoid->SetHiddenInGame(false);
+
 }
 

@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "BlackVoid.generated.h"
 
+class UBoxComponent;
+
 UCLASS()
 class UNREALPROJECTBASE_API ABlackVoid : public AActor
 {
@@ -27,10 +29,15 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<UStaticMeshComponent> blackVoid;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite);
+	TObjectPtr<UBoxComponent> triggerBox;
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION(BlueprintCallable)
+	void StartVoid();
 private:
 	float MoveDuration = 2.0f;
 	float ElapsedTime = 0.0f;
