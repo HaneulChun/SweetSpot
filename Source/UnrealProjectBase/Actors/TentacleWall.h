@@ -108,5 +108,5 @@ public:
 	int count = 0;
 
 	UPROPERTY(EditAnywhere)
-	float comingUpSpeed = 1;
+	float comingUpSpeed = 2;
 };

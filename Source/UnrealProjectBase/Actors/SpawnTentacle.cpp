@@ -18,6 +18,9 @@ ASpawnTentacle::ASpawnTentacle()
 	triggerBox->SetupAttachment(RootComponent);
 	triggerBox->SetCollisionProfileName(TEXT("Trigger"));
 	triggerBox->SetGenerateOverlapEvents(true);
+
+	spawnTentacle = CreateDefaultSubobject<UArrowComponent>(TEXT("Arrow"));
+	spawnTentacle->SetupAttachment(RootComponent);
 }
 
 // Called when the game starts or when spawned

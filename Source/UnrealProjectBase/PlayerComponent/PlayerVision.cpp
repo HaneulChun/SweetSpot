@@ -61,8 +61,16 @@ void UPlayerVision::LookForTentacleWall()
 	// check if the eye was recently rendered
 	for (TObjectPtr<AActor> Actor : tenticalArray)
 	{
-		if (!IsValid(Actor) || Actor->IsPendingKillPending()) continue;;
-		if (DotProduct(Actor->GetActorLocation()) <= 0.54) continue;
+		if (!IsValid(Actor) || Actor->IsPendingKillPending())
+		{
+			tenticalIndex++;
+			continue;
+		}
+		if (DotProduct(Actor->GetActorLocation()) <= 0.54)
+		{
+			tenticalIndex++;
+			continue;
+		}
 
 		FVector bottom = tenticalMeshArray[tenticalIndex]->Bounds.Origin;
 		float height = 105;
