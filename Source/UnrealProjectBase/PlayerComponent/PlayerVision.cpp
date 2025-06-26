@@ -233,8 +233,14 @@ void UPlayerVision::LookForBigEye()
 							
 							FVector Up = PlayerCamera->GetUpVector();
 							float VerticalDot = FVector::DotProduct(Dir, Up);
+
+							float vertical = FMath::Abs(VerticalDot);
+							float horizontal = FMath::Abs(Direction);
 							
-							FRotator RelativeRotation = FRotator(FMath::Sign(VerticalDot) * -100, FMath::Sign(Direction) * -100, 0.0f);
+							float pitch = VerticalDot/(vertical + horizontal);
+							float yaw = Direction/(vertical + horizontal);
+							
+							FRotator RelativeRotation = FRotator(pitch * -100,yaw * -100, 0.0f);
 							FRotator CurrentRotation = PlayerController->GetControlRotation();
 							FRotator NewRotation = RelativeRotation + CurrentRotation;
 
