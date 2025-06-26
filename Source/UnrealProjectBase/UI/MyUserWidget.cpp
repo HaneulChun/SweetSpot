@@ -148,15 +148,13 @@ void UMyUserWidget::SetIncreaseMadness(float value)
 
 void UMyUserWidget::DecreaseMadness(float value)
 {
-	currentMadnessBarValue -= value;
-	if (isInRoom)
+	if ((currentMadnessBarValue -= value) < 0.2f)
 	{
-		CameraSettings->ChangeCameraSettings(0.0, 1);
-		CameraSettings->Color(0.5);
+		currentMadnessBarValue = 0.2f;
 	}
 	else
 	{
-		CameraSettings->ChangeCameraSettings(0.0, .4);
+		currentMadnessBarValue -= value;
 	}
 }
 

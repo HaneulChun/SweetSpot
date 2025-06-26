@@ -56,7 +56,7 @@ void ABigEye::FadeAway()
 	else
 	{
 		this->SetActorHiddenInGame(true);
-		MadnessWidget->IncreaseMadnessBar(-restoreMadnessValue);
+		MadnessWidget->DecreaseMadness(restoreMadnessValue);
 		
 		// give immune to player madness meter 
 		//MadnessWidget->isImmune = true;
