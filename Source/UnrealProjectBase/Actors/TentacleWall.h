@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "TentacleWall.generated.h"
 
+class ASweetSpotCharacter;
 class UMyUserWidget;
 class UBoxComponent;
 
@@ -24,6 +25,8 @@ private:
 
 	UPROPERTY()
 	float startLocation;
+
+	TObjectPtr<ASweetSpotCharacter> Character;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -33,8 +36,6 @@ protected:
 	FTimerHandle TimerHandle;
 	
 	FTransform startTransform;
-	bool isPlayerNear = false;
-	int count = 0;
 	
 	UPROPERTY()
 	TObjectPtr<UMyUserWidget> widget;
@@ -56,6 +57,11 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float restoreMadnessValue = 0.1;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float slowPlayer = 200;
+
+	float OriginalSpeed;
 public:	
 
 	UFUNCTION(BlueprintCallable)
@@ -67,11 +73,18 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void StartDown();
 
-	UFUNCTION()
+	
+	UFUNCTION(BlueprintImplementableEvent)
+	void CameraShake();
+	
+	UFUNCTION(BlueprintNativeEvent)
 	void ResetTentaclePosition();
-
+	virtual void ResetTentaclePosition_Implementation();
+	
+	
 	UFUNCTION(BlueprintImplementableEvent)
 	void DestroyTentacle();
+
 	
 	UPROPERTY(BlueprintReadWrite)
 	bool isFading = false;
@@ -90,4 +103,10 @@ public:
 	
 	UPROPERTY(EditAnywhere)
 	int focusedLookTicks = 20;
+
+	UPROPERTY(BlueprintReadOnly)
+	int count = 0;
+
+	UPROPERTY(EditAnywhere)
+	float comingUpSpeed = 2;
 };
