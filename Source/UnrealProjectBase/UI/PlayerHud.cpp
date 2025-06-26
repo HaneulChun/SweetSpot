@@ -30,6 +30,8 @@ void APlayerHud::BeginPlay()
 			}
 		}
 	}
+
+	// set up popUp Widget
 	if (PopUpWidgetClass)
 	{
 		PopUpWidget = CreateWidget<UPopUpWidget>(GetWorld(), PopUpWidgetClass);
@@ -38,21 +40,14 @@ void APlayerHud::BeginPlay()
 			PopUpWidget->AddToViewport();
 		}
 	}
-	Text = TEXT("");
 }
 
 void APlayerHud::DrawHUD()
 {
 	Super::DrawHUD();
-	
-	// set the text on screen 
-	FCanvasTextItem TextItem(FVector2D(500, 40), FText::FromString(Text), GEngine->GetLargeFont(), FLinearColor::Red);
-	TextItem.Scale = FVector2D(2.5f, 2.5f);
-	
 	FCanvasTextItem TextItemGoto(FVector2D(1000, 40), FText::FromString(GotoText), GEngine->GetLargeFont(), FLinearColor::Red);
 	TextItemGoto.Scale = FVector2D(2.5f, 2.5f);
 	
-	//Canvas->DrawItem(TextItem);
 	Canvas->DrawItem(TextItemGoto);
 }
 
@@ -65,9 +60,4 @@ UMyUserWidget* APlayerHud::GetMadnessMeterWidget() const
 void APlayerHud::SetTextTodo(FString setText)
 {
 	GotoText = setText;
-}
-
-void APlayerHud::SetText(FString setText)
-{
-	Text = setText;
 }

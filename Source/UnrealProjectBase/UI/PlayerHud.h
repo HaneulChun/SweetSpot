@@ -27,9 +27,6 @@ protected:
 public:
 
 	UPROPERTY(BlueprintReadOnly, Category = "UI")
-	FString Text = "";
-
-	UPROPERTY(BlueprintReadOnly, Category = "UI")
 	FString GotoText = "";
 	
 	
@@ -62,7 +59,4 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetTextTodo(FString setText);
-
-	UFUNCTION(BlueprintCallable)
-	void SetText(FString setText);
 };
