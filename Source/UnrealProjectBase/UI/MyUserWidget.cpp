@@ -5,6 +5,7 @@
 #include "EngineUtils.h"
 #include "Camera/CameraComponent.h"
 #include "Engine/Scene.h"
+#include "Components/Image.h"
 #include "FMODBlueprintStatics.h"
 #include "PlayerHud.h"
 #include "Kismet/GameplayStatics.h"
@@ -17,7 +18,7 @@ void UMyUserWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	bIsFocusable = true;
+	SetIsFocusable(true);
 
 	if (TObjectPtr<APlayerController> PlayerController = GetWorld()->GetFirstPlayerController())
 	{
@@ -51,7 +52,7 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 	{
 		if (CurrentState != ECurrentState::Sane)
 		{
-			// change camera settings and matreial
+			// change camera settings and material
 			CameraSettings->ChangeCameraSettings(0.0, 0.4);
 			chromaticAberrationIntensity = 0;
 			vignetteIntensity = 0.4;
@@ -244,4 +245,21 @@ void UMyUserWidget::Dead()
 	MyCharacter->Dead();
 	
 	currentMadnessBarValue = 0;
+}
+
+void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float DeltaTime)
+{
+	Super::NativeTick(MyGeometry, DeltaTime);
+
+	if (!SliderHandle) return;
+
+	// Map madness value (0 to 1) to an angle
+	float ClampedValue = FMath::Clamp(currentMadnessBarValue, 0.0f, 1.0f);
+	float Angle = FMath::Lerp(AngleStart, AngleEnd, ClampedValue);
+	float Radians = FMath::DegreesToRadians(Angle);
+
+	float X = Radius * FMath::Cos(Radians);
+	float Y = Radius * FMath::Sin(Radians);
+
+	SliderHandle->SetRenderTranslation(FVector2D(X, -Y));
 }

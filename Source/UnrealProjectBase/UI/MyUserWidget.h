@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "FMODEvent.h"
+#include "Components/Image.h"
 #include "MyUserWidget.generated.h"
 
 class UCameraSettingsComponent;
@@ -42,11 +43,36 @@ protected:
 	UPROPERTY()
 	TObjectPtr<APawn> Player;
 
+	UPROPERTY()
 	TObjectPtr<UCameraSettingsComponent> CameraSettings;
 	
 	UPROPERTY()
 	TSoftObjectPtr<UWorld> checkUnloadedLevel;
 public:
+
+	// === Curved Madness Meter Settings ===
+
+	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
+
+	UPROPERTY(BlueprintReadWrite, Category = "UI")
+	bool bShouldTick = true;
+
+	
+	UPROPERTY(meta = (BindWidget))
+	TObjectPtr<UImage> SliderHandle;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
+	float Radius = 180.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
+	float AngleStart = 0.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
+	float AngleEnd = 180.0f;
+
+	//============================================================================
+
+	
 	UPROPERTY(BlueprintReadOnly)
 	ECurrentState CurrentState = ECurrentState::SweetSpot;
 
@@ -57,6 +83,7 @@ public:
 	UPROPERTY(BlueprintReadWrite, Category = "UI")
 	TObjectPtr<UUserWidget> CurrentWidget;
 
+	UPROPERTY(BlueprintReadWrite, Category = "UI")
 	TObjectPtr<UFadeObjectComponent> FadeObject;
 
 

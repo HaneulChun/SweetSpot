@@ -146,14 +146,14 @@ void AMyTeleport::Reset()
 
 void AMyTeleport::Teleport(AActor* OtherActor, FTransform Transform)
 {
-	FTransform destanation = Transform;
+	FTransform destination = Transform;
 	FTransform teleportStartPoint = this->GetTransform();
 	FTransform player = OtherActor->GetTransform();
 		
 	FVector offset = player.GetLocation() - teleportStartPoint.GetLocation();
-	FVector final = offset + destanation.GetLocation();
+	FVector final = offset + destination.GetLocation();
 		
-	FTransform finalTeleport = FTransform(destanation.GetRotation(), final, OtherActor->GetTransform().GetScale3D());
+	FTransform finalTeleport = FTransform(destination.GetRotation(), final, OtherActor->GetTransform().GetScale3D());
 	
 	OtherActor->SetActorTransform(finalTeleport, false, nullptr, ETeleportType::TeleportPhysics);
 }
