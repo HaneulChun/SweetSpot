@@ -5,7 +5,7 @@
 			<value>Heart_Beat</value>
 		</property>
 		<property name="outputFormat">
-			<value>0</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{5f0e255a-8f4f-42ca-9226-c7d4dbd1b513}</destination>
@@ -84,7 +84,7 @@
 	</object>
 	<object class="MultiSound" id="{ce3338ea-bd50-4533-b8e2-596883e3ffcd}">
 		<relationship name="sounds">
-			<destination>{e495905a-2782-4eac-8b1d-b7ed615e43ef}</destination>
+			<destination>{062fefad-3924-4e9e-814f-ea46cb1e41bc}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusEffectChain" id="{6238962f-ddeb-43d3-b8f5-afabb058a6bb}">
@@ -99,12 +99,9 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{e72249c4-95d4-4007-b9be-44cc786c4fe3}" />
-	<object class="SingleSound" id="{e495905a-2782-4eac-8b1d-b7ed615e43ef}">
-		<property name="looping">
-			<value>true</value>
-		</property>
+	<object class="SingleSound" id="{062fefad-3924-4e9e-814f-ea46cb1e41bc}">
 		<relationship name="audioFile">
-			<destination>{a3b9a786-da65-4cb5-bfb2-d50a2d311507}</destination>
+			<destination>{e9c7a972-c0e5-42de-8298-9c438ce17418}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusFader" id="{841981bb-7e95-42d5-9de0-c45504fa1309}" />
