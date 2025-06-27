@@ -25,6 +25,9 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void CheckForSubLevel(const TSoftObjectPtr<UWorld>& UnloadSubLevel);
 
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void UnloadThenLoadLevel(const TSoftObjectPtr<UWorld>& UnloadSubLevel, const TSoftObjectPtr<UWorld>& loadSubLevel);
+	
 	UFUNCTION(BlueprintCallable)
 	void SetLevel();
 };
