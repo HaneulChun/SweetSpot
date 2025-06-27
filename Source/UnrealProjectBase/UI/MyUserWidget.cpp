@@ -148,15 +148,13 @@ void UMyUserWidget::SetIncreaseMadness(float value)
 
 void UMyUserWidget::DecreaseMadness(float value)
 {
-	currentMadnessBarValue -= value;
-	if (isInRoom)
+	if ((currentMadnessBarValue -= value) < 0.2f)
 	{
-		CameraSettings->ChangeCameraSettings(0.0, 1);
-		CameraSettings->Color(0.5);
+		currentMadnessBarValue = 0.2f;
 	}
 	else
 	{
-		CameraSettings->ChangeCameraSettings(0.0, .4);
+		currentMadnessBarValue -= value;
 	}
 }
 
@@ -182,12 +180,7 @@ void UMyUserWidget::Dying()
 
 void UMyUserWidget::Dead()
 {
-	// find object with spawn tag and teleport to spawn
-	if (FadeObject->spawnPoint)
-	{
-		Player->Controller->SetControlRotation(FadeObject->spawnPoint->FindComponentByClass<UArrowComponent>()->GetComponentRotation());
-		Player->SetActorLocation(FadeObject->spawnPoint->FindComponentByClass<UArrowComponent>()->GetComponentLocation());
-	}
+	SpawnPlayer();
 						
 	if (FullyMadSFX)
 	{
@@ -198,4 +191,14 @@ void UMyUserWidget::Dead()
 	MyCharacter->Dead();
 	
 	currentMadnessBarValue = 0;
+}
+
+void UMyUserWidget::SpawnPlayer()
+{
+	// find object with spawn tag and teleport to spawn
+	if (FadeObject->spawnPoint)
+	{
+		Player->Controller->SetControlRotation(FadeObject->spawnPoint->FindComponentByClass<UArrowComponent>()->GetComponentRotation());
+		Player->SetActorLocation(FadeObject->spawnPoint->FindComponentByClass<UArrowComponent>()->GetComponentLocation());
+	}
 }

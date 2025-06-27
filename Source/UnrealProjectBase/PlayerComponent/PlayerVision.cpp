@@ -59,10 +59,18 @@ void UPlayerVision::LookForTentacleWall()
 	if (!isFocusing) return;
 	
 	// check if the eye was recently rendered
-	for (TObjectPtr<AActor> Actor : tenticalArray)
+	for (AActor* Actor : tenticalArray)
 	{
-		if (!IsValid(Actor) || Actor->IsPendingKillPending()) continue;;
-		if (DotProduct(Actor->GetActorLocation()) <= 0.54) continue;
+		if (!IsValid(Actor) || Actor->IsPendingKillPending())
+		{
+			tenticalIndex++;
+			continue;
+		}
+		if (DotProduct(Actor->GetActorLocation()) <= 0.54)
+		{
+			tenticalIndex++;
+			continue;
+		}
 
 		FVector bottom = tenticalMeshArray[tenticalIndex]->Bounds.Origin;
 		float height = 105;
@@ -109,8 +117,16 @@ void UPlayerVision::LookForEye()
 	// check if the eye was recently rendered
 	for (TObjectPtr<AActor> Actor : eyeArray)
 	{
-		if (!IsValid(Actor) || !Actor->WasRecentlyRendered(0.1f)) continue;
-		if (DotProduct(Actor->GetActorLocation()) <= 0.54) continue;
+		if (!IsValid(Actor) || !Actor->WasRecentlyRendered(0.1f))
+		{
+			EyeIndex++;
+			continue;
+		}
+		if (DotProduct(Actor->GetActorLocation()) <= 0.54)
+		{
+			EyeIndex++;
+			continue;
+		}
 
 		FVector Center = eyeMeshArray[EyeIndex]->Bounds.Origin;
 		float Radius = eyeMeshArray[EyeIndex]->Bounds.SphereRadius;
@@ -217,8 +233,14 @@ void UPlayerVision::LookForBigEye()
 							
 							FVector Up = PlayerCamera->GetUpVector();
 							float VerticalDot = FVector::DotProduct(Dir, Up);
+
+							float vertical = FMath::Abs(VerticalDot);
+							float horizontal = FMath::Abs(Direction);
 							
-							FRotator RelativeRotation = FRotator(FMath::Sign(VerticalDot) * -100, FMath::Sign(Direction) * -100, 0.0f);
+							float pitch = VerticalDot/(vertical + horizontal);
+							float yaw = Direction/(vertical + horizontal);
+							
+							FRotator RelativeRotation = FRotator(pitch * -100,yaw * -100, 0.0f);
 							FRotator CurrentRotation = PlayerController->GetControlRotation();
 							FRotator NewRotation = RelativeRotation + CurrentRotation;
 

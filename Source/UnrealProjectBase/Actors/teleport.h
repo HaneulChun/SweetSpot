@@ -30,17 +30,28 @@ protected:
 		UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,
 		bool bFromSweep, const FHitResult& SweepResult);
 
-	UFUNCTION()
-	void Teleport(AActor* OtherActor);
+	UFUNCTION(BlueprintCallable)
+	void Teleport(AActor* OtherActor, UArrowComponent* ArrowComponent);
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void ShowElevatorPart();
-	
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void LoadLevel();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSoftObjectPtr<UWorld> NextLoopLevel;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSoftObjectPtr<UWorld> thisLoopLevel;
 public:	
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TObjectPtr<Ateleport> teleportTo;
 
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TObjectPtr<UArrowComponent> Arrow;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<UArrowComponent> nextLevelArrow;
 };
