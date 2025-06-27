@@ -25,6 +25,10 @@ Ateleport::Ateleport()
 	Arrow = CreateDefaultSubobject<UArrowComponent>(TEXT("SpawnPoint"));
 	Arrow->SetupAttachment(RootComponent); 
 	Arrow->ArrowColor = FColor::Green;
+
+	nextLevelArrow = CreateDefaultSubobject<UArrowComponent>(TEXT("NextLevelSpawnPoint"));
+	nextLevelArrow->SetupAttachment(RootComponent); 
+	nextLevelArrow->ArrowColor = FColor::Blue;
 }
 
 void Ateleport::BeginPlay()
@@ -41,22 +45,28 @@ void Ateleport::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor*
 	if (!Cast<ACharacter>(OtherActor)) return;
 	if (!Cast<UCapsuleComponent>(OtherComp)) return;
 
-	if (teleportTo)
+	if (!NextLoopLevel.IsNull() && !thisLoopLevel.IsNull())
 	{
-		Teleport(OtherActor);
+		LoadLevel();
 	}
-	ShowElevatorPart();
+	else
+	{
+		if (teleportTo)
+		{
+			Teleport(OtherActor, teleportTo->Arrow);
+		}
+		ShowElevatorPart();
+	}
 }
 
-
-void Ateleport::Teleport(AActor* OtherActor)
+void Ateleport::Teleport(AActor* OtherActor, UArrowComponent* ArrowComponent)
 {
 	if (ACharacter* Character = Cast<ACharacter>(OtherActor))
 	{
 		// Rotation
-		Character->Controller->SetControlRotation(teleportTo->Arrow->GetComponentRotation());
+		Character->Controller->SetControlRotation(ArrowComponent->GetComponentRotation());
 		
 		// Location
-		OtherActor->SetActorLocation(teleportTo->Arrow->GetComponentLocation(), false);
+		OtherActor->SetActorLocation(ArrowComponent->GetComponentLocation(), false);
 	}
 }

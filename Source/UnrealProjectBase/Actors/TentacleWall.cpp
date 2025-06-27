@@ -119,7 +119,7 @@ void ATentacleWall::FadeAway()
 	}
 	else
 	{
-		widget->IncreaseMadnessBar(-restoreMadnessValue);
+		widget->DecreaseMadness(restoreMadnessValue);
 		// destroy actor
 		DestroyTentacle();
 	}

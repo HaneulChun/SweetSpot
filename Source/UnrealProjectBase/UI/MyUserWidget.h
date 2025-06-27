@@ -88,7 +88,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void Dead();
-	
+
+	UFUNCTION(BlueprintCallable)
+	void SpawnPlayer();
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float chromaticAberrationIntensity;
