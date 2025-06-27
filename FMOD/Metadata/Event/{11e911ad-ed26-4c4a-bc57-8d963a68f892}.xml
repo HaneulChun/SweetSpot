@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.03.00">
 	<object class="Event" id="{11e911ad-ed26-4c4a-bc57-8d963a68f892}">
 		<property name="name">
-			<value>Amplifier_Hum_Fender_Vintage</value>
+			<value>Hum</value>
 		</property>
 		<property name="outputFormat">
 			<value>2</value>
@@ -91,7 +91,7 @@
 	</object>
 	<object class="MultiSound" id="{fa8c9b2b-3c62-49af-85fc-a7146fc2312c}">
 		<relationship name="sounds">
-			<destination>{74407234-0935-4ecd-8aba-0a1988d59a35}</destination>
+			<destination>{dc18d314-756d-4df6-94c8-69a051e054fb}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusEffectChain" id="{ad75573c-a257-4f00-8724-421c9a785802}">
@@ -109,15 +109,9 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{df37e60a-5caa-422f-a544-953ae464cd66}" />
-	<object class="SingleSound" id="{74407234-0935-4ecd-8aba-0a1988d59a35}">
-		<property name="volume">
-			<value>1</value>
-		</property>
-		<property name="looping">
-			<value>true</value>
-		</property>
+	<object class="SingleSound" id="{dc18d314-756d-4df6-94c8-69a051e054fb}">
 		<relationship name="audioFile">
-			<destination>{5d259ef8-cffd-46ae-979e-809d55a85e89}</destination>
+			<destination>{44808008-cb48-4d99-a22a-e2f741e71f5d}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusFader" id="{012865f1-f727-4f5b-86db-945fc892b9c8}" />
