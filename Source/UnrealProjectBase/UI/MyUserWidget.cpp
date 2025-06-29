@@ -148,13 +148,11 @@ void UMyUserWidget::SetIncreaseMadness(float value)
 
 void UMyUserWidget::DecreaseMadness(float value)
 {
-	if ((currentMadnessBarValue -= value) < 0.2f)
+	currentMadnessBarValue -= value;
+	
+	if (currentMadnessBarValue <= 0.2f)
 	{
 		currentMadnessBarValue = 0.2f;
-	}
-	else
-	{
-		currentMadnessBarValue -= value;
 	}
 }
 

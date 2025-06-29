@@ -63,16 +63,14 @@ void UPlayerVision::LookForTentacleWall()
 	{
 		if (!IsValid(Actor) || Actor->IsPendingKillPending())
 		{
-			tenticalIndex++;
 			continue;
 		}
 		if (DotProduct(Actor->GetActorLocation()) <= 0.54)
 		{
-			tenticalIndex++;
 			continue;
 		}
 
-		FVector bottom = tenticalMeshArray[tenticalIndex]->Bounds.Origin;
+		FVector bottom = Actor->GetActorLocation();
 		float height = 105;
 			
 		TArray<FVector> PointsToCheck = {
@@ -93,7 +91,7 @@ void UPlayerVision::LookForTentacleWall()
 				Point,
 				ECC_Visibility,
 				Params);
-					
+
 			// if you see actor make it fade away
 			if (!bHit || HitResult.GetActor() == Actor)
 			{
@@ -107,9 +105,7 @@ void UPlayerVision::LookForTentacleWall()
 				break; 
 			}
 		}
-		tenticalIndex++;
 	}
-	tenticalIndex = 0;
 }
 
 void UPlayerVision::LookForEye()
@@ -270,7 +266,6 @@ void UPlayerVision::LookForBigEye()
 void UPlayerVision::SetActorArray()
 {
 	tenticalArray.Empty();
-	tenticalMeshArray.Empty();
 	eyeArray.Empty();
 	eyeMeshArray.Empty();
 	bigEyeArray.Empty();
@@ -282,7 +277,6 @@ void UPlayerVision::SetActorArray()
 		TObjectPtr<ATentacleWall> Actor = *ActorItr;
 
 		tenticalArray.Add(Actor);
-		tenticalMeshArray.Add(Actor->FindComponentByClass<UMeshComponent>());
 	}
 	for (TActorIterator<ABigEye> ActorItr(GetWorld()); ActorItr; ++ActorItr)
 	{

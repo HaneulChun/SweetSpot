@@ -27,8 +27,6 @@ protected:
 
 	// property for tentical 
 	TArray<TObjectPtr<AActor>> tenticalArray;
-	TArray<TObjectPtr<UMeshComponent>> tenticalMeshArray;
-	int32 tenticalIndex = 0;
 
 	// property for eye 
 	TArray<TObjectPtr<AActor>> eyeArray;
