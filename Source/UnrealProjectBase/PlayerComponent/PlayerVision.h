@@ -76,4 +76,7 @@ public:
 	// Interval for checking object
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float tenticalCheckInterval = .1f;
+
+	UPROPERTY(EditAnywhere)
+	float distance = 1000.0f;
 };
