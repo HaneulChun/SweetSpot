@@ -47,7 +47,7 @@ void ATentacleWall::BeginPlay()
 
 	startTransform = GetTransform();
 	startLocation = GetActorLocation().Z;
-	finalLocation = GetActorLocation().Z - 400;
+	finalLocation = GetActorLocation() + (-GetActorUpVector() * 400);
 }
 
 void ATentacleWall::Tick(float DeltaTime)
@@ -133,7 +133,7 @@ void ATentacleWall::Spawn()
 
 void ATentacleWall::StartDown()
 {
-	SetActorLocation(FVector(GetActorLocation().X, GetActorLocation().Y, finalLocation));
+	SetActorLocation(finalLocation);
 }
 
 void ATentacleWall::ResetTentaclePosition_Implementation()

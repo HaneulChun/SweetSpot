@@ -21,7 +21,7 @@ public:
 	
 private:
 	UPROPERTY()
-	float finalLocation;
+	FVector finalLocation;
 
 	UPROPERTY()
 	float startLocation;
