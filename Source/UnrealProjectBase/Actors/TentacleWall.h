@@ -22,9 +22,10 @@ public:
 private:
 	UPROPERTY()
 	FVector finalLocation;
-
-	UPROPERTY()
-	float startLocation;
+	
+	FVector startLocation;
+	
+	float currentAlpha = 0;
 
 	TObjectPtr<ASweetSpotCharacter> Character;
 protected:
@@ -88,9 +89,6 @@ public:
 	
 	UPROPERTY(BlueprintReadWrite)
 	bool isFading = false;
-
-	UPROPERTY(BlueprintReadWrite)
-	bool isSpawning = false;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float IncreaseMadness = 0.02f;
