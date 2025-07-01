@@ -31,8 +31,6 @@ protected:
 	TObjectPtr<UMyUserWidget> widget;
 	
 public:	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TArray<TObjectPtr<UBoxComponent>> TriggerVolume;
 	
 	UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,

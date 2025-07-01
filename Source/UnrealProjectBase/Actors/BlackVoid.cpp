@@ -63,7 +63,6 @@ void ABlackVoid::Tick(float DeltaTime)
 	{
 		SetActorTickEnabled(false);
 	}
-	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, "BlackVoid");
 }
 
 void ABlackVoid::StartVoid()

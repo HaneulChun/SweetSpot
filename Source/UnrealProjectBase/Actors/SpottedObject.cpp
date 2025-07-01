@@ -52,7 +52,7 @@ void USpottedObject::FadeAway_Implementation()
 	}
 	else
 	{
-		widget->IncreaseMadnessBar(-restoreMadnessValue);
+		widget->DecreaseMadness(restoreMadnessValue);
 		GetOwner()->Destroy();
 	}
 }

@@ -39,6 +39,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void StartVoid();
 private:
-	float MoveDuration = 2.0f;
+	UPROPERTY(EditAnywhere)
+	float MoveDuration = 4.0f;
+	
 	float ElapsedTime = 0.0f;
 };

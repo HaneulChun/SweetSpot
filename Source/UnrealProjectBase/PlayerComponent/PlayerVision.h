@@ -27,8 +27,6 @@ protected:
 
 	// property for tentical 
 	TArray<TObjectPtr<AActor>> tenticalArray;
-	TArray<TObjectPtr<UMeshComponent>> tenticalMeshArray;
-	int32 tenticalIndex = 0;
 
 	// property for eye 
 	TArray<TObjectPtr<AActor>> eyeArray;
@@ -78,4 +76,7 @@ public:
 	// Interval for checking object
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float tenticalCheckInterval = .1f;
+
+	UPROPERTY(EditAnywhere)
+	float distance = 1000.0f;
 };
