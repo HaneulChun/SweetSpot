@@ -8,6 +8,7 @@
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Math/UnitConversion.h"
 #include "UnrealProjectBase/UI/MyUserWidget.h"
 #include "UnrealProjectBase/UI/PlayerHud.h"
 
@@ -45,9 +46,11 @@ void ATentacleWall::BeginPlay()
 		OriginalSpeed = Character->GetCharacterMovement()->MaxWalkSpeed;
 	});
 
+	SetActorTickEnabled(false);
+	
 	startTransform = GetTransform();
-	startLocation = GetActorLocation().Z;
-	finalLocation = GetActorLocation().Z - 400;
+	startLocation = GetActorLocation() + GetActorUpVector();
+	finalLocation = GetActorLocation() + (-GetActorUpVector() * 400);
 }
 
 void ATentacleWall::Tick(float DeltaTime)
@@ -55,16 +58,13 @@ void ATentacleWall::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	// tentacle fading up
-	if (isSpawning)
-	{
-		// move the object
-		FVector CurrentLocation = GetActorLocation();
-		SetActorLocation(CurrentLocation + (GetActorUpVector() * comingUpSpeed));
+	currentAlpha += comingUpSpeed * DeltaTime;
+	FVector NewLocation = FMath::Lerp(finalLocation, startLocation, currentAlpha);
+	SetActorLocation(NewLocation);
 		
-		if (CurrentLocation.Z >= startLocation)
-		{
-			isSpawning = false;
-		}
+	if (currentAlpha >= 1)
+	{
+		SetActorTickEnabled(false);
 	}
 }
 
@@ -128,12 +128,12 @@ void ATentacleWall::FadeAway()
 
 void ATentacleWall::Spawn()
 {
-	isSpawning = true;
+	SetActorTickEnabled(true);
 }
 
 void ATentacleWall::StartDown()
 {
-	SetActorLocation(FVector(GetActorLocation().X, GetActorLocation().Y, finalLocation));
+	SetActorLocation(finalLocation);
 }
 
 void ATentacleWall::ResetTentaclePosition_Implementation()
