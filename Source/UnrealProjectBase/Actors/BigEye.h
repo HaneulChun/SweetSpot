@@ -16,6 +16,7 @@ public:
 	// Sets default values for this actor's properties
 	ABigEye();
 
+	int count = 0;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -24,7 +25,6 @@ protected:
 	TObjectPtr<UMyUserWidget> MadnessWidget;
 	
 	FTransform startTransform;
-	int count = 0;
 
 	FTimerHandle TimerHandle;
 	FTimerHandle TimerHandleImmune;
