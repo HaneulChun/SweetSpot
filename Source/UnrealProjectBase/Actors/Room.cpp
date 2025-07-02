@@ -32,15 +32,6 @@ void ARoom::BeginPlay()
 
 	triggerBox->OnComponentBeginOverlap.AddDynamic(this, &ARoom::OnOverlapBegin);
 	triggerBox->OnComponentEndOverlap.AddDynamic(this, &ARoom::OnOverlapEnd);
-	
-	for (UBoxComponent* Trigger : TriggerVolume)
-	{
-		if (Trigger)
-		{
-			Trigger->OnComponentBeginOverlap.AddDynamic(this, &ARoom::OnOverlapBegin);
-			Trigger->OnComponentEndOverlap.AddDynamic(this, &ARoom::OnOverlapEnd);
-		}
-	}
 
 	GetWorld()->GetTimerManager().SetTimerForNextTick([this]()
 	{
