@@ -22,9 +22,10 @@ public:
 private:
 	UPROPERTY()
 	FVector finalLocation;
-
-	UPROPERTY()
-	float startLocation;
+	
+	FVector startLocation;
+	
+	float currentAlpha = 0;
 
 	TObjectPtr<ASweetSpotCharacter> Character;
 protected:
@@ -54,9 +55,6 @@ protected:
 	
 	UFUNCTION()
 	void IncreaseMadnessBar();
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	float restoreMadnessValue = 0.1;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float slowPlayer = 200;
@@ -89,8 +87,8 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	bool isFading = false;
 
-	UPROPERTY(BlueprintReadWrite)
-	bool isSpawning = false;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float restoreMadnessValue = 0.1;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float IncreaseMadness = 0.02f;
@@ -107,6 +105,6 @@ public:
 	UPROPERTY(BlueprintReadOnly)
 	int count = 0;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float comingUpSpeed = 2;
 };

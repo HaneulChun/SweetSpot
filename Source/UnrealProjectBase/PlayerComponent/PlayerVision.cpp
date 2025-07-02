@@ -75,6 +75,15 @@ void UPlayerVision::LookForTentacleWall()
 			continue;	
 		}
 
+		if (ATentacleWall* tentacle = Cast<ATentacleWall>(Actor))
+		{
+			if (tentacle->count >= 1)
+			{
+				tentacle->FadeAway();
+				continue;
+			}
+		}
+		
 		FVector bottom = Actor->GetActorLocation();
 		float height = 105;
 			
@@ -102,10 +111,7 @@ void UPlayerVision::LookForTentacleWall()
 			{
 				if (ATentacleWall* tentacle = Cast<ATentacleWall>(Actor))
 				{
-					if (isFocusing)
-					{
-						tentacle->FadeAway();
-					}
+					tentacle->FadeAway();
 				}
 				break; 
 			}
@@ -133,6 +139,21 @@ void UPlayerVision::LookForEye()
 		{
 			EyeIndex++;
 			continue;	
+		}
+
+		// check if the player has started making the object fade
+		if (isFocusing)
+		{
+			if (USpottedObject* eye = Cast<USpottedObject>(Actor->FindComponentByClass<USpottedObject>()))
+			{
+				// fade object if the object is detected and dont need to raycast 
+				if (eye->count >= 1)
+				{
+					eye->FadeAway_Implementation();
+					EyeIndex++;
+					continue;
+				}
+			}
 		}
 
 		FVector Center = eyeMeshArray[EyeIndex]->Bounds.Origin;

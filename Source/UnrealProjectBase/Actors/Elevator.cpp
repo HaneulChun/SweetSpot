@@ -39,11 +39,7 @@ void AElevator::BeginPlay()
 		if (TurnOnSwitch == false)
 		{
 			Switch->GetChildActor()->SetOwner(this);
-			if (UStaticMeshComponent* Mesh = Switch->GetChildActor()->FindComponentByClass<UStaticMeshComponent>())
-			{
-				Mesh->SetVisibility(false);
-				Mesh->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
-			}	
+			Switch->SetVisibility(false);
 		}
 	}
 	if (Button && Button->GetChildActor())
@@ -51,11 +47,7 @@ void AElevator::BeginPlay()
 		if (TurnOnButton == false)
 		{
 			Button->GetChildActor()->SetOwner(this);
-			if (UStaticMeshComponent* Mesh = Button->GetChildActor()->FindComponentByClass<UStaticMeshComponent>())
-			{
-				Mesh->SetVisibility(false);
-				Mesh->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
-			}	
+			Button->SetVisibility(false);
 		}
 	}
 	if (Cranck && Cranck->GetChildActor())
@@ -63,11 +55,7 @@ void AElevator::BeginPlay()
 		if (TurnOnCranck == false)
 		{
 			Cranck->GetChildActor()->SetOwner(this);
-			if (UStaticMeshComponent* Mesh = Cranck->GetChildActor()->FindComponentByClass<UStaticMeshComponent>())
-			{
-				Mesh->SetVisibility(false);
-				Mesh->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
-			}	
+			Cranck->SetVisibility(false);
 		}
 	}
 	
@@ -78,7 +66,6 @@ void AElevator::BeginPlay()
 
 void AElevator::SetChildPart(UChildActorComponent* Component, EElevatorPart Type)
 {
-	
 	 //give the child enum
 	 if (Component && Component->GetChildActor())
 	 {
@@ -138,7 +125,7 @@ void AElevator::ShowElevatorPart(UChildActorComponent* Part)
 	// helper function make elevator parts appear 
 	if (UStaticMeshComponent* Mesh = Part->GetChildActor()->FindComponentByClass<UStaticMeshComponent>())
 	{
-		Mesh->SetVisibility(true);
+		Part->SetVisibility(true);
 	}
 	if (Teleport)
 	{
