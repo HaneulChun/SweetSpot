@@ -27,4 +27,17 @@ protected:
 public:	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TObjectPtr<UArrowComponent> spawnTentacle;
+
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float restoreMadnessValue = 0.1;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float IncreaseMadness = 0.02f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float MadnessTickInterval = 0.4f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float comingUpSpeed = 2;
 };
