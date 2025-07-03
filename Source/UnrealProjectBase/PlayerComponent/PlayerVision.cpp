@@ -82,7 +82,6 @@ void UPlayerVision::LookForTentacleWall()
 		float Actordistance = FVector::Distance(PlayerCamera->GetComponentLocation(), Actor->GetActorLocation());
 		if (Actordistance > distance)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Black, "Test");
 			continue;	
 		}
 		
