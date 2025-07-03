@@ -107,10 +107,4 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float comingUpSpeed = 2;
-
-	UPROPERTY(BlueprintReadWrite)
-	TSoftObjectPtr<UWorld> NextLoop;
-
-	UPROPERTY(BlueprintReadWrite)
-	TSoftObjectPtr<UWorld> CurrentLoop;
 };
