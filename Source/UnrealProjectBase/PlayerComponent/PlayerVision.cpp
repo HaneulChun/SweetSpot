@@ -234,7 +234,7 @@ void UPlayerVision::LookForBigEye()
 		if (Actordistance > distance)
 		{
 			bigEyeIndex++;
-			continue;	
+			continue;
 		}
 		
 		FVector Center = bigEyeMeshArray[bigEyeIndex]->Bounds.Origin;
