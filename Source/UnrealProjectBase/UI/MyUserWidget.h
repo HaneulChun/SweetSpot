@@ -45,20 +45,20 @@ protected:
 public:
 	UPROPERTY(BlueprintReadOnly)
 	ECurrentState CurrentState = ECurrentState::SweetSpot;
-
-
+	
 	UPROPERTY(BlueprintReadWrite, Category = "UI")
 	TObjectPtr<APlayerHud> playerHud;
 	
 	UPROPERTY(BlueprintReadWrite, Category = "UI")
 	TObjectPtr<UUserWidget> CurrentWidget;
 
+	UPROPERTY(BlueprintReadWrite, Category = "UI")
 	TObjectPtr<UFadeObjectComponent> FadeObject;
 	
-
+	UPROPERTY(BlueprintReadWrite, Category = "UI")
 	FTimerHandle TimerHandleLevel;
 	
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
 	TObjectPtr<UFMODEvent> FullyMadSFX;
 	
 	UFUNCTION(BlueprintCallable)
