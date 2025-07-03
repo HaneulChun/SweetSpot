@@ -61,7 +61,7 @@ void UPlayerVision::LookForTentacleWall()
 	// check if the eye was recently rendered
 	for (AActor* Actor : tenticalArray)
 	{
-		if (!IsValid(Actor) || Actor->IsPendingKillPending())
+		if (!IsValid(Actor) || Actor->IsPendingKillPending() || !Actor->IsValidLowLevel())
 		{
 			continue;
 		}
@@ -125,7 +125,12 @@ void UPlayerVision::LookForEye()
 	// check if the eye was recently rendered
 	for (TObjectPtr<AActor> Actor : eyeArray)
 	{
-		if (!IsValid(Actor) || !Actor->WasRecentlyRendered(0.1f))
+		if (!IsValid(Actor) || Actor->IsPendingKillPending() || !Actor->IsValidLowLevel())
+		{
+			EyeIndex++;
+			continue;
+		}
+		if (!Actor->WasRecentlyRendered(0.1f))
 		{
 			EyeIndex++;
 			continue;
@@ -215,7 +220,12 @@ void UPlayerVision::LookForBigEye()
 	// check if the eye was recently rendered
 	for (TObjectPtr<AActor> Actor : bigEyeArray)
 	{
-		if (!IsValid(Actor) || !Actor->WasRecentlyRendered(0.1f))
+		if (!IsValid(Actor) || Actor->IsPendingKillPending() || !Actor->IsValidLowLevel())
+		{
+			bigEyeIndex++;
+			continue;
+		}
+		if (!Actor->WasRecentlyRendered(0.1f))
 		{
 			bigEyeIndex++;
 			continue;
