@@ -69,11 +69,6 @@ void UPlayerVision::LookForTentacleWall()
 		{
 			continue;
 		}
-		float Actordistance = FVector::Distance(PlayerCamera->GetComponentLocation(), Actor->GetActorLocation());
-		if (Actordistance > distance)
-		{
-			continue;	
-		}
 
 		if (ATentacleWall* tentacle = Cast<ATentacleWall>(Actor))
 		{
@@ -82,6 +77,13 @@ void UPlayerVision::LookForTentacleWall()
 				tentacle->FadeAway();
 				continue;
 			}
+		}
+		
+		float Actordistance = FVector::Distance(PlayerCamera->GetComponentLocation(), Actor->GetActorLocation());
+		if (Actordistance > distance)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Black, "Test");
+			continue;	
 		}
 		
 		FVector bottom = Actor->GetActorLocation();
@@ -134,13 +136,7 @@ void UPlayerVision::LookForEye()
 			EyeIndex++;
 			continue;
 		}
-		float Actordistance = FVector::Distance(PlayerCamera->GetComponentLocation(), Actor->GetActorLocation());
-		if (Actordistance > distance)
-		{
-			EyeIndex++;
-			continue;	
-		}
-
+		
 		// check if the player has started making the object fade
 		if (isFocusing)
 		{
@@ -154,6 +150,13 @@ void UPlayerVision::LookForEye()
 					continue;
 				}
 			}
+		}
+		
+		float Actordistance = FVector::Distance(PlayerCamera->GetComponentLocation(), Actor->GetActorLocation());
+		if (Actordistance > distance)
+		{
+			EyeIndex++;
+			continue;	
 		}
 
 		FVector Center = eyeMeshArray[EyeIndex]->Bounds.Origin;
