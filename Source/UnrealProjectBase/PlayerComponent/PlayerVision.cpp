@@ -61,18 +61,13 @@ void UPlayerVision::LookForTentacleWall()
 	// check if the eye was recently rendered
 	for (AActor* Actor : tenticalArray)
 	{
-		if (!IsValid(Actor) || Actor->IsPendingKillPending())
+		if (!IsValid(Actor) || Actor->IsPendingKillPending() || !Actor->IsValidLowLevel())
 		{
 			continue;
 		}
 		if (DotProduct(Actor->GetActorLocation()) <= 0.54)
 		{
 			continue;
-		}
-		float Actordistance = FVector::Distance(PlayerCamera->GetComponentLocation(), Actor->GetActorLocation());
-		if (Actordistance > distance)
-		{
-			continue;	
 		}
 
 		if (ATentacleWall* tentacle = Cast<ATentacleWall>(Actor))
@@ -82,6 +77,12 @@ void UPlayerVision::LookForTentacleWall()
 				tentacle->FadeAway();
 				continue;
 			}
+		}
+		
+		float Actordistance = FVector::Distance(PlayerCamera->GetComponentLocation(), Actor->GetActorLocation());
+		if (Actordistance > distance)
+		{
+			continue;	
 		}
 		
 		FVector bottom = Actor->GetActorLocation();
@@ -124,7 +125,12 @@ void UPlayerVision::LookForEye()
 	// check if the eye was recently rendered
 	for (TObjectPtr<AActor> Actor : eyeArray)
 	{
-		if (!IsValid(Actor) || !Actor->WasRecentlyRendered(0.1f))
+		if (!IsValid(Actor) || Actor->IsPendingKillPending() || !Actor->IsValidLowLevel())
+		{
+			EyeIndex++;
+			continue;
+		}
+		if (!Actor->WasRecentlyRendered(0.1f))
 		{
 			EyeIndex++;
 			continue;
@@ -134,13 +140,7 @@ void UPlayerVision::LookForEye()
 			EyeIndex++;
 			continue;
 		}
-		float Actordistance = FVector::Distance(PlayerCamera->GetComponentLocation(), Actor->GetActorLocation());
-		if (Actordistance > distance)
-		{
-			EyeIndex++;
-			continue;	
-		}
-
+		
 		// check if the player has started making the object fade
 		if (isFocusing)
 		{
@@ -154,6 +154,13 @@ void UPlayerVision::LookForEye()
 					continue;
 				}
 			}
+		}
+		
+		float Actordistance = FVector::Distance(PlayerCamera->GetComponentLocation(), Actor->GetActorLocation());
+		if (Actordistance > distance)
+		{
+			EyeIndex++;
+			continue;	
 		}
 
 		FVector Center = eyeMeshArray[EyeIndex]->Bounds.Origin;
@@ -213,7 +220,12 @@ void UPlayerVision::LookForBigEye()
 	// check if the eye was recently rendered
 	for (TObjectPtr<AActor> Actor : bigEyeArray)
 	{
-		if (!IsValid(Actor) || !Actor->WasRecentlyRendered(0.1f))
+		if (!IsValid(Actor) || Actor->IsPendingKillPending() || !Actor->IsValidLowLevel())
+		{
+			bigEyeIndex++;
+			continue;
+		}
+		if (!Actor->WasRecentlyRendered(0.1f))
 		{
 			bigEyeIndex++;
 			continue;
