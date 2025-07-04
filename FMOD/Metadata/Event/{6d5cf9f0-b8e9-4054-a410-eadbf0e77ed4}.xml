@@ -66,6 +66,9 @@
 		<property name="voiceStealing">
 			<value>2</value>
 		</property>
+		<property name="maximumDistance">
+			<value>30</value>
+		</property>
 	</object>
 	<object class="MarkerTrack" id="{ed6691f8-92b2-43f1-b1a5-2826769ef521}" />
 	<object class="Timeline" id="{eace18a8-bad3-43b1-8669-b90f0c71df34}">
