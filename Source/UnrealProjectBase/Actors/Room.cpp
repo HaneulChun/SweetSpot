@@ -125,11 +125,20 @@ void ARoom::Color(float intensity, float Vignette)
 		{
 			FPostProcessSettings& Settings = Camera->PostProcessSettings;
 
-			Settings.bOverride_ColorSaturation = true;
-			Settings.ColorSaturation = FVector4(intensity, intensity, intensity, 1.0f);
+			if (intensity <= 1)
+			{
+				Settings.bOverride_ColorSaturation = true;
+				Settings.ColorSaturation = FVector4(intensity, intensity, intensity, 1.0f);
 
-			Settings.bOverride_VignetteIntensity = true;
-			Settings.VignetteIntensity = Vignette;
+				Settings.bOverride_VignetteIntensity = true;
+				Settings.VignetteIntensity = Vignette;	
+			}
+			else
+			{
+				//intensity = intensity * 100;
+				Settings.bOverride_ColorSaturation = true;
+				Settings.ColorSaturation = FVector4(intensity, intensity/2, intensity, 1.0f);
+			}
 		}
 	}
 }
