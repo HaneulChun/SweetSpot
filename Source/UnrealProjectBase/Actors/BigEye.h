@@ -16,6 +16,7 @@ public:
 	// Sets default values for this actor's properties
 	ABigEye();
 
+	UPROPERTY(BlueprintReadOnly)
 	int count = 0;
 protected:
 	// Called when the game starts or when spawned
@@ -37,14 +38,16 @@ public:
 	UFUNCTION()
 	void IncreaseMadness();
 	
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void FadeAway();
+	virtual void FadeAway_Implementation();
 
 	UFUNCTION(BlueprintImplementableEvent , BlueprintCallable)
 	void LookAtPlayer();
 	
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void ResetPosition();
+	virtual void ResetPosition_Implementation();
 
 	UFUNCTION(BlueprintCallable)
 	void RemoveImmunity();
