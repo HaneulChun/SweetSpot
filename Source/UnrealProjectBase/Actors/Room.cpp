@@ -135,7 +135,6 @@ void ARoom::Color(float intensity, float Vignette)
 			}
 			else
 			{
-				//intensity = intensity * 100;
 				Settings.bOverride_ColorSaturation = true;
 				Settings.ColorSaturation = FVector4(intensity, intensity/2, intensity, 1.0f);
 			}
