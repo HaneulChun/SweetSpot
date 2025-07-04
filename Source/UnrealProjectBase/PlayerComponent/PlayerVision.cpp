@@ -89,8 +89,9 @@ void UPlayerVision::LookForTentacleWall()
 		float height = 105;
 			
 		TArray<FVector> PointsToCheck = {
-			bottom + FVector(0, 0, height), 
-			bottom + FVector(0, 0, height * 2)
+			Actor->GetActorLocation(),
+			bottom + FVector(Actor->GetActorUpVector() * height), 
+			bottom + FVector(Actor->GetActorUpVector() * height * 2)
 		};
 				
 		// check if there is a wall between player and point
@@ -234,7 +235,7 @@ void UPlayerVision::LookForBigEye()
 		if (Actordistance > distance)
 		{
 			bigEyeIndex++;
-			continue;	
+			continue;
 		}
 		
 		FVector Center = bigEyeMeshArray[bigEyeIndex]->Bounds.Origin;
@@ -303,7 +304,7 @@ void UPlayerVision::LookForBigEye()
 						// if player is focusing fade the object 
 						if (isFocusing)
 						{
-							bigEye->FadeAway();
+							bigEye->FadeAway_Implementation();
 						}
 						bigEye->IncreaseMadness();
 					}
