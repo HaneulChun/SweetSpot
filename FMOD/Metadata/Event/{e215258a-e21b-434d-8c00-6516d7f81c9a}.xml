@@ -5,7 +5,7 @@
 			<value>Door_Open_Creak</value>
 		</property>
 		<property name="outputFormat">
-			<value>0</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{d683ce45-9c3e-4035-a01f-e35cc8f67d38}</destination>
@@ -59,7 +59,14 @@
 			<destination>{fd354eed-d229-4a55-a0ab-8ed4aa1f6b44}</destination>
 		</relationship>
 	</object>
-	<object class="EventAutomatableProperties" id="{5af4f625-a1e0-4c52-9a8e-9abd386b471c}" />
+	<object class="EventAutomatableProperties" id="{5af4f625-a1e0-4c52-9a8e-9abd386b471c}">
+		<property name="maxVoices">
+			<value>6</value>
+		</property>
+		<property name="voiceStealing">
+			<value>2</value>
+		</property>
+	</object>
 	<object class="MarkerTrack" id="{04a82468-af82-4962-8be0-b5e661db28e9}" />
 	<object class="Timeline" id="{ce0d60ff-13b1-4da2-9fa5-402c75474f03}">
 		<property name="isProxyEnabled">
@@ -96,6 +103,7 @@
 	<object class="MixerBusEffectChain" id="{51dcc522-bdf3-4ce4-b125-a08695f13a1a}">
 		<relationship name="effects">
 			<destination>{d5e7abdb-c170-4bde-8502-ed5f7661a22b}</destination>
+			<destination>{32981d47-1fb1-4514-9b8e-7a83833d5f83}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{def113b3-7591-48c6-a56e-b7c53bd983e6}" />
@@ -106,4 +114,9 @@
 	</object>
 	<object class="MixerBusFader" id="{ebd9a32d-c648-41cf-886c-6621b04adfbd}" />
 	<object class="MixerBusFader" id="{d5e7abdb-c170-4bde-8502-ed5f7661a22b}" />
+	<object class="SpatialiserEffect" id="{32981d47-1fb1-4514-9b8e-7a83833d5f83}">
+		<property name="distanceRolloffType">
+			<value>2</value>
+		</property>
+	</object>
 </objects>
