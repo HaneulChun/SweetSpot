@@ -304,7 +304,7 @@ void UPlayerVision::LookForBigEye()
 						// if player is focusing fade the object 
 						if (isFocusing)
 						{
-							bigEye->FadeAway();
+							bigEye->FadeAway_Implementation();
 						}
 						bigEye->IncreaseMadness();
 					}
