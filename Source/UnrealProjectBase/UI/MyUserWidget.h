@@ -40,6 +40,7 @@ protected:
 	UPROPERTY()
 	TObjectPtr<APawn> Player;
 
+	UPROPERTY()
 	TObjectPtr<UCameraSettingsComponent> CameraSettings;
 
 public:
