@@ -40,7 +40,7 @@ void ABigEye::IncreaseMadness()
 	}
 }
 
-void ABigEye::FadeAway()
+void ABigEye::FadeAway_Implementation()
 {
 	if (count <= focusedLookTicks)
 	{
@@ -51,7 +51,9 @@ void ABigEye::FadeAway()
 		SetActorLocation(NewLocation);
 		
 		count++;
-		GetWorldTimerManager().SetTimer(TimerHandle, this, &ABigEye::ResetPosition, 1.0f, false, 0.4f);
+		GetWorldTimerManager().SetTimer(TimerHandle, this, &ABigEye::ResetPosition_Implementation, 1.0f, false, 0.4f);
+		
+		FadeAway();
 	}
 	else
 	{
@@ -68,12 +70,13 @@ void ABigEye::FadeAway()
 }
 
 
-void ABigEye::ResetPosition()
+void ABigEye::ResetPosition_Implementation()
 {
 	if (count <= focusedLookTicks)
 	{
 		SetActorTransform(startTransform);
 		count = 0;
+		ResetPosition();
 	}
 }
 
