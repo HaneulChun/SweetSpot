@@ -123,10 +123,8 @@ void AElevator::FixElevator()
 void AElevator::ShowElevatorPart(UChildActorComponent* Part)
 {
 	// helper function make elevator parts appear 
-	if (UStaticMeshComponent* Mesh = Part->GetChildActor()->FindComponentByClass<UStaticMeshComponent>())
-	{
-		Part->SetVisibility(true);
-	}
+	Part->SetVisibility(true);
+	
 	if (Teleport)
 	{
 		Teleport->isCompleted = true;
