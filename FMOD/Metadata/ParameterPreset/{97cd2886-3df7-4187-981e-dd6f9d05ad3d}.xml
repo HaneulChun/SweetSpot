@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{97cd2886-3df7-4187-981e-dd6f9d05ad3d}">
+		<property name="name">
+			<value>MadnessLevel</value>
+		</property>
+		<relationship name="folder">
+			<destination>{1fe3472f-553b-4a54-976e-510d10293c10}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{baa8a783-faf3-4cfc-bfb2-5a53e58be93b}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{baa8a783-faf3-4cfc-bfb2-5a53e58be93b}">
+		<property name="isGlobal">
+			<value>true</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+		<property name="isExposedRecursively">
+			<value>false</value>
+		</property>
+	</object>
+</objects>
