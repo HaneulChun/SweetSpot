@@ -69,7 +69,6 @@ void UPlayerVision::LookForTentacleWall()
 		{
 			continue;
 		}
-
 		if (ATentacleWall* tentacle = Cast<ATentacleWall>(Actor))
 		{
 			if (tentacle->count >= 1)
@@ -84,9 +83,8 @@ void UPlayerVision::LookForTentacleWall()
 		{
 			continue;	
 		}
-		
+
 		FVector bottom = Actor->GetActorLocation();
-		float height = 105;
 			
 		TArray<FVector> PointsToCheck = {
 			Actor->GetActorLocation(),
@@ -304,7 +302,7 @@ void UPlayerVision::LookForBigEye()
 						// if player is focusing fade the object 
 						if (isFocusing)
 						{
-							bigEye->FadeAway();
+							bigEye->FadeAway_Implementation();
 						}
 						bigEye->IncreaseMadness();
 					}

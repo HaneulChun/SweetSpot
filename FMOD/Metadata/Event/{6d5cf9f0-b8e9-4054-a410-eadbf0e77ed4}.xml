@@ -5,7 +5,7 @@
 			<value>Door_Wood_Close</value>
 		</property>
 		<property name="outputFormat">
-			<value>0</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{d683ce45-9c3e-4035-a01f-e35cc8f67d38}</destination>
@@ -59,7 +59,17 @@
 			<destination>{fd354eed-d229-4a55-a0ab-8ed4aa1f6b44}</destination>
 		</relationship>
 	</object>
-	<object class="EventAutomatableProperties" id="{f87fb03f-c5de-4272-81a0-5a3650ae5ea8}" />
+	<object class="EventAutomatableProperties" id="{f87fb03f-c5de-4272-81a0-5a3650ae5ea8}">
+		<property name="maxVoices">
+			<value>6</value>
+		</property>
+		<property name="voiceStealing">
+			<value>2</value>
+		</property>
+		<property name="maximumDistance">
+			<value>30</value>
+		</property>
+	</object>
 	<object class="MarkerTrack" id="{ed6691f8-92b2-43f1-b1a5-2826769ef521}" />
 	<object class="Timeline" id="{eace18a8-bad3-43b1-8669-b90f0c71df34}">
 		<property name="isProxyEnabled">
@@ -96,6 +106,7 @@
 	<object class="MixerBusEffectChain" id="{a3c05eef-5d80-4dda-a5f0-62e4aa41f68c}">
 		<relationship name="effects">
 			<destination>{7f04665f-c366-42e6-87cf-98a91fa173a9}</destination>
+			<destination>{fce6c426-7966-45f7-a93c-84f25ed737ec}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{85058dcd-3dff-4793-9318-61a74adac973}" />
@@ -106,4 +117,5 @@
 	</object>
 	<object class="MixerBusFader" id="{52d6096a-e4cb-4236-9021-fedf9239316b}" />
 	<object class="MixerBusFader" id="{7f04665f-c366-42e6-87cf-98a91fa173a9}" />
+	<object class="SpatialiserEffect" id="{fce6c426-7966-45f7-a93c-84f25ed737ec}" />
 </objects>

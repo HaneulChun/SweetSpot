@@ -39,7 +39,7 @@ void UPlayerLook::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 
 AActor* UPlayerLook::LookAtActor(const TArray<AActor*>& Actors)
 {
-	// check if there is interactable actors
+	// check if there are interactable actors
 	if (!Camera || Actors.Num() == 0)
 	{
 		return nullptr;
@@ -51,7 +51,7 @@ AActor* UPlayerLook::LookAtActor(const TArray<AActor*>& Actors)
 	BestActor = nullptr;
 	float BestDot = 0.97f;
 
-	// dot product to see witch actor is the best actor
+	// dot product to see which actor is the best actor
 	for (AActor* Actor : Actors)
 	{
 		if (!Actor) continue;
