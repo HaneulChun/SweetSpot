@@ -72,6 +72,6 @@ void ABlackVoid::StartVoid()
 	triggerBox->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	blackVoid->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	blackVoid->SetHiddenInGame(false);
-
+	PlaySound();
 }
 
