@@ -47,6 +47,10 @@ protected:
 	
 	UFUNCTION()
 	float DotProduct(const FVector &TargetVector);
+
+	UPROPERTY()
+	float height = 105;
+	
 public:	
 
 	UFUNCTION()

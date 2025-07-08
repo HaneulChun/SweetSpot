@@ -69,7 +69,6 @@ void UPlayerVision::LookForTentacleWall()
 		{
 			continue;
 		}
-
 		if (ATentacleWall* tentacle = Cast<ATentacleWall>(Actor))
 		{
 			if (tentacle->count >= 1)
@@ -84,9 +83,8 @@ void UPlayerVision::LookForTentacleWall()
 		{
 			continue;	
 		}
-		
+
 		FVector bottom = Actor->GetActorLocation();
-		float height = 105;
 			
 		TArray<FVector> PointsToCheck = {
 			Actor->GetActorLocation(),
