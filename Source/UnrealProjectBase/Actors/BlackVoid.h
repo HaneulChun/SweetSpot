@@ -38,6 +38,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void StartVoid();
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlaySound();
 private:
 	UPROPERTY(EditAnywhere)
 	float MoveDuration = 4.0f;
