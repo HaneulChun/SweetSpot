@@ -158,7 +158,7 @@ void UMyUserWidget::DecreaseMadness(float value)
 
 void UMyUserWidget::IncreaseMadnessBar(float value)
 {
-	if (hasPickedUpKey == true)
+	if (isImmune == false)
 	{
 		currentMadnessBarValue += value;
 	}
