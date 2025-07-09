@@ -61,38 +61,19 @@ void UPlayerVision::LookForTentacleWall()
 	// check if the eye was recently rendered
 	for (AActor* Actor : tenticalArray)
 	{
-		// valid check
 		if (!IsValid(Actor) || Actor->IsPendingKillPending() || !Actor->IsValidLowLevel())
 		{
 			continue;
 		}
-		
-		// get the points for tentacle
-		FVector bottom = Actor->GetActorLocation();
-		TArray<FVector> PointsToCheck = {
-			Actor->GetActorLocation(),
-			bottom + FVector(Actor->GetActorUpVector() * height), 
-			bottom + FVector(Actor->GetActorUpVector() * height * 2)
-		};
-
-		// check if tentacle is going down 
+		if (DotProduct(Actor->GetActorLocation()) <= 0.54)
+		{
+			continue;
+		}
 		if (ATentacleWall* tentacle = Cast<ATentacleWall>(Actor))
 		{
-			bool isTentacleFound = false;
-			for (const FVector& Point : PointsToCheck)
+			if (tentacle->count >= 1)
 			{
-				if (DotProduct(Point) > 0.54)
-				{
-					if (tentacle->count >= 1)
-					{
-						tentacle->FadeAway();
-						isTentacleFound = true;
-						break;
-					}
-				}
-			}
-			if (isTentacleFound)
-			{
+				tentacle->FadeAway();
 				continue;
 			}
 		}
@@ -102,6 +83,14 @@ void UPlayerVision::LookForTentacleWall()
 		{
 			continue;	
 		}
+
+		FVector bottom = Actor->GetActorLocation();
+			
+		TArray<FVector> PointsToCheck = {
+			Actor->GetActorLocation(),
+			bottom + FVector(Actor->GetActorUpVector() * height), 
+			bottom + FVector(Actor->GetActorUpVector() * height * 2)
+		};
 				
 		// check if there is a wall between player and point
 		for (const FVector& Point : PointsToCheck)
@@ -110,11 +99,6 @@ void UPlayerVision::LookForTentacleWall()
 			FCollisionQueryParams Params;
 			Params.AddIgnoredActor(PlayerPawn);
 
-			if (DotProduct(Point) <= 0.54)
-			{
-				continue;
-			}
-			
 			bool bHit = GetWorld()->LineTraceSingleByChannel(
 				HitResult,
 				PlayerLocation,
