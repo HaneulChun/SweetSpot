@@ -8,9 +8,6 @@
 #include "PlayerHud.generated.h"
 
 class UPopUpWidget;
-/**
- * 
- */
 class UMyUserWidget;
 UCLASS()
 class UNREALPROJECTBASE_API APlayerHud : public AHUD
@@ -22,12 +19,7 @@ protected:
 	
 	virtual void BeginPlay() override;
 
-	virtual void DrawHUD() override;
-
 public:
-
-	UPROPERTY(BlueprintReadOnly, Category = "UI")
-	FString GotoText = "";
 	
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI", meta = (AllowPrivateAccess = "true"))
@@ -56,7 +48,4 @@ public:
 
 	UPROPERTY(EditAnywhere, BluePrintReadWrite)
 	float mad = 0.6;
-
-	UFUNCTION(BlueprintCallable)
-	void SetTextTodo(FString setText);
 };

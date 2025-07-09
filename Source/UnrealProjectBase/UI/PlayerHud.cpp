@@ -42,22 +42,7 @@ void APlayerHud::BeginPlay()
 	}
 }
 
-void APlayerHud::DrawHUD()
-{
-	Super::DrawHUD();
-	FCanvasTextItem TextItemGoto(FVector2D(1000, 40), FText::FromString(GotoText), GEngine->GetLargeFont(), FLinearColor::Red);
-	TextItemGoto.Scale = FVector2D(2.5f, 2.5f);
-	
-	Canvas->DrawItem(TextItemGoto);
-}
-
 UMyUserWidget* APlayerHud::GetMadnessMeterWidget() const
 {
 	return CurrentWidget;
-}
-
-
-void APlayerHud::SetTextTodo(FString setText)
-{
-	GotoText = setText;
 }
