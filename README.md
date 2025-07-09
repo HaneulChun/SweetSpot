@@ -61,8 +61,8 @@ Action               | Keyboard Control  | Gamepad Control
 ---                  |---                |---
 Move                 | WASD            
 look                 | Mouse Look       
-Interact             | E    
-Focus                | C  
+Interact             | E / LMB   
+Focus                | RMB  
 Check Watch          | TAB 
 
 
