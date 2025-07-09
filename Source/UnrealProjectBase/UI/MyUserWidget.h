@@ -116,7 +116,7 @@ public:
 	bool isInLight = false;
 	
 	UPROPERTY(BlueprintReadWrite)
-	bool isImmune = false;
+	bool hasPickedUpKey = false;
 
 
 	// property
