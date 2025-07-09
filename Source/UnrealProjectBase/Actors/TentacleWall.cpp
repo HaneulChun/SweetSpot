@@ -77,8 +77,11 @@ void ATentacleWall::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AAc
 	// give damage too player
 	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &ATentacleWall::IncreaseMadnessBar, 0.4, true);
 
-	// slow down player
-	Character->GetCharacterMovement()->MaxWalkSpeed = slowPlayer;
+	if (Character)
+	{
+		// slow down player
+		Character->GetCharacterMovement()->MaxWalkSpeed = slowPlayer;	
+	}
 }
 
 void ATentacleWall::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
@@ -91,7 +94,10 @@ void ATentacleWall::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* Ot
 	GetWorld()->GetTimerManager().ClearTimer(TimerHandle);
 
 	// give player their original speed
-	Character->GetCharacterMovement()->MaxWalkSpeed = OriginalSpeed;
+	if (Character)
+	{
+		Character->GetCharacterMovement()->MaxWalkSpeed = OriginalSpeed;
+	}
 }
 
 
