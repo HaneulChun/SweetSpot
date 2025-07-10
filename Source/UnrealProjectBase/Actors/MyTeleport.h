@@ -8,6 +8,7 @@
 
 #include "MyTeleport.generated.h"
 
+class UArrowComponent;
 class UPlayerVision;
 class UMyUserWidget;
 class ACharacter;
@@ -49,10 +50,14 @@ public:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<USceneComponent> teleportTo;
+	UPROPERTY(BlueprintReadWrite)
+	TObjectPtr<UArrowComponent> Arrow;
 
+	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<USceneComponent> NextTeleportTo;
-
+	UPROPERTY(BlueprintReadWrite)
+	TObjectPtr<UArrowComponent> nextArrow;
 	
 	UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
@@ -70,7 +75,7 @@ public:
 	void Reset();
 
 	UFUNCTION(BlueprintCallable)
-	void Teleport(AActor* OtherActor, FTransform Transform);
+	void Teleport(AActor* OtherActor, UArrowComponent* ArrowComponent);
 	
 	UPROPERTY(BlueprintReadWrite)
 	bool isCompleted = false;
