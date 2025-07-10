@@ -110,7 +110,7 @@ void UMyUserWidget::CheckPlayerState()
 			// hide actor
 			if (CurrentState == ECurrentState::Mad)
 			{
-				FadeObject->Fade(0, 1, 0.1, 0);
+				FadeObject->Fade(0, 1, 0, 1);
 			}
 			else
 			{
