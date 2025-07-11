@@ -85,7 +85,7 @@ public:
 
 	
 	UPROPERTY(BlueprintReadWrite)
-	bool isFading = false;
+	bool isActive = true;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float restoreMadnessValue = 0.1;
