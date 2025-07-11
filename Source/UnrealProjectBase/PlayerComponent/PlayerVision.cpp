@@ -76,6 +76,10 @@ void UPlayerVision::LookForTentacleWall()
 				tentacle->FadeAway();
 				continue;
 			}
+			if (tentacle->isActive == false)
+			{
+				continue;
+			}
 		}
 		
 		float Actordistance = FVector::Distance(PlayerCamera->GetComponentLocation(), Actor->GetActorLocation());
