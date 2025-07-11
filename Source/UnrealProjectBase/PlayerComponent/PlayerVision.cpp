@@ -65,10 +65,27 @@ void UPlayerVision::LookForTentacleWall()
 		{
 			continue;
 		}
-		if (DotProduct(Actor->GetActorLocation()) <= 0.54)
+
+		bool isTentacleWall = false;
+		FVector bottom = Actor->GetActorLocation();
+		TArray<FVector> PointsToCheck = {
+			Actor->GetActorLocation(),
+			bottom + FVector(Actor->GetActorUpVector() * height), 
+			bottom + FVector(Actor->GetActorUpVector() * height * 2)
+		};
+
+		for (FVector points : PointsToCheck)
+		{
+			if (DotProduct(points) > 0.54)
+			{
+				isTentacleWall = true;
+			}
+		}
+		if (isTentacleWall == false)
 		{
 			continue;
 		}
+		
 		if (ATentacleWall* tentacle = Cast<ATentacleWall>(Actor))
 		{
 			if (tentacle->count >= 1)
@@ -87,15 +104,7 @@ void UPlayerVision::LookForTentacleWall()
 		{
 			continue;
 		}
-
-		FVector bottom = Actor->GetActorLocation();
-			
-		TArray<FVector> PointsToCheck = {
-			Actor->GetActorLocation(),
-			bottom + FVector(Actor->GetActorUpVector() * height), 
-			bottom + FVector(Actor->GetActorUpVector() * height * 2)
-		};
-				
+		
 		// check if there is a wall between player and point
 		for (const FVector& Point : PointsToCheck)
 		{
