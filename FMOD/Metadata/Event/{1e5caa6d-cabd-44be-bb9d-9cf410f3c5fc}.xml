@@ -117,10 +117,7 @@
 	<object class="MixerBusFader" id="{0f98a12b-8e7b-4f2f-a6c2-f4cb8f07b82d}" />
 	<object class="LowpassEffect" id="{6e9a0ad8-8761-4366-8ada-95314a80bf40}">
 		<property name="cutoff">
-			<value>95</value>
-		</property>
-		<property name="resonance">
-			<value>1.13999999</value>
+			<value>300</value>
 		</property>
 	</object>
 	<object class="MixerBusFader" id="{f65bb1a7-d68d-4bdb-bec3-924a26147cd6}" />
@@ -143,7 +140,7 @@
 	</object>
 	<object class="DistortionEffect" id="{1efa79ab-7853-4d34-8391-5599ad8e3ca2}">
 		<property name="level">
-			<value>0.579999983</value>
+			<value>0.75</value>
 		</property>
 	</object>
 	<object class="SpatialiserEffect" id="{66d04a8f-de91-481a-9445-7913760bbe2e}">

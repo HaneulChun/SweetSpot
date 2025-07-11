@@ -3,6 +3,7 @@
 
 #include "MyTeleport.h"
 
+#include "Components/ArrowComponent.h"
 #include "Components/BoxComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Engine/Engine.h"
@@ -28,8 +29,17 @@ AMyTeleport::AMyTeleport()
 	teleportTo = CreateDefaultSubobject<USceneComponent>(TEXT("TeleportPoint"));
 	teleportTo->SetupAttachment(RootComponent);
 
+	Arrow = CreateDefaultSubobject<UArrowComponent>(TEXT("Arrow"));
+	Arrow->SetupAttachment(teleportTo); 
+	Arrow->ArrowColor = FColor::Green;
+	
+	
 	NextTeleportTo = CreateDefaultSubobject<USceneComponent>(TEXT("NextTeleportPoint"));
 	NextTeleportTo->SetupAttachment(RootComponent);
+
+	nextArrow = CreateDefaultSubobject<UArrowComponent>(TEXT("NextArrow"));
+	nextArrow->SetupAttachment(NextTeleportTo); 
+	nextArrow->ArrowColor = FColor::Green;
 }
 
 // Called when the game starts or when spawned
@@ -75,7 +85,7 @@ void AMyTeleport::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 	else
 	{
 		// teleport player
-		Teleport(OtherActor, teleportTo->GetComponentTransform());
+		Teleport(OtherActor, Arrow);
 				
 		// reset the eyes
 		Reset();
@@ -129,16 +139,19 @@ void AMyTeleport::Reset()
 	playerVision->SetActorArray();
 }
 
-void AMyTeleport::Teleport(AActor* OtherActor, FTransform Transform)
+void AMyTeleport::Teleport(AActor* OtherActor, UArrowComponent* ArrowComponent)
 {
-	FTransform destanation = Transform;
-	FTransform teleportStartPoint = this->GetTransform();
-	FTransform player = OtherActor->GetTransform();
-		
-	FVector offset = player.GetLocation() - teleportStartPoint.GetLocation();
-	FVector final = offset + destanation.GetLocation();
-		
-	FTransform finalTeleport = FTransform(destanation.GetRotation(), final, OtherActor->GetTransform().GetScale3D());
+	// FTransform destanation = Transform;
+	// FTransform teleportStartPoint = this->GetTransform();
+	// FTransform player = OtherActor->GetTransform();
+	// FVector offset = player.GetLocation() - teleportStartPoint.GetLocation();
+	// FVector final = offset + destanation.GetLocation();
+	// FTransform finalTeleport = FTransform(destanation.GetRotation(), final, OtherActor->GetTransform().GetScale3D());
+	// OtherActor->SetActorTransform(finalTeleport, false, nullptr, ETeleportType::TeleportPhysics);
 	
-	OtherActor->SetActorTransform(finalTeleport, false, nullptr, ETeleportType::TeleportPhysics);
+	// Rotation
+	GetWorld()->GetFirstPlayerController()->SetControlRotation(ArrowComponent->GetComponentRotation());
+		
+	// Location
+	OtherActor->SetActorLocation(ArrowComponent->GetComponentLocation(), false);
 }

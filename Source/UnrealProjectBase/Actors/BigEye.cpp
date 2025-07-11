@@ -82,7 +82,7 @@ void ABigEye::ResetPosition_Implementation()
 
 void ABigEye::RemoveImmunity()
 {
-	MadnessWidget->hasPickedUpKey = false;
+	MadnessWidget->hasKey = false;
 	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, "Removing Immunity");
 	this->Destroy();
 }

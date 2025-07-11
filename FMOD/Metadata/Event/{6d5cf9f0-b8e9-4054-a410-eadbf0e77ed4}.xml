@@ -82,9 +82,6 @@
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{780eb2ac-9943-49a9-b08a-0284f87c72fd}">
-		<property name="volume">
-			<value>-8</value>
-		</property>
 		<relationship name="effectChain">
 			<destination>{a3c05eef-5d80-4dda-a5f0-62e4aa41f68c}</destination>
 		</relationship>
@@ -120,12 +117,5 @@
 	</object>
 	<object class="MixerBusFader" id="{52d6096a-e4cb-4236-9021-fedf9239316b}" />
 	<object class="MixerBusFader" id="{7f04665f-c366-42e6-87cf-98a91fa173a9}" />
-	<object class="SpatialiserEffect" id="{fce6c426-7966-45f7-a93c-84f25ed737ec}">
-		<property name="panBlend">
-			<value>0.504999995</value>
-		</property>
-		<property name="userPanExtent">
-			<value>316.026733</value>
-		</property>
-	</object>
+	<object class="SpatialiserEffect" id="{fce6c426-7966-45f7-a93c-84f25ed737ec}" />
 </objects>
