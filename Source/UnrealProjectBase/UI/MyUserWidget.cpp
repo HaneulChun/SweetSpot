@@ -110,7 +110,7 @@ void UMyUserWidget::CheckPlayerState()
 			// hide actor
 			if (CurrentState == ECurrentState::Mad)
 			{
-				FadeObject->Fade(0, 1, 0.1, 0);
+				FadeObject->Fade(0, 1, 0, 1);
 			}
 			else
 			{
@@ -158,7 +158,7 @@ void UMyUserWidget::DecreaseMadness(float value)
 
 void UMyUserWidget::IncreaseMadnessBar(float value)
 {
-	if (isImmune == false)
+	if (hasKey == true)
 	{
 		currentMadnessBarValue += value;
 	}
