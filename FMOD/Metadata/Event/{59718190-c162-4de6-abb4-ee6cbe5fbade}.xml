@@ -60,8 +60,14 @@
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{351bc96e-a10c-44c1-898e-b408f033299a}">
+		<property name="maxVoices">
+			<value>1</value>
+		</property>
+		<property name="voiceStealing">
+			<value>4</value>
+		</property>
 		<property name="maximumDistance">
-			<value>250</value>
+			<value>60</value>
 		</property>
 	</object>
 	<object class="MarkerTrack" id="{df17189a-5c2f-4c93-a6ca-5f436a881824}" />
@@ -76,9 +82,6 @@
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{25b2ee99-e67d-4a18-b235-b57a3dda66b3}">
-		<property name="volume">
-			<value>8</value>
-		</property>
 		<relationship name="effectChain">
 			<destination>{f6277b6f-1fe5-4d41-bd70-f56bdfe0adbf}</destination>
 		</relationship>
@@ -104,6 +107,7 @@
 		<relationship name="effects">
 			<destination>{1b99192e-39d2-48df-8d48-54b510389338}</destination>
 			<destination>{216f0801-7338-4006-adea-9fe42ffa5d4c}</destination>
+			<destination>{8fff6c28-4fb6-421a-827e-60948d07e55c}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{81020ae9-100e-4417-8e8c-b4e619f76859}" />
@@ -115,4 +119,9 @@
 	<object class="MixerBusFader" id="{c6966815-5f47-4219-91b8-fc27328a9755}" />
 	<object class="MixerBusFader" id="{1b99192e-39d2-48df-8d48-54b510389338}" />
 	<object class="SpatialiserEffect" id="{216f0801-7338-4006-adea-9fe42ffa5d4c}" />
+	<object class="GainEffect" id="{8fff6c28-4fb6-421a-827e-60948d07e55c}">
+		<property name="gain">
+			<value>7.5</value>
+		</property>
+	</object>
 </objects>
