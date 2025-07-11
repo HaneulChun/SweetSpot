@@ -85,7 +85,7 @@ void UPlayerVision::LookForTentacleWall()
 		float Actordistance = FVector::Distance(PlayerCamera->GetComponentLocation(), Actor->GetActorLocation());
 		if (Actordistance > distance)
 		{
-			continue;	
+			continue;
 		}
 
 		FVector bottom = Actor->GetActorLocation();
