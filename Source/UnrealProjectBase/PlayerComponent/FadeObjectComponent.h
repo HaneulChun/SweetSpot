@@ -22,7 +22,7 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 	
-
+	UPROPERTY()
 	TObjectPtr<UMyUserWidget> widget;
 public:	
 	UPROPERTY(BlueprintReadOnly)
