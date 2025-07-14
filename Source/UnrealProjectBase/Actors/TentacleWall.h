@@ -27,6 +27,7 @@ private:
 	
 	float currentAlpha = 0;
 
+	UPROPERTY()
 	TObjectPtr<ASweetSpotCharacter> Character;
 protected:
 	// Called when the game starts or when spawned
