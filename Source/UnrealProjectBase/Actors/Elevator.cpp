@@ -6,7 +6,6 @@
 #include "ElevatorPart.h"
 #include "FMODBlueprintStatics.h"
 #include "MyTeleport.h"
-#include "UnrealProjectBase/UI/PlayerHud.h"
 #include "UnrealProjectBase/PlayerComponent/PlayerInventory.h"
 
 // Sets default values
@@ -17,14 +16,14 @@ AElevator::AElevator()
 
 	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
 
-	//set the childs
+	//set the children
 	Switch = CreateDefaultSubobject<UChildActorComponent>(TEXT("Switch"));
 	Switch->SetupAttachment(RootComponent);
 	
 	Button = CreateDefaultSubobject<UChildActorComponent>(TEXT("Button"));
 	Button->SetupAttachment(RootComponent);
 	
-	Cranck = CreateDefaultSubobject<UChildActorComponent>(TEXT("Cranck"));
+	Cranck = CreateDefaultSubobject<UChildActorComponent>(TEXT("Crank"));
 	Cranck->SetupAttachment(RootComponent);
 }
 
@@ -123,10 +122,7 @@ void AElevator::FixElevator()
 void AElevator::ShowElevatorPart(UChildActorComponent* Part)
 {
 	// helper function make elevator parts appear 
-	if (UStaticMeshComponent* Mesh = Part->GetChildActor()->FindComponentByClass<UStaticMeshComponent>())
-	{
-		Part->SetVisibility(true);
-	}
+	Part->SetVisibility(true);
 	if (Teleport)
 	{
 		Teleport->isCompleted = true;

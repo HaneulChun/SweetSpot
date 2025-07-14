@@ -48,7 +48,7 @@ void UMyUserWidget::CheckPlayerState()
 	{
 		if (CurrentState != ECurrentState::Sane)
 		{
-			// change camera settings and matreial
+			// change camera settings and material
 			CameraSettings->ChangeCameraSettings(0.0, 0.4);
 			chromaticAberrationIntensity = 0;
 			vignetteIntensity = 0.4;
