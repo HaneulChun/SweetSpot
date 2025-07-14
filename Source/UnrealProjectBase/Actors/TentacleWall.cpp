@@ -84,14 +84,19 @@ void ATentacleWall::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AAc
 void ATentacleWall::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	if (!Cast<ACharacter>(OtherActor)) return;
-	if (!Cast<UCapsuleComponent>(OtherComp)) return;
+	if (ACharacter* OverlappingCharacter = Cast<ACharacter>(OtherActor))
+	{
+		if (!Cast<UCapsuleComponent>(OtherComp)) return;
 
-	// end damage timer
-	GetWorld()->GetTimerManager().ClearTimer(TimerHandle);
+		// end damage timer
+		GetWorld()->GetTimerManager().ClearTimer(TimerHandle);
 
-	// give player their original speed
-	Character->GetCharacterMovement()->MaxWalkSpeed = OriginalSpeed;
+		// reset speed
+		if (OverlappingCharacter->GetCharacterMovement())
+		{
+			OverlappingCharacter->GetCharacterMovement()->MaxWalkSpeed = OriginalSpeed;
+		}
+	}
 }
 
 
