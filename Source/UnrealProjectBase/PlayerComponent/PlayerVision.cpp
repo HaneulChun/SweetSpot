@@ -65,10 +65,27 @@ void UPlayerVision::LookForTentacleWall()
 		{
 			continue;
 		}
-		if (DotProduct(Actor->GetActorLocation()) <= 0.54)
+
+		bool isTentacleWall = false;
+		FVector bottom = Actor->GetActorLocation();
+		TArray<FVector> PointsToCheck = {
+			Actor->GetActorLocation(),
+			bottom + FVector(Actor->GetActorUpVector() * height), 
+			bottom + FVector(Actor->GetActorUpVector() * height * 2)
+		};
+
+		for (FVector points : PointsToCheck)
+		{
+			if (DotProduct(points) > 0.54)
+			{
+				isTentacleWall = true;
+			}
+		}
+		if (isTentacleWall == false)
 		{
 			continue;
 		}
+		
 		if (ATentacleWall* tentacle = Cast<ATentacleWall>(Actor))
 		{
 			if (tentacle->count >= 1)
@@ -76,22 +93,18 @@ void UPlayerVision::LookForTentacleWall()
 				tentacle->FadeAway();
 				continue;
 			}
+			if (tentacle->isActive == false)
+			{
+				continue;
+			}
 		}
 		
 		float Actordistance = FVector::Distance(PlayerCamera->GetComponentLocation(), Actor->GetActorLocation());
 		if (Actordistance > distance)
 		{
-			continue;	
+			continue;
 		}
-
-		FVector bottom = Actor->GetActorLocation();
-			
-		TArray<FVector> PointsToCheck = {
-			Actor->GetActorLocation(),
-			bottom + FVector(Actor->GetActorUpVector() * height), 
-			bottom + FVector(Actor->GetActorUpVector() * height * 2)
-		};
-				
+		
 		// check if there is a wall between player and point
 		for (const FVector& Point : PointsToCheck)
 		{
@@ -145,7 +158,7 @@ void UPlayerVision::LookForEye()
 		{
 			if (USpottedObject* eye = Cast<USpottedObject>(Actor->FindComponentByClass<USpottedObject>()))
 			{
-				// fade object if the object is detected and dont need to raycast 
+				// fade object if the object is detected and don't need to raycast 
 				if (eye->count >= 1)
 				{
 					eye->FadeAway_Implementation();

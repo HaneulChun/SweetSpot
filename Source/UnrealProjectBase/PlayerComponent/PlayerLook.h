@@ -22,10 +22,13 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+	UPROPERTY()
 	TObjectPtr<UCameraComponent> Camera;
+	
 	FVector CameraLocation;
 	FVector CameraForward;
 
+	UPROPERTY()
 	TObjectPtr<AActor> BestActor = nullptr;
 	
 public:	

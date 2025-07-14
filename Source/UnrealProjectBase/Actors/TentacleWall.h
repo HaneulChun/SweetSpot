@@ -27,6 +27,7 @@ private:
 	
 	float currentAlpha = 0;
 
+	UPROPERTY()
 	TObjectPtr<ASweetSpotCharacter> Character;
 protected:
 	// Called when the game starts or when spawned
@@ -85,7 +86,7 @@ public:
 
 	
 	UPROPERTY(BlueprintReadWrite)
-	bool isFading = false;
+	bool isActive = true;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float restoreMadnessValue = 0.1;
