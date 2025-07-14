@@ -55,7 +55,7 @@ AActor* UPlayerLook::LookAtActor(const TArray<AActor*>& Actors)
 	for (AActor* Actor : Actors)
 	{
 		if (!Actor) continue;
-
+		
 		FVector DirectionToActor = (Actor->GetActorLocation() - CameraLocation).GetSafeNormal();
 		float Dot = FVector::DotProduct(CameraForward, DirectionToActor);
 
@@ -64,28 +64,11 @@ AActor* UPlayerLook::LookAtActor(const TArray<AActor*>& Actors)
 			BestDot = Dot;
 			BestActor = Actor;
 		}
-
 	}
 	if (BestActor)
 	{
 		return BestActor;
 	}
-
-	// return early without ray-casting if there is no actor in the pov
-	for (AActor* Actor : Actors)
-	{
-		if (Actor)
-		{
-			FVector Direction = (Actor->GetActorLocation() - CameraLocation).GetSafeNormal();
-			float Dot = FVector::DotProduct(CameraForward, Direction);
-
-			if (Dot > 0)
-			{
-				break;
-			}
-		}
-	}
-	
 	
 	FVector End = CameraLocation + CameraForward * 200.0f;
 
