@@ -24,6 +24,7 @@ public:
 	AMyTeleport();
 
 private:
+	UPROPERTY()
 	TObjectPtr<UPlayerVision> playerVision;
 
 	bool hasTeleported = false;

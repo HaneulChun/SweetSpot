@@ -158,7 +158,7 @@ void UPlayerVision::LookForEye()
 		{
 			if (USpottedObject* eye = Cast<USpottedObject>(Actor->FindComponentByClass<USpottedObject>()))
 			{
-				// fade object if the object is detected and dont need to raycast 
+				// fade object if the object is detected and don't need to raycast 
 				if (eye->count >= 1)
 				{
 					eye->FadeAway_Implementation();
