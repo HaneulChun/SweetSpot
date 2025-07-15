@@ -38,7 +38,31 @@ void ARoom::BeginPlay()
 		APlayerHud* hud = Cast<APlayerHud>(PlayerController->GetHUD());
 
 		widget = Cast<UMyUserWidget>(hud->GetMadnessMeterWidget());
+
+		// point at the player's camera and add material
+		Camera = PlayerController->PlayerCameraManager->GetOwningPlayerController()->PlayerCameraManager->ViewTarget.Target->FindComponentByClass<UCameraComponent>();
 	});
+
+	SetActorTickEnabled(false);
+}
+
+void ARoom::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	if (ElapsedTime < duration)
+	{
+		//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Black, "test");
+		ElapsedTime += DeltaTime;
+		float Alpha = FMath::Clamp(ElapsedTime / duration, 0.0f, 1.0f);
+		float newColor = FMath::Lerp(startColor, endColor, Alpha);
+		float newVignette = FMath::Lerp(startVignette, endVignette, Alpha);
+		Color(newColor, newVignette);
+	}
+	else
+	{
+		SetActorTickEnabled(false);
+	}
 }
 
 // increment madness when enter the collision
@@ -49,6 +73,14 @@ void ARoom::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 	if (!Cast<UCapsuleComponent>(OtherComp)) return;
 
 	if (!widget) return;
+
+	// set up for tick
+	{
+		ElapsedTime = 0.0f;
+		startColor = Camera->PostProcessSettings.ColorSaturation.X;
+		startVignette = Camera->PostProcessSettings.VignetteIntensity;
+		endColor = colorIntensity;
+	}
 	
 	if (increment < 0)
 	{
@@ -64,19 +96,20 @@ void ARoom::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 	// give the player vignette
 	if (widget->CurrentState == ECurrentState::Mad)
 	{
-		Color(colorIntensity, widget->vignetteIntensity);
+		endVignette = widget->vignetteIntensity;
 	}
 	else
 	{
 		if (increment < 0)
 		{
-			Color(colorIntensity, 0.4);	
+			endVignette = 0.4;
 		}
 		else
 		{
-			Color(colorIntensity, 1);	
+			endVignette = 1;
 		}
 	}
+	SetActorTickEnabled(true);
 }
 
 // madness stop rising when exit the collision
@@ -119,9 +152,6 @@ void ARoom::Color(float intensity, float Vignette)
 {
 	if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
 	{
-		// point at the player's camera and add material
-		if (UCameraComponent* Camera = PlayerController->PlayerCameraManager->GetOwningPlayerController()->PlayerCameraManager->ViewTarget.Target->FindComponentByClass<UCameraComponent>())
-		{
 			FPostProcessSettings& Settings = Camera->PostProcessSettings;
 
 			if (intensity <= 1)
@@ -137,6 +167,5 @@ void ARoom::Color(float intensity, float Vignette)
 				Settings.bOverride_ColorSaturation = true;
 				Settings.ColorSaturation = FVector4(intensity, intensity/2, intensity, 1.0f);
 			}
-		}
 	}
 }

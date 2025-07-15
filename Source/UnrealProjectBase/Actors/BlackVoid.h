@@ -33,7 +33,6 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite);
 	TObjectPtr<UBoxComponent> triggerBox;
 public:	
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION(BlueprintCallable)
@@ -44,6 +43,7 @@ public:
 private:
 	UPROPERTY(EditAnywhere)
 	float MoveDuration = 4.0f;
-	
+
+	UPROPERTY()
 	float ElapsedTime = 0.0f;
 };

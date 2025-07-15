@@ -8,6 +8,7 @@
 
 #include "Room.generated.h"
 
+class UCameraComponent;
 class ACharacter;
 class UBoxComponent;
 class UMyUserWidget;
@@ -24,12 +25,32 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	virtual void Tick(float DeltaTime) override;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite);
 	TObjectPtr<UBoxComponent> triggerBox;
 
 	UPROPERTY()
 	TObjectPtr<UMyUserWidget> widget;
+
+	UPROPERTY()
+	TObjectPtr<UCameraComponent> Camera;
+
+
+	UPROPERTY(EditAnywhere)
+	float duration = 1.0f;
+	UPROPERTY()
+	float ElapsedTime = 0.0f;
 	
+	UPROPERTY()
+	float startColor = 1.0f;
+	UPROPERTY()
+	float endColor = 0.0f;
+
+	UPROPERTY()
+	float startVignette = 1.0f;
+	UPROPERTY()
+	float endVignette = 0.0f;
 public:	
 	
 	UFUNCTION()
