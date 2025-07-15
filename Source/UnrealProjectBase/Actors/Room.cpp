@@ -74,11 +74,13 @@ void ARoom::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 
 	if (!widget) return;
 
-	ElapsedTime = 0.0f;
-	startColor = Camera->PostProcessSettings.ColorSaturation.X;
-	startVignette = Camera->PostProcessSettings.VignetteIntensity;
-
-	endColor = colorIntensity;
+	// set up for tick
+	{
+		ElapsedTime = 0.0f;
+		startColor = Camera->PostProcessSettings.ColorSaturation.X;
+		startVignette = Camera->PostProcessSettings.VignetteIntensity;
+		endColor = colorIntensity;
+	}
 	
 	if (increment < 0)
 	{
@@ -95,19 +97,16 @@ void ARoom::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 	if (widget->CurrentState == ECurrentState::Mad)
 	{
 		endVignette = widget->vignetteIntensity;
-		//Color(colorIntensity, widget->vignetteIntensity);
 	}
 	else
 	{
 		if (increment < 0)
 		{
 			endVignette = 0.4;
-			//Color(colorIntensity, 0.4);	
 		}
 		else
 		{
 			endVignette = 1;
-			//Color(colorIntensity, 1);	
 		}
 	}
 	SetActorTickEnabled(true);
@@ -121,8 +120,6 @@ void ARoom::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor
 	if (!Cast<UCapsuleComponent>(OtherComp)) return;
 
 	if (!widget) return;
-
-	SetActorTickEnabled(false);
 	
 	// increase Madness if player is in room
 	if (increment < 0)
