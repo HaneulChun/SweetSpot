@@ -55,6 +55,9 @@ AActor* UPlayerLook::LookAtActor(const TArray<AActor*>& Actors)
 	for (AActor* Actor : Actors)
 	{
 		if (!Actor) continue;
+
+		float Actordistance = FVector::Distance(CameraLocation, Actor->GetActorLocation());
+		if (Actordistance > 250) continue;
 		
 		FVector DirectionToActor = (Actor->GetActorLocation() - CameraLocation).GetSafeNormal();
 		float Dot = FVector::DotProduct(CameraForward, DirectionToActor);
