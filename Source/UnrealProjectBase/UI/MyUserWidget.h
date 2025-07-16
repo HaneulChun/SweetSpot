@@ -118,7 +118,9 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	bool hasKey = false;
 
-
+	UFUNCTION(BlueprintImplementableEvent , BlueprintCallable)
+	void PromptPopUp();
+	
 	// property
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float currentMadnessBarValue = 0.0;
