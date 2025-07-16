@@ -152,20 +152,20 @@ void ARoom::Color(float intensity, float Vignette)
 {
 	if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
 	{
-			FPostProcessSettings& Settings = Camera->PostProcessSettings;
+		FPostProcessSettings& Settings = Camera->PostProcessSettings;
 
-			if (intensity <= 1)
-			{
-				Settings.bOverride_ColorSaturation = true;
-				Settings.ColorSaturation = FVector4(intensity, intensity, intensity, 1.0f);
+		if (intensity <= 1)
+		{
+			Settings.bOverride_ColorSaturation = true;
+			Settings.ColorSaturation = FVector4(intensity, intensity, intensity, 1.0f);
 
-				Settings.bOverride_VignetteIntensity = true;
-				Settings.VignetteIntensity = Vignette;	
-			}
-			else
-			{
-				Settings.bOverride_ColorSaturation = true;
-				Settings.ColorSaturation = FVector4(intensity, intensity/2, intensity, 1.0f);
-			}
+			Settings.bOverride_VignetteIntensity = true;
+			Settings.VignetteIntensity = Vignette;	
+		}
+		else
+		{
+			Settings.bOverride_ColorSaturation = true;
+			Settings.ColorSaturation = FVector4(intensity, intensity/2, intensity, 1.0f);
+		}
 	}
 }
