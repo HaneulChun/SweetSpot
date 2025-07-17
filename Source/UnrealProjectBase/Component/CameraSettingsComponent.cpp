@@ -30,6 +30,7 @@ void UCameraSettingsComponent::BeginPlay()
 			playerCamera = Camera;
 		}	
 	}
+	SetComponentTickEnabled(false);
 }
 
 
@@ -37,8 +38,19 @@ void UCameraSettingsComponent::BeginPlay()
 void UCameraSettingsComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
+	
+	if (ElapsedTime < duration)
+	{
+		ElapsedTime += DeltaTime;
+		float Alpha = FMath::Clamp(ElapsedTime / duration, 0.0f, 1.0f);
+		float newColor = FMath::Lerp(startColor, endColor, Alpha);
+		float newVignette = FMath::Lerp(startVignette, endVignette, Alpha);
+		RoomColor(newColor, newVignette);
+	}
+	else
+	{
+		SetComponentTickEnabled(false);
+	}
 }
 
 void UCameraSettingsComponent::ChangeCameraSettings(float chromaticAberration, float Vignette)
@@ -70,6 +82,25 @@ void UCameraSettingsComponent::ChangeCameraMaterial(float intensity)
 		{
 			Settings.AddBlendable(Material[i], intensity);
 		}
+	}
+}
+
+void UCameraSettingsComponent::RoomColor(float intensity, float Vignette)
+{
+	FPostProcessSettings& Settings = playerCamera->PostProcessSettings;
+
+	if (intensity <= 1)
+	{
+		Settings.bOverride_ColorSaturation = true;
+		Settings.ColorSaturation = FVector4(intensity, intensity, intensity, 1.0f);
+
+		Settings.bOverride_VignetteIntensity = true;
+		Settings.VignetteIntensity = Vignette;	
+	}
+	else
+	{
+		Settings.bOverride_ColorSaturation = true;
+		Settings.ColorSaturation = FVector4(intensity, intensity/2, intensity, 1.0f);
 	}
 }
 
