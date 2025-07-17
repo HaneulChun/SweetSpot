@@ -8,6 +8,7 @@
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/Character.h"
+#include "UnrealProjectBase/Component/CameraSettingsComponent.h"
 
 // Sets default values
 ARoom::ARoom()
@@ -41,27 +42,9 @@ void ARoom::BeginPlay()
 
 		// point at the player's camera and add material
 		Camera = PlayerController->PlayerCameraManager->GetOwningPlayerController()->PlayerCameraManager->ViewTarget.Target->FindComponentByClass<UCameraComponent>();
+
+		CameraSettings = PlayerController->GetPawn()->FindComponentByClass<UCameraSettingsComponent>();
 	});
-
-	SetActorTickEnabled(false);
-}
-
-void ARoom::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-	if (ElapsedTime < duration)
-	{
-		ElapsedTime += DeltaTime;
-		float Alpha = FMath::Clamp(ElapsedTime / duration, 0.0f, 1.0f);
-		float newColor = FMath::Lerp(startColor, endColor, Alpha);
-		float newVignette = FMath::Lerp(startVignette, endVignette, Alpha);
-		Color(newColor, newVignette);
-	}
-	else
-	{
-		SetActorTickEnabled(false);
-	}
 }
 
 // increment madness when enter the collision
@@ -75,10 +58,10 @@ void ARoom::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 
 	// set up for tick
 	{
-		ElapsedTime = 0.0f;
-		startColor = Camera->PostProcessSettings.ColorSaturation.X;
-		startVignette = Camera->PostProcessSettings.VignetteIntensity;
-		endColor = colorIntensity;
+		CameraSettings->ElapsedTime = 0.0f;
+		CameraSettings->startColor = Camera->PostProcessSettings.ColorSaturation.Y;
+		CameraSettings->startVignette = Camera->PostProcessSettings.VignetteIntensity;
+		CameraSettings->endColor = colorIntensity;
 	}
 	
 	if (increment < 0)
@@ -95,20 +78,20 @@ void ARoom::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 	// give the player vignette
 	if (widget->CurrentState == ECurrentState::Mad)
 	{
-		endVignette = widget->vignetteIntensity;
+		CameraSettings->endVignette = widget->vignetteIntensity;
 	}
 	else
 	{
 		if (increment < 0)
 		{
-			endVignette = 0.4;
+			CameraSettings->endVignette = 0.4;
 		}
 		else
 		{
-			endVignette = 1;
+			CameraSettings->endVignette = 1;
 		}
 	}
-	SetActorTickEnabled(true);
+	CameraSettings->SetComponentTickEnabled(true);
 }
 
 // madness stop rising when exit the collision
