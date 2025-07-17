@@ -49,10 +49,6 @@ public:
 	UFUNCTION()
 	void OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, 
 					  UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
-
-	UFUNCTION(BlueprintCallable)
-	void Color(float intensity, float Vignette);
-
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float increment = 0.01;

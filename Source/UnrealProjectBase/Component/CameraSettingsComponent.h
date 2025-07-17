@@ -32,7 +32,7 @@ protected:
 	void RoomColor(float intensity, float Vignette);
 	
 	UPROPERTY(EditAnywhere)
-	float duration = 1.0f;
+	float duration = .5f;
 	UPROPERTY()
 	float ElapsedTime = 0.0f;
 	

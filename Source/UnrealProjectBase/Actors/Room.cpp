@@ -101,14 +101,14 @@ void ARoom::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor
 		if (widget->isInRoom == true)
 		{
 			widget->SetIncreaseMadness(widget->roomMadnessDamage);
-			Color(.5, 1);
+			CameraSettings->SetCameraSettings(0.5, 1);
 		}
 		else
 		{
 			widget->SetIncreaseMadness(0.0);
 
 			// remove the player vignette when exiting room
-			Color(widget->colorIntensity, widget->vignetteIntensity);
+			CameraSettings->SetCameraSettings(widget->colorIntensity, widget->vignetteIntensity);
 		}
 	}
 	else
@@ -117,25 +117,6 @@ void ARoom::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor
 		widget->SetIncreaseMadness(0.0);
 
 		// remove the player vignette when exiting room
-		Color(widget->colorIntensity, widget->vignetteIntensity);
-	}
-}
-
-void ARoom::Color(float intensity, float Vignette)
-{
-	FPostProcessSettings& Settings = Camera->PostProcessSettings;
-
-	if (intensity <= 1)
-	{
-		Settings.bOverride_ColorSaturation = true;
-		Settings.ColorSaturation = FVector4(intensity, intensity, intensity, 1.0f);
-
-		Settings.bOverride_VignetteIntensity = true;
-		Settings.VignetteIntensity = Vignette;	
-	}
-	else
-	{
-		Settings.bOverride_ColorSaturation = true;
-		Settings.ColorSaturation = FVector4(intensity, intensity/2, intensity, 1.0f);
+		CameraSettings->SetCameraSettings(widget->colorIntensity, widget->vignetteIntensity);
 	}
 }
