@@ -52,7 +52,6 @@ void ARoom::Tick(float DeltaTime)
 
 	if (ElapsedTime < duration)
 	{
-		//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Black, "test");
 		ElapsedTime += DeltaTime;
 		float Alpha = FMath::Clamp(ElapsedTime / duration, 0.0f, 1.0f);
 		float newColor = FMath::Lerp(startColor, endColor, Alpha);
