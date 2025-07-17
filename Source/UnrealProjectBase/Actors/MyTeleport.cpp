@@ -3,11 +3,13 @@
 
 #include "MyTeleport.h"
 
+#include "Camera/CameraComponent.h"
 #include "Components/ArrowComponent.h"
 #include "Components/BoxComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Engine/Engine.h"
 #include "GameFramework/Character.h"
+#include "UnrealProjectBase/Component/CameraSettingsComponent.h"
 #include "UnrealProjectBase/UI/PlayerHud.h"
 #include "UnrealProjectBase/UI/MyUserWidget.h"
 #include "UnrealProjectBase/PlayerComponent/PlayerVision.h"
@@ -62,6 +64,8 @@ void AMyTeleport::BeginPlay()
 		widget = Cast<UMyUserWidget>(hud->GetMadnessMeterWidget());
 
 		playerVision = PlayerController->GetPawn()->FindComponentByClass<UPlayerVision>();
+		
+		CameraSettings = PlayerController->GetPawn()->FindComponentByClass<UCameraSettingsComponent>();
 	});
 }
 
@@ -81,6 +85,8 @@ void AMyTeleport::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 	{
 		Player = OtherActor;
 		LoadSubLevel();
+		CameraSettings->SetCameraSettings(-1, 5);
+		CameraSettings->DelayrestoreCamera();
 	}
 	else
 	{

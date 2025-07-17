@@ -55,14 +55,6 @@ void ARoom::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 	if (!Cast<UCapsuleComponent>(OtherComp)) return;
 
 	if (!widget) return;
-
-	// set up for tick
-	{
-		CameraSettings->ElapsedTime = 0.0f;
-		CameraSettings->startColor = Camera->PostProcessSettings.ColorSaturation.Y;
-		CameraSettings->startVignette = Camera->PostProcessSettings.VignetteIntensity;
-		CameraSettings->endColor = colorIntensity;
-	}
 	
 	if (increment < 0)
 	{
@@ -78,20 +70,19 @@ void ARoom::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 	// give the player vignette
 	if (widget->CurrentState == ECurrentState::Mad)
 	{
-		CameraSettings->endVignette = widget->vignetteIntensity;
+		CameraSettings->SetCameraSettings(colorIntensity, widget->vignetteIntensity);
 	}
 	else
 	{
 		if (increment < 0)
 		{
-			CameraSettings->endVignette = 0.4;
+			CameraSettings->SetCameraSettings(colorIntensity, 0.4);
 		}
 		else
 		{
-			CameraSettings->endVignette = 1;
+			CameraSettings->SetCameraSettings(colorIntensity, 1);
 		}
 	}
-	CameraSettings->SetComponentTickEnabled(true);
 }
 
 // madness stop rising when exit the collision

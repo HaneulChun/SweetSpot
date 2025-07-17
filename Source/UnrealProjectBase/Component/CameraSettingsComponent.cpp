@@ -53,6 +53,27 @@ void UCameraSettingsComponent::TickComponent(float DeltaTime, ELevelTick TickTyp
 	}
 }
 
+void UCameraSettingsComponent::SetCameraSettings(float intensity, float Vignette)
+{
+	// set up for tick
+	ElapsedTime = 0.0f;
+	startColor = playerCamera->PostProcessSettings.ColorSaturation.Y;
+	startVignette = playerCamera->PostProcessSettings.VignetteIntensity;
+	endColor = intensity;
+	endVignette = Vignette;
+
+	if (intensity < 0)
+	{
+		endColor = playerCamera->PostProcessSettings.ColorSaturation.Y;
+	}
+	if (Vignette < 0)
+	{
+		endVignette = playerCamera->PostProcessSettings.VignetteIntensity;
+	}
+	
+	SetComponentTickEnabled(true);
+}
+
 void UCameraSettingsComponent::ChangeCameraSettings(float chromaticAberration, float Vignette)
 {
 	FPostProcessSettings& Settings = playerCamera->PostProcessSettings;

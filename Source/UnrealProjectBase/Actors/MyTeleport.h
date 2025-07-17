@@ -8,6 +8,8 @@
 
 #include "MyTeleport.generated.h"
 
+class UCameraSettingsComponent;
+class UCameraComponent;
 class UArrowComponent;
 class UPlayerVision;
 class UMyUserWidget;
@@ -42,6 +44,10 @@ protected:
 
 	UPROPERTY()
 	TObjectPtr<AActor> Player;
+	
+	UPROPERTY()
+	TObjectPtr<UCameraSettingsComponent> CameraSettings;
+
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSoftObjectPtr<UWorld> NextLoopLevel;
