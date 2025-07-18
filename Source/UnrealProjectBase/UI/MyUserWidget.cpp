@@ -67,8 +67,10 @@ void UMyUserWidget::CheckPlayerState()
 		if (CurrentState != ECurrentState::Dead)
 		{
 			// reset the player
-			isDying = true;
-			GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &UMyUserWidget::Dying, 0.1, isDying);
+			GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &UMyUserWidget::Dying, 0.1, true);
+
+			UnFocus();
+			
 			CurrentState = ECurrentState::Dead;
 		}
 	}
@@ -80,9 +82,6 @@ void UMyUserWidget::CheckPlayerState()
 			CameraSettings->ChangeCameraSettings(10.0, 1.5);
 			chromaticAberrationIntensity = 10;
 			vignetteIntensity = 1.5;
-			
-			CameraSettings->ChangeCameraMaterial(0.0f);
-			matIntensity = 0;
 			
 			// show actor
 			FadeObject->Fade(0, 1, 0, 1);
@@ -171,8 +170,7 @@ void UMyUserWidget::Dying()
 	CameraSettings->ChangeCameraSettings(10.0, (dyingCount * 0.5) + 1.5);
 	if (dyingCount >= 10)
 	{
-		isDying = false;
-		GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &UMyUserWidget::Dead, 0.1, isDying);
+		GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &UMyUserWidget::Dead, 0.1, false);
 		dyingCount = 0;
 	}
 }
