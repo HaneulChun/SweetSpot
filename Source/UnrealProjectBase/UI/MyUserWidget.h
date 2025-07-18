@@ -34,7 +34,6 @@ protected:
 	
 	// cache
 	FTimerHandle TimerHandle;
-	bool isDying = false;
 	int dyingCount = 0;
 	
 	UPROPERTY()
@@ -83,6 +82,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void IncreaseMadnessBar(float value);
 
+	UFUNCTION(BlueprintImplementableEvent , BlueprintCallable)
+	void UnFocus();
 	
 	UFUNCTION(BlueprintCallable)
 	void Dying();
