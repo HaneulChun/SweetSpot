@@ -322,6 +322,9 @@
 		<relationship name="effects">
 			<destination>{b8016ae5-5886-4f48-a1de-83494f5c9c19}</destination>
 			<destination>{2e086e30-c101-4132-a5ee-1997149c9c08}</destination>
+			<destination>{233772a0-6641-4619-acf1-70c393446a4b}</destination>
+			<destination>{1089d7c3-1447-4240-911b-74a1621b63bd}</destination>
+			<destination>{c74cfd93-695b-4e8f-bb0b-6955ebbbcfa8}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{3a0724b9-851c-492e-b22d-b244a3353576}" />
@@ -332,21 +335,33 @@
 		</relationship>
 	</object>
 	<object class="SingleSound" id="{6d89009a-1a52-4657-807a-ab2ffa99af3e}">
+		<property name="startOffset">
+			<value>21.5</value>
+		</property>
 		<relationship name="audioFile">
 			<destination>{755395bd-eecc-4888-a6a9-16b2dc93fe4a}</destination>
 		</relationship>
 	</object>
 	<object class="SingleSound" id="{679be116-77c5-44aa-ad1f-faba53b11866}">
+		<property name="startOffset">
+			<value>27</value>
+		</property>
 		<relationship name="audioFile">
 			<destination>{8a48fbbb-3f72-4bb1-b826-9caeb31f3192}</destination>
 		</relationship>
 	</object>
 	<object class="SingleSound" id="{bf9a1c43-67e9-476f-9db6-16305efe2faf}">
+		<property name="startOffset">
+			<value>7.5</value>
+		</property>
 		<relationship name="audioFile">
 			<destination>{c17956e9-77cf-4eb4-955f-273715004902}</destination>
 		</relationship>
 	</object>
 	<object class="SingleSound" id="{204bbf00-20fb-4481-ad8c-d54720a1a30c}">
+		<property name="startOffset">
+			<value>5.5</value>
+		</property>
 		<relationship name="audioFile">
 			<destination>{65c45d0c-78af-4497-afb6-b8665b4edcb6}</destination>
 		</relationship>
@@ -357,6 +372,9 @@
 		</relationship>
 	</object>
 	<object class="SingleSound" id="{27c10d70-e6ee-4f6e-8199-4b986adf0b30}">
+		<property name="startOffset">
+			<value>3</value>
+		</property>
 		<relationship name="audioFile">
 			<destination>{69ec10b0-b07e-4d6a-8361-48a0f640bbba}</destination>
 		</relationship>
@@ -372,6 +390,9 @@
 		</relationship>
 	</object>
 	<object class="SingleSound" id="{2a5360ad-83dc-4700-815f-24116e2e8060}">
+		<property name="startOffset">
+			<value>1.5</value>
+		</property>
 		<relationship name="audioFile">
 			<destination>{37f45453-4397-472e-8bcc-28c8d4b6e0ea}</destination>
 		</relationship>
@@ -457,6 +478,9 @@
 		</relationship>
 	</object>
 	<object class="SingleSound" id="{8bbf9d5b-ef1e-49e0-9e61-cc4eb3a19b69}">
+		<property name="startOffset">
+			<value>13.5</value>
+		</property>
 		<relationship name="audioFile">
 			<destination>{1b096435-81b3-49e5-a200-64712194ed7e}</destination>
 		</relationship>
@@ -642,6 +666,9 @@
 		</relationship>
 	</object>
 	<object class="SingleSound" id="{0170f3aa-8da8-4e2c-9d00-1b33a8f020a6}">
+		<property name="startOffset">
+			<value>3.5</value>
+		</property>
 		<relationship name="audioFile">
 			<destination>{a3dbcbc1-32a9-420c-bd76-8189e21ef8e9}</destination>
 		</relationship>
@@ -682,11 +709,17 @@
 		</relationship>
 	</object>
 	<object class="SingleSound" id="{576efeb6-d8e1-4f81-853a-d6b3164ba4ed}">
+		<property name="startOffset">
+			<value>11.5</value>
+		</property>
 		<relationship name="audioFile">
 			<destination>{69cf00de-b066-4fb5-9d7c-1d7bf743f745}</destination>
 		</relationship>
 	</object>
 	<object class="SingleSound" id="{000aebbf-5b77-4674-8310-cb36795c240f}">
+		<property name="startOffset">
+			<value>5</value>
+		</property>
 		<relationship name="audioFile">
 			<destination>{d0db04ad-9136-47b2-9d9a-3fe272deff2b}</destination>
 		</relationship>
@@ -946,6 +979,63 @@
 	<object class="SpatialiserEffect" id="{2e086e30-c101-4132-a5ee-1997149c9c08}">
 		<property name="distanceRolloffType">
 			<value>4</value>
+		</property>
+	</object>
+	<object class="MultibandEqEffect" id="{233772a0-6641-4619-acf1-70c393446a4b}">
+		<property name="filterTypeA">
+			<value>6</value>
+		</property>
+		<property name="filterTypeB">
+			<value>9</value>
+		</property>
+		<property name="filterTypeD">
+			<value>9</value>
+		</property>
+		<property name="frequencyA">
+			<value>32.8841705</value>
+		</property>
+		<property name="frequencyB">
+			<value>356.270752</value>
+		</property>
+		<property name="frequencyD">
+			<value>5489.62793</value>
+		</property>
+		<property name="qualityA">
+			<value>0.267448276</value>
+		</property>
+		<property name="gainB">
+			<value>-10.8620682</value>
+		</property>
+		<property name="gainD">
+			<value>-10.5</value>
+		</property>
+	</object>
+	<object class="SFXReverbEffect" id="{1089d7c3-1447-4240-911b-74a1621b63bd}">
+		<property name="decayTime">
+			<value>400</value>
+		</property>
+		<property name="HFDecayRatio">
+			<value>32</value>
+		</property>
+		<property name="diffusion">
+			<value>41</value>
+		</property>
+		<property name="density">
+			<value>45.5</value>
+		</property>
+		<property name="earlyLateMix">
+			<value>59</value>
+		</property>
+		<property name="wetLevel">
+			<value>-21</value>
+		</property>
+	</object>
+	<object class="LimiterEffect" id="{c74cfd93-695b-4e8f-bb0b-6955ebbbcfa8}">
+		<property name="boost">
+			<value>0.800000012</value>
+		</property>
+		<property name="ceiling">
+			<value>-3.79999995</value>
 		</property>
 	</object>
 	<object class="MixerBusFader" id="{8c8d402d-ff20-4f90-a45d-10165664e26d}" />

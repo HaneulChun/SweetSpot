@@ -114,6 +114,9 @@
 		<relationship name="effects">
 			<destination>{bd747e0a-73ff-475e-a99b-79dde3eb7468}</destination>
 			<destination>{0a0045bb-46a9-4ecc-81f4-ec1d331ad8ae}</destination>
+			<destination>{8dceb0e9-3eb2-4d11-b9ea-92030153e154}</destination>
+			<destination>{7f232c49-ab52-4992-b4ad-1fa674762473}</destination>
+			<destination>{da382958-e947-472e-9e70-049340520b90}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{78f1ee26-afd5-4688-b4cd-baa4db7e186a}" />
@@ -127,6 +130,39 @@
 	<object class="MixerBusPanner" id="{cd9e1fcf-a928-4c3c-b244-a358cf2b8048}" />
 	<object class="MixerBusFader" id="{bd747e0a-73ff-475e-a99b-79dde3eb7468}" />
 	<object class="SpatialiserEffect" id="{0a0045bb-46a9-4ecc-81f4-ec1d331ad8ae}" />
+	<object class="DistortionEffect" id="{8dceb0e9-3eb2-4d11-b9ea-92030153e154}">
+		<property name="level">
+			<value>0.754999995</value>
+		</property>
+	</object>
+	<object class="MultibandDynamicsEffect" id="{7f232c49-ab52-4992-b4ad-1fa674762473}">
+		<property name="modeC">
+			<value>1</value>
+		</property>
+		<property name="thresholdA">
+			<value>-34.1058922</value>
+		</property>
+		<property name="thresholdB">
+			<value>-31.9313564</value>
+		</property>
+		<property name="thresholdC">
+			<value>-17.5321999</value>
+		</property>
+		<property name="attackA">
+			<value>32</value>
+		</property>
+		<property name="releaseA">
+			<value>120</value>
+		</property>
+	</object>
+	<object class="LimiterEffect" id="{da382958-e947-472e-9e70-049340520b90}">
+		<property name="boost">
+			<value>2.10000014</value>
+		</property>
+		<property name="ceiling">
+			<value>-2.29999995</value>
+		</property>
+	</object>
 	<object class="GainEffect" id="{4dbc04b1-fbda-4a54-8630-5286eed4b88e}">
 		<property name="gain">
 			<value>7</value>

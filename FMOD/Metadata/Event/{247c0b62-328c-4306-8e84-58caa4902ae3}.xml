@@ -72,6 +72,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{f246f527-ebe7-43f9-ab93-b8b392aa7817}">
+		<property name="volume">
+			<value>-3.5</value>
+		</property>
 		<relationship name="effectChain">
 			<destination>{9eaaee06-6ded-4193-a118-5e975697e24f}</destination>
 		</relationship>
@@ -97,6 +100,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{2b6685cf-45d2-402b-8565-2034e31ce91e}">
+		<property name="volume">
+			<value>-2.5</value>
+		</property>
 		<property name="name">
 			<value>ElevatorMovement</value>
 		</property>
@@ -114,6 +120,9 @@
 		<relationship name="effects">
 			<destination>{680ae1b2-0ef3-4473-a605-5608935f9a89}</destination>
 			<destination>{d49ca288-7c8b-4457-8e6c-cc83ec9f7359}</destination>
+			<destination>{79d11795-b650-43b7-bdba-a5f3808d3065}</destination>
+			<destination>{a94ce3d2-9ee9-4154-b8e6-90ff5b948ca5}</destination>
+			<destination>{82cf0c95-cb83-4e45-8734-2cecd090259a}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{39da0c45-df3b-467e-bf82-18aaa6e190b5}" />
@@ -127,6 +136,39 @@
 	<object class="MixerBusPanner" id="{28a65b42-484b-4a34-af1d-c75def6d44b7}" />
 	<object class="MixerBusFader" id="{680ae1b2-0ef3-4473-a605-5608935f9a89}" />
 	<object class="SpatialiserEffect" id="{d49ca288-7c8b-4457-8e6c-cc83ec9f7359}" />
+	<object class="DistortionEffect" id="{79d11795-b650-43b7-bdba-a5f3808d3065}">
+		<property name="level">
+			<value>0.465000004</value>
+		</property>
+	</object>
+	<object class="MultibandDynamicsEffect" id="{a94ce3d2-9ee9-4154-b8e6-90ff5b948ca5}">
+		<property name="modeC">
+			<value>1</value>
+		</property>
+		<property name="thresholdA">
+			<value>-34.1058922</value>
+		</property>
+		<property name="thresholdB">
+			<value>-31.9313564</value>
+		</property>
+		<property name="thresholdC">
+			<value>-17.5321999</value>
+		</property>
+		<property name="attackA">
+			<value>32</value>
+		</property>
+		<property name="releaseA">
+			<value>120</value>
+		</property>
+	</object>
+	<object class="LimiterEffect" id="{82cf0c95-cb83-4e45-8734-2cecd090259a}">
+		<property name="boost">
+			<value>2.10000014</value>
+		</property>
+		<property name="ceiling">
+			<value>-6.30000019</value>
+		</property>
+	</object>
 	<object class="GainEffect" id="{9e4f2563-b16c-4911-bd15-2fd4d5412041}">
 		<property name="gain">
 			<value>8.5</value>
