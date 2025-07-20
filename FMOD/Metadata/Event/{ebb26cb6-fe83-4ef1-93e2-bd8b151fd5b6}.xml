@@ -97,6 +97,9 @@
 		<relationship name="effects">
 			<destination>{aab12162-f121-4aad-8a7f-d359d21da630}</destination>
 			<destination>{b90df278-712b-457f-8e5e-fb40dbf4f326}</destination>
+			<destination>{110705ba-5a1c-450b-9dbe-9c1aceab2658}</destination>
+			<destination>{541adc6b-67d0-47b5-a898-f02f5f554d33}</destination>
+			<destination>{997106b7-0d6d-41b4-9d80-2cab64f0e3ce}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{e755d175-22bb-47bd-8343-5fcaf9ef7059}" />
@@ -111,6 +114,42 @@
 	<object class="MixerBusFader" id="{b1b4d652-dde9-42a0-8f94-febea7beb4ab}" />
 	<object class="MixerBusFader" id="{aab12162-f121-4aad-8a7f-d359d21da630}" />
 	<object class="SpatialiserEffect" id="{b90df278-712b-457f-8e5e-fb40dbf4f326}" />
+	<object class="LimiterEffect" id="{110705ba-5a1c-450b-9dbe-9c1aceab2658}">
+		<property name="boost">
+			<value>1.39999998</value>
+		</property>
+		<property name="ceiling">
+			<value>-2.9000001</value>
+		</property>
+	</object>
+	<object class="MultibandDynamicsEffect" id="{541adc6b-67d0-47b5-a898-f02f5f554d33}">
+		<property name="thresholdA">
+			<value>-11.416316</value>
+		</property>
+		<property name="thresholdB">
+			<value>-13.4549446</value>
+		</property>
+		<property name="thresholdC">
+			<value>-23.776844</value>
+		</property>
+		<property name="ratioC">
+			<value>8.5</value>
+		</property>
+	</object>
+	<object class="DelayEffect" id="{997106b7-0d6d-41b4-9d80-2cab64f0e3ce}">
+		<property name="delay">
+			<value>36</value>
+		</property>
+		<property name="feedback">
+			<value>36.5</value>
+		</property>
+		<property name="level">
+			<value>-5</value>
+		</property>
+		<property name="dryLevel">
+			<value>-5.5</value>
+		</property>
+	</object>
 	<object class="SingleSound" id="{12a039a6-3c43-43f5-baa6-a8efbab5f3a7}">
 		<relationship name="audioFile">
 			<destination>{7bab5694-5579-4bd6-a75a-806249dea431}</destination>

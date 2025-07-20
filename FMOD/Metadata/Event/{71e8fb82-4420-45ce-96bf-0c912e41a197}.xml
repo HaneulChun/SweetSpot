@@ -97,6 +97,10 @@
 		<relationship name="effects">
 			<destination>{04450bc0-b4bd-4329-a335-778ca5acef10}</destination>
 			<destination>{d0181f18-7d8b-41a2-99b5-871360cf256e}</destination>
+			<destination>{abcbec1e-4519-4e41-82e8-405f42ba56c0}</destination>
+			<destination>{0d66685e-60f4-4e8f-a778-ed970f8e8f1a}</destination>
+			<destination>{c50b3613-660b-4519-accd-2a3d1fcdce35}</destination>
+			<destination>{b962c9de-af1b-4d52-a7e8-2f6b58298865}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{66558a33-0173-4813-a6ff-57e6d387d7ab}" />
@@ -116,6 +120,65 @@
 	<object class="MixerBusFader" id="{ef63171c-e697-4168-bc5d-0d0cf0cd9e72}" />
 	<object class="MixerBusFader" id="{04450bc0-b4bd-4329-a335-778ca5acef10}" />
 	<object class="SpatialiserEffect" id="{d0181f18-7d8b-41a2-99b5-871360cf256e}" />
+	<object class="CompressorEffect" id="{abcbec1e-4519-4e41-82e8-405f42ba56c0}">
+		<property name="threshold">
+			<value>-18.5</value>
+		</property>
+		<property name="ratio">
+			<value>4</value>
+		</property>
+		<property name="attackTime">
+			<value>3.60000014</value>
+		</property>
+		<property name="releaseTime">
+			<value>92</value>
+		</property>
+		<property name="gain">
+			<value>7.5</value>
+		</property>
+	</object>
+	<object class="DistortionEffect" id="{0d66685e-60f4-4e8f-a778-ed970f8e8f1a}">
+		<property name="level">
+			<value>0.424999982</value>
+		</property>
+	</object>
+	<object class="LimiterEffect" id="{c50b3613-660b-4519-accd-2a3d1fcdce35}">
+		<property name="boost">
+			<value>1.39999998</value>
+		</property>
+		<property name="ceiling">
+			<value>-3</value>
+		</property>
+		<property name="release">
+			<value>46</value>
+		</property>
+	</object>
+	<object class="MultibandEqEffect" id="{b962c9de-af1b-4d52-a7e8-2f6b58298865}">
+		<property name="filterTypeB">
+			<value>9</value>
+		</property>
+		<property name="filterTypeD">
+			<value>9</value>
+		</property>
+		<property name="frequencyA">
+			<value>17516.2949</value>
+		</property>
+		<property name="frequencyB">
+			<value>137.360825</value>
+		</property>
+		<property name="frequencyD">
+			<value>3780.72656</value>
+		</property>
+		<property name="qualityA">
+			<value>0.393034458</value>
+		</property>
+		<property name="gainB">
+			<value>8.79310417</value>
+		</property>
+		<property name="gainD">
+			<value>-10.8620682</value>
+		</property>
+	</object>
 	<object class="SingleSound" id="{77d8069a-da53-4eae-8969-93aa9af78e15}">
 		<relationship name="audioFile">
 			<destination>{b2c7afeb-88b2-4050-96cd-2a39e17e7c27}</destination>
