@@ -156,6 +156,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{404b43cd-e4e1-4b9d-b1f0-e56daae18f1c}">
+		<property name="volume">
+			<value>-3.5</value>
+		</property>
 		<property name="name">
 			<value>Whispers</value>
 		</property>
@@ -171,10 +174,10 @@
 	</object>
 	<object class="LoopRegion" id="{0bb53fbd-d364-49e6-80a9-d64a61c523af}">
 		<property name="position">
-			<value>5</value>
+			<value>0</value>
 		</property>
 		<property name="length">
-			<value>225</value>
+			<value>238</value>
 		</property>
 		<relationship name="timeline">
 			<destination>{fb70419a-fa30-4dcf-8bc1-9f7ff52855bb}</destination>
@@ -194,6 +197,7 @@
 	<object class="MixerBusEffectChain" id="{b41bb0ca-d907-4eab-817a-2006924a95bd}">
 		<relationship name="effects">
 			<destination>{6541952a-8fd8-4b49-af31-4a09dc4335e1}</destination>
+			<destination>{5326fb9d-cccd-4164-9487-a06415fdfc11}</destination>
 			<destination>{468d0db1-bfef-4844-8daa-ce994446e109}</destination>
 		</relationship>
 	</object>
@@ -229,6 +233,26 @@
 	<object class="GainEffect" id="{6541952a-8fd8-4b49-af31-4a09dc4335e1}">
 		<property name="gain">
 			<value>7</value>
+		</property>
+	</object>
+	<object class="MultibandEqEffect" id="{5326fb9d-cccd-4164-9487-a06415fdfc11}">
+		<property name="filterTypeA">
+			<value>0</value>
+		</property>
+		<property name="filterTypeB">
+			<value>7</value>
+		</property>
+		<property name="frequencyA">
+			<value>21999.9902</value>
+		</property>
+		<property name="frequencyB">
+			<value>32.8841705</value>
+		</property>
+		<property name="qualityA">
+			<value>0.507462025</value>
+		</property>
+		<property name="gainB">
+			<value>-22.0113773</value>
 		</property>
 	</object>
 	<object class="MixerBusFader" id="{468d0db1-bfef-4844-8daa-ce994446e109}" />
