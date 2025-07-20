@@ -97,10 +97,17 @@
 		<relationship name="effects">
 			<destination>{827afd9e-ec73-40d8-81ea-cf6d7976f6bd}</destination>
 			<destination>{77fefe5a-a62d-40d2-9a49-4287f9be97e9}</destination>
+			<destination>{4fb49bd0-d3fa-43c4-a6ff-576d5c922864}</destination>
+			<destination>{9f7dd1e3-ea54-417c-a667-3f05600b1fed}</destination>
+			<destination>{ff0ebda5-0282-44a4-b33e-ae22c1426a9c}</destination>
+			<destination>{18011925-9d57-472c-99e2-e6ece36266fa}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{731a5f04-bc30-49b0-98fb-b830e5cf08d2}" />
 	<object class="MultiSound" id="{0c1a1ea7-3f37-44af-a46e-5cdf64147d2c}">
+		<property name="pitch">
+			<value>-14.5</value>
+		</property>
 		<relationship name="sounds">
 			<destination>{10403a8d-a684-47c8-8c78-19e61664693a}</destination>
 			<destination>{7586135b-bc9e-4195-9cae-20334c631c12}</destination>
@@ -113,6 +120,50 @@
 	<object class="MixerBusFader" id="{7583bfa2-f2c4-455b-816a-0b602e08e9c7}" />
 	<object class="MixerBusFader" id="{827afd9e-ec73-40d8-81ea-cf6d7976f6bd}" />
 	<object class="SpatialiserEffect" id="{77fefe5a-a62d-40d2-9a49-4287f9be97e9}" />
+	<object class="DistortionEffect" id="{4fb49bd0-d3fa-43c4-a6ff-576d5c922864}">
+		<property name="level">
+			<value>0.689999998</value>
+		</property>
+	</object>
+	<object class="ThreeEQEffect" id="{9f7dd1e3-ea54-417c-a667-3f05600b1fed}">
+		<property name="lowGain">
+			<value>4.5</value>
+		</property>
+		<property name="midGain">
+			<value>-1</value>
+		</property>
+		<property name="highGain">
+			<value>3.5</value>
+		</property>
+		<property name="lowCrossover">
+			<value>520</value>
+		</property>
+		<property name="highCrossover">
+			<value>7000</value>
+		</property>
+	</object>
+	<object class="MultibandEqEffect" id="{ff0ebda5-0282-44a4-b33e-ae22c1426a9c}">
+		<property name="filterTypeA">
+			<value>7</value>
+		</property>
+		<property name="frequencyA">
+			<value>216.682251</value>
+		</property>
+		<property name="gainA">
+			<value>9.5</value>
+		</property>
+	</object>
+	<object class="LimiterEffect" id="{18011925-9d57-472c-99e2-e6ece36266fa}">
+		<property name="boost">
+			<value>1.80000007</value>
+		</property>
+		<property name="ceiling">
+			<value>-4</value>
+		</property>
+		<property name="release">
+			<value>6.80000019</value>
+		</property>
+	</object>
 	<object class="SingleSound" id="{10403a8d-a684-47c8-8c78-19e61664693a}">
 		<relationship name="audioFile">
 			<destination>{538006e3-372f-488c-812e-9a59aed4a2e8}</destination>

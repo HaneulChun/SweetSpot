@@ -97,6 +97,8 @@
 		<relationship name="effects">
 			<destination>{e0713108-582f-400d-a6fd-7191da5a77f7}</destination>
 			<destination>{aad421bc-7b3e-4543-aed0-d89f70bbb785}</destination>
+			<destination>{5b3ca2a4-c5eb-4712-a8e8-8af33653ba70}</destination>
+			<destination>{2df2d6e5-46ea-42e9-a411-76c39627befc}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{4331bc2f-339e-4b74-b9a6-0e20f2168244}" />
@@ -111,6 +113,25 @@
 	<object class="MixerBusFader" id="{f299d783-cec1-4e1b-9642-2e65c6dd2097}" />
 	<object class="MixerBusFader" id="{e0713108-582f-400d-a6fd-7191da5a77f7}" />
 	<object class="SpatialiserEffect" id="{aad421bc-7b3e-4543-aed0-d89f70bbb785}" />
+	<object class="SFXReverbEffect" id="{5b3ca2a4-c5eb-4712-a8e8-8af33653ba70}">
+		<property name="decayTime">
+			<value>600</value>
+		</property>
+		<property name="earlyDelay">
+			<value>19</value>
+		</property>
+		<property name="HFDecayRatio">
+			<value>38</value>
+		</property>
+	</object>
+	<object class="LimiterEffect" id="{2df2d6e5-46ea-42e9-a411-76c39627befc}">
+		<property name="boost">
+			<value>1.39999998</value>
+		</property>
+		<property name="ceiling">
+			<value>-1.60000002</value>
+		</property>
+	</object>
 	<object class="SingleSound" id="{e36a5193-d156-48fc-8ccd-1ab1e2f1751c}">
 		<relationship name="audioFile">
 			<destination>{1ca431fe-abb6-48f0-8f59-4b69b6e617a6}</destination>

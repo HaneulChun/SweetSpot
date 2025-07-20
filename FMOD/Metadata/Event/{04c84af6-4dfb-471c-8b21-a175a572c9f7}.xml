@@ -97,6 +97,8 @@
 		<relationship name="effects">
 			<destination>{dca2da72-7e99-4eb5-9d9d-8ef5f4619426}</destination>
 			<destination>{e5652804-2c63-4bc1-83a5-80d601137831}</destination>
+			<destination>{50128ca7-ec70-4d74-9951-bd2f28a49965}</destination>
+			<destination>{59d5d354-7da1-405e-b869-67186883ffcf}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{954d9789-bdcf-4983-9296-9e8ff3a3f665}" />
@@ -115,6 +117,25 @@
 	<object class="MixerBusFader" id="{cdef4b8e-8126-4fec-a765-a60a46a13da4}" />
 	<object class="MixerBusFader" id="{dca2da72-7e99-4eb5-9d9d-8ef5f4619426}" />
 	<object class="SpatialiserEffect" id="{e5652804-2c63-4bc1-83a5-80d601137831}" />
+	<object class="MultibandEqEffect" id="{50128ca7-ec70-4d74-9951-bd2f28a49965}">
+		<property name="frequencyA">
+			<value>1136.78809</value>
+		</property>
+	</object>
+	<object class="SFXReverbEffect" id="{59d5d354-7da1-405e-b869-67186883ffcf}">
+		<property name="decayTime">
+			<value>290</value>
+		</property>
+		<property name="HFDecayRatio">
+			<value>33</value>
+		</property>
+		<property name="wetLevel">
+			<value>-13.5</value>
+		</property>
+		<property name="dryLevel">
+			<value>2</value>
+		</property>
+	</object>
 	<object class="SingleSound" id="{39a69785-bf10-493b-8d95-4460b2639072}">
 		<relationship name="audioFile">
 			<destination>{4b79fdeb-ab8b-4ed5-8629-2fd105ef22a8}</destination>

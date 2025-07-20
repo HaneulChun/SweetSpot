@@ -97,6 +97,11 @@
 		<relationship name="effects">
 			<destination>{43e54e8d-f08c-49fd-b969-aa3a53d8aef7}</destination>
 			<destination>{5e45ca76-695f-4fa4-84a7-b867fcd8982e}</destination>
+			<destination>{f1e6de57-4dcb-4a38-9330-cbdfd144d611}</destination>
+			<destination>{fe59ebc7-fcfb-42ba-929b-82e519d39d47}</destination>
+			<destination>{7cb10ade-1e14-4bf3-b8cf-21be3287f2f0}</destination>
+			<destination>{2aaa96a9-4cd1-4ab0-9787-9a5c7da87d14}</destination>
+			<destination>{76911154-5764-4d6d-89b6-2825b70c042b}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{a5baa4de-0bcb-406d-bd72-e7c656bfdfc3}" />
@@ -109,6 +114,73 @@
 	<object class="MixerBusFader" id="{b41a99dc-6f40-4f14-8366-d5a887d98674}" />
 	<object class="MixerBusFader" id="{43e54e8d-f08c-49fd-b969-aa3a53d8aef7}" />
 	<object class="SpatialiserEffect" id="{5e45ca76-695f-4fa4-84a7-b867fcd8982e}" />
+	<object class="CompressorEffect" id="{f1e6de57-4dcb-4a38-9330-cbdfd144d611}">
+		<property name="threshold">
+			<value>-18.5</value>
+		</property>
+		<property name="ratio">
+			<value>4</value>
+		</property>
+		<property name="attackTime">
+			<value>3.60000014</value>
+		</property>
+		<property name="releaseTime">
+			<value>92</value>
+		</property>
+		<property name="gain">
+			<value>7.5</value>
+		</property>
+	</object>
+	<object class="DistortionEffect" id="{fe59ebc7-fcfb-42ba-929b-82e519d39d47}">
+		<property name="level">
+			<value>0.424999982</value>
+		</property>
+	</object>
+	<object class="LimiterEffect" id="{7cb10ade-1e14-4bf3-b8cf-21be3287f2f0}">
+		<property name="boost">
+			<value>1.39999998</value>
+		</property>
+		<property name="ceiling">
+			<value>-3</value>
+		</property>
+		<property name="release">
+			<value>46</value>
+		</property>
+	</object>
+	<object class="MultibandEqEffect" id="{2aaa96a9-4cd1-4ab0-9787-9a5c7da87d14}">
+		<property name="filterTypeB">
+			<value>9</value>
+		</property>
+		<property name="filterTypeD">
+			<value>9</value>
+		</property>
+		<property name="frequencyA">
+			<value>17516.2949</value>
+		</property>
+		<property name="frequencyB">
+			<value>137.360825</value>
+		</property>
+		<property name="frequencyD">
+			<value>3780.72656</value>
+		</property>
+		<property name="qualityA">
+			<value>0.393034458</value>
+		</property>
+		<property name="gainB">
+			<value>8.79310417</value>
+		</property>
+		<property name="gainD">
+			<value>-10.8620682</value>
+		</property>
+	</object>
+	<object class="SFXReverbEffect" id="{76911154-5764-4d6d-89b6-2825b70c042b}">
+		<property name="wetLevel">
+			<value>-12.5</value>
+		</property>
+		<property name="dryLevel">
+			<value>-3</value>
+		</property>
+	</object>
 	<object class="SingleSound" id="{c136337e-bf29-441a-a79a-fce27d768c5d}">
 		<relationship name="audioFile">
 			<destination>{3f0d1a64-a769-4695-95ba-99b80aa98407}</destination>
