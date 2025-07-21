@@ -158,7 +158,7 @@
 	</object>
 	<object class="EventMixerGroup" id="{03cb9cd1-971c-4da0-94a9-4c6edf9a6253}">
 		<property name="volume">
-			<value>-12</value>
+			<value>-30</value>
 		</property>
 		<property name="name">
 			<value>RoomTone</value>
@@ -401,7 +401,17 @@
 	</object>
 	<object class="MixerBusPanner" id="{e2215293-c046-48bd-8321-2ef80fedd9ea}" />
 	<object class="MixerBusFader" id="{fa760352-6084-4b34-8e25-89b5a6c5fd65}" />
-	<object class="SpatialiserEffect" id="{1e518341-e772-4694-81ba-ae522121231d}" />
+	<object class="SpatialiserEffect" id="{1e518341-e772-4694-81ba-ae522121231d}">
+		<property name="minimumDistance">
+			<value>3.95000005</value>
+		</property>
+		<property name="maximumDistance">
+			<value>7.20000029</value>
+		</property>
+		<property name="overrideRange">
+			<value>true</value>
+		</property>
+	</object>
 	<object class="MultibandEqEffect" id="{9097740d-23a4-4aaf-87f4-481794f87fd2}">
 		<property name="frequencyA">
 			<value>21999.9902</value>
