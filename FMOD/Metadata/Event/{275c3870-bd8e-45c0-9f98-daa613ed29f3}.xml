@@ -229,6 +229,15 @@
 		<property name="distanceRolloffType">
 			<value>4</value>
 		</property>
+		<property name="minimumDistance">
+			<value>90</value>
+		</property>
+		<property name="maximumDistance">
+			<value>250</value>
+		</property>
+		<property name="overrideRange">
+			<value>true</value>
+		</property>
 	</object>
 	<object class="GainEffect" id="{6541952a-8fd8-4b49-af31-4a09dc4335e1}">
 		<property name="gain">
