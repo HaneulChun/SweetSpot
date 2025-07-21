@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.03.00">
 	<object class="Event" id="{b266112f-fb8c-4957-8639-06b9f254dfba}">
 		<property name="name">
-			<value>Elevator_Open_Close</value>
+			<value>Elevator_Open</value>
 		</property>
 		<property name="outputFormat">
 			<value>0</value>
@@ -84,7 +84,7 @@
 	</object>
 	<object class="MultiSound" id="{816351c4-ffb2-4104-b8c4-30fe202639e5}">
 		<relationship name="sounds">
-			<destination>{d425b133-6d80-4af9-ad0d-170279aaa084}</destination>
+			<destination>{84897a30-ce12-4d77-bfff-1ceeaf2dfead}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusEffectChain" id="{58fec1ae-af45-479e-9ff1-b9dc8ac9b1ee}">
@@ -103,12 +103,9 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{b04cebca-1d04-4ac9-9e7e-09d0d4c0e4f7}" />
-	<object class="SingleSound" id="{d425b133-6d80-4af9-ad0d-170279aaa084}">
-		<property name="pitch">
-			<value>-0.900000036</value>
-		</property>
+	<object class="SingleSound" id="{84897a30-ce12-4d77-bfff-1ceeaf2dfead}">
 		<relationship name="audioFile">
-			<destination>{d1915ff4-6af2-4eab-90df-c28fe2ca1c16}</destination>
+			<destination>{e2d8d33b-0cf8-4af5-9ca4-c25c2b68584e}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusFader" id="{d5c9f887-54d7-46e6-a4f3-f3e2ebb37a3b}" />
