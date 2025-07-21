@@ -14,6 +14,9 @@ ABlackVoid::ABlackVoid()
 	
 	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
 
+	moveingComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Moveing"));
+	moveingComponent->SetupAttachment(RootComponent);
+	
 	start = CreateDefaultSubobject<USceneComponent>(TEXT("Start"));
 	start->SetupAttachment(RootComponent);
 	CreateDefaultSubobject<UBillboardComponent>(TEXT("StartBillboard"))->SetupAttachment(start);
@@ -23,7 +26,7 @@ ABlackVoid::ABlackVoid()
 	CreateDefaultSubobject<UBillboardComponent>(TEXT("EndBillboard"))->SetupAttachment(end);
 
 	blackVoid = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BlackVoid"));
-	blackVoid->SetupAttachment(RootComponent);
+	blackVoid->SetupAttachment(moveingComponent);
 
 	triggerBox = CreateDefaultSubobject<UBoxComponent>(TEXT("TriggerBox"));
 	triggerBox->SetupAttachment(blackVoid);
@@ -36,7 +39,8 @@ void ABlackVoid::BeginPlay()
 {
 	Super::BeginPlay();
 
-	blackVoid->SetWorldLocation(start->GetComponentLocation());
+	moveingComponent->SetWorldLocation(start->GetComponentLocation());
+	blackVoid->AttachToComponent(moveingComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	
 	triggerBox->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	blackVoid->SetCollisionEnabled(ECollisionEnabled::NoCollision);
@@ -56,7 +60,7 @@ void ABlackVoid::Tick(float DeltaTime)
 		ElapsedTime += DeltaTime;
 		float Alpha = FMath::Clamp(ElapsedTime / MoveDuration, 0.0f, 1.0f);
 		FVector NewLocation = FMath::Lerp(start->GetComponentLocation(), end->GetComponentLocation(), Alpha);
-		blackVoid->SetWorldLocation(NewLocation);
+		moveingComponent->SetWorldLocation(NewLocation);
 	}
 	else
 	{
