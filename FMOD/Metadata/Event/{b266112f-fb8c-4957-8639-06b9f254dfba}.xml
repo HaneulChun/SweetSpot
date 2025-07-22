@@ -72,6 +72,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{4ab012d3-e310-4d0c-9c52-ab0f447cbcf7}">
+		<property name="pitch">
+			<value>-1</value>
+		</property>
 		<relationship name="effectChain">
 			<destination>{03b22fb3-7616-46b3-a9ff-378a8828759e}</destination>
 		</relationship>
@@ -119,10 +122,10 @@
 	<object class="MixerBusEffectChain" id="{03b22fb3-7616-46b3-a9ff-378a8828759e}">
 		<relationship name="effects">
 			<destination>{0061ac0c-5cb2-4c2b-9e95-be94efba436b}</destination>
-			<destination>{5d792c80-ea21-4fcb-8b3a-319e9792c8a6}</destination>
+			<destination>{3fc0cde3-127b-42ee-90ca-e014f6468d43}</destination>
 			<destination>{4b77da64-dc07-4b0e-a071-d2deebdec1e4}</destination>
-			<destination>{5f0c8b45-f9fa-464c-bbc1-800efe3f1d4f}</destination>
 			<destination>{7cb74b92-7cb3-46e3-a069-82d1f3a3cffc}</destination>
+			<destination>{0b2f35a7-a5c7-47a0-87e6-6238eaea1e29}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{b04cebca-1d04-4ac9-9e7e-09d0d4c0e4f7}" />
@@ -142,9 +145,9 @@
 	</object>
 	<object class="MixerBusPanner" id="{2c5d9968-c6a8-4f17-9b7e-1dfc2cbbcaf7}" />
 	<object class="MixerBusFader" id="{0061ac0c-5cb2-4c2b-9e95-be94efba436b}" />
-	<object class="DistortionEffect" id="{5d792c80-ea21-4fcb-8b3a-319e9792c8a6}">
-		<property name="level">
-			<value>0.754999995</value>
+	<object class="GainEffect" id="{3fc0cde3-127b-42ee-90ca-e014f6468d43}">
+		<property name="gain">
+			<value>2.5</value>
 		</property>
 	</object>
 	<object class="MultibandDynamicsEffect" id="{4b77da64-dc07-4b0e-a071-d2deebdec1e4}">
@@ -167,26 +170,6 @@
 			<value>120</value>
 		</property>
 	</object>
-	<object class="MultibandEqEffect" id="{5f0c8b45-f9fa-464c-bbc1-800efe3f1d4f}">
-		<property name="filterTypeB">
-			<value>9</value>
-		</property>
-		<property name="frequencyA">
-			<value>3338.7666</value>
-		</property>
-		<property name="frequencyB">
-			<value>80.151123</value>
-		</property>
-		<property name="qualityA">
-			<value>0.686068952</value>
-		</property>
-		<property name="qualityB">
-			<value>0.199999988</value>
-		</property>
-		<property name="gainB">
-			<value>8.27586269</value>
-		</property>
-	</object>
 	<object class="LimiterEffect" id="{7cb74b92-7cb3-46e3-a069-82d1f3a3cffc}">
 		<property name="boost">
 			<value>2.10000014</value>
@@ -195,15 +178,26 @@
 			<value>-2.29999995</value>
 		</property>
 	</object>
+	<object class="ThreeEQEffect" id="{0b2f35a7-a5c7-47a0-87e6-6238eaea1e29}">
+		<property name="lowGain">
+			<value>1.5</value>
+		</property>
+		<property name="lowCrossover">
+			<value>700</value>
+		</property>
+		<property name="highCrossover">
+			<value>5200</value>
+		</property>
+	</object>
 	<object class="AutomationPoint" id="{e2afb558-6ef3-44b2-949d-29ddbe8c34dd}">
 		<property name="position">
-			<value>0.4753878896882493</value>
+			<value>0.01</value>
 		</property>
 		<property name="value">
 			<value>1</value>
 		</property>
 		<property name="curveShape">
-			<value>0.25471893</value>
+			<value>-0.308251381</value>
 		</property>
 	</object>
 	<object class="AutomationPoint" id="{17149c65-22b5-4685-b368-8a5a018bcad0}">
