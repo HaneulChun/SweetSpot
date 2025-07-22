@@ -5,7 +5,7 @@
 			<value>WoodCreak</value>
 		</property>
 		<property name="outputFormat">
-			<value>2</value>
+			<value>0</value>
 		</property>
 		<relationship name="folder">
 			<destination>{5f0e255a-8f4f-42ca-9226-c7d4dbd1b513}</destination>
@@ -72,6 +72,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{7cf8c545-19d8-4658-89bf-3a33b28a8835}">
+		<property name="pitch">
+			<value>16.5</value>
+		</property>
 		<relationship name="effectChain">
 			<destination>{c7b67e22-ec98-48da-a64f-f5450d1a19e9}</destination>
 		</relationship>
@@ -96,7 +99,6 @@
 	<object class="MixerBusEffectChain" id="{c7b67e22-ec98-48da-a64f-f5450d1a19e9}">
 		<relationship name="effects">
 			<destination>{b0653a16-d11b-4405-a3dd-34868439f453}</destination>
-			<destination>{a00277b3-93f9-477e-a5e6-0c665203ef3d}</destination>
 			<destination>{9f42d2b9-d561-4d92-9e42-23e51f3f15f4}</destination>
 			<destination>{a62b07af-b137-4ef3-bde3-09f90909a76e}</destination>
 			<destination>{c32b830f-8777-4350-8c2c-77af666cf6ae}</destination>
@@ -117,7 +119,6 @@
 	</object>
 	<object class="MixerBusFader" id="{b45d11f6-65ca-4f93-8c05-068e448a736a}" />
 	<object class="MixerBusFader" id="{b0653a16-d11b-4405-a3dd-34868439f453}" />
-	<object class="SpatialiserEffect" id="{a00277b3-93f9-477e-a5e6-0c665203ef3d}" />
 	<object class="CompressorEffect" id="{9f42d2b9-d561-4d92-9e42-23e51f3f15f4}">
 		<property name="threshold">
 			<value>-18.5</value>
@@ -137,7 +138,7 @@
 	</object>
 	<object class="DistortionEffect" id="{a62b07af-b137-4ef3-bde3-09f90909a76e}">
 		<property name="level">
-			<value>0.424999982</value>
+			<value>0</value>
 		</property>
 	</object>
 	<object class="LimiterEffect" id="{c32b830f-8777-4350-8c2c-77af666cf6ae}">

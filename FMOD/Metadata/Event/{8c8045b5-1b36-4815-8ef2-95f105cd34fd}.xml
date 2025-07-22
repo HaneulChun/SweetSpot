@@ -63,6 +63,12 @@
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{5bf4ea76-a29c-430a-8b21-05bfe59f744c}">
+		<property name="maxVoices">
+			<value>2</value>
+		</property>
+		<property name="voiceStealing">
+			<value>4</value>
+		</property>
 		<property name="maximumDistance">
 			<value>7.5999999</value>
 		</property>
@@ -193,7 +199,7 @@
 			<value>0</value>
 		</property>
 		<property name="value">
-			<value>-42</value>
+			<value>0</value>
 		</property>
 		<property name="curveShape">
 			<value>0.5</value>
@@ -207,7 +213,7 @@
 			<value>1</value>
 		</property>
 		<property name="value">
-			<value>0</value>
+			<value>10</value>
 		</property>
 	</object>
 </objects>

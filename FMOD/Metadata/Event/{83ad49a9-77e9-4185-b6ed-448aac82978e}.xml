@@ -5,7 +5,7 @@
 			<value>Elevator_Close</value>
 		</property>
 		<property name="outputFormat">
-			<value>2</value>
+			<value>0</value>
 		</property>
 		<relationship name="folder">
 			<destination>{5f0e255a-8f4f-42ca-9226-c7d4dbd1b513}</destination>
@@ -119,7 +119,6 @@
 	<object class="MixerBusEffectChain" id="{58c0c0be-b31d-4fc6-9c41-cb9b0e49cda6}">
 		<relationship name="effects">
 			<destination>{16b367d5-d6bf-4a93-bfca-6ad620144c3f}</destination>
-			<destination>{36da66db-01b0-446c-aa68-4e86632554f0}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{d570383b-b357-4861-b7a3-b90946f451f4}" />
@@ -139,16 +138,15 @@
 	</object>
 	<object class="MixerBusPanner" id="{c80409a6-aa81-49b8-93d9-3dc8c9b5a1cd}" />
 	<object class="MixerBusFader" id="{16b367d5-d6bf-4a93-bfca-6ad620144c3f}" />
-	<object class="SpatialiserEffect" id="{36da66db-01b0-446c-aa68-4e86632554f0}" />
 	<object class="AutomationPoint" id="{36eceea1-1cc9-4604-b63d-4cc46d9a892b}">
 		<property name="position">
-			<value>1</value>
+			<value>0.68000000000000005</value>
 		</property>
 		<property name="value">
 			<value>1</value>
 		</property>
 		<property name="curveShape">
-			<value>0.25471893</value>
+			<value>-0.202966034</value>
 		</property>
 	</object>
 	<object class="AutomationPoint" id="{087ee665-7877-490f-8e89-550372c56edc}">
