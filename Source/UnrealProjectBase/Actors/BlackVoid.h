@@ -32,6 +32,9 @@ protected:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite);
 	TObjectPtr<UBoxComponent> triggerBox;
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<USceneComponent> moveingComponent;
 public:	
 	virtual void Tick(float DeltaTime) override;
 

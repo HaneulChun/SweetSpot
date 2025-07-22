@@ -70,14 +70,20 @@ void ATentacleWall::Tick(float DeltaTime)
 void ATentacleWall::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
                                    UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (!Cast<ASweetSpotCharacter>(OtherActor)) return;
-	if (!Cast<UCapsuleComponent>(OtherComp)) return;
-	
-	// give damage too player
-	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &ATentacleWall::IncreaseMadnessBar, 0.4, true);
+	if (ACharacter* OverlappingCharacter = Cast<ACharacter>(OtherActor))
+	{
+		if (!Cast<UCapsuleComponent>(OtherComp)) return;
 
-	// slow down player
-	Character->GetCharacterMovement()->MaxWalkSpeed = slowPlayer;
+		// give damage too player
+		GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &ATentacleWall::IncreaseMadnessBar, 0.4, true);
+
+		// reset speed
+		if (OverlappingCharacter->GetCharacterMovement())
+		{
+			// slow down player
+			OverlappingCharacter->GetCharacterMovement()->MaxWalkSpeed = slowPlayer;
+		}
+	}
 }
 
 void ATentacleWall::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
