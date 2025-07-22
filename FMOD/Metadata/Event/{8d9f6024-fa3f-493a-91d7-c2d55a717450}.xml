@@ -95,6 +95,9 @@
 		<property name="timelockedOffset">
 			<value>0.70000000000000007</value>
 		</property>
+		<relationship name="fadeOutCurve">
+			<destination>{8ece5127-cbef-4052-a029-8dc1e0dc8c0a}</destination>
+		</relationship>
 		<relationship name="audioFile">
 			<destination>{0e5f076d-e101-47a4-8e1c-02a3a117cf92}</destination>
 		</relationship>
@@ -117,10 +120,19 @@
 		<relationship name="effects">
 			<destination>{083b82d6-0c51-461c-92b1-d8b472356a69}</destination>
 			<destination>{6f8e2d72-6d58-4271-adf3-99f653300c0b}</destination>
+			<destination>{fa4b2632-3cad-4112-9309-c0c3ae9d314d}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{9ff1341b-8ac5-4b50-8b1c-89c0169e01ad}" />
 	<object class="MixerBusFader" id="{f556f227-cb8e-44c1-bc7f-2cc4f0909c6b}" />
+	<object class="FadeCurve" id="{8ece5127-cbef-4052-a029-8dc1e0dc8c0a}">
+		<relationship name="startPoint">
+			<destination>{bdbee8ee-63bb-4361-8e53-eab37f01fe75}</destination>
+		</relationship>
+		<relationship name="endPoint">
+			<destination>{2834559c-a398-47b7-a3f1-2324a7ac65fa}</destination>
+		</relationship>
+	</object>
 	<object class="MixerBusEffectChain" id="{b1eb10ef-a9f7-4563-94fe-647367d044c7}">
 		<relationship name="effects">
 			<destination>{e044c4c2-ac5d-46bf-87d6-210286640755}</destination>
@@ -130,6 +142,36 @@
 	<object class="MixerBusPanner" id="{f79ab72a-7d6e-42e8-bf77-b0d619fe5a9d}" />
 	<object class="MixerBusFader" id="{083b82d6-0c51-461c-92b1-d8b472356a69}" />
 	<object class="SpatialiserEffect" id="{6f8e2d72-6d58-4271-adf3-99f653300c0b}" />
+	<object class="SFXReverbEffect" id="{fa4b2632-3cad-4112-9309-c0c3ae9d314d}">
+		<property name="decayTime">
+			<value>900</value>
+		</property>
+		<property name="HFDecayRatio">
+			<value>39.5</value>
+		</property>
+		<property name="wetLevel">
+			<value>-14.5</value>
+		</property>
+	</object>
+	<object class="AutomationPoint" id="{bdbee8ee-63bb-4361-8e53-eab37f01fe75}">
+		<property name="position">
+			<value>4.8000000000000007</value>
+		</property>
+		<property name="value">
+			<value>1</value>
+		</property>
+		<property name="curveShape">
+			<value>0.25471893</value>
+		</property>
+	</object>
+	<object class="AutomationPoint" id="{2834559c-a398-47b7-a3f1-2324a7ac65fa}">
+		<property name="position">
+			<value>6.1735208333333347</value>
+		</property>
+		<property name="value">
+			<value>0</value>
+		</property>
+	</object>
 	<object class="GainEffect" id="{e044c4c2-ac5d-46bf-87d6-210286640755}">
 		<property name="gain">
 			<value>2.5</value>
