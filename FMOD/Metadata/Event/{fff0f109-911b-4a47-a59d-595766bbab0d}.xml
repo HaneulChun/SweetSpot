@@ -5,7 +5,7 @@
 			<value>Teleport</value>
 		</property>
 		<property name="outputFormat">
-			<value>2</value>
+			<value>0</value>
 		</property>
 		<relationship name="folder">
 			<destination>{5f0e255a-8f4f-42ca-9226-c7d4dbd1b513}</destination>
@@ -72,6 +72,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{17b7adb3-5fb9-491f-ba98-e0afd93a1dae}">
+		<property name="pitch">
+			<value>9.5</value>
+		</property>
 		<relationship name="effectChain">
 			<destination>{e3578a96-8d46-4e07-9f96-adac747d7553}</destination>
 		</relationship>
@@ -96,7 +99,8 @@
 	<object class="MixerBusEffectChain" id="{e3578a96-8d46-4e07-9f96-adac747d7553}">
 		<relationship name="effects">
 			<destination>{5645dcc8-797e-449e-af85-5bcee175cbc8}</destination>
-			<destination>{4f1e3a68-5e43-411c-893d-5ccecfaafc6b}</destination>
+			<destination>{9ac4cced-1ec3-42fb-8f78-44b673ccd1f1}</destination>
+			<destination>{272456be-0eb6-443d-920a-bf3396c5d057}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{5b24be10-5fd2-4ebd-9c85-f44d049ef7fe}" />
@@ -115,7 +119,28 @@
 	</object>
 	<object class="MixerBusFader" id="{395c442a-8991-491a-ab0d-e383a0fad136}" />
 	<object class="MixerBusFader" id="{5645dcc8-797e-449e-af85-5bcee175cbc8}" />
-	<object class="SpatialiserEffect" id="{4f1e3a68-5e43-411c-893d-5ccecfaafc6b}" />
+	<object class="GainEffect" id="{9ac4cced-1ec3-42fb-8f78-44b673ccd1f1}">
+		<property name="gain">
+			<value>5</value>
+		</property>
+	</object>
+	<object class="ThreeEQEffect" id="{272456be-0eb6-443d-920a-bf3396c5d057}">
+		<property name="lowGain">
+			<value>5.5</value>
+		</property>
+		<property name="midGain">
+			<value>-11.5</value>
+		</property>
+		<property name="highGain">
+			<value>-9</value>
+		</property>
+		<property name="lowCrossover">
+			<value>1300</value>
+		</property>
+		<property name="highCrossover">
+			<value>100</value>
+		</property>
+	</object>
 	<object class="SingleSound" id="{b4c279ec-1a88-415f-8a60-623a7e808aa6}">
 		<relationship name="audioFile">
 			<destination>{7e7fe4fc-4fc9-4bc3-a96c-1d0a682d4cc4}</destination>

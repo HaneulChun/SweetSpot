@@ -5,7 +5,7 @@
 			<value>Exit_Sign</value>
 		</property>
 		<property name="outputFormat">
-			<value>0</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{5f0e255a-8f4f-42ca-9226-c7d4dbd1b513}</destination>
@@ -161,6 +161,7 @@
 		<relationship name="effects">
 			<destination>{1b99192e-39d2-48df-8d48-54b510389338}</destination>
 			<destination>{8fff6c28-4fb6-421a-827e-60948d07e55c}</destination>
+			<destination>{db0a3ab3-ec95-4e00-8d7a-ddd462d53f31}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{81020ae9-100e-4417-8e8c-b4e619f76859}" />
@@ -185,6 +186,7 @@
 			<value>7.5</value>
 		</property>
 	</object>
+	<object class="SpatialiserEffect" id="{db0a3ab3-ec95-4e00-8d7a-ddd462d53f31}" />
 	<object class="AutomationCurve" id="{d6afc8e7-3a1f-40b2-9c3c-c6325a231e93}">
 		<relationship name="parameter">
 			<destination>{d6aaed15-1e81-482c-a68a-6f0ea6e7fabf}</destination>
