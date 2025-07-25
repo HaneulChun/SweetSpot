@@ -64,7 +64,6 @@ void ATentacleWall::Tick(float DeltaTime)
 	if (currentAlpha >= 1)
 	{
 		SetActorTickEnabled(false);
-		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, "Tentacle Wall");
 	}
 }
 
