@@ -48,6 +48,27 @@ AActor* UPlayerLook::LookAtActor(const TArray<AActor*>& Actors)
 	CameraLocation = Camera->GetComponentLocation();
 	CameraForward = Camera->GetForwardVector();
 
+	FVector End = CameraLocation + CameraForward * 200.0f;
+
+	FHitResult HitResult;
+	FCollisionQueryParams Params(SCENE_QUERY_STAT(MyTrace), true);
+
+	// ray tracing
+	if (GetWorld()->LineTraceSingleByChannel(HitResult, CameraLocation, End, ECC_Visibility, Params))
+	{
+		if (TObjectPtr<AActor> HitActor = HitResult.GetActor())
+		{
+			for (AActor* Actor : Actors)
+			{
+				if (HitActor == Actor)
+				{
+					// return the actor that was hit
+					return HitActor;
+				}
+			}
+		}
+	}
+	
 	BestActor = nullptr;
 	float BestDot = 0.97f;
 
@@ -73,26 +94,6 @@ AActor* UPlayerLook::LookAtActor(const TArray<AActor*>& Actors)
 		return BestActor;
 	}
 	
-	FVector End = CameraLocation + CameraForward * 200.0f;
-
-	FHitResult HitResult;
-	FCollisionQueryParams Params(SCENE_QUERY_STAT(MyTrace), true);
-
-	// ray tracing
-	if (GetWorld()->LineTraceSingleByChannel(HitResult, CameraLocation, End, ECC_Visibility, Params))
-	{
-		if (TObjectPtr<AActor> HitActor = HitResult.GetActor())
-		{
-			for (AActor* Actor : Actors)
-			{
-				if (HitActor == Actor)
-				{
-					// return the actor that was hit
-					return HitActor;
-				}
-			}
-		}
-	}
 	return nullptr;
 }
 
