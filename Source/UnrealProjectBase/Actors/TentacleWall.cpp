@@ -64,6 +64,7 @@ void ATentacleWall::Tick(float DeltaTime)
 	if (currentAlpha >= 1)
 	{
 		SetActorTickEnabled(false);
+		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, "Tentacle Wall");
 	}
 }
 
@@ -149,7 +150,9 @@ void ATentacleWall::StartDown()
 void ATentacleWall::ResetTentaclePosition_Implementation()
 {
 	ResetTentaclePosition();
-	SetActorTransform(startTransform);
+	finalLocation = GetActorLocation();
+	currentAlpha = 0;
+	SetActorTickEnabled(true);
 	count = 0;
 }
 
