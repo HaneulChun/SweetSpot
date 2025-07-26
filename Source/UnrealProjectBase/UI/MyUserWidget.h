@@ -105,7 +105,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float colorIntensity = 1;
-
+	
 	// value roomMadnessDamage
 	UPROPERTY()
 	float roomMadnessDamage = 0;
