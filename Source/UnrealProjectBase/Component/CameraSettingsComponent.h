@@ -24,12 +24,12 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	TArray<TObjectPtr<UMaterialInterface>> Material;
-
+	
 	UPROPERTY()
 	TObjectPtr<UCameraComponent> playerCamera;
 
 	UFUNCTION(BlueprintCallable)
-	void RoomColor(float intensity, float Vignette);
+	void RoomColor(float intensity, float Vignette, float FieldOfView);
 	
 	UPROPERTY(EditAnywhere)
 	float duration = .5f;
@@ -45,6 +45,11 @@ protected:
 	float startVignette = 1.0f;
 	UPROPERTY()
 	float endVignette = 0.0f;
+
+	UPROPERTY()
+	float startFOV = 1.0f;
+	UPROPERTY()
+	float endFOV = 0.0f;
 public:
 
 	UFUNCTION()
@@ -53,7 +58,7 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	UFUNCTION(BlueprintCallable)
-	void SetCameraSettings(float intensity, float Vignette);
+	void SetCameraSettings(float intensity, float Vignette, float FieldOfView);
 
 	UFUNCTION(BlueprintCallable)
 	void Color(float intensity);
