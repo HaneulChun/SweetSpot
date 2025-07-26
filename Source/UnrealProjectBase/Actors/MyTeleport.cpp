@@ -85,7 +85,7 @@ void AMyTeleport::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActo
 	{
 		Player = OtherActor;
 		LoadSubLevel();
-		CameraSettings->SetCameraSettings(-1, 5);
+		CameraSettings->SetCameraSettings(-1, 5, 90);
 		CameraSettings->DelayrestoreCamera();
 	}
 	else

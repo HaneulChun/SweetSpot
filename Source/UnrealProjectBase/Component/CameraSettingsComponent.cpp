@@ -45,7 +45,8 @@ void UCameraSettingsComponent::TickComponent(float DeltaTime, ELevelTick TickTyp
 		float Alpha = FMath::Clamp(ElapsedTime / duration, 0.0f, 1.0f);
 		float newColor = FMath::Lerp(startColor, endColor, Alpha);
 		float newVignette = FMath::Lerp(startVignette, endVignette, Alpha);
-		RoomColor(newColor, newVignette);
+		float newFOV = FMath::Lerp(startFOV, endFOV, Alpha);
+		RoomColor(newColor, newVignette, newFOV);
 	}
 	else
 	{
@@ -53,14 +54,18 @@ void UCameraSettingsComponent::TickComponent(float DeltaTime, ELevelTick TickTyp
 	}
 }
 
-void UCameraSettingsComponent::SetCameraSettings(float intensity, float Vignette)
+void UCameraSettingsComponent::SetCameraSettings(float intensity, float Vignette, float FieldOfView)
 {
 	// set up for tick
 	ElapsedTime = 0.0f;
+	
 	startColor = playerCamera->PostProcessSettings.ColorSaturation.X;
 	startVignette = playerCamera->PostProcessSettings.VignetteIntensity;
+	startFOV = playerCamera->FieldOfView;
+	
 	endColor = intensity;
 	endVignette = Vignette;
+	endFOV = FieldOfView;
 
 	if (intensity < 0)
 	{
@@ -105,7 +110,7 @@ void UCameraSettingsComponent::ChangeCameraMaterial(float intensity)
 	}
 }
 
-void UCameraSettingsComponent::RoomColor(float intensity, float Vignette)
+void UCameraSettingsComponent::RoomColor(float intensity, float Vignette, float FieldOfView)
 {
 	FPostProcessSettings& Settings = playerCamera->PostProcessSettings;
 
@@ -122,5 +127,6 @@ void UCameraSettingsComponent::RoomColor(float intensity, float Vignette)
 		Settings.bOverride_ColorSaturation = true;
 		Settings.ColorSaturation = FVector4(intensity, intensity/2, intensity, 1.0f);
 	}
+	playerCamera->SetFieldOfView(FieldOfView);
 }
 

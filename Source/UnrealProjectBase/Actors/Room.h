@@ -55,4 +55,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float colorIntensity = 0.5;
+
+	UPROPERTY(EditAnywhere)
+	float fieldOfView = 110;
 };

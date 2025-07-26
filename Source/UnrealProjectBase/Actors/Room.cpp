@@ -45,6 +45,11 @@ void ARoom::BeginPlay()
 
 		CameraSettings = PlayerController->GetPawn()->FindComponentByClass<UCameraSettingsComponent>();
 	});
+
+	if (increment <=0)
+	{
+		fieldOfView = 90;
+	}
 }
 
 // increment madness when enter the collision
@@ -70,17 +75,17 @@ void ARoom::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 	// give the player vignette
 	if (widget->CurrentState == ECurrentState::Mad)
 	{
-		CameraSettings->SetCameraSettings(colorIntensity, widget->vignetteIntensity);
+		CameraSettings->SetCameraSettings(colorIntensity, widget->vignetteIntensity, fieldOfView);
 	}
 	else
 	{
 		if (increment < 0)
 		{
-			CameraSettings->SetCameraSettings(colorIntensity, 0.4);
+			CameraSettings->SetCameraSettings(colorIntensity, 0.4, fieldOfView);
 		}
 		else
 		{
-			CameraSettings->SetCameraSettings(colorIntensity, 1);
+			CameraSettings->SetCameraSettings(colorIntensity, 1, fieldOfView);
 		}
 	}
 }
@@ -101,14 +106,14 @@ void ARoom::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor
 		if (widget->isInRoom == true)
 		{
 			widget->SetIncreaseMadness(widget->roomMadnessDamage);
-			CameraSettings->SetCameraSettings(0.5, 1);
+			CameraSettings->SetCameraSettings(0.5, 1, 110);
 		}
 		else
 		{
 			widget->SetIncreaseMadness(0.0);
 
 			// remove the player vignette when exiting room
-			CameraSettings->SetCameraSettings(widget->colorIntensity, widget->vignetteIntensity);
+			CameraSettings->SetCameraSettings(widget->colorIntensity, widget->vignetteIntensity, 90);
 		}
 	}
 	else
@@ -117,6 +122,6 @@ void ARoom::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor
 		widget->SetIncreaseMadness(0.0);
 
 		// remove the player vignette when exiting room
-		CameraSettings->SetCameraSettings(widget->colorIntensity, widget->vignetteIntensity);
+		CameraSettings->SetCameraSettings(widget->colorIntensity, widget->vignetteIntensity, 90);
 	}
 }
