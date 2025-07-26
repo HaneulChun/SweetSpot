@@ -149,7 +149,9 @@ void ATentacleWall::StartDown()
 void ATentacleWall::ResetTentaclePosition_Implementation()
 {
 	ResetTentaclePosition();
-	SetActorTransform(startTransform);
+	finalLocation = GetActorLocation();
+	currentAlpha = 0;
+	SetActorTickEnabled(true);
 	count = 0;
 }
 
