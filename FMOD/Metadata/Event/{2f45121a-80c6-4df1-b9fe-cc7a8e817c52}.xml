@@ -202,9 +202,17 @@
 		<relationship name="effects">
 			<destination>{2fbbe336-6a9f-4c40-ac84-dd7e82c1ada6}</destination>
 			<destination>{1afae826-9ca4-40b4-b7c7-5c47c8e689dd}</destination>
+			<destination>{9888b4d1-12de-4187-9e67-58ddbdd69652}</destination>
 		</relationship>
 	</object>
-	<object class="MixerBusPanner" id="{b95869f9-c227-41f2-a9c3-29e77a6cf1a1}" />
+	<object class="MixerBusPanner" id="{b95869f9-c227-41f2-a9c3-29e77a6cf1a1}">
+		<property name="surroundPanDirection">
+			<value>156.801407</value>
+		</property>
+		<property name="surroundPanExtent">
+			<value>328.981201</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{64f19646-24da-4856-927a-5acfed231d7a}" />
 	<object class="MixerBusEffectChain" id="{40a40d63-ceca-47e0-ad97-91b032e1d61a}">
 		<relationship name="effects">
@@ -255,6 +263,32 @@
 		</property>
 		<property name="overrideRange">
 			<value>true</value>
+		</property>
+	</object>
+	<object class="MultibandEqEffect" id="{9888b4d1-12de-4187-9e67-58ddbdd69652}">
+		<property name="filterTypeB">
+			<value>9</value>
+		</property>
+		<property name="filterTypeE">
+			<value>6</value>
+		</property>
+		<property name="frequencyA">
+			<value>17883.0039</value>
+		</property>
+		<property name="frequencyB">
+			<value>4462.32178</value>
+		</property>
+		<property name="frequencyE">
+			<value>43.9502907</value>
+		</property>
+		<property name="qualityA">
+			<value>0.497689635</value>
+		</property>
+		<property name="qualityE">
+			<value>0.330241382</value>
+		</property>
+		<property name="gainB">
+			<value>-10.3448277</value>
 		</property>
 	</object>
 	<object class="MultibandEqEffect" id="{3c5d6082-f44f-4af3-9270-5f9313eef485}">

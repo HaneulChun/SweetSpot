@@ -126,6 +126,9 @@
 		<relationship name="effects">
 			<destination>{975292b2-7ceb-4921-878f-7d6226a16078}</destination>
 			<destination>{6aec6a49-fb8d-4543-8751-d49e15db324d}</destination>
+			<destination>{5ad37f7c-8a43-43f6-86eb-76a658c028aa}</destination>
+			<destination>{aed7ca5a-84d5-4580-9d30-a0a024e51748}</destination>
+			<destination>{ad764a56-ec9c-4b1c-8ced-fd8371d9d227}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{77c55309-8fa4-4845-918a-1e8d30d2044b}" />
@@ -166,6 +169,30 @@
 	<object class="MixerBusPanner" id="{b33d840c-d7a1-483d-a807-5ec6e8179758}" />
 	<object class="MixerBusFader" id="{975292b2-7ceb-4921-878f-7d6226a16078}" />
 	<object class="SpatialiserEffect" id="{6aec6a49-fb8d-4543-8751-d49e15db324d}" />
+	<object class="DistortionEffect" id="{5ad37f7c-8a43-43f6-86eb-76a658c028aa}">
+		<property name="level">
+			<value>0.639999986</value>
+		</property>
+	</object>
+	<object class="ThreeEQEffect" id="{aed7ca5a-84d5-4580-9d30-a0a024e51748}">
+		<property name="lowGain">
+			<value>3</value>
+		</property>
+		<property name="midGain">
+			<value>3.5</value>
+		</property>
+		<property name="lowCrossover">
+			<value>380</value>
+		</property>
+	</object>
+	<object class="LimiterEffect" id="{ad764a56-ec9c-4b1c-8ced-fd8371d9d227}">
+		<property name="boost">
+			<value>1.80000007</value>
+		</property>
+		<property name="ceiling">
+			<value>-1.10000002</value>
+		</property>
+	</object>
 	<object class="AutomationPoint" id="{6b0a5876-a26e-47be-8c50-a21ff5a2e8fe}">
 		<property name="position">
 			<value>0.56000000000000005</value>

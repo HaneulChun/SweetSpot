@@ -275,9 +275,18 @@
 		<relationship name="effects">
 			<destination>{e7faf688-ca53-47f6-a88c-0a00db870007}</destination>
 			<destination>{1948f09f-a0a9-4d6b-a649-4f990702ccc3}</destination>
+			<destination>{3fa628fb-461a-4d94-815b-a2478e2589f4}</destination>
+			<destination>{2c83b685-d074-4fe9-9fa9-9a2d28f60399}</destination>
 		</relationship>
 	</object>
-	<object class="MixerBusPanner" id="{78e3dd3e-be93-4be1-8670-22ac99871f1a}" />
+	<object class="MixerBusPanner" id="{78e3dd3e-be93-4be1-8670-22ac99871f1a}">
+		<property name="surroundPanDirection">
+			<value>-180</value>
+		</property>
+		<property name="surroundPanExtent">
+			<value>281.399994</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{7e8aaae5-74a2-429d-927e-e3e2b7e406a0}" />
 	<object class="Automator" id="{5cf92e04-604e-4f05-9c8d-8dd9e4b74f4a}">
 		<property name="nameOfPropertyBeingAutomated">
@@ -361,6 +370,55 @@
 	<object class="SpatialiserEffect" id="{1948f09f-a0a9-4d6b-a649-4f990702ccc3}">
 		<property name="overrideRange">
 			<value>true</value>
+		</property>
+	</object>
+	<object class="ChorusEffect" id="{3fa628fb-461a-4d94-815b-a2478e2589f4}">
+		<property name="rate">
+			<value>0.0399999991</value>
+		</property>
+		<property name="depth">
+			<value>35.5</value>
+		</property>
+		<property name="mix">
+			<value>14</value>
+		</property>
+	</object>
+	<object class="MultibandEqEffect" id="{2c83b685-d074-4fe9-9fa9-9a2d28f60399}">
+		<property name="filterTypeB">
+			<value>9</value>
+		</property>
+		<property name="filterTypeD">
+			<value>9</value>
+		</property>
+		<property name="filterTypeE">
+			<value>6</value>
+		</property>
+		<property name="frequencyA">
+			<value>17883.0039</value>
+		</property>
+		<property name="frequencyB">
+			<value>179.820633</value>
+		</property>
+		<property name="frequencyD">
+			<value>1908.24695</value>
+		</property>
+		<property name="frequencyE">
+			<value>43.9502907</value>
+		</property>
+		<property name="qualityA">
+			<value>0.497689635</value>
+		</property>
+		<property name="qualityD">
+			<value>1.14999998</value>
+		</property>
+		<property name="qualityE">
+			<value>0.330241382</value>
+		</property>
+		<property name="gainB">
+			<value>-6.72413635</value>
+		</property>
+		<property name="gainD">
+			<value>-13</value>
 		</property>
 	</object>
 	<object class="AutomationCurve" id="{1aec1a51-2c4a-4c85-a7e5-cbb111980005}">
