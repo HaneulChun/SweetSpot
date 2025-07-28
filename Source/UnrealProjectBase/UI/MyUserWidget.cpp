@@ -60,6 +60,7 @@ void UMyUserWidget::CheckPlayerState()
 			FadeObject->Fade(-0.1, 1, -0.1, 1);
 			
 			CurrentState = ECurrentState::Sane;
+			ChangedPlayerState();
 		}
 	}
 	else if(currentMadnessBarValue >= 1) // dead 
@@ -72,6 +73,7 @@ void UMyUserWidget::CheckPlayerState()
 			UnFocus();
 			
 			CurrentState = ECurrentState::Dead;
+			ChangedPlayerState();
 		}
 	}
 	else if(currentMadnessBarValue >= mad) // mad
@@ -87,6 +89,7 @@ void UMyUserWidget::CheckPlayerState()
 			FadeObject->Fade(0, 1, 0, 1);
 			
 			CurrentState = ECurrentState::Mad;
+			ChangedPlayerState();
 		}
 	}
 	else // sweet spot
@@ -118,6 +121,7 @@ void UMyUserWidget::CheckPlayerState()
 			}
 
 			CurrentState = ECurrentState::SweetSpot;
+			ChangedPlayerState();
 		}
 	}
 }
