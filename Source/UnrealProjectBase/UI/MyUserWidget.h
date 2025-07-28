@@ -122,6 +122,9 @@ public:
 	UFUNCTION(BlueprintImplementableEvent , BlueprintCallable)
 	void PromptPopUp();
 	
+	UFUNCTION(BlueprintImplementableEvent , BlueprintCallable)
+	void ChangedPlayerState();
+	
 	// property
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float currentMadnessBarValue = 0.0;
