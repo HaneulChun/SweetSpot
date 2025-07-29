@@ -23,5 +23,8 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UFUNCTION(BlueprintImplementableEvent)
+	void DeathCameraMovement();
+	
+	UFUNCTION(BlueprintImplementableEvent)
 	void Dead();
 };
