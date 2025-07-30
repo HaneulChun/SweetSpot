@@ -147,14 +147,6 @@ void AMyTeleport::Reset()
 
 void AMyTeleport::Teleport(AActor* OtherActor, UArrowComponent* ArrowComponent)
 {
-	// FTransform destination = Transform;
-	// FTransform teleportStartPoint = this->GetTransform();
-	// FTransform player = OtherActor->GetTransform();
-	// FVector offset = player.GetLocation() - teleportStartPoint.GetLocation();
-	// FVector final = offset + destination.GetLocation();
-	// FTransform finalTeleport = FTransform(destination.GetRotation(), final, OtherActor->GetTransform().GetScale3D());
-	// OtherActor->SetActorTransform(finalTeleport, false, nullptr, ETeleportType::TeleportPhysics);
-	
 	// Rotation
 	GetWorld()->GetFirstPlayerController()->SetControlRotation(ArrowComponent->GetComponentRotation());
 		
