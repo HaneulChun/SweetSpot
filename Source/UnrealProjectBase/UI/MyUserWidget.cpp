@@ -68,9 +68,12 @@ void UMyUserWidget::CheckPlayerState()
 		if (CurrentState != ECurrentState::Dead)
 		{
 			// reset the player
-			GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &UMyUserWidget::Dying, 0.1, true);
-
+			//GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &UMyUserWidget::Dying, 0.1, true);
+			ASweetSpotCharacter* MyCharacter = Cast<ASweetSpotCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+			MyCharacter->DeathCameraMovement();
+			
 			UnFocus();
+
 			
 			CurrentState = ECurrentState::Dead;
 			ChangedPlayerState();
@@ -165,17 +168,6 @@ void UMyUserWidget::IncreaseMadnessBar(float value)
 	if (hasKey == true)
 	{
 		currentMadnessBarValue += value;
-	}
-}
-
-void UMyUserWidget::Dying()
-{
-	dyingCount++;
-	CameraSettings->ChangeCameraSettings(10.0, (dyingCount * 0.5) + 1.5);
-	if (dyingCount >= 10)
-	{
-		GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &UMyUserWidget::Dead, 0.1, false);
-		dyingCount = 0;
 	}
 }
 

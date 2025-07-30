@@ -86,9 +86,6 @@ public:
 	void UnFocus();
 	
 	UFUNCTION(BlueprintCallable)
-	void Dying();
-
-	UFUNCTION(BlueprintCallable)
 	void Dead();
 
 	UFUNCTION(BlueprintCallable)
