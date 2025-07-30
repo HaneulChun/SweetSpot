@@ -16,7 +16,9 @@ public:
 	ASweetSpotCharacter();
 
 protected:
-
+	UPROPERTY(BlueprintReadWrite)
+	float cameraTilt = 0;
+	
 public:	
 
 	// Called to bind functionality to input
