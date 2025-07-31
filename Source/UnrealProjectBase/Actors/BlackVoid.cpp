@@ -3,8 +3,10 @@
 
 #include "BlackVoid.h"
 
+#include "SweetSpotCharacter.h"
 #include "Components/BillboardComponent.h"
 #include "Components/BoxComponent.h"
+#include "UnrealProjectBase/UI/PlayerHud.h"
 
 // Sets default values
 ABlackVoid::ABlackVoid()
@@ -48,6 +50,8 @@ void ABlackVoid::BeginPlay()
 
 	PrimaryActorTick.SetTickFunctionEnable(true);
 	SetActorTickEnabled(false);
+
+	player = Cast<ASweetSpotCharacter>(GetWorld()->GetFirstPlayerController()->GetPawn());
 }
 
 // Called every frame
@@ -61,6 +65,7 @@ void ABlackVoid::Tick(float DeltaTime)
 		float Alpha = FMath::Clamp(ElapsedTime / MoveDuration, 0.0f, 1.0f);
 		FVector NewLocation = FMath::Lerp(start->GetComponentLocation(), end->GetComponentLocation(), Alpha);
 		moveingComponent->SetWorldLocation(NewLocation);
+		float distance = GetDistanceTo(player);
 	}
 	else
 	{

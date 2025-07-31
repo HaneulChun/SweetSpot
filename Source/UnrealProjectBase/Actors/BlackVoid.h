@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "BlackVoid.generated.h"
 
+class ASweetSpotCharacter;
 class UBoxComponent;
 
 UCLASS()
@@ -35,6 +36,9 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<USceneComponent> moveingComponent;
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<ASweetSpotCharacter> player;
 public:	
 	virtual void Tick(float DeltaTime) override;
 
