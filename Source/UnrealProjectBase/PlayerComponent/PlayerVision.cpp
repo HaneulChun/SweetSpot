@@ -66,14 +66,16 @@ void UPlayerVision::LookForTentacleWall()
 			continue;
 		}
 
+		ATentacleWall* tentacle = Cast<ATentacleWall>(Actor);
+		
 		bool isTentacleWall = false;
-		FVector bottom = Actor->GetActorLocation();
+		FVector bottom = tentacle->MovingSceneComponent->GetComponentLocation();
 		TArray<FVector> PointsToCheck = {
-			Actor->GetActorLocation(),
+			bottom,
 			bottom + FVector(Actor->GetActorUpVector() * height), 
 			bottom + FVector(Actor->GetActorUpVector() * height * 2)
 		};
-
+		
 		for (FVector points : PointsToCheck)
 		{
 			if (DotProduct(points) > 0.54)
@@ -86,20 +88,17 @@ void UPlayerVision::LookForTentacleWall()
 			continue;
 		}
 		
-		if (ATentacleWall* tentacle = Cast<ATentacleWall>(Actor))
+		if (tentacle->count >= 1)
 		{
-			if (tentacle->count >= 1)
-			{
-				tentacle->FadeAway();
-				continue;
-			}
-			if (tentacle->isActive == false)
-			{
-				continue;
-			}
+			tentacle->FadeAway();
+			continue;
+		}
+		if (tentacle->isActive == false)
+		{
+			continue;
 		}
 		
-		float Actordistance = FVector::Distance(PlayerCamera->GetComponentLocation(), Actor->GetActorLocation());
+		float Actordistance = FVector::Distance(PlayerCamera->GetComponentLocation(), tentacle->MovingSceneComponent->GetComponentLocation());
 		if (Actordistance > distance)
 		{
 			continue;
@@ -122,10 +121,7 @@ void UPlayerVision::LookForTentacleWall()
 			// if you see actor make it fade away
 			if (!bHit || HitResult.GetActor() == Actor)
 			{
-				if (ATentacleWall* tentacle = Cast<ATentacleWall>(Actor))
-				{
-					tentacle->FadeAway();
-				}
+				tentacle->FadeAway();
 				break; 
 			}
 		}
