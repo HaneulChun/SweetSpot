@@ -22,7 +22,7 @@ public:
 private:
 	UPROPERTY()
 	FVector finalLocation;
-	
+
 	FVector startLocation;
 	
 	float currentAlpha = 0;
@@ -36,8 +36,6 @@ protected:
 	virtual void Tick(float DeltaTime) override;
 	
 	FTimerHandle TimerHandle;
-	
-	FTransform startTransform;
 	
 	UPROPERTY()
 	TObjectPtr<UMyUserWidget> widget;
@@ -62,7 +60,9 @@ protected:
 
 	float OriginalSpeed;
 public:	
-
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<USceneComponent> MovingSceneComponent;
+	
 	UFUNCTION(BlueprintCallable)
 	void FadeAway();
 
