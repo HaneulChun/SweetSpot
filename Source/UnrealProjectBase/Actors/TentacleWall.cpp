@@ -19,9 +19,12 @@ ATentacleWall::ATentacleWall()
 
 	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
 
+	MovingSceneComponent = CreateDefaultSubobject<USceneComponent>(TEXT("MovingComponent"));
+	MovingSceneComponent->SetupAttachment(RootComponent);
+	
 	// set trigger-box for default
 	triggerBox = CreateDefaultSubobject<UBoxComponent>(TEXT("TriggerBox"));
-	triggerBox->SetupAttachment(RootComponent);
+	triggerBox->SetupAttachment(MovingSceneComponent);
 	triggerBox->SetCollisionProfileName(TEXT("Trigger"));
 	triggerBox->SetGenerateOverlapEvents(true);
 }
@@ -47,7 +50,6 @@ void ATentacleWall::BeginPlay()
 
 	SetActorTickEnabled(false);
 	
-	startTransform = GetTransform();
 	startLocation = GetActorLocation() + GetActorUpVector();
 	finalLocation = GetActorLocation() + (-GetActorUpVector() * 400);
 }
@@ -59,7 +61,7 @@ void ATentacleWall::Tick(float DeltaTime)
 	// tentacle fading up
 	currentAlpha += comingUpSpeed * DeltaTime;
 	FVector NewLocation = FMath::Lerp(finalLocation, startLocation, currentAlpha);
-	SetActorLocation(NewLocation);
+	MovingSceneComponent->SetWorldLocation(NewLocation);
 		
 	if (currentAlpha >= 1)
 	{
@@ -119,9 +121,9 @@ void ATentacleWall::FadeAway()
 	{
 		// make eye disappear 
 		FVector Direction = -GetActorUpVector();
-		FVector CurrentLocation = GetActorLocation();
+		FVector CurrentLocation = MovingSceneComponent->GetComponentLocation();
 		FVector NewLocation = CurrentLocation + (Direction * speed);
-		SetActorLocation(NewLocation);
+		MovingSceneComponent->SetWorldLocation(NewLocation);
 
 		CameraShake();
 		
@@ -143,13 +145,13 @@ void ATentacleWall::Spawn()
 
 void ATentacleWall::StartDown()
 {
-	SetActorLocation(finalLocation);
+	MovingSceneComponent->SetWorldLocation(finalLocation);
 }
 
 void ATentacleWall::ResetTentaclePosition_Implementation()
 {
 	ResetTentaclePosition();
-	finalLocation = GetActorLocation();
+	finalLocation = MovingSceneComponent->GetComponentLocation();
 	currentAlpha = 0;
 	SetActorTickEnabled(true);
 	count = 0;

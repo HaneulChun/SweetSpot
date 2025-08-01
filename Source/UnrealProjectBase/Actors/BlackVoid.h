@@ -6,6 +6,16 @@
 #include "GameFramework/Actor.h"
 #include "BlackVoid.generated.h"
 
+UENUM(BlueprintType)
+enum class EDistance : uint8
+{
+	veryClose       UMETA(DisplayName = "very Close"),
+	close  UMETA(DisplayName = "close"),
+	far        UMETA(DisplayName = "far"),
+};
+
+class UCameraSettingsComponent;
+class ASweetSpotCharacter;
 class UBoxComponent;
 
 UCLASS()
@@ -35,6 +45,15 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<USceneComponent> moveingComponent;
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<ASweetSpotCharacter> player;
+
+	UPROPERTY()
+	TObjectPtr<UCameraSettingsComponent> CameraSettings;
+
+	UPROPERTY(BlueprintReadOnly)
+	EDistance DistanceState = EDistance::veryClose;
 public:	
 	virtual void Tick(float DeltaTime) override;
 
