@@ -99,7 +99,6 @@ void UMyUserWidget::CheckPlayerState()
 	{
 		if (CurrentState != ECurrentState::SweetSpot)
 		{
-			PromptPopUp();
 			if (isInRoom)
 			{
 				CameraSettings->ChangeCameraSettings(0.0, 1);
