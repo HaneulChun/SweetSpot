@@ -115,9 +115,7 @@ public:
 	
 	UPROPERTY(BlueprintReadWrite)
 	bool hasKey = false;
-
-	UFUNCTION(BlueprintImplementableEvent , BlueprintCallable)
-	void PromptPopUp();
+	
 	
 	UFUNCTION(BlueprintImplementableEvent , BlueprintCallable)
 	void ChangedPlayerState();
