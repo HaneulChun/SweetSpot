@@ -71,7 +71,7 @@
 			<destination>{14bef6d3-6ad2-4dcc-bbf0-992a0caab7d0}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{fd354eed-d229-4a55-a0ab-8ed4aa1f6b44}</destination>
+			<destination>{95914b12-2299-496c-8d8b-0a1014a5bbae}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{6f7016bd-3e33-4976-92d5-26f95856c1bd}" />
@@ -572,6 +572,7 @@
 		<relationship name="effects">
 			<destination>{85b27ac8-e5f1-4708-a41b-5ce6ba3cc227}</destination>
 			<destination>{41623367-d5d8-4e1f-9d62-72aa1f9c62a0}</destination>
+			<destination>{2962a784-92ba-416a-800d-2102a8a7d86f}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{b684b11c-a115-43d8-a16c-25ddacdd2627}" />
@@ -809,6 +810,32 @@
 	</object>
 	<object class="MixerBusFader" id="{85b27ac8-e5f1-4708-a41b-5ce6ba3cc227}" />
 	<object class="SpatialiserEffect" id="{41623367-d5d8-4e1f-9d62-72aa1f9c62a0}" />
+	<object class="MultibandEqEffect" id="{2962a784-92ba-416a-800d-2102a8a7d86f}">
+		<property name="filterTypeB">
+			<value>9</value>
+		</property>
+		<property name="filterTypeE">
+			<value>6</value>
+		</property>
+		<property name="frequencyA">
+			<value>17883.0039</value>
+		</property>
+		<property name="frequencyB">
+			<value>610.5672</value>
+		</property>
+		<property name="frequencyE">
+			<value>43.9502907</value>
+		</property>
+		<property name="qualityA">
+			<value>0.497689635</value>
+		</property>
+		<property name="qualityE">
+			<value>0.330241382</value>
+		</property>
+		<property name="gainB">
+			<value>-4.13793182</value>
+		</property>
+	</object>
 	<object class="AutomationPoint" id="{b0b788cd-26d1-4be2-8b03-2ec2e51b3751}">
 		<property name="position">
 			<value>2</value>

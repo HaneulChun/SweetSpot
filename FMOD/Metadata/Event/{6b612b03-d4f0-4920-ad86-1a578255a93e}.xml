@@ -59,7 +59,7 @@
 			<destination>{0b9025d9-d5aa-4f3f-9b72-73ac2c1e8043}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{fd354eed-d229-4a55-a0ab-8ed4aa1f6b44}</destination>
+			<destination>{95914b12-2299-496c-8d8b-0a1014a5bbae}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{143dca4c-6309-43b4-9915-2144e1459ad7}" />
@@ -309,9 +309,18 @@
 		<relationship name="effects">
 			<destination>{fa760352-6084-4b34-8e25-89b5a6c5fd65}</destination>
 			<destination>{1e518341-e772-4694-81ba-ae522121231d}</destination>
+			<destination>{65d1d333-c4f3-4227-bc5f-8bb65ceb0485}</destination>
+			<destination>{a5e1b94b-a501-46c2-9255-572851d3d4d5}</destination>
 		</relationship>
 	</object>
-	<object class="MixerBusPanner" id="{63563dc9-d25f-4d92-9770-4cdc33340d4c}" />
+	<object class="MixerBusPanner" id="{63563dc9-d25f-4d92-9770-4cdc33340d4c}">
+		<property name="surroundPanDirection">
+			<value>9.09027672</value>
+		</property>
+		<property name="surroundPanExtent">
+			<value>287.978577</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{9b90af92-354b-43ff-938c-a6a75563c295}" />
 	<object class="MixerBusEffectChain" id="{ceb1864c-53ba-4f33-94f2-7e96ac576d16}">
 		<relationship name="effects">
@@ -410,6 +419,46 @@
 		</property>
 		<property name="overrideRange">
 			<value>true</value>
+		</property>
+	</object>
+	<object class="MultibandEqEffect" id="{65d1d333-c4f3-4227-bc5f-8bb65ceb0485}">
+		<property name="filterTypeB">
+			<value>9</value>
+		</property>
+		<property name="filterTypeE">
+			<value>6</value>
+		</property>
+		<property name="frequencyA">
+			<value>17883.0039</value>
+		</property>
+		<property name="frequencyB">
+			<value>610.5672</value>
+		</property>
+		<property name="frequencyE">
+			<value>43.9502907</value>
+		</property>
+		<property name="qualityA">
+			<value>0.497689635</value>
+		</property>
+		<property name="qualityE">
+			<value>0.330241382</value>
+		</property>
+		<property name="gainB">
+			<value>-4.13793182</value>
+		</property>
+	</object>
+	<object class="CompressorEffect" id="{a5e1b94b-a501-46c2-9255-572851d3d4d5}">
+		<property name="threshold">
+			<value>-41</value>
+		</property>
+		<property name="attackTime">
+			<value>78</value>
+		</property>
+		<property name="releaseTime">
+			<value>320</value>
+		</property>
+		<property name="gain">
+			<value>2</value>
 		</property>
 	</object>
 	<object class="MultibandEqEffect" id="{9097740d-23a4-4aaf-87f4-481794f87fd2}">

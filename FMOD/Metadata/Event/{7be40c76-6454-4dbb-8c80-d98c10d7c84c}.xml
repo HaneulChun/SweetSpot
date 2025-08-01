@@ -54,7 +54,7 @@
 			<destination>{9a5eb544-b391-42de-8b7c-3fea269804a1}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{fd354eed-d229-4a55-a0ab-8ed4aa1f6b44}</destination>
+			<destination>{175c9fbe-5ae8-41f1-a6ae-2c0079f33b39}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{541d6e82-f7a4-4356-bfb5-4811d8a35e02}" />
@@ -174,6 +174,10 @@
 		<relationship name="effects">
 			<destination>{15acc498-5b94-4a03-b26b-e66c77c5807c}</destination>
 			<destination>{9775f397-432b-45f0-a4e1-29feda9095bb}</destination>
+			<destination>{2feb9101-0141-41a8-b11a-b932b05cfe51}</destination>
+			<destination>{e09f7583-d6b7-4f6d-9e7a-4f874776f1eb}</destination>
+			<destination>{53ce314a-8aca-43ba-996b-ad8fc2719b73}</destination>
+			<destination>{52711e79-80ae-4009-b86c-fa6a6d1d7c9c}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{1e640fab-b67c-4042-8cba-c53a8d93a669}" />
@@ -253,6 +257,56 @@
 	<object class="MixerBusPanner" id="{6b329a1b-4960-4b52-84f3-e5d2c58295e6}" />
 	<object class="MixerBusFader" id="{15acc498-5b94-4a03-b26b-e66c77c5807c}" />
 	<object class="SpatialiserEffect" id="{9775f397-432b-45f0-a4e1-29feda9095bb}" />
+	<object class="MultibandEqEffect" id="{2feb9101-0141-41a8-b11a-b932b05cfe51}">
+		<property name="filterTypeA">
+			<value>6</value>
+		</property>
+		<property name="filterTypeB">
+			<value>9</value>
+		</property>
+		<property name="filterTypeE">
+			<value>8</value>
+		</property>
+		<property name="frequencyA">
+			<value>57.5358276</value>
+		</property>
+		<property name="frequencyB">
+			<value>195.358505</value>
+		</property>
+		<property name="frequencyE">
+			<value>1583.61926</value>
+		</property>
+		<property name="qualityA">
+			<value>0.267448276</value>
+		</property>
+		<property name="gainB">
+			<value>5.17241478</value>
+		</property>
+		<property name="gainE">
+			<value>4.65517426</value>
+		</property>
+	</object>
+	<object class="DistortionEffect" id="{e09f7583-d6b7-4f6d-9e7a-4f874776f1eb}">
+		<property name="level">
+			<value>0.409999996</value>
+		</property>
+	</object>
+	<object class="MultibandDynamicsEffect" id="{53ce314a-8aca-43ba-996b-ad8fc2719b73}">
+		<property name="thresholdA">
+			<value>-23.5</value>
+		</property>
+		<property name="ratioA">
+			<value>25</value>
+		</property>
+	</object>
+	<object class="LimiterEffect" id="{52711e79-80ae-4009-b86c-fa6a6d1d7c9c}">
+		<property name="boost">
+			<value>1.80000007</value>
+		</property>
+		<property name="ceiling">
+			<value>-2</value>
+		</property>
+	</object>
 	<object class="AutomationPoint" id="{15acfdd2-5be8-4bfe-98da-e2d41f1d122c}">
 		<property name="position">
 			<value>0.85000000000000009</value>
