@@ -5,7 +5,7 @@
 			<value>Footsteps</value>
 		</property>
 		<property name="outputFormat">
-			<value>2</value>
+			<value>0</value>
 		</property>
 		<relationship name="folder">
 			<destination>{35dafbf5-e338-440c-b685-05d9d43e148b}</destination>
@@ -325,7 +325,6 @@
 	<object class="MixerBusEffectChain" id="{3b78fdbd-cc19-4f8d-b416-470733ac375b}">
 		<relationship name="effects">
 			<destination>{b8016ae5-5886-4f48-a1de-83494f5c9c19}</destination>
-			<destination>{2e086e30-c101-4132-a5ee-1997149c9c08}</destination>
 			<destination>{233772a0-6641-4619-acf1-70c393446a4b}</destination>
 			<destination>{1089d7c3-1447-4240-911b-74a1621b63bd}</destination>
 			<destination>{c74cfd93-695b-4e8f-bb0b-6955ebbbcfa8}</destination>
@@ -977,11 +976,6 @@
 	</object>
 	<object class="MixerBusPanner" id="{bc6ca927-79dc-4954-8952-b38b84f42f27}" />
 	<object class="MixerBusFader" id="{b8016ae5-5886-4f48-a1de-83494f5c9c19}" />
-	<object class="SpatialiserEffect" id="{2e086e30-c101-4132-a5ee-1997149c9c08}">
-		<property name="distanceRolloffType">
-			<value>4</value>
-		</property>
-	</object>
 	<object class="MultibandEqEffect" id="{233772a0-6641-4619-acf1-70c393446a4b}">
 		<property name="filterTypeA">
 			<value>6</value>
