@@ -54,8 +54,8 @@ void Ateleport::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor*
 		if (teleportTo)
 		{
 			Teleport(OtherActor, teleportTo->Arrow);
+			ShowElevatorPart();
 		}
-		ShowElevatorPart();
 	}
 }
 
