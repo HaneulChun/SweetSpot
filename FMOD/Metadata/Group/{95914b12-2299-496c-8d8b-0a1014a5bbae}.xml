@@ -28,6 +28,8 @@
 	<object class="MixerBusEffectChain" id="{30ee4540-81d6-4d88-88a5-16ca7b67630e}">
 		<relationship name="effects">
 			<destination>{6e2c728e-4976-421f-90f9-85cd4cdc4c68}</destination>
+			<destination>{029a23e9-a456-4ffb-9495-8e4aed3e8f51}</destination>
+			<destination>{3ed4639e-1b13-42cb-bca7-935451a49a70}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{e28d5572-75f1-46ad-8d94-2e06e8806884}" />
@@ -41,6 +43,37 @@
 		</relationship>
 	</object>
 	<object class="MixerBusFader" id="{6e2c728e-4976-421f-90f9-85cd4cdc4c68}" />
+	<object class="MultibandEqEffect" id="{029a23e9-a456-4ffb-9495-8e4aed3e8f51}">
+		<property name="filterTypeE">
+			<value>5</value>
+		</property>
+		<property name="frequencyA">
+			<value>17883.0039</value>
+		</property>
+		<property name="frequencyE">
+			<value>42.1662827</value>
+		</property>
+		<property name="qualityE">
+			<value>0.581413805</value>
+		</property>
+	</object>
+	<object class="CompressorEffect" id="{3ed4639e-1b13-42cb-bca7-935451a49a70}">
+		<property name="threshold">
+			<value>-9.5</value>
+		</property>
+		<property name="ratio">
+			<value>3.10000014</value>
+		</property>
+		<property name="attackTime">
+			<value>12</value>
+		</property>
+		<property name="releaseTime">
+			<value>480</value>
+		</property>
+		<relationship name="sidechains">
+			<destination>{197ae302-9cb3-496a-b7fa-c6c36ea502a1}</destination>
+		</relationship>
+	</object>
 	<object class="AutomationPoint" id="{03cb39dc-de12-4a8b-a445-1a2c620d7161}">
 		<property name="position">
 			<value>0</value>

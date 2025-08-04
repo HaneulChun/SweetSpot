@@ -29,6 +29,7 @@
 		<relationship name="effects">
 			<destination>{ae5d8647-2ac0-4b0e-a8bb-e2d0cd79dcf0}</destination>
 			<destination>{7b14253e-5c3f-481e-b3fc-5b423e972314}</destination>
+			<destination>{197ae302-9cb3-496a-b7fa-c6c36ea502a1}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{21913af1-4a9d-46b0-a005-57857a376b99}" />
@@ -52,6 +53,11 @@
 		<relationship name="mixerReturn">
 			<destination>{3bf59bde-78ae-4a26-8603-424378304b15}</destination>
 		</relationship>
+	</object>
+	<object class="Sidechain" id="{197ae302-9cb3-496a-b7fa-c6c36ea502a1}">
+		<property name="level">
+			<value>-5</value>
+		</property>
 	</object>
 	<object class="AutomationPoint" id="{426f0bc2-2a9c-4ca0-9650-da51af22d989}">
 		<property name="position">
