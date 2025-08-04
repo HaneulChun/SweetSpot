@@ -63,6 +63,9 @@
 		<property name="maxVoices">
 			<value>6</value>
 		</property>
+		<property name="voiceStealing">
+			<value>2</value>
+		</property>
 		<property name="maximumDistance">
 			<value>9</value>
 		</property>
@@ -79,6 +82,12 @@
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{898f0f60-c91c-4f81-91d2-cfec5caf2789}">
+		<property name="volume">
+			<value>10</value>
+		</property>
+		<property name="pitch">
+			<value>2</value>
+		</property>
 		<relationship name="effectChain">
 			<destination>{d0d08e3f-8f7c-4cd5-b62e-08d6e3c38fe2}</destination>
 		</relationship>
