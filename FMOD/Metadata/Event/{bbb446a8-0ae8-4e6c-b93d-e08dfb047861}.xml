@@ -574,6 +574,7 @@
 			<destination>{f615c4c4-28ee-4071-916e-4dfb0f131d57}</destination>
 			<destination>{8c12fa55-3384-476b-bf8a-f658388c36fd}</destination>
 			<destination>{752e5525-7e4c-4556-a508-66b297e81863}</destination>
+			<destination>{9e6d188c-0263-4424-9108-623ccbe44d1e}</destination>
 		</relationship>
 	</object>
 	<object class="MultibandEqEffect" id="{c35796d6-b55b-436e-9e83-9de83738d1a6}">
@@ -704,7 +705,7 @@
 			<value>1</value>
 		</property>
 		<property name="value">
-			<value>-9</value>
+			<value>-6</value>
 		</property>
 	</object>
 	<object class="AutomationPoint" id="{b972ef94-f4ce-4ddd-b5e3-8be8d4c3c5c1}">
@@ -723,10 +724,10 @@
 			<value>0.35000000000000003</value>
 		</property>
 		<property name="value">
-			<value>-51.6666679</value>
+			<value>-11</value>
 		</property>
 		<property name="curveShape">
-			<value>0.25545761</value>
+			<value>1</value>
 		</property>
 	</object>
 	<object class="AutomationPoint" id="{60c28b3e-956f-4bde-8378-252ff0c19994}">
@@ -734,7 +735,7 @@
 			<value>0.75</value>
 		</property>
 		<property name="value">
-			<value>-41.25</value>
+			<value>-9</value>
 		</property>
 		<property name="curveShape">
 			<value>0.153343782</value>
@@ -772,7 +773,7 @@
 			<value>1</value>
 		</property>
 		<property name="value">
-			<value>-10</value>
+			<value>1</value>
 		</property>
 	</object>
 	<object class="AutomationPoint" id="{8c12fa55-3384-476b-bf8a-f658388c36fd}">
@@ -791,7 +792,18 @@
 			<value>0.93079095189282068</value>
 		</property>
 		<property name="value">
-			<value>-19</value>
+			<value>-4</value>
+		</property>
+	</object>
+	<object class="AutomationPoint" id="{9e6d188c-0263-4424-9108-623ccbe44d1e}">
+		<property name="position">
+			<value>0.75</value>
+		</property>
+		<property name="value">
+			<value>-7</value>
+		</property>
+		<property name="curveShape">
+			<value>1</value>
 		</property>
 	</object>
 	<object class="AutomationCurve" id="{74180dc3-b302-456e-8e3d-caa2e3756c8e}">
