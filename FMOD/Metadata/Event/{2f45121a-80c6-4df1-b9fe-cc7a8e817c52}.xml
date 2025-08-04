@@ -131,7 +131,7 @@
 	</object>
 	<object class="EventMixerGroup" id="{0cf62bfa-ff3e-4cfa-89f2-6189c1704168}">
 		<property name="volume">
-			<value>-19</value>
+			<value>-30</value>
 		</property>
 		<property name="name">
 			<value>RoomTone</value>
@@ -440,10 +440,10 @@
 	</object>
 	<object class="AutomationPoint" id="{f9f09372-bb65-4f20-8632-91cec9e15781}">
 		<property name="position">
-			<value>0.65000000000000002</value>
+			<value>0.55000000000000004</value>
 		</property>
 		<property name="value">
-			<value>-23</value>
+			<value>-25</value>
 		</property>
 		<property name="curveShape">
 			<value>-0.363908708</value>
