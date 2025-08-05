@@ -50,11 +50,11 @@ Sweet Spot is a 3D, First Person, Puzzle Solving game with Horror Elements. You 
 ### Documentation  
 Google Drive: https://drive.google.com/drive/folders/1iGh71J26g5hfqgEvMaGSsHmyDN9VofN6?usp=sharing
 
-Level Design Document: https://docs.google.com/document/d/1rT5bHHUxjSvzPTquw2RtZ4tRYL9zqpKHUI6JmJJMPtk/edit?tab=t.0
+Level Design Document: https://drive.google.com/drive/folders/1zEFb_PUugLA4ELfhpR0h1WceM5O-Wrrp?usp=drive_link
 
-Playtest Form Spreadsheet: https://docs.google.com/spreadsheets/d/1Ly6EOHT7N3kgYfrjwPQnzIvG6zQdnk95tuIP7uqlDwg/edit?usp=sharing
+Playtest Form Spreadsheet: https://docs.google.com/forms/d/e/1FAIpQLSdc2rJ5N8a37Deaw4-MCjRGVXiiEhhr8v1HuZLbbJzC3YxDmA/viewform?usp=sharing&ouid=113901013285546762999
 
-Playtest Form Google Forms: https://docs.google.com/forms/d/e/1FAIpQLSfpWB7qxcmVBaY5hGQr4RNzGKUmK1E6m6Pxmznvx1XzQ2IEPQ/viewform?usp=sharing&ouid=113901013285546762999
+PitchnPlay Final Build: https://drive.vfs.com/index.php/apps/files/?dir=/VFSSTORAGE10%20Dropbox%20GDPGSD/Builds/Final%20Project/GD76PG27/Sweet_Spot/MBeta_Pitch_and_Play_Build&fileid=132902754
 
 ### Gameplay Controls  
 Action               | Keyboard Control  | Gamepad Control
@@ -63,7 +63,6 @@ Move                 | WASD
 look                 | Mouse Look       
 Interact             | E / LMB   
 Focus                | RMB  
-Check Watch          | TAB 
 
 
 ### Debug Controls  
