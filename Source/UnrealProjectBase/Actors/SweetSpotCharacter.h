@@ -18,7 +18,9 @@ public:
 protected:
 	UPROPERTY(BlueprintReadWrite)
 	float cameraTilt = 0;
-	
+
+	UFUNCTION(BlueprintCallable)
+	bool IsEditor();
 public:	
 
 	// Called to bind functionality to input
