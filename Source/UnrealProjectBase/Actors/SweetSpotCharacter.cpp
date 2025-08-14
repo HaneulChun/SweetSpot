@@ -12,6 +12,15 @@ ASweetSpotCharacter::ASweetSpotCharacter()
 }
 
 
+bool ASweetSpotCharacter::IsEditor()
+{
+	if (GetWorld() && GetWorld()->WorldType == EWorldType::PIE)
+	{
+		return true;
+	}
+	return false;
+}
+
 // Called to bind functionality to input
 void ASweetSpotCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
